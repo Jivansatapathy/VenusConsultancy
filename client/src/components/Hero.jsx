@@ -28,25 +28,35 @@ export default function Hero({ showImage = false, imageSrc = "/hero-person.webp"
           <Link to="/find-jobs" className="btn btn--outline">Find a Job</Link>
         </div>
 
-        {/* Stats */}
+        {/* Optional Hero Image (keeps stacking below buttons) */}
+        {showImage && (
+          <div className="hero-image">
+            <img src={imageSrc} alt="hero person" />
+          </div>
+        )}
+      </div>
+
+      {/* --- Stats: intentionally placed OUTSIDE hero-container but stacked below --- */}
+      <div className="hero-stats-wrapper stacked">
         <div className="hero-stats">
           <div className="stat u-card">
             <FontAwesomeIcon icon={faUsers} className="stat-icon" />
             <h3>10,000+</h3>
             <p>Candidates Placed</p>
           </div>
+
           <div className="stat u-card">
             <FontAwesomeIcon icon={faBriefcase} className="stat-icon" />
             <h3>500+</h3>
             <p>Companies Served</p>
           </div>
+
           <div className="stat u-card">
             <FontAwesomeIcon icon={faAward} className="stat-icon" />
             <h3>95%</h3>
             <p>Success Rate</p>
           </div>
         </div>
-
       </div>
     </section>
   );

@@ -1,0 +1,217 @@
+/* UpFooter.css
+   Universal CTA band. Tweak colors via CSS variables below.
+   Primary shape tints use --vh-primary and are blended with opacity so they are decorative.
+*/
+
+/* Branding variables - change to match your app's theme */
+:root {
+  --vh-upfooter-bg: #0b6ea1;         /* main band color (blue) */
+  --vh-primary: #e50914;             /* Venus primary color (used for shape tints) */
+  --vh-upfooter-text: #ffffff;       /* text color */
+  --vh-upfooter-accent: rgba(255,255,255,0.95);
+  --vh-upfooter-height: clamp(140px, 18vw, 220px);
+  --vh-upfooter-max-width: 1200px;
+}
+
+/* Section wrapper */
+.vh-upfooter {
+  position: relative;
+  overflow: hidden;
+  background: var(--vh-upfooter-bg);
+  color: var(--vh-upfooter-text);
+  padding: clamp(1.2rem, 3.2vw, 2.4rem) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* container centered (max 1200px) */
+.vh-upfooter__container {
+  width: min(100%, var(--vh-upfooter-max-width));
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  min-height: var(--vh-upfooter-height);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 3; /* above decorative shapes */
+}
+
+/* Heading (centered, large) */
+.vh-upfooter__heading {
+  margin: 0;
+  text-align: left;
+  font-weight: 800;
+  color: var(--vh-upfooter-text);
+  line-height: 1.05;
+  font-size: clamp(1.6rem, 4.2vw, 2.6rem);
+  letter-spacing: -0.02em;
+  flex: 1 1 60%;
+}
+
+/* On small screens center heading */
+@media (max-width: 880px) {
+  .vh-upfooter__heading {
+    text-align: center;
+    flex-basis: 100%;
+    font-size: clamp(1.25rem, 6vw, 1.8rem);
+  }
+}
+
+/* CTA pill */
+.vh-upfooter__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: rgba(0,0,0,0.85);
+  color: var(--vh-upfooter-accent);
+  padding: 0.6rem 1.05rem;
+  border-radius: 999px;
+  min-height: 48px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), background 220ms ease, color 220ms ease;
+  border: 3px solid rgba(255,255,255,0.06);
+  flex: 0 0 auto;
+}
+
+/* CTA hover/focus */
+.vh-upfooter__cta:hover,
+.vh-upfooter__cta:focus {
+  transform: translateY(-4px);
+  background: var(--vh-upfooter-accent);
+  color: var(--vh-upfooter-bg);
+  outline: none;
+}
+
+/* CTA text and small white circle for arrow */
+.vh-upfooter__cta-text {
+  display: inline-block;
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  color: inherit;
+  padding-left: 4px;
+}
+
+.vh-upfooter__cta-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--vh-upfooter-accent);
+  color: var(--vh-upfooter-bg);
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: transform 200ms ease, background 200ms ease;
+}
+.vh-upfooter__cta:hover .vh-upfooter__cta-circle,
+.vh-upfooter__cta:focus .vh-upfooter__cta-circle {
+  transform: translateX(6px);
+}
+
+/* Decorative shapes rendered using pseudo elements and gradients */
+/* primary tinted shapes placed left/mid/right behind heading */
+.vh-upfooter::before,
+.vh-upfooter::after,
+.vh-upfooter .vh-upfooter__container::before,
+.vh-upfooter .vh-upfooter__container::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 24px;
+  filter: blur(26px);
+  opacity: 0.42;
+  transform: rotate(-6deg);
+}
+
+/* large soft rounded shape left (uses primary color tint) */
+.vh-upfooter::before {
+  left: -6%;
+  top: 6%;
+  width: 320px;
+  height: 160px;
+  background: linear-gradient(180deg, rgba(var(--vh-primary-r, 229),var(--vh-primary-g,9),var(--vh-primary-b,20),0.20), rgba(var(--vh-primary-r,229),var(--vh-primary-g,9),var(--vh-primary-b,20),0.08));
+  transform: rotate(-12deg);
+  opacity: 0.45;
+}
+
+/* medium soft shape centered below heading */
+.vh-upfooter .vh-upfooter__container::before {
+  right: 18%;
+  top: 18%;
+  width: 360px;
+  height: 220px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  filter: blur(28px);
+  opacity: 0.14;
+  transform: rotate(2deg);
+}
+
+/* rounded shape on right (primary color but lighter) */
+.vh-upfooter::after {
+  right: -6%;
+  bottom: 4%;
+  width: 420px;
+  height: 200px;
+  background: linear-gradient(180deg, rgba(var(--vh-primary-r,229),var(--vh-primary-g,9),var(--vh-primary-b,20),0.18), rgba(var(--vh-primary-r,229),var(--vh-primary-g,9),var(--vh-primary-b,20),0.06));
+  transform: rotate(6deg);
+  opacity: 0.42;
+}
+
+/* diagonal stripes on the right to match reference */
+.vh-upfooter .vh-upfooter__container::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  width: 48%;
+  height: 100%;
+  background-image: linear-gradient(135deg, rgba(255,255,255,0.02) 0 7%, transparent 7% 100%);
+  opacity: 0.06;
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+/* Accessibility/focus */
+.vh-upfooter__cta:focus {
+  box-shadow: 0 0 0 4px rgba(229,9,20,0.18);
+}
+
+/* Responsiveness */
+@media (max-width: 880px) {
+  .vh-upfooter__cta {
+    min-height: 44px;
+    padding: 0.5rem 0.9rem;
+  }
+  /* hide decorative heavy shapes on small screens to avoid clutter */
+  .vh-upfooter::before,
+  .vh-upfooter::after,
+  .vh-upfooter .vh-upfooter__container::before {
+    display: none;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .vh-upfooter__cta,
+  .vh-upfooter__cta-circle { transition: none; transform: none; }
+  .vh-upfooter::before,
+  .vh-upfooter::after,
+  .vh-upfooter .vh-upfooter__container::before,
+  .vh-upfooter .vh-upfooter__container::after { filter: blur(18px); }
+}
+
+/* Utility: make --vh-primary available as RGB parts for gradients if user sets hex */
+:root {
+  /* helper CSS custom properties — optionally override to pass RGB breakdown of your primary color */
+  --vh-primary-r: 229;
+  --vh-primary-g: 9;
+  --vh-primary-b: 20;
+}

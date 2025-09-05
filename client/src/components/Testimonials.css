@@ -1,0 +1,191 @@
+/* Testimonials Section */
+.vh-testimonials {
+    padding: clamp(2.5rem, 6vw, 5rem) 0;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(180deg, #fff 0%, #fafafa 100%);
+  }
+  
+  .vh-testimonials__container {
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+    padding: 0 1rem;
+  }
+  
+  /* Heading */
+  .vh-testimonials__heading {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: #111;
+  }
+  
+  .vh-testimonials__sub {
+    color: #555;
+    max-width: 680px;
+    margin: 0 auto 2.5rem auto;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  
+  /* Carousel */
+  .vh-testimonials__carousel {
+    position: relative;
+    overflow: hidden;
+    height: 320px; /* ensures consistent height */
+    margin-bottom: 2rem;
+  }
+  
+  /* Testimonial Card */
+  .vh-testimonial-card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(0.95);
+    width: min(820px, 92%);
+    background: #fff;
+    border-radius: 18px;
+    padding: 2.25rem;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.06);
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .vh-testimonial-card.active {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    z-index: 2;
+  }
+  
+  .vh-testimonial-card.inactive {
+    opacity: 0;
+    z-index: 1;
+  }
+  
+  /* Quote */
+  .vh-testimonial-quote {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 1.75rem;
+    color: #222;
+    position: relative;
+  }
+  
+  .vh-testimonial-quote::before {
+    content: "“";
+    font-size: 2.5rem;
+    color: #e50914;
+    position: absolute;
+    top: -0.5rem;
+    left: -0.75rem;
+    opacity: 0.4;
+  }
+  
+  /* Profile */
+  .vh-testimonial-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+  }
+  
+  .vh-testimonial-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vh-testimonial-name {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #111;
+  }
+  
+  .vh-testimonial-title {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  /* Controls */
+  .vh-testimonials__controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+  }
+  
+  .vh-testimonial-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .vh-testimonial-btn:hover {
+    background: #e50914;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+  
+  .vh-testimonial-btn:focus {
+    outline: 3px solid rgba(229, 9, 20, 0.4);
+    outline-offset: 2px;
+  }
+  
+  /* Progress circle */
+  .vh-testimonial-progress {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    width: 36px;
+    height: 36px;
+  }
+  
+  .progress-ring {
+    width: 36px;
+    height: 36px;
+    transform: rotate(-90deg);
+  }
+  
+  .progress-ring__bg {
+    fill: none;
+    stroke: #e5e7eb;
+    stroke-width: 4;
+  }
+  
+  .progress-ring__fg {
+    fill: none;
+    stroke: #e50914;
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.1s linear;
+  }
+  
+  /* Responsive */
+  @media (max-width: 640px) {
+    .vh-testimonials__carousel {
+      height: auto;
+    }
+    .vh-testimonial-card {
+      position: relative;
+      transform: none;
+      left: auto;
+      top: auto;
+      opacity: 1 !important;
+      margin-bottom: 1.25rem;
+    }
+    .vh-testimonials__controls {
+      display: none;
+    }
+  }
+  

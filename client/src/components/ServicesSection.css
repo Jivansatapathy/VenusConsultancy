@@ -1,0 +1,200 @@
+/* ServicesSection.css
+   - centered max-width 1200px
+   - shows ~2.5 cards (partial third visible)
+   - pure CSS, Poppins from global index.css
+*/
+
+.vh-services {
+    padding: clamp(2rem, 4.5vw, 3.5rem) 0;
+    display: flex;
+    justify-content: center;
+    color: #111;
+  }
+  
+  /* card centered */
+  .vh-services__card {
+    max-width: 1200px;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .vh-services__heading {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    text-align: center;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+  }
+  
+  .vh-services__desc {
+    text-align: center;
+    color: #444;
+    max-width: 860px;
+    margin: 0.25rem auto 1.1rem auto;
+  }
+  
+  /* viewport with overflow hidden; controls translate track via JS */
+  .vh-services__viewport {
+    overflow: hidden;
+    width: 100%;
+    margin: 1rem 0 0.85rem 0;
+  }
+  
+  /* track (flex row), will be translated in px by JS */
+  .vh-services__track {
+    display: flex;
+    align-items: stretch;
+    gap: 24px;
+    transition: transform 420ms cubic-bezier(.2,.9,.2,1);
+    will-change: transform;
+  }
+  
+  /* card size: fixed-width responsive; to create partial third visible we rely on JS measurement.
+     fallback: flex-basis responsive to available space */
+  .vh-service-card {
+    flex: 0 0 320px; /* base width */
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(8, 18, 20, 0.06);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* media */
+  .vh-service-card__media {
+    height: 160px;
+    overflow: hidden;
+    background: #eaeef0;
+  }
+  .vh-service-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  /* body */
+  .vh-service-card__body {
+    padding: 1rem 1rem 1.2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+  .vh-service-card__title {
+    font-size: 1.05rem;
+    margin: 0;
+    color: #0b2f30;
+    font-weight: 600;
+  }
+  .vh-service-card__excerpt {
+    margin: 0;
+    color: #4a5a5a;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    flex: 1;
+  }
+  .vh-service-card__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(11,47,48,0.15);
+    color: #0b5658;
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    background: #fff;
+    transition: all 0.3s cubic-bezier(.2, .9, .2, 1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  
+  .vh-service-card__link:hover {
+    background: #e50914;
+    color: #fff;
+    border-color: #e50914;
+    transform: translateY(-2px) scale(1.1);
+    box-shadow: 0 6px 14px rgba(229,9,20,0.3);
+  }
+  
+  .vh-service-card__link:focus {
+    outline: 3px solid rgba(229,9,20,0.4);
+    outline-offset: 2px;
+  }
+  
+  /* bottom controls row */
+  .vh-services__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  /* arrows */
+  .vh-services__arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(11,47,48,0.08);
+    background: #fff;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vh-services__arrow:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  
+  /* pager + progress */
+  .vh-services__pager {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    justify-content: center;
+  }
+  .vh-services__pager-text {
+    color: #0b2f30;
+    font-weight: 600;
+  }
+  
+  /* progress bar */
+  .vh-services__progress {
+    height: 6px;
+    width: 320px;
+    background: rgba(11,47,48,0.08);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .vh-services__progress-fill {
+    height: 100%;
+    background: #e50914;
+    width: 0%;
+    transition: width 360ms ease;
+  }
+  
+  /* responsive */
+  @media (max-width: 1100px) {
+    .vh-service-card { flex: 0 0 300px; }
+    .vh-services__progress { width: 260px; }
+  }
+  @media (max-width: 820px) {
+    .vh-service-card { flex: 0 0 280px; }
+    .vh-services__progress { width: 220px; }
+  }
+  @media (max-width: 640px) {
+    /* stack cards on small screens */
+    .vh-services__viewport { overflow: visible; }
+    .vh-services__track { gap: 14px; flex-wrap: nowrap; transform: none !important; }
+    .vh-service-card { flex: 0 0 100%; }
+    .vh-services__controls { display: none; }
+    .vh-services__progress { display: none; }
+  }
+  

@@ -1,0 +1,56 @@
+.certifications {
+    padding: 4rem 2rem;
+    background: #f9fcff; /* light subtle bg */
+  }
+  
+  .cert-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #f3f7fa;
+    border-radius: 18px;
+    padding: 2.5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 3rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  }
+  
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: left;
+  }
+  
+  .cert-img {
+    max-height: 90px;
+    width: auto;
+    object-fit: contain;
+  }
+  
+  .cert-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.4;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .cert-container {
+      flex-direction: column;
+      text-align: center;
+      gap: 2rem;
+    }
+  
+    .cert-item {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .cert-text {
+      font-size: 1.1rem;
+    }
+  }
+  

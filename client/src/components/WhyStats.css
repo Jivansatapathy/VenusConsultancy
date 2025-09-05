@@ -1,0 +1,117 @@
+/* client/src/components/WhyStats.css */
+/* Ensure Poppins loaded globally; this file only defines layout and styles */
+
+.vh-why {
+    padding: clamp(1rem, 3vw, 2.5rem) 0;
+    color: #111;
+  }
+  
+  .vh-why__inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 2rem;
+    width: min(1180px, 92%);
+    margin: 0 auto;
+  }
+  
+  /* Responsive */
+  @media (max-width: 900px) {
+    .vh-why__inner { grid-template-columns: 1fr; gap: 1.25rem; }
+  }
+  
+  /* LEFT */
+  .vh-why__left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .vh-why__heading {
+    font-size: clamp(2rem, 4.2vw, 3.2rem);
+    font-weight: 400;
+    margin: 0;
+    color: #111;
+    letter-spacing: -0.02em;
+  }
+  
+  /* big primary stat on left */
+  .vh-why__left-value {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+  .vh-why__stat-value {
+    font-weight: 800;
+    color: #e50914; /* brand red */
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    line-height: 1;
+    display: inline-block;
+    min-height: 1.1em;
+  }
+  .vh-why__left-caption {
+    color: #4b5563;
+    font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  }
+  
+  /* RIGHT: stacked two items with divider */
+  .vh-why__right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-left: 1.25rem;
+    border-left: 2px solid rgba(0,0,0,0.06);
+  }
+  
+  /* Remove border for small screens (becomes vertical stack) */
+  @media (max-width: 900px) {
+    .vh-why__right { padding-left: 0; border-left: none; }
+  }
+  
+  .vh-why__right-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding-left: 0.6rem;
+    position: relative;
+  }
+  
+  /* small vertical separators between right items for desktop */
+  .vh-why__right-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.65rem;
+    width: calc(100% - 0.6rem);
+    height: 1px;
+    background: rgba(0,0,0,0.04);
+  }
+  @media (max-width: 900px) {
+    .vh-why__right-item:not(:last-child)::after { display: none; }
+  }
+  
+  .vh-why__right-value-wrap {
+    display: flex;
+    align-items: center;
+  }
+  .vh-why__right .vh-why__stat-value {
+    font-size: clamp(1.4rem, 3.4vw, 2.4rem);
+    color: #e50914;
+    font-weight: 700;
+  }
+  
+  /* right captions */
+  .vh-why__right-caption {
+    color: #5b5b5b;
+    font-size: 0.98rem;
+    line-height: 1.35;
+  }
+  
+  /* Accessibility and motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .vh-why__stat-value { transition: none; }
+  }
+  
+  /* Ensure good contrast focus states */
+  .vh-why :focus { outline: 3px solid rgba(229,9,20,0.12); outline-offset: 2px; border-radius: 6px; }
+  

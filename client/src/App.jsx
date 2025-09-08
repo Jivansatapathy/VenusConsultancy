@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import AdminLogin from "./pages/AdminLogin";
 import PostJob from "./pages/PostJob";
+import Services from "./pages/Services";
 import FindJobs from "./pages/FindJobs";
 import FindTalent from "./pages/FindTalent";
 import PrivateRoute from "./components/PrivateRoute";
@@ -24,6 +25,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/services" element={<Services />} />
         <Route path="/find-jobs" element={<FindJobs />} />
         <Route path="/find-talent" element={<FindTalent />} />
         <Route path="/about" element={<h1>About Us Page</h1>} />
@@ -33,7 +35,7 @@ function App() {
         <Route path="/" element={<Home />} />
       </Routes>
       <UpFooter
-        heading={<>Strengthen your Human Resource<br/>Strategy with ABC Consultants</>}
+        heading={<>Strengthen your Human Resource<br/>Strategy with Venus Consultancy</>}
         ctaText="Get In Touch"
         ctaHref="/contact"
       />

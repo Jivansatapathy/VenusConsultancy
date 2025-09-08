@@ -8,7 +8,6 @@
   padding: clamp(1rem, 2vw, 2.5rem);
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-  margin-top: 2rem;
 }
 
 .vh-footer.u-card { /* reuse u-card style, but safe fallback */

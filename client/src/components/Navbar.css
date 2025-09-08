@@ -1,113 +1,145 @@
-/* Navbar Base */
-.navbar {
-  position: sticky;   /* ✅ normal at first, sticks after scroll */
+:root{
+  --vh-red: #e50914;
+  --vh-black: #000;
+  --vh-white: #fff;
+  --vh-navbar-height: 84px;
+  --vh-navbar-height-scrolled: 60px;
+  box-sizing: border-box;
+}
+
+/* reset box-sizing */
+*,
+*::before,
+*::after { box-sizing: inherit; }
+
+/* header / sticky */
+.vh-navbar {
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
-  background: #ffffff; /* solid white */
-  transition: all 0.3s ease;
-  z-index: 1000;
+  background: var(--vh-white);
+  z-index: 1100;
+  transition: box-shadow 220ms ease, padding 220ms ease, background 220ms ease;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.03);
 }
 
-/* On Scroll (extra styles if you want) */
-.navbar.scrolled {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 0;
+.vh-navbar--scrolled {
+  box-shadow: 0 6px 18px rgba(10,12,15,0.06);
+  padding: 0.45rem 0;
+  background: rgba(255,255,255,0.98);
 }
 
-  
-  /* Container */
-  .navbar-container {
-    max-width: 1200px;
-    margin: auto;
-    padding-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  /* Logo */
-  .logo-img {
-    height: 80px;
-    transition: height 0.3s ease;
-  }
-  .logo-img.small {
-    height: 40px;
-  }
-  
-  /* Nav Links */
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    flex: 1;
-    font-weight: 600;
-  }
-  
-  .nav-links a {
-    color: black;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  .nav-links a:hover {
-    color: #e50914; /* 🔴 red hover */
-  }
-  
-  /* Book a Call Button */
-  .book-btn {
-    background: #e50914;  /* 🔴 red */
-    color: white;
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: background 0.3s ease, transform 0.2s ease;
-    white-space: nowrap;
-    border: none;
-    text-decoration: none;
-    display: inline-block;
-  }
-  .book-btn:hover {
-    background: #000000; /* darker red */
-    color: white;
-    transform: scale(1.05); /* slight grow effect */
-  }
-  
-  /* Mobile Menu Button */
-  .menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: black;
-  }
-  
-  /* Mobile Menu */
-  .mobile-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem;
-    background: #ffffff; /* solid white */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  .mobile-menu a {
-    text-decoration: none;
-    color: black;
-    font-weight: 600;
-    text-align: center;
-  }
-  .mobile-menu .book-btn {
-    display: block;
-    text-align: center;
-  }
-  
-  /* Responsive */
-  @media (max-width: 992px) {
-    .nav-links {
-      display: none;
-    }
-    .menu-toggle {
-      display: block;
-    }
-  }
-  
+/* container */
+.vh-navbar__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: var(--vh-navbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* brand logo */
+.vh-navbar__brand { display: inline-flex; align-items: center; text-decoration: none; }
+.vh-navbar__logo {
+  height: 72px;
+  width: auto;
+  transition: height 220ms ease, transform 220ms ease;
+  display: block;
+}
+.vh-navbar__logo--small { height: 34px; }
+
+/* desktop nav */
+.vh-navbar__links {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  flex: 1 1 auto;
+  margin-left: 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.vh-navlink {
+  text-decoration: none;
+  color: var(--vh-black);
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background 160ms ease, color 160ms ease;
+}
+.vh-navlink:hover,
+.vh-navlink:focus { background: rgba(0,0,0,0.04); color: var(--vh-red); outline: none; }
+.vh-navlink.active { color: var(--vh-red); }
+
+/* actions */
+.vh-navbar__actions { display: flex; gap: .6rem; align-items: center; }
+
+/* book button */
+.vh-btn { display: inline-block; padding: .5rem .9rem; border-radius: 8px; font-weight: 700; text-decoration: none; }
+.vh-btn--outline { border: 1px solid rgba(0,0,0,0.08); background: transparent; color: var(--vh-black); }
+
+/* mobile toggle */
+.vh-navbar__toggle { display: none; border: none; background: transparent; cursor: pointer; padding: 8px; border-radius: 8px; }
+.vh-navbar__toggle:focus { outline: none; box-shadow: 0 0 0 3px rgba(0,0,0,0.06); }
+
+/* mobile menu */
+.vh-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: var(--vh-navbar-height);
+  background: rgba(255,255,255,0.98);
+  z-index: 1090;
+  padding: 1.25rem;
+  overflow-y: auto;
+}
+.vh-mobile-menu--open { display: block; }
+
+.vh-mobile-menu__inner {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 18px 40px rgba(10,10,10,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+.vh-mobile-menu__link {
+  display: block;
+  padding: .9rem .75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--vh-black);
+  font-weight: 700;
+}
+.vh-mobile-menu__link:hover,
+.vh-mobile-menu__link:focus { background: rgba(0,0,0,0.04); outline: none; }
+.vh-mobile-menu__cta { display: inline-block; padding: 0.9rem 1rem; border-radius: 10px; background: var(--vh-red); color: var(--vh-white); text-align: center; font-weight: 800; }
+
+/* responsive */
+@media (max-width: 992px) {
+  .vh-navbar__inner { height: var(--vh-navbar-height-scrolled); }
+  .vh-navbar__links { display: none; } /* hide desktop links */
+  .vh-btn--outline { display: none; }
+  .vh-navbar__toggle { display: inline-flex; }
+  .vh-navbar__logo { height: 56px; }
+  .vh-navbar__logo--small { height: 30px; }
+  /* show mobile menu when open (class controls it) */
+}
+
+/* small screens */
+@media (max-width: 420px) {
+  .vh-navbar__logo { height: 48px; }
+  .vh-mobile-menu__inner { padding: 0.85rem; max-width: calc(100% - 1rem); }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .vh-navbar, .vh-navbar__logo, .vh-navlink, .vh-btn, .vh-mobile-menu { transition: none !important; }
+}

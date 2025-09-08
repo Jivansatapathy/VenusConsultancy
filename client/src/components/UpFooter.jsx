@@ -12,7 +12,7 @@ import "./UpFooter.css";
  *
  * Example:
  *  <UpFooter
- *    heading={<><span>Strengthen your Human Resource</span><br/><span>Strategy with ABC Consultants</span></>}
+ *    heading={<><span>Strengthen your Human Resource</span><br/><span>Strategy with Venus Consultancy</span></>}
  *    ctaText="Get In Touch"
  *    ctaHref="/contact"
  *  />
@@ -23,7 +23,7 @@ const UpFooter = ({
     <>
       <span>Strengthen your Human Resource</span>
       <br />
-      <span>Strategy with ABC Consultants</span>
+      <span>Strategy with Venus Consultancy</span>
     </>
   ),
   ctaText = "Get In Touch",

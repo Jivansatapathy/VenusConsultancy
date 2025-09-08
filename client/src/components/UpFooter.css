@@ -5,7 +5,7 @@
 
 /* Branding variables - change to match your app's theme */
 :root {
-  --vh-upfooter-bg: #0b6ea1;         /* main band color (blue) */
+  --vh-upfooter-bg: #b2060f;         /* main band color (blue) */
   --vh-primary: #e50914;             /* Venus primary color (used for shape tints) */
   --vh-upfooter-text: #ffffff;       /* text color */
   --vh-upfooter-accent: rgba(255,255,255,0.95);

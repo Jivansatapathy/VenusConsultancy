@@ -1,0 +1,54 @@
+/* client/src/pages/Services.css - clean single-page services layout */
+
+:root {
+  --vh-red: #e50914;
+  --vh-black: #0b0b0b;
+  --vh-muted: #6b6b6b;
+  --card-radius: 12px;
+  --content-max: 980px;
+}
+
+/* page base */
+.svc-page { padding: clamp(1.25rem, 3vw, 3rem) 0 4rem; background: #fff; }
+
+/* hero */
+.svc-hero { padding: clamp(1rem, 3.2vw, 2.2rem) 0; background: transparent; }
+.svc-hero__inner { max-width: var(--content-max); margin: 0 auto; text-align: center; padding: 0 1rem; }
+.svc-hero__eyebrow { display:block; color: var(--vh-muted); font-weight:700; margin-bottom:.6rem; }
+.svc-hero__title { margin: 0 0 .6rem; font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight:800; color:var(--vh-black); }
+.svc-hero__sub { margin: 0 auto 1.2rem; color:var(--vh-muted); max-width: 720px; }
+.svc-hero__ctas { display:flex; gap:.9rem; justify-content:center; align-items:center; flex-wrap:wrap; }
+
+/* Explore specific button - unique style (white -> black on hover) */
+.btn--explore {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn--explore:hover,
+.btn--explore:focus {
+  background: #000000;
+  color: #ffffff;
+  outline: none;
+}
+
+/* Hero illustration */
+.svc-hero__visual { margin-top: 1.25rem; display: flex; justify-content: center; pointer-events: none; }
+.svc-hero__illus { max-width: 900px; width: 100%; height: auto; opacity: 0.98; filter: drop-shadow(0 12px 30px rgba(12,14,18,0.06)); }
+
+/* container */
+.svc-container { margin-top: 1.6rem; max-width: var(--content-max); margin-left:auto; margin-right:auto; padding: 0 1rem; }
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .svc-hero__illus { transition: none !important; }
+}

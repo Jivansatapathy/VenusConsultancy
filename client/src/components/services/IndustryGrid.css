@@ -1,0 +1,18 @@
+/* client/src/components/services/IndustryGrid.css */
+.svc-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+/* center each card */
+.svc-grid__item { display:flex; justify-content:center; }
+
+/* subtle reveal */
+@media (prefers-reduced-motion: no-preference) {
+  .svc-grid__item { opacity:0; transform: translateY(8px); animation: svc-stagger 480ms ease forwards; }
+  .svc-grid__item:nth-child(1) { animation-delay: 60ms; }
+  .svc-grid__item:nth-child(2) { animation-delay: 120ms; }
+  .svc-grid__item:nth-child(3) { animation-delay: 180ms; }
+  .svc-grid__item:nth-child(4) { animation-delay: 240ms; }
+}
+@keyframes svc-stagger { to { opacity:1; transform:none; } }

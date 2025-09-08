@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="vh-footer u-card" role="contentinfo" aria-label="Site footer">
       <div className="vh-footer__container">
         <div className="vh-footer__brand">
-          <img src="/logo.png" alt="Venus Hiring logo" className="vh-footer__logo" />
+          <img src="/venuslogo.png" alt="Venus Hiring logo" className="vh-footer__logo" />
           <div className="vh-footer__tagline">Hire Smarter. Grow Faster.</div>
         </div>
 

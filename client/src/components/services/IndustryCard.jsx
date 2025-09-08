@@ -1,92 +1,139 @@
-// client/src/components/services/IndustryCard.jsx
-import React, { useState } from "react";
+// IndustryCard.jsx (place in client/src/components/services/IndustryCard.jsx)
+// NOTE: ensure IndustryGrid imports this component from "./IndustryCard"
+
+import React, { useState, useRef, useEffect } from "react";
 import "./IndustryCard.css";
 
 /**
  * Props:
- *  - id, title, subtitle, description, bullets (array), extended (HTML string),
- *    images (array), illustration (string), color, metric, anchor, onRequestShortlist
+ *  - id, title, description, bullets (array), roles (array of {label, img?}), images (array), color (accent)
+ *
+ * This component displays:
+ *  - left image with a numbered badge
+ *  - right content with title/desc and Know more button
+ *  - an expandable second section that shows roles & extra bullets,
+ *    toggled by Know more / Show less button.
  */
 const IndustryCard = ({
   id,
   title,
-  subtitle,
   description,
   bullets = [],
-  extended = "",
+  roles = [], // optionally an array of strings or objects {label, img}
   images = [],
-  illustration,
   color = "#e50914",
-  metric = {},
-  anchor,
-  onRequestShortlist = () => {}
+  metric = {}
 }) => {
   const [expanded, setExpanded] = useState(false);
+  const contentRef = useRef(null);
+
+  // for smooth max-height animation, compute content height when expanded
+  const [contentHeight, setContentHeight] = useState(0);
+  useEffect(() => {
+    if (!contentRef.current) return;
+    // read content height
+    setContentHeight(contentRef.current.scrollHeight);
+  }, [expanded]);
+
+  const toggle = () => setExpanded((s) => !s);
 
   return (
-    <article id={anchor || id} className="svc-card" aria-labelledby={`svc-${id}-title`}>
-      <div className="svc-card__body">
-        <div className="svc-card__meta">
-          <span className="svc-badge" style={{ borderColor: color }}>
-            <small className="svc-badge__label">{metric?.label}</small>
-            <strong className="svc-badge__value">{metric?.value}</strong>
-          </span>
+    <article className="svc-card" aria-labelledby={`svc-card-${id}-title`}>
+      <div className="svc-card__top">
+        <div className="svc-card__media">
+          {/* numbered badge */}
+          <div className="svc-card__badge" style={{ backgroundColor: color }}>
+            <span className="svc-card__badge-num">{/* you can derive number from id or pass index as prop */}01</span>
+          </div>
+
+          {/* main image */}
+          <div className="svc-card__imgwrap">
+            <img
+              src={images?.[0] || "/illustrations/serviceshero-1.png"}
+              alt={`${title} illustration`}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
 
-        <h3 id={`svc-${id}-title`} className="svc-card__title">{title}</h3>
-        {subtitle && <div className="svc-card__subtitle">{subtitle}</div>}
-        <p className="svc-card__desc">{description}</p>
+        <div className="svc-card__content">
+          <div className="svc-card__meta">
+            {metric?.label && (
+              <span className="svc-badge" style={{ borderColor: color }}>
+                <small>{metric.label}</small>
+                <strong>{metric.value}</strong>
+              </span>
+            )}
+          </div>
 
-        {bullets && bullets.length > 0 && (
-          <ul className="svc-card__bullets" aria-hidden={expanded ? "true" : "false"}>
-            {bullets.map((b) => (
-              <li key={b} className="svc-bullet">{b}</li>
-            ))}
-          </ul>
-        )}
+          <h3 id={`svc-card-${id}-title`} className="svc-card__title">{title}</h3>
 
-        <div className="svc-card__actions">
-          <button
-            className="btn btn--outline"
-            onClick={() => setExpanded((s) => !s)}
-            aria-expanded={expanded}
-            aria-controls={`svc-expanded-${id}`}
-            style={{ borderColor: color, color }}
-          >
-            {expanded ? "Show less" : "Know more"}
-          </button>
+          <p className="svc-card__desc">{description}</p>
 
-          <button
-            className="btn btn--primary"
-            onClick={() => onRequestShortlist({ id, title })}
-            style={{ backgroundColor: color, borderColor: color }}
-          >
-            Request shortlist
-          </button>
-        </div>
-
-        <div
-          id={`svc-expanded-${id}`}
-          className={`svc-card__expanded ${expanded ? "open" : ""}`}
-          aria-hidden={!expanded}
-        >
-          <div dangerouslySetInnerHTML={{ __html: extended }} />
+          <div className="svc-card__actions">
+            <button
+              className="btn btn--primary"
+              aria-expanded={expanded}
+              aria-controls={`svc-card-${id}-more`}
+              onClick={toggle}
+            >
+              {expanded ? "Show less" : "Know More"}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* decorative illustration */}
-      {illustration && (
-        <div className="svc-card__illus" aria-hidden="true">
-          <img src={illustration} alt="" role="presentation" loading="lazy" className="svc-illus" width="420" height="240" />
-        </div>
-      )}
+      {/* Expandable section */}
+      <div
+        id={`svc-card-${id}-more`}
+        className="svc-card__more"
+        role="region"
+        aria-hidden={!expanded}
+        style={
+          expanded
+            ? { maxHeight: `${contentHeight}px` }
+            : { maxHeight: 0 }
+        }
+      >
+        <div ref={contentRef} className="svc-card__more-inner">
+          {/* Roles grid (circular icons + label) */}
+          {roles && roles.length > 0 && (
+            <>
+              <h4 className="svc-card__more-title">Roles We Hire For</h4>
+              <div className="svc-roles-grid" role="list">
+                {roles.map((r, idx) => {
+                  // role can be string or object { label, img }
+                  const label = typeof r === "string" ? r : r.label;
+                  const img = typeof r === "string" ? null : r.img;
+                  return (
+                    <div key={label + idx} className="svc-role" role="listitem">
+                      <div className="svc-role__img">
+                        {img ? <img src={img} alt={label} loading="lazy" /> : <div className="svc-role__placeholder" />}
+                      </div>
+                      <div className="svc-role__label">{label}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
 
-      {/* media images */}
-      <div className="svc-card__media" aria-hidden="true">
-        <div className="svc-media__row">
-          <img src={images?.[0] || "https://via.placeholder.com/900x540?text=1"} alt={`${title} 1`} loading="lazy" width="900" height="540" />
-          <img src={images?.[1] || "https://via.placeholder.com/700x440?text=2"} alt={`${title} 2`} loading="lazy" width="700" height="440" />
-          <img src={images?.[2] || "https://via.placeholder.com/480x480?text=3"} alt={`${title} 3`} loading="lazy" width="480" height="480" />
+          {/* bullets / highlights */}
+          {bullets && bullets.length > 0 && (
+            <>
+              <h4 className="svc-card__more-title">What we do</h4>
+              <ul className="svc-card__bullets">
+                {bullets.map((b, i) => <li key={i}>{b}</li>)}
+              </ul>
+            </>
+          )}
+
+          {/* Secondary CTA row inside expanded */}
+          <div className="svc-card__more-actions">
+            <a className="btn btn--outline" href={`/services/${id}`}>Learn more</a>
+            <a className="btn btn--alt" href="/book-call">Book a call</a>
+          </div>
         </div>
       </div>
     </article>

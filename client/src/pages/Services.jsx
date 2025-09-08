@@ -8,12 +8,11 @@ const Services = () => {
     <main className="svc-page">
       <header className="svc-hero">
         <div className="svc-hero__inner">
-          {/* Eyebrow stays centered */}
+          {/* Eyebrow (centered) */}
           <small className="svc-hero__eyebrow">Services</small>
 
-          {/* Two-column hero content */}
+          {/* Two-column hero content: left = text & CTAs, right = illustration */}
           <div className="svc-hero__content">
-            {/* Left column: text + CTAs */}
             <div className="svc-hero__text">
               <h1 className="svc-hero__title">Our Services</h1>
               <p className="svc-hero__sub">
@@ -33,7 +32,6 @@ const Services = () => {
               </div>
             </div>
 
-            {/* Right column: illustration (raw image, no card) */}
             <div className="svc-hero__image" aria-hidden="true">
               <img
                 src="/illustrations/serviceshero-1.png"

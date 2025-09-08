@@ -1,33 +1,26 @@
 // client/src/data/servicesData.js
-// Services content used by Services page (single-page layout)
 const servicesData = [
   {
     id: "board-advisory",
-    title: "Board Advisory Services",
+    title: "Board Advisory",
     subtitle: "Governance • Strategy • Risk",
     description:
-      "We advise boards and leadership teams on governance, strategic roadmaps and long-term value creation.",
+      "We help organizations hire exceptional leaders for their boards and advisory panels, ensuring the right mix of governance, strategy, and industry expertise.",
     bullets: [
-      "Board composition & diversity",
-      "Strategy alignment & roadmaps",
-      "Succession planning & performance frameworks"
+      "Board composition & diversity planning",
+      "Strategy alignment and governance frameworks",
+      "Succession planning & onboarding support"
     ],
-    extended: `
-      <h4>What this is</h4>
-      <p>Board Advisory Services provide independent, strategic counsel to boards and executive teams. We help shape governance structures, define strategic priorities, and ensure the board is set up to support growth and risk management.</p>
-      <h4>How we help you hire</h4>
-      <ul>
-        <li><strong>Board composition:</strong> We map skills, gaps and help build a diverse board aligned to strategy.</li>
-        <li><strong>Succession planning:</strong> Identify and prepare executive and independent director candidates for long-term continuity.</li>
-        <li><strong>Search & onboarding:</strong> Confidential search for non-exec directors and support for effective onboarding & charter definition.</li>
-      </ul>
-      <p>Typical engagement: strategic advisory + retained search for 3–12 months depending on scope.</p>
-    `,
-    images: ["/services/board-1.jpg", "/services/board-2.jpg", "/services/board-3.jpg"],
-    color: "#0b6ea0",
-    metric: { label: "Advisory tenure", value: "Avg 12 months" },
-    anchor: "board-advisory",
-    illustration: "/illustrations/illus-board.svg"
+    roles: [
+      "Independent & Non-Executive Directors",
+      "Advisory Board Members",
+      "Chairpersons & Vice-Chairpersons",
+      "Audit & Risk Committee Members",
+      "Governance & Compliance Experts",
+      "Financial & Investment Advisors"
+    ],
+    image: "/illustrations/serviceshero-1.png",
+    color: "#0b6ea0"
   },
 
   {
@@ -35,27 +28,21 @@ const servicesData = [
     title: "Executive Search",
     subtitle: "C-suite & Senior Leadership",
     description:
-      "Confidential executive searches to identify, attract and onboard transformational leaders.",
+      "Confidential executive search for transformational leaders who match culture, sector expertise and strategic growth priorities.",
     bullets: [
       "Confidential CxO search",
-      "Market mapping & competitor intel",
-      "Offer & onboarding support"
+      "Market mapping & competitor intelligence",
+      "Offer negotiation & onboarding"
     ],
-    extended: `
-      <h4>About our Executive Search</h4>
-      <p>We run confidential mandates for senior leadership roles — combining research, outreach, and rigorous assessment to ensure strong cultural and domain fit.</p>
-      <h4>How we help</h4>
-      <ul>
-        <li>Market mapping and passive candidate outreach.</li>
-        <li>Leadership assessment & evidence-based shortlists.</li>
-        <li>Negotiation support and onboarding follow-up.</li>
-      </ul>
-    `,
-    images: ["/services/exec-1.jpg", "/services/exec-2.jpg", "/services/exec-3.jpg"],
-    color: "#b02e2e",
-    metric: { label: "Success rate", value: "98%" },
-    anchor: "executive-search",
-    illustration: "/illustrations/illus-exec.svg"
+    roles: [
+      "CEO / Managing Director",
+      "CFO / Head of Finance",
+      "CTO / Head of Engineering",
+      "Chief Product Officer",
+      "VP Sales / Growth"
+    ],
+    image: "/illustrations/serviceshero-2.png",
+    color: "#b02e2e"
   },
 
   {
@@ -63,55 +50,43 @@ const servicesData = [
     title: "Leadership Hiring",
     subtitle: "Mid-senior management",
     description:
-      "Programs to build leadership pipelines — hiring heads of function and senior managers with domain-fit.",
+      "Targeted leadership hiring programs to build function heads and leadership pipelines for product, engineering, sales and operations.",
     bullets: [
       "Targeted shortlist delivery",
-      "Leadership assessment",
-      "Panel interviews & feedback"
+      "Leadership assessment & interviewing",
+      "Panel feedback & debrief"
     ],
-    extended: `
-      <h4>Leadership Hiring programs</h4>
-      <p>We design targeted hiring programs to source and assess mid-senior leaders. This includes tailored briefs, behavioral assessments, and structured interview guides for calibration.</p>
-      <h4>Deliverables</h4>
-      <ul>
-        <li>Shortlist of 6–8 vetted candidates.</li>
-        <li>Assessment summaries and hiring scorecards.</li>
-        <li>Onboarding checklist and 30/60/90 plan support.</li>
-      </ul>
-    `,
-    images: ["/services/leadership-1.jpg", "/services/leadership-2.jpg", "/services/leadership-3.jpg"],
-    color: "#2e7d32",
-    metric: { label: "Avg shortlist", value: "7 days" },
-    anchor: "leadership-hiring",
-    illustration: "/illustrations/illus-leadership.svg"
+    roles: [
+      "Head of Product",
+      "Engineering Manager",
+      "Head of Operations",
+      "Sales Director",
+      "Head of Customer Success"
+    ],
+    image: "/illustrations/serviceshero-3.png",
+    color: "#2e7d32"
   },
 
   {
     id: "talent-advisory",
     title: "Talent Advisory Solutions",
-    subtitle: "Workforce planning • Employer brand",
+    subtitle: "Workforce planning & Employer Brand",
     description:
-      "Employer branding, workforce planning and retention programs that reduce attrition and increase productivity.",
+      "Holistic talent programs — employer branding, workforce planning, retention strategies and internal mobility to reduce attrition and build capability.",
     bullets: [
       "Employer branding & EVP",
-      "Workforce planning",
-      "Retention & L&D strategies"
+      "Workforce design & capacity planning",
+      "Retention & L&D playbooks"
     ],
-    extended: `
-      <h4>Talent Advisory Solutions</h4>
-      <p>We partner with HR and leadership to build talent strategies that scale: EVP design, employer brand, and retention programming.</p>
-      <h4>How it works</h4>
-      <ol>
-        <li>Diagnose: stakeholder interviews & attrition analysis.</li>
-        <li>Design: EVP, internal mobility and L&D pathways.</li>
-        <li>Deploy: pilot cohorts, measurement and iterative improvements.</li>
-      </ol>
-    `,
-    images: ["/services/talent-1.jpg", "/services/talent-2.jpg", "/services/talent-3.jpg"],
-    color: "#5b21b6",
-    metric: { label: "Client NPS", value: "89" },
-    anchor: "talent-advisory",
-    illustration: "/illustrations/illus-talent.svg"
+    roles: [
+      "Employer Brand Leads",
+      "Talent Partners / People Ops",
+      "Learning & Development Leads",
+      "Workforce Planning Specialists",
+      "Internal Mobility Program Managers"
+    ],
+    image: "/illustrations/serviceshero-4.png",
+    color: "#5b21b6"
   }
 ];
 

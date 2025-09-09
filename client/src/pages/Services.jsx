@@ -1,17 +1,47 @@
 // client/src/pages/Services.jsx
 import React from "react";
+import HowWeHire from "../components/services/HowWeHire";
 import IndustryGrid from "../components/services/IndustryGrid";
 import "./Services.css";
 
 const Services = () => {
+const processSteps = [
+  {
+    id: "discover",
+    title: "Discover",
+    desc: "Role scoping & requirement mapping",
+    image: "/illustrations/serviceshero-1.png",
+    imageAlt: "Discover step illustration"
+  },
+  {
+    id: "sourcing",
+    title: "Sourcing",
+    desc: "Attract & shortlist talent",
+    image: "/illustrations/serviceshero-1.png",
+    imageAlt: "Sourcing step illustration"
+  },
+  {
+    id: "interview",
+    title: "Interview",
+    desc: "Structured evaluation",
+    image: "/illustrations/serviceshero-1.png",
+    imageAlt: "Interview step illustration"
+  },
+  {
+    id: "onboard",
+    title: "Onboard",
+    desc: "Smooth joining & follow-up",
+    image: "/illustrations/serviceshero-1.png",
+    imageAlt: "Onboard step illustration"
+  },
+];
+
   return (
     <main className="svc-page">
       <header className="svc-hero">
         <div className="svc-hero__inner">
-          {/* Eyebrow (centered) */}
           <small className="svc-hero__eyebrow">Services</small>
 
-          {/* Two-column hero content: left = text & CTAs, right = illustration */}
           <div className="svc-hero__content">
             <div className="svc-hero__text">
               <h1 className="svc-hero__title">Our Services</h1>
@@ -43,6 +73,8 @@ const Services = () => {
           </div>
         </div>
       </header>
+
+      <HowWeHire steps={processSteps} />
 
       <section id="services-list" className="svc-container">
         <IndustryGrid />

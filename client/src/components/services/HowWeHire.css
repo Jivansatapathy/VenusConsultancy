@@ -1,0 +1,340 @@
+/* client/src/components/services/HowWeHire.css */
+
+/* theme variables */
+:root {
+  --brand-red: #e50914;
+  --muted: #6b6b6b;
+  --text: #111;
+  --bg-soft: rgba(229,9,20,0.04);
+  --line: rgba(0,0,0,0.06);
+  --card-shadow: 0 18px 40px rgba(10,12,16,0.06);
+
+  --anim-time: 520ms;
+  --stagger: 90ms;
+}
+
+/* wrapper */
+.how-we-hire {
+  padding: 4rem 0;
+  background: transparent;
+  color: var(--text);
+  --visible: 0;
+}
+.how-we-hire.is-visible {
+  --visible: 1;
+}
+.how-we-hire__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* header */
+.how-we-hire__head { text-align: center; margin-bottom: 1.4rem; }
+.how-we-hire__title {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.6rem, 3.6vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.how-we-hire__subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+/* grid */
+.how-we-hire__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.25rem;
+  margin-top: 2rem;
+  list-style: none;
+  padding: 0;
+  align-items: start;
+}
+
+/* item - starts hidden for staggered animation */
+.how-we-hire__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  padding: 0.2rem 0;
+
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity calc(var(--anim-time) * 0.9) cubic-bezier(.2,.9,.2,1),
+    transform calc(var(--anim-time) * 0.9) cubic-bezier(.2,.9,.2,1);
+}
+.how-we-hire.is-visible .how-we-hire__item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* avatar wrapper (positioning context for counter) */
+.how-we-hire__avatar-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+  height: 160px;
+  margin-bottom: 0.9rem;
+  position: relative; /* IMPORTANT: positioning context for counter */
+  overflow: visible;  /* allow counter to sit outside avatar edge without being clipped */
+}
+
+/* avatar circle - crops image */
+.how-we-hire__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(229,9,20,0.03), rgba(0,0,0,0.02));
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden; /* keep image clipped to circle */
+  z-index: 3;
+  transform-origin: center;
+  transition: transform 420ms cubic-bezier(.2,.9,.2,1), box-shadow 420ms ease;
+}
+
+/* small pop for avatar when section becomes visible */
+.how-we-hire.is-visible .how-we-hire__avatar {
+  transform: translateY(-6px) scale(1);
+}
+
+/* image fills the circle */
+.how-we-hire__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* fallback circle if no image */
+.how-we-hire__avatar-fallback {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-soft);
+}
+
+/* ---------- small red circular counter (top-right of the avatar-wrap) ---------- */
+.how-we-hire__counter {
+  position: absolute;
+  right: 6px;   /* inside the wrap, overlapping avatar edge */
+  top: 6px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--brand-red);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.78rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  z-index: 6;
+  line-height: 1;
+  padding-top: 1px;
+
+  /* subtle pop animation — will be revealed when parent gets .is-visible */
+  transform: translateY(-6px) scale(0.94);
+  opacity: 0;
+  transition: transform 360ms cubic-bezier(.2,.9,.2,1), opacity 360ms ease;
+}
+
+/* visible -> counter pops in */
+.how-we-hire.is-visible .how-we-hire__counter {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* responsive counter sizing */
+@media (max-width: 780px) {
+  .how-we-hire__avatar-wrap { width: 140px; height: 140px; }
+  .how-we-hire__avatar { width: 110px; height: 110px; }
+  .how-we-hire__counter { width: 30px; height: 30px; font-size: 0.7rem; right: 5px; top: 5px; }
+}
+@media (max-width: 520px) {
+  .how-we-hire__avatar-wrap { width: 96px; height: 96px; margin-bottom: 0.6rem; }
+  .how-we-hire__avatar { width: 88px; height: 88px; }
+  .how-we-hire__counter { width: 28px; height: 28px; font-size: 0.68rem; right: 5px; top: 5px; }
+}
+
+/* meta */
+.how-we-hire__meta { max-width: 220px; }
+.how-we-hire__step-title {
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+  color: var(--text);
+  font-size: 1rem;
+}
+.how-we-hire__step-desc {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.33;
+}
+
+/* ---------- connectors (thicker) ---------- */
+.how-we-hire__connector {
+  position: absolute;
+  right: -2.2rem;
+  top: 50%;
+  transform-origin: left center;
+  transform: translateY(-50%) scaleX(0); /* collapsed initially for draw animation */
+  width: 84px;
+  height: 8px;
+  background: linear-gradient(90deg, rgba(229,9,20,0.18), rgba(229,9,20,0.28));
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(233,9,20,0.06);
+  z-index: 1;
+  opacity: 0.98;
+  transition: transform var(--anim-time) cubic-bezier(.2,.9,.2,1);
+}
+.how-we-hire__connector::after {
+  content: "";
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  width: 18px;
+  height: 18px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath fill='%23e50914' d='M0 0 L10 7 L0 14 Z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0;
+  transition: transform calc(var(--anim-time) / 1.2) cubic-bezier(.2,.9,.2,1), opacity calc(var(--anim-time) / 1.2) cubic-bezier(.2,.9,.2,1);
+}
+
+/* animate connectors when visible */
+.how-we-hire.is-visible .how-we-hire__connector { transform: translateY(-50%) scaleX(1); }
+.how-we-hire.is-visible .how-we-hire__connector::after { transform: translateY(-50%) translateX(0); opacity: 1; }
+
+/* hide connector for last in row */
+.how-we-hire__grid > .how-we-hire__item:nth-child(4n) .how-we-hire__connector { display: none; }
+
+/* ---------- stagger rules (items, connectors, and counters) ---------- */
+/* item reveal delays */
+.how-we-hire__grid > .how-we-hire__item:nth-child(1) { transition-delay: calc(var(--stagger) * 0); }
+.how-we-hire__grid > .how-we-hire__item:nth-child(2) { transition-delay: calc(var(--stagger) * 1); }
+.how-we-hire__grid > .how-we-hire__item:nth-child(3) { transition-delay: calc(var(--stagger) * 2); }
+.how-we-hire__grid > .how-we-hire__item:nth-child(4) { transition-delay: calc(var(--stagger) * 3); }
+.how-we-hire__grid > .how-we-hire__item:nth-child(5) { transition-delay: calc(var(--stagger) * 4); }
+.how-we-hire__grid > .how-we-hire__item:nth-child(6) { transition-delay: calc(var(--stagger) * 5); }
+.how-we-hire__grid > .how-we-hire__item:nth-child(7) { transition-delay: calc(var(--stagger) * 6); }
+.how-we-hire__grid > .how-we-hire__item:nth-child(8) { transition-delay: calc(var(--stagger) * 7); }
+
+/* connector draw delays (slightly after item) */
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(1) .how-we-hire__connector { transition-delay: calc(var(--stagger) * 0 + 120ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(2) .how-we-hire__connector { transition-delay: calc(var(--stagger) * 1 + 120ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(3) .how-we-hire__connector { transition-delay: calc(var(--stagger) * 2 + 120ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(4) .how-we-hire__connector { transition-delay: calc(var(--stagger) * 3 + 120ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(5) .how-we-hire__connector { transition-delay: calc(var(--stagger) * 4 + 120ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(6) .how-we-hire__connector { transition-delay: calc(var(--stagger) * 5 + 120ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(7) .how-we-hire__connector { transition-delay: calc(var(--stagger) * 6 + 120ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(8) .how-we-hire__connector { transition-delay: calc(var(--stagger) * 7 + 120ms); }
+
+/* counter reveal delays (pop slightly after avatar) */
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(1) .how-we-hire__counter { transition-delay: calc(var(--stagger) * 0 + 80ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(2) .how-we-hire__counter { transition-delay: calc(var(--stagger) * 1 + 80ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(3) .how-we-hire__counter { transition-delay: calc(var(--stagger) * 2 + 80ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(4) .how-we-hire__counter { transition-delay: calc(var(--stagger) * 3 + 80ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(5) .how-we-hire__counter { transition-delay: calc(var(--stagger) * 4 + 80ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(6) .how-we-hire__counter { transition-delay: calc(var(--stagger) * 5 + 80ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(7) .how-we-hire__counter { transition-delay: calc(var(--stagger) * 6 + 80ms); }
+.how-we-hire.is-visible .how-we-hire__grid > .how-we-hire__item:nth-child(8) .how-we-hire__counter { transition-delay: calc(var(--stagger) * 7 + 80ms); }
+
+/* responsive rules for layout & connectors */
+@media (max-width: 1200px) {
+  .how-we-hire__avatar-wrap { width: 140px; height: 140px; }
+  .how-we-hire__avatar { width: 110px; height: 110px; }
+  .how-we-hire__grid { gap: 1.8rem; }
+  .how-we-hire__connector { right: -1.8rem; width: 72px; height: 7px; }
+  .how-we-hire__connector::after { right: -12px; width: 16px; height: 16px; }
+}
+
+@media (max-width: 1000px) {
+  .how-we-hire__grid { grid-template-columns: repeat(3, 1fr); }
+  .how-we-hire__grid > .how-we-hire__item:nth-child(3n) .how-we-hire__connector { display: none; }
+}
+
+@media (max-width: 780px) {
+  .how-we-hire__grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+  .how-we-hire__grid > .how-we-hire__item:nth-child(2n) .how-we-hire__connector { display: none; }
+  .how-we-hire__avatar-wrap { width: 120px; height: 120px; }
+  .how-we-hire__avatar { width: 96px; height: 96px; }
+  .how-we-hire__counter { width: 30px; height: 30px; font-size: 0.7rem; right: 5px; top: 5px; }
+}
+
+@media (max-width: 520px) {
+  .how-we-hire__grid { grid-template-columns: 1fr; gap: 1.15rem; }
+  .how-we-hire__avatar-wrap { width: 96px; height: 96px; margin-bottom: 0.6rem; }
+  .how-we-hire__avatar { width: 88px; height: 88px; }
+  .how-we-hire__counter { width: 28px; height: 28px; font-size: 0.68rem; right: 5px; top: 5px; }
+
+  /* vertical connectors on mobile */
+  .how-we-hire__connector {
+    right: auto;
+    left: 50%;
+    top: calc(100% - 6px);
+    transform-origin: center top;
+    transform: translateX(-50%) scaleY(0);
+    width: 8px;
+    height: 64px;
+    background: linear-gradient(180deg, rgba(229,9,20,0.18), rgba(229,9,20,0.28));
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(233,9,20,0.06);
+    transition: transform var(--anim-time) cubic-bezier(.2,.9,.2,1);
+  }
+  .how-we-hire__connector::after {
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: -14px;
+    transform: translateX(-50%) translateY(10px);
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath fill='%23e50914' d='M0 0 L14 0 L7 10 Z'/%3E%3C/svg%3E");
+    opacity: 0;
+    transition: transform calc(var(--anim-time)/1.2) cubic-bezier(.2,.9,.2,1), opacity calc(var(--anim-time)/1.2) cubic-bezier(.2,.9,.2,1);
+  }
+  .how-we-hire.is-visible .how-we-hire__connector { transform: translateX(-50%) scaleY(1); }
+  .how-we-hire.is-visible .how-we-hire__connector::after { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  .how-we-hire__grid > .how-we-hire__item:last-child .how-we-hire__connector { display: none; }
+}
+
+/* hover / focus */
+.how-we-hire__item:focus-within .how-we-hire__avatar,
+.how-we-hire__item:hover .how-we-hire__avatar {
+  transform: translateY(-6px);
+  transition: transform 220ms ease;
+}
+.how-we-hire__item:focus-within { outline: none; }
+.how-we-hire__item:focus-within .how-we-hire__avatar {
+  box-shadow: 0 24px 40px rgba(14,16,20,0.08), 0 0 0 6px rgba(229,9,20,0.06);
+}
+
+/* reduced motion: disable animations & show everything */
+@media (prefers-reduced-motion: reduce) {
+  .how-we-hire__item,
+  .how-we-hire__connector,
+  .how-we-hire__connector::after,
+  .how-we-hire__avatar,
+  .how-we-hire__counter {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .how-we-hire__grid > .how-we-hire__item { opacity: 1 !important; transform: none !important; }
+}

@@ -41,7 +41,7 @@ const servicesData = [
       "Chief Product Officer",
       "VP Sales / Growth"
     ],
-    image: "/illustrations/serviceshero-2.png",
+    image: "/illustrations/serviceshero-1.png",
     color: "#b02e2e"
   },
 
@@ -63,7 +63,7 @@ const servicesData = [
       "Sales Director",
       "Head of Customer Success"
     ],
-    image: "/illustrations/serviceshero-3.png",
+    image: "/illustrations/serviceshero-1.png",
     color: "#2e7d32"
   },
 
@@ -85,7 +85,7 @@ const servicesData = [
       "Workforce Planning Specialists",
       "Internal Mobility Program Managers"
     ],
-    image: "/illustrations/serviceshero-4.png",
+    image: "/illustrations/serviceshero-1.png",
     color: "#5b21b6"
   }
 ];

@@ -5,36 +5,36 @@ import IndustryGrid from "../components/services/IndustryGrid";
 import "./Services.css";
 
 const Services = () => {
-const processSteps = [
-  {
-    id: "discover",
-    title: "Discover",
-    desc: "Role scoping & requirement mapping",
-    image: "/illustrations/serviceshero-1.png",
-    imageAlt: "Discover step illustration"
-  },
-  {
-    id: "sourcing",
-    title: "Sourcing",
-    desc: "Attract & shortlist talent",
-    image: "/illustrations/serviceshero-1.png",
-    imageAlt: "Sourcing step illustration"
-  },
-  {
-    id: "interview",
-    title: "Interview",
-    desc: "Structured evaluation",
-    image: "/illustrations/serviceshero-1.png",
-    imageAlt: "Interview step illustration"
-  },
-  {
-    id: "onboard",
-    title: "Onboard",
-    desc: "Smooth joining & follow-up",
-    image: "/illustrations/serviceshero-1.png",
-    imageAlt: "Onboard step illustration"
-  },
-];
+  const processSteps = [
+    {
+      id: "discover",
+      title: "Discover",
+      desc: "Role scoping & requirement mapping",
+      image: "/illustrations/serviceshero-1.png",
+      imageAlt: "Discover step illustration"
+    },
+    {
+      id: "sourcing",
+      title: "Sourcing",
+      desc: "Attract & shortlist talent",
+      image: "/illustrations/serviceshero-1.png",
+      imageAlt: "Sourcing step illustration"
+    },
+    {
+      id: "interview",
+      title: "Interview",
+      desc: "Structured evaluation",
+      image: "/illustrations/serviceshero-1.png",
+      imageAlt: "Interview step illustration"
+    },
+    {
+      id: "onboard",
+      title: "Onboard",
+      desc: "Smooth joining & follow-up",
+      image: "/illustrations/serviceshero-1.png",
+      imageAlt: "Onboard step illustration"
+    },
+  ];
 
   return (
     <main className="svc-page">
@@ -76,7 +76,15 @@ const processSteps = [
 
       <HowWeHire steps={processSteps} />
 
+      {/* Who we Hire heading above industry grid */}
       <section id="services-list" className="svc-container">
+        <div className="svc-heading">
+          <h2 className="svc-section-title">Who we Hire</h2>
+          <p className="svc-section-sub">
+            Explore the industries and roles we specialize in hiring for.
+          </p>
+        </div>
+
         <IndustryGrid />
       </section>
     </main>

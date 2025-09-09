@@ -49,7 +49,7 @@
 .btn--alt:hover, .btn--alt:focus { background:#000; color:#fff; }
 
 /* expandable area */
-.svc-section__more1 { overflow:hidden; transition: max-height 360ms cubic-bezier(.2,.9,.2,1); max-height:800px; }
+.svc-section__more { overflow:hidden; transition: max-height 360ms cubic-bezier(.2,.9,.2,1); max-height:0; }
 .svc-section__more-inner { padding:1.25rem 0 0; border-top:1px solid rgba(0,0,0,0.04); }
 
 /* expanded headings (bigger + centered) */
@@ -74,7 +74,7 @@
 .svc-role__label { font-weight:700; }
 
 /* centered CTA row for expanded area */
-.svc-section__more-actions1 { display:flex; justify-content:center; gap:.75rem; margin-top:1rem;margin-bottom: 10px; }
+.svc-section__more-actions1 { display:flex; justify-content:center; gap:.75rem; margin-top:1rem; }
 
 /* responsive */
 @media (max-width: 980px) {

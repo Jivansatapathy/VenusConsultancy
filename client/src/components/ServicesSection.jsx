@@ -1,110 +1,144 @@
-// client/src/components/services/ServiceSection.jsx
+// client/src/components/ServicesSection.jsx
 import React, { useEffect, useRef, useState } from "react";
 import "./ServicesSection.css";
+import services from "../data/servicesConfig.js";
 
 /**
- * Props:
- *  - service: object from servicesData
- *  - index: number (0-based) to render badge
+ * ServicesSection
+ * - shows ~2.5 cards at once (third card partially visible)
+ * - clicking next moves by one card to the left (so you see cards 2,3,4 etc.)
+ * - centered max-width 1200px
+ * - accessible buttons and indicators
  */
-const ServiceSection = ({ service, index }) => {
-  const { id, title, subtitle, description, bullets = [], roles = [], image, color = "#e50914" } = service;
 
-  const [expanded, setExpanded] = useState(false);
-  const contentRef = useRef(null);
-  const [contentHeight, setContentHeight] = useState(0);
+const VISIBLE_RATIO = 2.5; // number of cards visible (2.5 -> 2 full + 1 partial)
+const STEP = 1; // move by 1 card per click
 
+const ServicesSection = () => {
+  const { heading, description, items } = services;
+  const [index, setIndex] = useState(0); // index of first fully-visible card
+  const trackRef = useRef(null);
+  const cardRef = useRef(null);
+  const [cardWidth, setCardWidth] = useState(320);
+  const [gap, setGap] = useState(24);
+  const maxIndex = Math.max(0, items.length - Math.floor(VISIBLE_RATIO));
+
+  // measure card width on mount & resize
   useEffect(() => {
-    if (!contentRef.current) return;
-    // measure inner content for expand animation
-    setContentHeight(contentRef.current.scrollHeight);
-  }, [expanded]);
+    const measure = () => {
+      const cardNode = cardRef.current;
+      if (cardNode) {
+        const style = getComputedStyle(cardNode);
+        const w = cardNode.getBoundingClientRect().width;
+        const g = parseFloat(style.marginRight || style.gap || gap) || gap;
+        setCardWidth(Math.round(w));
+        setGap(g);
+      } else {
+        setCardWidth(320);
+        setGap(gap);
+      }
+    };
 
-  const toggle = () => setExpanded((s) => !s);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
-  const badgeText = String(index + 1).padStart(2, "0");
+  const goPrev = () => {
+    setIndex((i) => Math.max(0, i - STEP));
+  };
+
+  const goNext = () => {
+    setIndex((i) => Math.min(maxIndex, i + STEP));
+  };
+
+  // compute translateX in px based on index
+  const translateX = -(index * (cardWidth + gap));
+
+  // progress fraction for bottom bar: index / (items.length - visibleFullCount)
+  const totalSteps = Math.max(1, items.length - Math.floor(VISIBLE_RATIO) + 1);
+  const currentStep = Math.min(index + 1, totalSteps);
+  const progressPercent = ((currentStep - 1) / (totalSteps - 1 || 1)) * 100;
 
   return (
-    <section id={id} className="svc-section" aria-labelledby={`svc-${id}-title`}>
-      <div className="svc-section__inner u-container">
-        <div className="svc-section__row">
-          {/* left - image + badge */}
-          <div className="svc-section__left">
-            <div className="svc-section__badge" style={{ background: color }} aria-hidden="true">
-              {badgeText}
-            </div>
-            <div className="svc-section__image">
-              <img src={image || "/illustrations/serviceshero-1.png"} alt={`${title} illustration`} loading="lazy" decoding="async" />
-            </div>
-          </div>
+    <section className="vh-services" aria-labelledby="vh-services-heading">
+      <div className="vh-services__card">
+        <h2 id="vh-services-heading" className="vh-services__heading">
+          {heading}
+        </h2>
+        {description && (
+          <p className="vh-services__desc">{description}</p>
+        )}
 
-          {/* right - text + short CTA */}
-          <div className="svc-section__right">
-            <div className="svc-section__meta">
-              {subtitle && <div className="svc-section__subtitle">{subtitle}</div>}
-            </div>
-
-            <h2 id={`svc-${id}-title`} className="svc-section__title">{title}</h2>
-
-            <p className="svc-section__desc">{description}</p>
-
-            <div className="svc-section__actions">
-              <button
-                className="btn btn--primary"
-                aria-expanded={expanded}
-                aria-controls={`svc-${id}-more`}
-                onClick={toggle}
+        <div className="vh-services__viewport">
+          {/* track wrapper */}
+          <div
+            className="vh-services__track"
+            ref={trackRef}
+            style={{
+              transform: `translateX(${translateX}px)`,
+            }}
+            aria-live="polite"
+          >
+            {items.map((it, i) => (
+              <article
+                key={it.key || i}
+                className="vh-service-card"
+                ref={i === 0 ? cardRef : null} // measure first card
               >
-                {expanded ? "Show less" : "Know More"}
-              </button>
-            </div>
+                <div className="vh-service-card__media">
+                  <img src={it.image} alt={it.title} />
+                </div>
+                <div className="vh-service-card__body">
+                  <h3 className="vh-service-card__title">{it.title}</h3>
+                  <p className="vh-service-card__excerpt">{it.excerpt}</p>
+                  <a className="vh-service-card__link" href={it.link} aria-label={`Learn more about ${it.title}`}>
+                    <span className="vh-service-card__link-icon">⟶</span>
+                  </a>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
 
-        {/* Expandable block (roles, bullets, CTAs) */}
-        <div
-          id={`svc-${id}-more`}
-          className="svc-section__more"
-          role="region"
-          aria-hidden={!expanded}
-          style={expanded ? { maxHeight: `${contentHeight}px` } : { maxHeight: 0 }}
-        >
-          <div ref={contentRef} className="svc-section__more-inner">
-            {/* Roles grid */}
-            {roles && roles.length > 0 && (
-              <>
-                <h3 className="svc-section__more-title">Roles We Hire For</h3>
-                <div className="svc-section__roles" role="list">
-                  {roles.map((r, idx) => (
-                    <div key={r + idx} className="svc-role">
-                      <div className="svc-role__avatar" aria-hidden="true" />
-                      <div className="svc-role__label">{r}</div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
+        {/* controls and progress */}
+        <div className="vh-services__controls">
+          <button
+            className="vh-services__arrow"
+            onClick={goPrev}
+            aria-label="Previous services"
+            disabled={index <= 0}
+          >
+            ‹
+          </button>
 
-            {/* Bullets */}
-            {bullets && bullets.length > 0 && (
-              <>
-                <h4 className="svc-section__more-title">What we do</h4>
-                <ul className="svc-section__bullets">
-                  {bullets.map((b, i) => <li key={i}>{b}</li>)}
-                </ul>
-              </>
-            )}
-
-            {/* Secondary CTAs */}
-            <div className="svc-section__more-actions">
-              <a className="btn btn--outline" href={`/services/${id}`}>Learn more</a>
-              <a className="btn btn--alt" href="/book-call">Book a call</a>
+          <div className="vh-services__pager">
+            <span className="vh-services__pager-text">
+              {currentStep} / {items.length} Services
+            </span>
+            <div
+              className="vh-services__progress"
+              aria-hidden="true"
+            >
+              <div
+                className="vh-services__progress-fill"
+                style={{ width: `${progressPercent}%` }}
+              />
             </div>
           </div>
+
+          <button
+            className="vh-services__arrow"
+            onClick={goNext}
+            aria-label="Next services"
+            disabled={index >= maxIndex}
+          >
+            ›
+          </button>
         </div>
       </div>
     </section>
   );
 };
 
-export default ServiceSection;
+export default ServicesSection;

@@ -12,6 +12,7 @@
 
 .vh-footer.u-card { /* reuse u-card style, but safe fallback */
   padding: 1.25rem;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.92), #000);
 }
 
 .vh-footer__container {

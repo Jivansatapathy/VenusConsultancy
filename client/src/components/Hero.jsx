@@ -24,8 +24,8 @@ export default function Hero({ showImage = false, imageSrc = "/hero-person.webp"
 
         {/* Buttons */}
         <div className="hero-buttons">
-          <Link to="/find-talent" className="btn btn--primary">Hire Talent</Link>
-          <Link to="/find-jobs" className="btn btn--outline">Find a Job</Link>
+          <Link to="/find-jobs" className="btn btn--primary">Find a Job</Link>
+          <Link to="/services" className="btn btn--outline">Our Services</Link>
         </div>
 
         {/* Optional Hero Image (keeps stacking below buttons) */}

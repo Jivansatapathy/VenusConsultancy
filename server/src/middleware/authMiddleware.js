@@ -1,16 +1,62 @@
+// server/src/middleware/authMiddleware.js
 import jwt from "jsonwebtoken";
 
-const authMiddleware = (req, res, next) => {
-  const token = req.header("Authorization")?.split(" ")[1]; // Bearer <token>
-  if (!token) return res.status(401).json({ error: "No token, authorization denied" });
+const ACCESS_SECRET = process.env.ACCESS_SECRET || "dev_access_secret_change_me";
 
+/**
+ * verify access token and attach user payload to req.user
+ */
+export function requireAuth(req, res, next) {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.admin = decoded.id;
-    next();
+    const authHeader = req.headers.authorization || "";
+    const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
+    if (!token) return res.status(401).json({ message: "Unauthorized: no token" });
+
+    const payload = jwt.verify(token, ACCESS_SECRET);
+    req.user = payload; // payload expected to have { id, role, ... }
+    return next();
   } catch (err) {
-    res.status(401).json({ error: "Invalid token" });
+    console.error("Auth error:", err.message || err);
+    return res.status(401).json({ message: "Unauthorized: invalid token" });
   }
+}
+
+/**
+ * require one of the allowed roles
+ */
+export function requireRole(...allowedRoles) {
+  return (req, res, next) => {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" });
+    const role = req.user.role || "user";
+    if (allowedRoles.includes(role)) return next();
+    return res.status(403).json({ message: "Forbidden: insufficient role" });
+  };
+}
+
+/**
+ * Return a single middleware that runs requireAuth then role-check.
+ * This is usable directly in route definitions:
+ *   router.post('/', authAndRole('admin'), handler)
+ */
+export function authAndRole(...roles) {
+  return (req, res, next) => {
+    // call requireAuth; if it sends a response on error it'll return early
+    requireAuth(req, res, (authErr) => {
+      // If requireAuth forwarded an error via next(err), handle it
+      if (authErr) return next(authErr);
+
+      // now run role middleware
+      const roleMiddleware = requireRole(...roles);
+      return roleMiddleware(req, res, next);
+    });
+  };
+}
+
+// Default export (backwards compatibility)
+const defaultExport = {
+  requireAuth,
+  requireRole,
+  authAndRole,
 };
 
-export default authMiddleware;
+export default defaultExport;

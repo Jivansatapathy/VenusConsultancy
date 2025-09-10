@@ -5,11 +5,11 @@ import API from "../utils/api";
 const PostJob = () => {
   const [form, setForm] = useState({
     title: "",
-    company: "",
+    department: "",
     location: "",
     type: "Full-Time",
     description: "",
-    salary: ""
+    tags: ""
   });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -28,17 +28,21 @@ const PostJob = () => {
     }
 
     try {
-      await API.post("/jobs", form, {
+      const jobData = {
+        ...form,
+        tags: form.tags.split(",").map(tag => tag.trim()).filter(tag => tag)
+      };
+      await API.post("/jobs", jobData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage("✅ Job posted successfully!");
       setForm({
         title: "",
-        company: "",
+        department: "",
         location: "",
         type: "Full-Time",
         description: "",
-        salary: ""
+        tags: ""
       });
     } catch (err) {
       setMessage("❌ Failed to post job");
@@ -72,9 +76,9 @@ const PostJob = () => {
         />
 
         <input
-          name="company"
-          placeholder="Company"
-          value={form.company}
+          name="department"
+          placeholder="Department"
+          value={form.department}
           onChange={handleChange}
           className="w-full p-2 mb-3 border rounded"
         />
@@ -96,6 +100,7 @@ const PostJob = () => {
           <option>Full-Time</option>
           <option>Part-Time</option>
           <option>Internship</option>
+          <option>Contract</option>
         </select>
 
         <textarea
@@ -107,9 +112,9 @@ const PostJob = () => {
         />
 
         <input
-          name="salary"
-          placeholder="Salary"
-          value={form.salary}
+          name="tags"
+          placeholder="Tags (comma-separated)"
+          value={form.tags}
           onChange={handleChange}
           className="w-full p-2 mb-3 border rounded"
         />

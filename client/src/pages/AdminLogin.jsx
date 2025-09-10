@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import API from "../utils/api";
 
 const AdminLogin = () => {
@@ -7,14 +8,23 @@ const AdminLogin = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await API.post("/admin/login", { email, password });
-      localStorage.setItem("token", data.token); // save token
+      await login(email, password);
       setMessage("✅ Login successful!");
-      navigate("/admin/post-job"); // ✅ redirect to post-job page
+      
+      // Redirect based on user role
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user?.role === "admin") {
+        navigate("/admin/dashboard");
+      } else if (user?.role === "recruiter") {
+        navigate("/recruiter/dashboard");
+      } else {
+        navigate("/admin/dashboard");
+      }
     } catch (err) {
       setMessage("❌ Invalid credentials");
     }

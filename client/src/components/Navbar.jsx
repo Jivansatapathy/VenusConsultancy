@@ -1,26 +1,31 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+// client/src/components/Navbar.jsx
+import { useState, useEffect, useRef, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import "./Navbar.css";
+import { AuthContext } from "../context/AuthContext";
 
 const NAV_LINKS = [
   { to: "/", label: "Home" },
   { to: "/services", label: "Services" },
-  { to: "/find-talent", label: "Hire Talent" },
   { to: "/find-jobs", label: "Find Jobs" },
-  { to: "/recruits", label: "Venus Recruits" },
   { to: "/about", label: "About Us" },
   { to: "/contact", label: "Contact Us" }
 ];
 
 const Navbar = () => {
+  const { user, isAuthenticated, logout } = useContext(AuthContext);
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
   const menuButtonRef = useRef(null);
   const firstLinkRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const focusTimeoutRef = useRef(null);
+
+  const [shortlistCount, setShortlistCount] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -90,6 +95,38 @@ const Navbar = () => {
     }
   }, [menuOpen]);
 
+  // Shortlist badge: load and subscribe to updates
+  useEffect(() => {
+    const load = () => {
+      try {
+        const arr = JSON.parse(localStorage.getItem("vh_shortlist") || "[]");
+        setShortlistCount(Array.isArray(arr) ? arr.length : 0);
+      } catch {
+        setShortlistCount(0);
+      }
+    };
+    load();
+    const onUpdate = () => load();
+    window.addEventListener("vh:shortlist:update", onUpdate);
+    return () => window.removeEventListener("vh:shortlist:update", onUpdate);
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.warn("Logout failed", err);
+    } finally {
+      navigate("/admin/login");
+    }
+  };
+
+  // helper: decide whether to show an internal-only link
+  const canSeeInternal = () => {
+    if (!isAuthenticated || !user) return false;
+    return ["admin", "recruiter"].includes(user.role);
+  };
+
   return (
     <header className={`vh-navbar ${isScrolled ? "vh-navbar--scrolled" : ""}`}>
       <nav className="vh-navbar__inner u-container" aria-label="Main navigation">
@@ -104,6 +141,9 @@ const Navbar = () => {
         {/* Desktop links: when mobile menu is open we set tabIndex=-1 to prevent tabbing into them */}
         <div className="vh-navbar__links" role="navigation" aria-hidden={menuOpen}>
           {NAV_LINKS.map((link) => {
+            // hide internal-only links from public / unauthorized users
+            if (link.internalOnly && !canSeeInternal()) return null;
+
             const isActive = location.pathname === link.to;
             return (
               <Link
@@ -123,6 +163,47 @@ const Navbar = () => {
           <Link to="/book-call" className="vh-btn vh-btn--outline" tabIndex={menuOpen ? -1 : 0}>
             Book A Call
           </Link>
+
+          <Link to="/shortlist" aria-label="Shortlist" style={{ position: "relative", marginLeft: 8 }} tabIndex={menuOpen ? -1 : 0}>
+            <span className="vh-navlink" aria-hidden>
+              Shortlist
+            </span>
+            {shortlistCount > 0 && (
+              <span
+                aria-hidden
+                style={{
+                  display: "inline-block",
+                  minWidth: 20,
+                  height: 20,
+                  lineHeight: "20px",
+                  borderRadius: 999,
+                  background: "var(--vh-red)",
+                  color: "#fff",
+                  fontSize: 12,
+                  padding: "0 6px",
+                  marginLeft: 6,
+                }}
+              >
+                {shortlistCount}
+              </span>
+            )}
+          </Link>
+
+          {/* Auth area: Login or user + Logout */}
+          {!isAuthenticated ? (
+            <Link to="/admin/login" className="vh-btn vh-btn--outline" tabIndex={menuOpen ? -1 : 0}>
+              Login
+            </Link>
+          ) : (
+            <>
+              <span style={{ marginLeft: 8, color: "#333", fontSize: 14 }}>
+                {user?.name || user?.email}
+              </span>
+              <button onClick={handleLogout} className="vh-btn" style={{ marginLeft: 8 }} tabIndex={menuOpen ? -1 : 0}>
+                Logout
+              </button>
+            </>
+          )}
 
           <button
             ref={menuButtonRef}
@@ -146,18 +227,23 @@ const Navbar = () => {
         role="menu"
       >
         <div className="vh-mobile-menu__inner" role="presentation">
-          {NAV_LINKS.map((link, idx) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              onClick={() => setMenuOpen(false)}
-              className="vh-mobile-menu__link"
-              ref={idx === 0 ? firstLinkRef : null}
-              role="menuitem"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((link, idx) => {
+            // hide internal-only links from public / unauthorized users
+            if (link.internalOnly && !canSeeInternal()) return null;
+
+            return (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={() => setMenuOpen(false)}
+                className="vh-mobile-menu__link"
+                ref={idx === 0 ? firstLinkRef : null}
+                role="menuitem"
+              >
+                {link.label}
+              </Link>
+            );
+          })}
 
           <Link
             to="/book-call"
@@ -167,6 +253,35 @@ const Navbar = () => {
           >
             Book A Call
           </Link>
+
+          {/* Mobile auth actions */}
+          <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
+            {!isAuthenticated ? (
+              <Link
+                to="/admin/login"
+                className="vh-mobile-menu__link"
+                onClick={() => setMenuOpen(false)}
+                role="menuitem"
+              >
+                Login
+              </Link>
+            ) : (
+              <>
+                <div style={{ padding: ".6rem .8rem", fontWeight: 700 }}>{user?.name || user?.email}</div>
+                <button
+                  onClick={() => {
+                    setMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="vh-mobile-menu__link"
+                  style={{ textAlign: "left", border: "none", background: "transparent" }}
+                  role="menuitem"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>

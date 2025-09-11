@@ -7,7 +7,7 @@ async function testLogin() {
     
     const response = await axios.post('http://localhost:5000/api/auth/login', {
       email: 'admin@venusconsultancy.com',
-      password: 'admin123'
+      password: process.env.SEED_ADMIN_PASSWORD || 'test-password'
     });
     
     console.log('✅ Login successful!');

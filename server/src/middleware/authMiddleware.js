@@ -1,7 +1,16 @@
 // server/src/middleware/authMiddleware.js
 import jwt from "jsonwebtoken";
+import { config } from "../config/index.js";
 
-const ACCESS_SECRET = process.env.ACCESS_SECRET || "dev_access_secret_change_me";
+// Validate that ACCESS_SECRET is properly configured
+if (!config.ACCESS_SECRET) {
+  console.error("❌ CRITICAL SECURITY ERROR: ACCESS_SECRET is not configured!");
+  if (process.env.NODE_ENV === "production") {
+    process.exit(1);
+  } else {
+    console.error("🚨 Using development fallback - DO NOT USE IN PRODUCTION!");
+  }
+}
 
 /**
  * verify access token and attach user payload to req.user
@@ -12,7 +21,7 @@ export function requireAuth(req, res, next) {
     const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
     if (!token) return res.status(401).json({ message: "Unauthorized: no token" });
 
-    const payload = jwt.verify(token, ACCESS_SECRET);
+    const payload = jwt.verify(token, config.ACCESS_SECRET);
     req.user = payload; // payload expected to have { id, role, ... }
     return next();
   } catch (err) {

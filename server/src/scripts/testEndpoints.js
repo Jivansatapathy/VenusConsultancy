@@ -1,5 +1,9 @@
 // server/src/scripts/testEndpoints.js
+import dotenv from "dotenv";
 import axios from "axios";
+
+// Load environment variables
+dotenv.config();
 
 const BASE_URL = "http://localhost:5000/api";
 
@@ -21,7 +25,7 @@ async function testEndpoints() {
     console.log("2. Testing POST /api/auth/login (admin)");
     const adminLoginResponse = await axios.post(`${BASE_URL}/auth/login`, {
       email: "admin@venusconsultancy.com",
-      password: "admin123"
+      password: process.env.SEED_ADMIN_PASSWORD || "test-password"
     });
     console.log("✅ Admin login successful");
     console.log(`   User role: ${adminLoginResponse.data.user.role}`);
@@ -32,7 +36,7 @@ async function testEndpoints() {
     console.log("3. Testing POST /api/auth/login (recruiter)");
     const recruiterLoginResponse = await axios.post(`${BASE_URL}/auth/login`, {
       email: "recruiter@venusconsultancy.com",
-      password: "recruiter123"
+      password: process.env.SEED_RECRUITER_PASSWORD || "test-password"
     });
     console.log("✅ Recruiter login successful");
     console.log(`   User role: ${recruiterLoginResponse.data.user.role}`);

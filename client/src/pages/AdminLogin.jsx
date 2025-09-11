@@ -97,10 +97,10 @@ const AdminLogin = () => {
             <p>Test Credentials:</p>
             <div className="credentials">
               <div>
-                <strong>Admin:</strong> admin@venusconsultancy.com / admin123
+                <strong>Admin:</strong> admin@venusconsultancy.com
               </div>
               <div>
-                <strong>Recruiter:</strong> recruiter@venusconsultancy.com / recruiter123
+                <strong>Recruiter:</strong> recruiter@venusconsultancy.com
               </div>
             </div>
           </div>

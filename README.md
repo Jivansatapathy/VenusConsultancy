@@ -72,20 +72,40 @@ npm install
 
 ### 3. Environment Configuration
 
-Create a `.env` file in the `server` directory:
+**⚠️ SECURITY NOTICE: Never commit .env files to version control!**
+
+Copy the example environment file and configure your variables:
+
+```bash
+cd server
+cp .env.example .env
+```
+
+Edit the `.env` file with your actual values:
 
 ```env
-# Database
-MONGODB_URI=mongodb://localhost:27017/venus-hiring
-
-# JWT
-JWT_SECRET=your-super-secret-jwt-key-here
-JWT_REFRESH_SECRET=your-super-secret-refresh-key-here
-
-# Server
+# REQUIRED FOR PRODUCTION - Application will not start without these
+ACCESS_SECRET=your-super-secret-access-key-here-change-this-immediately
+REFRESH_SECRET=your-super-secret-refresh-key-here-change-this-immediately
+MONGO_URI=mongodb://localhost:27017/venus-hiring
 PORT=5000
 NODE_ENV=development
+
+# CORS and Security
 CLIENT_ORIGIN=http://localhost:5173
+CORS_ALLOWED_ORIGINS=http://localhost:5173
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=200
+
+# Seed Data Passwords (REQUIRED for seeding)
+SEED_ADMIN_PASSWORD=your-secure-admin-password-here
+SEED_RECRUITER_PASSWORD=your-secure-recruiter-password-here
+```
+
+**🔒 Generate strong secrets:**
+```bash
+# Generate JWT secrets
+openssl rand -base64 64
 ```
 
 ### 4. Database Setup
@@ -93,6 +113,8 @@ CLIENT_ORIGIN=http://localhost:5173
 Make sure MongoDB is running on your system. The application will automatically connect to the database when you start the server.
 
 ### 5. Seed the Database
+
+**⚠️ SECURITY: Seed scripts now require explicit password configuration!**
 
 Run the seed script to create sample data:
 
@@ -102,9 +124,11 @@ npm run seed
 ```
 
 This will create:
-- 1 Admin user: `admin@venusconsultancy.com` / `admin123`
-- 1 Recruiter user: `recruiter@venusconsultancy.com` / `recruiter123`
+- 1 Admin user: `admin@venusconsultancy.com` (password from `SEED_ADMIN_PASSWORD`)
+- 1 Recruiter user: `recruiter@venusconsultancy.com` (password from `SEED_RECRUITER_PASSWORD`)
 - 10 Sample job postings (no company names or salary data)
+
+**Note:** The seed script will fail if `SEED_ADMIN_PASSWORD` and `SEED_RECRUITER_PASSWORD` are not set in your `.env` file.
 
 ### 6. Test the Application
 
@@ -148,6 +172,72 @@ This will test all endpoints including login, jobs, and applications.
    cd server
    npm start
    ```
+
+## 🚀 Production Deployment Checklist
+
+### Pre-Deployment Security Checks
+
+1. **Environment Variables**:
+   ```bash
+   # Verify all required variables are set
+   node -e "require('./server/src/config'); console.log('✅ Environment variables OK')"
+   ```
+
+2. **Security Scan**:
+   ```bash
+   bash scripts/scan-secrets.sh
+   ```
+
+3. **Test Application**:
+   ```bash
+   cd server && npm test
+   cd server && npm start
+   ```
+
+### Production Environment Setup
+
+1. **Set Environment Variables** (in your hosting platform):
+   - `NODE_ENV=production`
+   - `ACCESS_SECRET=<strong-random-secret>`
+   - `REFRESH_SECRET=<different-strong-random-secret>`
+   - `MONGO_URI=<production-database-url>`
+   - `CORS_ALLOWED_ORIGINS=<your-domain>`
+
+2. **Enable HTTPS** (required for secure cookies)
+
+3. **Configure Firewall** (limit access to necessary ports)
+
+4. **Set up Monitoring** (log access attempts, rate limiting)
+
+5. **Regular Backups** (database and application state)
+
+### Hosting Platform Examples
+
+#### Render.com
+```bash
+# Set environment variables in Render dashboard
+NODE_ENV=production
+ACCESS_SECRET=<your-secret>
+REFRESH_SECRET=<your-secret>
+MONGO_URI=<your-mongodb-atlas-url>
+CORS_ALLOWED_ORIGINS=https://your-app.onrender.com
+```
+
+#### Heroku
+```bash
+# Set environment variables
+heroku config:set NODE_ENV=production
+heroku config:set ACCESS_SECRET=<your-secret>
+heroku config:set REFRESH_SECRET=<your-secret>
+heroku config:set MONGO_URI=<your-mongodb-atlas-url>
+heroku config:set CORS_ALLOWED_ORIGINS=https://your-app.herokuapp.com
+```
+
+#### AWS/GCP/Azure
+- Use environment variable configuration in your deployment platform
+- Ensure HTTPS is enabled
+- Configure proper firewall rules
+- Set up monitoring and logging
 
 ## Usage Guide
 
@@ -230,12 +320,37 @@ venus-hiring/
 
 ## Security Features
 
-- **JWT Authentication**: Secure token-based authentication
-- **Password Hashing**: bcrypt for secure password storage
-- **File Upload Security**: Restricted file types and size limits
-- **Protected Routes**: Role-based access control
-- **Secure File Access**: Resumes only accessible to authenticated users
-- **Input Validation**: Client and server-side validation
+- **🔒 JWT Authentication**: Secure token-based authentication with fail-fast validation
+- **🛡️ Password Security**: bcrypt hashing with salt rounds, no plaintext storage
+- **🚫 Rate Limiting**: 200 requests per 15 minutes to prevent abuse
+- **🌐 CORS Protection**: Strict origin validation with allowlist
+- **🍪 Secure Cookies**: httpOnly, secure, sameSite flags for production
+- **📁 File Upload Security**: Restricted file types and size limits
+- **🔐 Protected Routes**: Role-based access control
+- **📄 Secure File Access**: Resumes only accessible to authenticated users
+- **✅ Input Validation**: Client and server-side validation
+- **🔍 Security Headers**: Helmet.js for comprehensive security headers
+- **🚨 Secret Scanning**: Pre-commit hooks and automated security scans
+- **⚡ Environment Validation**: Fail-fast configuration validation in production
+
+## 🚨 Security Hardening
+
+**CRITICAL:** This repository has been security-hardened. See [SECURITY_HARDENING.md](./SECURITY_HARDENING.md) for:
+
+- ✅ Removed dev fallback secrets
+- ✅ Centralized environment configuration
+- ✅ Secure seed scripts with required passwords
+- ✅ Comprehensive .gitignore for secrets
+- ✅ Pre-commit security hooks
+- ✅ Rate limiting and CORS protection
+- ✅ Secure cookie configuration
+
+**Before deploying to production:**
+1. Read [SECURITY_HARDENING.md](./SECURITY_HARDENING.md)
+2. Generate new secrets: `openssl rand -base64 64`
+3. Set all required environment variables
+4. Run security scan: `bash scripts/scan-secrets.sh`
+5. Enable HTTPS and proper firewall rules
 
 ## Data Privacy
 

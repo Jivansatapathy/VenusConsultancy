@@ -1,16 +1,29 @@
 // server/src/scripts/seedData.js
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import dotenv from "dotenv";
+import { config } from "../config/index.js";
 import Admin from "../models/Admin.js";
 import Recruiter from "../models/Recruiter.js";
 import Job from "../models/Job.js";
 import connectDB from "../config/db.js";
 
-dotenv.config();
-
 const seedData = async () => {
   try {
+    // Validate required environment variables for seeding
+    if (!config.SEED_ADMIN_PASSWORD) {
+      console.error("❌ CRITICAL SECURITY ERROR: SEED_ADMIN_PASSWORD is not configured!");
+      console.error("🚨 For security reasons, seed scripts require explicit password configuration.");
+      console.error("Please set SEED_ADMIN_PASSWORD environment variable before running seed script.");
+      process.exit(1);
+    }
+
+    if (!config.SEED_RECRUITER_PASSWORD) {
+      console.error("❌ CRITICAL SECURITY ERROR: SEED_RECRUITER_PASSWORD is not configured!");
+      console.error("🚨 For security reasons, seed scripts require explicit password configuration.");
+      console.error("Please set SEED_RECRUITER_PASSWORD environment variable before running seed script.");
+      process.exit(1);
+    }
+
     await connectDB();
     console.log("Connected to database");
 
@@ -20,25 +33,25 @@ const seedData = async () => {
     await Job.deleteMany({});
     console.log("Cleared existing data");
 
-    // Create Admin
+    // Create Admin (password will be hashed by pre-save hook)
     const admin = new Admin({
       name: "System Administrator",
       email: "admin@venusconsultancy.com",
-      password: "admin123", // Will be hashed by pre-save hook
+      password: config.SEED_ADMIN_PASSWORD, // Will be hashed by pre-save hook
       role: "admin"
     });
     await admin.save();
-    console.log("✅ Created admin user: admin@venusconsultancy.com / admin123");
+    console.log("✅ Created admin user: admin@venusconsultancy.com");
 
-    // Create Recruiter
+    // Create Recruiter (password will be hashed by pre-save hook)
     const recruiter = new Recruiter({
       name: "John Recruiter",
       email: "recruiter@venusconsultancy.com",
-      password: "recruiter123", // Will be hashed by pre-save hook
+      password: config.SEED_RECRUITER_PASSWORD, // Will be hashed by pre-save hook
       role: "recruiter"
     });
     await recruiter.save();
-    console.log("✅ Created recruiter user: recruiter@venusconsultancy.com / recruiter123");
+    console.log("✅ Created recruiter user: recruiter@venusconsultancy.com");
 
     // Create sample jobs
     const sampleJobs = [
@@ -142,9 +155,10 @@ const seedData = async () => {
 
     console.log("\n🎉 Seed data created successfully!");
     console.log("\nLogin credentials:");
-    console.log("Admin: admin@venusconsultancy.com / admin123");
-    console.log("Recruiter: recruiter@venusconsultancy.com / recruiter123");
-    console.log("\nYou can now test the application with these credentials.");
+    console.log("Admin: admin@venusconsultancy.com");
+    console.log("Recruiter: recruiter@venusconsultancy.com");
+    console.log("\n⚠️  Passwords are securely hashed and stored.");
+    console.log("Use the SEED_ADMIN_PASSWORD and SEED_RECRUITER_PASSWORD environment variables to login.");
 
   } catch (error) {
     console.error("Error seeding data:", error);

@@ -1,13 +1,18 @@
 // server/src/app.js
-import express from "express";
 import dotenv from "dotenv";
+import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+
+// Load environment variables first
+dotenv.config();
+
+import { config } from "./config/index.js";
 import authRoutes from "./routes/authRoutes.js";
-
-
 import jobRoutes from "./routes/jobRoutes.js";
 import applicationRoutes from "./routes/applicationRoutes.js";
 import recruiterRoutes from "./routes/recruiterRoutes.js";
@@ -15,21 +20,65 @@ import candidateRoutes from "./routes/candidateRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import connectDB from "./config/db.js";
 
-dotenv.config();
-
 const app = express();
 
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
+// ---- Security Middleware ----
+// Helmet for security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
+  crossOriginEmbedderPolicy: false, // Disable for development
+}));
 
-// ---- Middleware ----
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: config.RATE_LIMIT_WINDOW_MS, // 15 minutes
+  max: config.RATE_LIMIT_MAX_REQUESTS, // limit each IP to 200 requests per windowMs
+  message: {
+    error: "Too many requests from this IP, please try again later.",
+  },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+// Apply rate limiting to API routes
+app.use("/api", limiter);
+
+// CORS with strict origin validation
 app.use(
   cors({
-    origin: CLIENT_ORIGIN,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      if (config.CORS_ALLOWED_ORIGINS.includes(origin)) {
+        return callback(null, true);
+      }
+      
+      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+      return callback(new Error(msg), false);
+    },
     credentials: true,
+    optionsSuccessStatus: 200, // Some legacy browsers choke on 204
   })
 );
-app.use(express.json());
+
+// Body parsing and cookie parsing with security options
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+// Secure cookie parser
 app.use(cookieParser());
+
+// Trust proxy for accurate IP addresses (important for rate limiting)
+app.set("trust proxy", 1);
+
 app.use("/api/auth", authRoutes);
 
 // ---- Connect to DB ----
@@ -83,9 +132,11 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 // ---- Start server ----
-const PORT = process.env.PORT || 5000;
+const PORT = config.PORT;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`NODE_ENV=${process.env.NODE_ENV || "development"}`);
-  console.log(`CLIENT_ORIGIN=${CLIENT_ORIGIN}`);
+  console.log(`NODE_ENV=${config.NODE_ENV}`);
+  console.log(`CLIENT_ORIGIN=${config.CLIENT_ORIGIN}`);
+  console.log(`CORS_ALLOWED_ORIGINS=${config.CORS_ALLOWED_ORIGINS.join(", ")}`);
+  console.log(`Rate limiting: ${config.RATE_LIMIT_MAX_REQUESTS} requests per ${config.RATE_LIMIT_WINDOW_MS / 1000 / 60} minutes`);
 });

@@ -3,21 +3,38 @@ import express from "express";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import dotenv from "dotenv";
+import { config } from "../config/index.js";
 import Admin from "../models/Admin.js";
 import Recruiter from "../models/Recruiter.js";
 import RefreshToken from "../models/RefreshToken.js";
 
-dotenv.config();
 const router = express.Router();
 
-const ACCESS_SECRET = process.env.ACCESS_SECRET || "dev_access_secret_change_me";
+// Validate that JWT secrets are properly configured
+if (!config.ACCESS_SECRET) {
+  console.error("❌ CRITICAL SECURITY ERROR: ACCESS_SECRET is not configured!");
+  if (process.env.NODE_ENV === "production") {
+    process.exit(1);
+  } else {
+    console.error("🚨 Using development fallback - DO NOT USE IN PRODUCTION!");
+  }
+}
+
+if (!config.REFRESH_SECRET) {
+  console.error("❌ CRITICAL SECURITY ERROR: REFRESH_SECRET is not configured!");
+  if (process.env.NODE_ENV === "production") {
+    process.exit(1);
+  } else {
+    console.error("🚨 Using development fallback - DO NOT USE IN PRODUCTION!");
+  }
+}
+
 const ACCESS_EXPIRES = process.env.ACCESS_EXPIRES || "15m";
 const REFRESH_TOKEN_DAYS = parseInt(process.env.REFRESH_TOKEN_DAYS || "30", 10);
 const REFRESH_TOKEN_MS = REFRESH_TOKEN_DAYS * 24 * 60 * 60 * 1000;
 
 function signAccess(user) {
-  return jwt.sign({ id: user._id, role: user.role, email: user.email }, ACCESS_SECRET, {
+  return jwt.sign({ id: user._id, role: user.role, email: user.email }, config.ACCESS_SECRET, {
     expiresIn: ACCESS_EXPIRES,
   });
 }
@@ -79,7 +96,7 @@ router.post("/login", async (req, res) => {
 
     res.cookie("vh_rt", refreshString, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: config.NODE_ENV === "production",
       sameSite: "lax",
       path: "/api/auth",
       maxAge: REFRESH_TOKEN_MS,
@@ -150,7 +167,7 @@ router.post("/refresh", async (req, res) => {
 
     res.cookie("vh_rt", newRtString, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: config.NODE_ENV === "production",
       sameSite: "lax",
       path: "/api/auth",
       maxAge: REFRESH_TOKEN_MS,

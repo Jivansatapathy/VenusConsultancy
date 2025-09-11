@@ -245,7 +245,7 @@
 /* Modal Styles */
 .modal-overlay {
   position: fixed;
-  top: 0;
+  top: 50;
   left: 0;
   right: 0;
   bottom: 0;
@@ -265,6 +265,8 @@
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 87px;
 }
 
 .modal-header {

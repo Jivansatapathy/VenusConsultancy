@@ -21,7 +21,6 @@
   background: var(--vh-white);
   z-index: 1100;
   transition: box-shadow 220ms ease, padding 220ms ease, background 220ms ease;
-  padding: 1rem 0;
   border-bottom: 1px solid rgba(0,0,0,0.03);
 }
 
@@ -51,7 +50,6 @@
   transition: height 220ms ease, transform 220ms ease;
   display: block;
 }
-.vh-navbar__logo--small { height: 34px; }
 
 /* desktop nav */
 .vh-navbar__links {
@@ -62,6 +60,7 @@
   margin-left: 1rem;
   font-weight: 600;
   font-size: 0.95rem;
+  justify-content: center;
 }
 .vh-navlink {
   text-decoration: none;
@@ -129,7 +128,6 @@
   .vh-btn--outline { display: none; }
   .vh-navbar__toggle { display: inline-flex; }
   .vh-navbar__logo { height: 56px; }
-  .vh-navbar__logo--small { height: 30px; }
   /* show mobile menu when open (class controls it) */
 }
 

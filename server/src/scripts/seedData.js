@@ -21,22 +21,20 @@ const seedData = async () => {
     console.log("Cleared existing data");
 
     // Create Admin
-    const adminPassword = await bcrypt.hash("admin123", 10);
     const admin = new Admin({
       name: "System Administrator",
       email: "admin@venusconsultancy.com",
-      password: adminPassword,
+      password: "admin123", // Will be hashed by pre-save hook
       role: "admin"
     });
     await admin.save();
     console.log("✅ Created admin user: admin@venusconsultancy.com / admin123");
 
     // Create Recruiter
-    const recruiterPassword = await bcrypt.hash("recruiter123", 10);
     const recruiter = new Recruiter({
       name: "John Recruiter",
       email: "recruiter@venusconsultancy.com",
-      password: recruiterPassword,
+      password: "recruiter123", // Will be hashed by pre-save hook
       role: "recruiter"
     });
     await recruiter.save();

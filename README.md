@@ -104,7 +104,18 @@ npm run seed
 This will create:
 - 1 Admin user: `admin@venusconsultancy.com` / `admin123`
 - 1 Recruiter user: `recruiter@venusconsultancy.com` / `recruiter123`
-- 10 Sample job postings
+- 10 Sample job postings (no company names or salary data)
+
+### 6. Test the Application
+
+Run the API tests to verify everything is working:
+
+```bash
+cd server
+npm test
+```
+
+This will test all endpoints including login, jobs, and applications.
 
 ## Running the Application
 

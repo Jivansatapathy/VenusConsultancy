@@ -25,8 +25,6 @@ const Navbar = () => {
   const mobileMenuRef = useRef(null);
   const focusTimeoutRef = useRef(null);
 
-  const [shortlistCount, setShortlistCount] = useState(0);
-
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -95,22 +93,6 @@ const Navbar = () => {
     }
   }, [menuOpen]);
 
-  // Shortlist badge: load and subscribe to updates
-  useEffect(() => {
-    const load = () => {
-      try {
-        const arr = JSON.parse(localStorage.getItem("vh_shortlist") || "[]");
-        setShortlistCount(Array.isArray(arr) ? arr.length : 0);
-      } catch {
-        setShortlistCount(0);
-      }
-    };
-    load();
-    const onUpdate = () => load();
-    window.addEventListener("vh:shortlist:update", onUpdate);
-    return () => window.removeEventListener("vh:shortlist:update", onUpdate);
-  }, []);
-
   const handleLogout = async () => {
     try {
       await logout();
@@ -164,30 +146,6 @@ const Navbar = () => {
             Book A Call
           </Link>
 
-          <Link to="/shortlist" aria-label="Shortlist" style={{ position: "relative", marginLeft: 8 }} tabIndex={menuOpen ? -1 : 0}>
-            <span className="vh-navlink" aria-hidden>
-              Shortlist
-            </span>
-            {shortlistCount > 0 && (
-              <span
-                aria-hidden
-                style={{
-                  display: "inline-block",
-                  minWidth: 20,
-                  height: 20,
-                  lineHeight: "20px",
-                  borderRadius: 999,
-                  background: "var(--vh-red)",
-                  color: "#fff",
-                  fontSize: 12,
-                  padding: "0 6px",
-                  marginLeft: 6,
-                }}
-              >
-                {shortlistCount}
-              </span>
-            )}
-          </Link>
 
           {/* Auth area: Login or user + Logout */}
           {!isAuthenticated ? (

@@ -1,68 +1,111 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import API from "../utils/api";
+import "./AdminLogin.css";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState({ type: "", text: "" });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setMessage({ type: "", text: "" });
+
     try {
-      await login(email, password);
-      setMessage("✅ Login successful!");
+      const result = await login({ email, password, userType: "admin" });
+      setMessage({ type: "success", text: "Login successful!" });
       
       // Redirect based on user role
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user?.role === "admin") {
+      if (result?.user?.role === "admin") {
         navigate("/admin/dashboard");
-      } else if (user?.role === "recruiter") {
+      } else if (result?.user?.role === "recruiter") {
         navigate("/recruiter/dashboard");
       } else {
         navigate("/admin/dashboard");
       }
     } catch (err) {
-      setMessage("❌ Invalid credentials");
+      setMessage({ type: "error", text: "Invalid credentials. Please try again." });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-light">
-      <form
-        onSubmit={handleLogin}
-        className="p-6 bg-white rounded-lg shadow-lg w-96"
-      >
-        <h2 className="text-2xl font-bold text-primary mb-4">Admin Login</h2>
+    <div className="admin-login-page">
+      <div className="login-container">
+        <div className="login-card">
+          <div className="login-header">
+            <h1>Admin / Recruiter Login</h1>
+            <p>Sign in to access your dashboard</p>
+          </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full p-2 mb-3 border rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <form onSubmit={handleLogin} className="login-form">
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={loading}
+              />
+            </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full p-2 mb-3 border rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={loading}
+              />
+            </div>
 
-        <button
-          type="submit"
-          className="w-full bg-primary text-white py-2 rounded hover:bg-red-700"
-        >
-          Login
-        </button>
+            {message.text && (
+              <div className={`message ${message.type}`}>
+                {message.text}
+              </div>
+            )}
 
-        {message && <p className="mt-4 text-center">{message}</p>}
-      </form>
+            <button
+              type="submit"
+              className="login-button"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="spinner"></span>
+                  Signing In...
+                </>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
+
+          <div className="login-footer">
+            <p>Test Credentials:</p>
+            <div className="credentials">
+              <div>
+                <strong>Admin:</strong> admin@venusconsultancy.com / admin123
+              </div>
+              <div>
+                <strong>Recruiter:</strong> recruiter@venusconsultancy.com / recruiter123
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

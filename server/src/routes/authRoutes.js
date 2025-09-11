@@ -29,16 +29,23 @@ function createRefreshTokenString() {
 router.post("/login", async (req, res) => {
   try {
     console.log("[auth] /login called");
-    const { email, password, userType = "admin" } = req.body || {};
-    console.log("[auth] login attempt:", { email, userType });
+    const { email, password } = req.body || {};
+    console.log("[auth] login attempt:", { email });
 
     if (!email || !password) {
       console.warn("[auth] missing credentials");
       return res.status(400).json({ message: "Email and password required" });
     }
 
-    const Model = userType === "recruiter" ? Recruiter : Admin;
-    const user = await Model.findOne({ email });
+    // Try to find user in both Admin and Recruiter models
+    let user = await Admin.findOne({ email });
+    let userModel = "Admin";
+    
+    if (!user) {
+      user = await Recruiter.findOne({ email });
+      userModel = "Recruiter";
+    }
+
     if (!user) {
       console.warn("[auth] user not found:", email);
       return res.status(401).json({ message: "Invalid credentials" });
@@ -63,7 +70,7 @@ router.post("/login", async (req, res) => {
 
     const rt = await RefreshToken.create({
       userId: user._id,
-      userModel: userType === "recruiter" ? "Recruiter" : "Admin",
+      userModel: userModel,
       tokenHash,
       ip: req.ip,
       userAgent: req.get("User-Agent") || "",
@@ -78,7 +85,7 @@ router.post("/login", async (req, res) => {
       maxAge: REFRESH_TOKEN_MS,
     });
 
-    console.log("[auth] login success for", email);
+    console.log("[auth] login success for", email, "as", user.role);
     return res.json({
       accessToken,
       user: { id: user._id, email: user.email, name: user.name, role: user.role },

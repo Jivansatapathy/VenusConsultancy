@@ -1,5 +1,5 @@
 // client/src/App.jsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -9,14 +9,19 @@ import Services from "./pages/Services";
 import FindJobs from "./pages/FindJobs";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
+import Contact from "./pages/Contact";
 import UpFooter from "./components/UpFooter";
 import Footer from "./components/Footer";
 
-function App() {
+// ✅ Wrapper so we can use useLocation inside Router
+function AppContent() {
+  const location = useLocation();
+
   return (
-    <Router>
+    <>
       {/* Navbar is always visible */}
       <Navbar />
+
       <Routes>
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
@@ -45,21 +50,37 @@ function App() {
         />
         <Route path="/services" element={<Services />} />
         <Route path="/find-jobs" element={<FindJobs />} />
-
+        <Route path="/contact" element={<Contact />} />
 
         <Route path="/about" element={<h1>About Us Page</h1>} />
-        <Route path="/contact" element={<h1>Contact Page</h1>} />
 
         {/* Home Page */}
         <Route path="/" element={<Home />} />
       </Routes>
 
-      <UpFooter
-        heading={<>Strengthen your Human Resource<br/>Strategy with Venus Consultancy</>}
-        ctaText="Get In Touch"
-        ctaHref="/contact"
-      />
+      {/* ✅ Show UpFooter everywhere except Contact page */}
+      {location.pathname !== "/contact" && (
+        <UpFooter
+          heading={
+            <>
+              Strengthen your Human Resource
+              <br />Strategy with Venus Consultancy
+            </>
+          }
+          ctaText="Get In Touch"
+          ctaHref="/contact"
+        />
+      )}
+
       <Footer />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

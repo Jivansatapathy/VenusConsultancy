@@ -43,6 +43,12 @@ export function AuthProvider({ children }) {
     const { accessToken, user: userObj } = resp.data;
     setAccessToken(accessToken);
     setUser(userObj || null);
+    
+    // Store user in localStorage for persistence
+    if (userObj) {
+      localStorage.setItem("user", JSON.stringify(userObj));
+    }
+    
     return resp.data;
   }, []);
 
@@ -55,6 +61,7 @@ export function AuthProvider({ children }) {
     } finally {
       clearAccessToken();
       setUser(null);
+      localStorage.removeItem("user");
     }
   }, []);
 

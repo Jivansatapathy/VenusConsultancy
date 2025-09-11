@@ -12,8 +12,8 @@ const jobSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 });
 
-// Index for search functionality
-jobSchema.index({ title: "text", description: "text", tags: "text", department: "text" });
+// Index for efficient queries
+jobSchema.index({ isActive: 1, createdAt: -1 });
 
 const Job = mongoose.model("Job", jobSchema);
 

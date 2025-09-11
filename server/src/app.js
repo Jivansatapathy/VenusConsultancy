@@ -98,18 +98,27 @@ app.use("/api/recruiters", recruiterRoutes);
 app.use("/api/candidates", candidateRoutes);
 app.use("/api/admin", adminRoutes);
 
-// ---- Serve Frontend in production ----
+// ---- Serve Frontend (guarded) ----
+import fs from "fs";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const frontendPath = path.join(__dirname, "../../client/dist");
+const clientDist = path.resolve(__dirname, "../../client/dist");
+const clientIndex = path.join(clientDist, "index.html");
+const serveClient = process.env.SERVE_CLIENT === "true"; // default false
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(frontendPath));
+if (serveClient && fs.existsSync(clientIndex)) {
+  app.use(express.static(clientDist));
   app.get("*", (req, res) => {
-    res.sendFile(path.join(frontendPath, "index.html"));
+    res.sendFile(clientIndex);
   });
 } else {
-  app.get("/", (req, res) => res.send("Venus Hiring API (dev)"));
+  // Handle root route to show message instead of error logs
+  app.get("/", (req, res) => res.json({ 
+    message: "Venus Hiring API running. Frontend served separately.",
+    environment: config.NODE_ENV,
+    timestamp: new Date().toISOString()
+  }));
 }
 
 // ---- Basic error handler ----

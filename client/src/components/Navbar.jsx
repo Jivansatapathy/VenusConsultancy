@@ -13,6 +13,11 @@ const NAV_LINKS = [
   { to: "/contact", label: "Contact Us" }
 ];
 
+const AUTH_LINKS = [
+  { to: "/admin/dashboard", label: "Dashboard", roles: ["admin"] },
+  { to: "/recruiter/dashboard", label: "Dashboard", roles: ["recruiter"] }
+];
+
 const Navbar = () => {
   const { user, isAuthenticated, logout } = useContext(AuthContext);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -139,6 +144,23 @@ const Navbar = () => {
               </Link>
             );
           })}
+          
+          {/* Dashboard link for authenticated users */}
+          {isAuthenticated && user && AUTH_LINKS.map((link) => {
+            if (!link.roles.includes(user.role)) return null;
+            const isActive = location.pathname === link.to;
+            return (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`vh-navlink ${isActive ? "active" : ""}`}
+                aria-current={isActive ? "page" : undefined}
+                tabIndex={menuOpen ? -1 : 0}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="vh-navbar__actions">
@@ -157,7 +179,7 @@ const Navbar = () => {
               <span style={{ marginLeft: 8, color: "#333", fontSize: 14 }}>
                 {user?.name || user?.email}
               </span>
-              <button onClick={handleLogout} className="vh-btn" style={{ marginLeft: 8 }} tabIndex={menuOpen ? -1 : 0}>
+              <button onClick={handleLogout} className="vh-btn" style={{ marginLeft: 8, cursor: "pointer" }} tabIndex={menuOpen ? -1 : 0}>
                 Logout
               </button>
             </>
@@ -202,6 +224,22 @@ const Navbar = () => {
               </Link>
             );
           })}
+          
+          {/* Dashboard link for authenticated users in mobile menu */}
+          {isAuthenticated && user && AUTH_LINKS.map((link) => {
+            if (!link.roles.includes(user.role)) return null;
+            return (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={() => setMenuOpen(false)}
+                className="vh-mobile-menu__link"
+                role="menuitem"
+              >
+                {link.label}
+              </Link>
+            );
+          })}
 
           <Link
             to="/book-call"
@@ -232,7 +270,7 @@ const Navbar = () => {
                     handleLogout();
                   }}
                   className="vh-mobile-menu__link"
-                  style={{ textAlign: "left", border: "none", background: "transparent" }}
+                  style={{ textAlign: "left", border: "none", background: "transparent", cursor: "pointer" }}
                   role="menuitem"
                 >
                   Logout

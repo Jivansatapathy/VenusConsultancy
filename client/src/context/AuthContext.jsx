@@ -22,14 +22,28 @@ export function AuthProvider({ children }) {
         const resp = await API.post("/auth/refresh"); // API has withCredentials true
         if (resp?.data?.accessToken) {
           setAccessToken(resp.data.accessToken);
-          // optional: parse token to get user info or call /auth/me if available
-          // we rely on login response to set user; here we simply set a minimal flag.
-          // You could call /api/admin/me if you implement it.
+          // Set user from refresh response or localStorage
+          if (resp.data.user) {
+            setUser(resp.data.user);
+          } else {
+            // Try to restore user from localStorage
+            const savedUser = localStorage.getItem("user");
+            if (savedUser) {
+              try {
+                setUser(JSON.parse(savedUser));
+              } catch (e) {
+                localStorage.removeItem("user");
+              }
+            }
+          }
         }
         if (mounted) setLoading(false);
       } catch (err) {
         // no session or refresh failed
+        console.log("[AuthContext] No valid session found:", err.message);
         clearAccessToken();
+        setUser(null);
+        localStorage.removeItem("user");
         if (mounted) setLoading(false);
       }
     })();

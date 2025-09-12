@@ -97,7 +97,7 @@ router.post("/login", async (req, res) => {
     res.cookie("vh_rt", refreshString, {
       httpOnly: true,
       secure: config.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: config.NODE_ENV === "production" ? "none" : "lax",
       path: "/api/auth",
       maxAge: REFRESH_TOKEN_MS,
     });
@@ -168,14 +168,17 @@ router.post("/refresh", async (req, res) => {
     res.cookie("vh_rt", newRtString, {
       httpOnly: true,
       secure: config.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: config.NODE_ENV === "production" ? "none" : "lax",
       path: "/api/auth",
       maxAge: REFRESH_TOKEN_MS,
     });
 
     const accessToken = signAccess(user);
     console.log("[auth] refresh success for user", user.email);
-    return res.json({ accessToken });
+    return res.json({ 
+      accessToken,
+      user: { id: user._id, email: user.email, name: user.name, role: user.role }
+    });
   } catch (err) {
     console.error("[auth] refresh error:", err && err.stack ? err.stack : err);
     return res.status(500).json({ message: "Server error" });

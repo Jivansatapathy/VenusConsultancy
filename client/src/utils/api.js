@@ -20,8 +20,17 @@ function processQueue(err, token = null) {
   refreshQueue = [];
 }
 
+// Resolve runtime API base from environment (cover Vite and NEXT_PUBLIC usage)
+const RUNTIME_API =
+  (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_URL) ||
+  (typeof process !== "undefined" && process.env && process.env.NEXT_PUBLIC_API_URL) ||
+  "http://localhost:5000";
+
+// Ensure baseURL ends without trailing slash and points to /api
+const API_BASE = RUNTIME_API.replace(/\/$/, "") + "/api";
+
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: API_BASE,
   withCredentials: true, // send cookies (refresh token) on refresh requests
   headers: {
     "Content-Type": "application/json",
@@ -64,13 +73,9 @@ API.interceptors.response.use(
 
       isRefreshing = true;
       try {
-        // call /auth/refresh — cookie will be sent because withCredentials: true
-        const resp = await axios.post(
-          "http://localhost:5000/api/auth/refresh",
-          {},
-          { withCredentials: true, headers: { "Content-Type": "application/json" } }
-        );
-        const newAccess = resp.data.accessToken;
+        // use the API instance (so baseURL and withCredentials apply)
+        const resp = await API.post("/auth/refresh", {}, { withCredentials: true });
+        const newAccess = resp.data?.accessToken;
         if (!newAccess) throw new Error("No access token returned from refresh");
 
         setAccessToken(newAccess);

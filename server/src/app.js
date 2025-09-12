@@ -54,14 +54,22 @@ app.use("/api", limiter);
 app.use(
   cors({
     origin: (origin, callback) => {
+      console.log("[CORS] Request from origin:", origin);
+      console.log("[CORS] Allowed origins:", config.CORS_ALLOWED_ORIGINS);
+      
       // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
+      if (!origin) {
+        console.log("[CORS] No origin, allowing request");
+        return callback(null, true);
+      }
       
       if (config.CORS_ALLOWED_ORIGINS.includes(origin)) {
+        console.log("[CORS] Origin allowed:", origin);
         return callback(null, true);
       }
       
       const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+      console.log("[CORS] Origin rejected:", origin);
       return callback(new Error(msg), false);
     },
     credentials: true,

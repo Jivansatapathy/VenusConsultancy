@@ -29,6 +29,9 @@ const RUNTIME_API =
 // Ensure baseURL ends without trailing slash and points to /api
 const API_BASE = RUNTIME_API.replace(/\/$/, "") + "/api";
 
+console.log("[API] Runtime API URL:", RUNTIME_API);
+console.log("[API] Final API Base:", API_BASE);
+
 const API = axios.create({
   baseURL: API_BASE,
   withCredentials: true, // send cookies (refresh token) on refresh requests

@@ -94,15 +94,20 @@ router.post("/login", async (req, res) => {
       expiresAt,
     });
 
-    res.cookie("vh_rt", refreshString, {
+    const cookieOptions = {
       httpOnly: true,
       secure: config.NODE_ENV === "production",
       sameSite: config.NODE_ENV === "production" ? "none" : "lax",
-      path: "/api/auth",
+      path: "/api",
       maxAge: REFRESH_TOKEN_MS,
-    });
-
+    };
+    
+    res.cookie("vh_rt", refreshString, cookieOptions);
+    
     console.log("[auth] login success for", email, "as", user.role);
+    console.log("[auth] Cookie options:", cookieOptions);
+    console.log("[auth] Response headers:", res.getHeaders());
+    
     return res.json({
       accessToken,
       user: { id: user._id, email: user.email, name: user.name, role: user.role },
@@ -116,6 +121,14 @@ router.post("/login", async (req, res) => {
 router.post("/refresh", async (req, res) => {
   try {
     console.log("[auth] /refresh called");
+    console.log("[auth] Request headers:", {
+      origin: req.get("origin"),
+      referer: req.get("referer"),
+      userAgent: req.get("user-agent"),
+      cookie: req.get("cookie")
+    });
+    console.log("[auth] Request cookies:", req.cookies);
+    
     const rt = req.cookies?.vh_rt;
     if (!rt) {
       console.warn("[auth] no refresh token cookie");
@@ -169,7 +182,7 @@ router.post("/refresh", async (req, res) => {
       httpOnly: true,
       secure: config.NODE_ENV === "production",
       sameSite: config.NODE_ENV === "production" ? "none" : "lax",
-      path: "/api/auth",
+      path: "/api",
       maxAge: REFRESH_TOKEN_MS,
     });
 

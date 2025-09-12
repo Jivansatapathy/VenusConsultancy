@@ -19,7 +19,9 @@ export function AuthProvider({ children }) {
     let mounted = true;
     (async () => {
       try {
+        console.log("[AuthContext] Attempting refresh...");
         const resp = await API.post("/auth/refresh"); // API has withCredentials true
+        console.log("[AuthContext] Refresh response:", resp.data);
         if (resp?.data?.accessToken) {
           setAccessToken(resp.data.accessToken);
           // Set user from refresh response or localStorage
@@ -41,6 +43,7 @@ export function AuthProvider({ children }) {
       } catch (err) {
         // no session or refresh failed
         console.log("[AuthContext] No valid session found:", err.message);
+        console.log("[AuthContext] Error details:", err.response?.data);
         clearAccessToken();
         setUser(null);
         localStorage.removeItem("user");

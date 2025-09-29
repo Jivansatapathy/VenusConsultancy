@@ -95,11 +95,6 @@
     font-size: 0.82rem;
     font-weight:600;
   }
-  .vh-blog__date {
-    color:#6b7280;
-    font-size:0.88rem;
-    margin-left:auto;
-  }
   
   /* title & excerpt */
   .vh-blog__title {
@@ -111,14 +106,19 @@
   .vh-blog__title a:hover { text-decoration: underline; }
   .vh-blog__excerpt { color: #4b5563; font-size: 0.95rem; margin: 0; flex:1; }
   
-  /* footer row */
-  .vh-blog__footer {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:0.6rem;
+  /* small "Read more" text link */
+  .vh-blog__readlink {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #e50914;
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
-  .vh-blog__author { color:#374151; font-weight:600; font-size:0.95rem; }
+  .vh-blog__readlink:hover {
+    text-decoration: underline;
+  }
   
   /* "View all" */
   .vh-blog__more {

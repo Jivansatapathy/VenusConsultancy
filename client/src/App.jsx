@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import UpFooter from "./components/UpFooter";
+import About from "./pages/AboutUs";
 import Footer from "./components/Footer";
 
 // ✅ Wrapper so we can use useLocation inside Router
@@ -52,14 +53,14 @@ function AppContent() {
         <Route path="/find-jobs" element={<FindJobs />} />
         <Route path="/contact" element={<Contact />} />
 
-        <Route path="/about" element={<h1>About Us Page</h1>} />
+        <Route path="/about" element={<About />} />
 
         {/* Home Page */}
         <Route path="/" element={<Home />} />
       </Routes>
 
-      {/* ✅ Show UpFooter everywhere except Contact page */}
-      {location.pathname !== "/contact" && (
+      {/* ✅ Show UpFooter everywhere except Contact and Services pages */}
+      {location.pathname !== "/contact" && location.pathname !== "/services" && (
         <UpFooter
           heading={
             <>

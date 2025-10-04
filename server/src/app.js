@@ -19,6 +19,7 @@ import recruiterRoutes from "./routes/recruiterRoutes.js";
 import candidateRoutes from "./routes/candidateRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 import connectDB from "./config/db.js";
 
 const app = express();
@@ -107,6 +108,7 @@ app.use("/api/recruiters", recruiterRoutes);
 app.use("/api/candidates", candidateRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/chat", chatRoutes);
 
 // ---- Serve Frontend (guarded) ----
 import fs from "fs";

@@ -43,6 +43,66 @@ export function requireRole(...allowedRoles) {
 }
 
 /**
+ * Validate that the authenticated user can only access their own resources
+ * This prevents user impersonation by ensuring userId matches the authenticated user's ID
+ */
+export function requireOwnership(req, res, next) {
+  if (!req.user) {
+    return res.status(401).json({ message: "Unauthorized: no user context" });
+  }
+
+  const { userId } = req.params;
+  const { userId: bodyUserId } = req.body;
+  const { userId: queryUserId } = req.query;
+  
+  // Check if userId is provided in params, body, or query
+  const providedUserId = userId || bodyUserId || queryUserId;
+  
+  if (providedUserId && providedUserId !== req.user.id) {
+    console.warn(`[SECURITY] User impersonation attempt detected:`, {
+      authenticatedUserId: req.user.id,
+      requestedUserId: providedUserId,
+      ip: req.ip,
+      userAgent: req.get('User-Agent')
+    });
+    return res.status(403).json({ 
+      message: "Forbidden: You can only access your own resources" 
+    });
+  }
+
+  return next();
+}
+
+/**
+ * Enhanced middleware that validates user ownership for specific user ID parameters
+ * Usage: router.get('/user/:userId', requireAuth, requireOwnershipForParam('userId'), handler)
+ */
+export function requireOwnershipForParam(paramName) {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized: no user context" });
+    }
+
+    const requestedUserId = req.params[paramName];
+    
+    if (requestedUserId && requestedUserId !== req.user.id) {
+      console.warn(`[SECURITY] User impersonation attempt detected:`, {
+        authenticatedUserId: req.user.id,
+        requestedUserId: requestedUserId,
+        paramName: paramName,
+        ip: req.ip,
+        userAgent: req.get('User-Agent')
+      });
+      return res.status(403).json({ 
+        message: "Forbidden: You can only access your own resources" 
+      });
+    }
+
+    return next();
+  };
+}
+
+/**
  * Return a single middleware that runs requireAuth then role-check.
  * This is usable directly in route definitions:
  *   router.post('/', authAndRole('admin'), handler)
@@ -61,11 +121,44 @@ export function authAndRole(...roles) {
   };
 }
 
+/**
+ * Enhanced middleware that combines authentication, role checking, and ownership validation
+ * Usage: router.get('/user/:userId', authRoleAndOwnership('admin', 'recruiter', 'userId'), handler)
+ */
+export function authRoleAndOwnership(...args) {
+  const roles = args.filter(arg => typeof arg === 'string' && !arg.includes('Id'));
+  const paramName = args.find(arg => typeof arg === 'string' && arg.includes('Id'));
+  
+  return (req, res, next) => {
+    // First authenticate
+    requireAuth(req, res, (authErr) => {
+      if (authErr) return next(authErr);
+
+      // Then check role
+      const roleMiddleware = requireRole(...roles);
+      roleMiddleware(req, res, (roleErr) => {
+        if (roleErr) return next(roleErr);
+
+        // Finally check ownership if paramName is provided
+        if (paramName) {
+          const ownershipMiddleware = requireOwnershipForParam(paramName);
+          return ownershipMiddleware(req, res, next);
+        }
+
+        return next();
+      });
+    });
+  };
+}
+
 // Default export (backwards compatibility)
 const defaultExport = {
   requireAuth,
   requireRole,
   authAndRole,
+  requireOwnership,
+  requireOwnershipForParam,
+  authRoleAndOwnership,
 };
 
 export default defaultExport;

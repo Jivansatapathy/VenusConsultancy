@@ -12,56 +12,47 @@ export default function AboutUs() {
     {
       id: 1,
       src: "/images/imagetrail/image1.jpg",
-      alt: "Venus Hiring Team",
-      title: "Our Team"
+      alt: "Venus Hiring Team"
     },
     {
       id: 2,
       src: "/images/imagetrail/image2.jpg",
-      alt: "Office Environment",
-      title: "Work Environment"
+      alt: "Office Environment"
     },
     {
       id: 3,
       src: "/images/imagetrail/image3.jpg",
-      alt: "Team Collaboration",
-      title: "Team Collaboration"
+      alt: "Team Collaboration"
     },
     {
       id: 4,
       src: "/images/imagetrail/image4.jpg",
-      alt: "Professional Meeting",
-      title: "Professional Meeting"
+      alt: "Professional Meeting"
     },
     {
       id: 5,
       src: "/images/imagetrail/image5.jpg",
-      alt: "Creative Workspace",
-      title: "Creative Workspace"
+      alt: "Creative Workspace"
     },
     {
       id: 6,
       src: "/images/imagetrail/image6.jpg",
-      alt: "Team Building",
-      title: "Team Building"
+      alt: "Team Building"
     },
     {
       id: 7,
       src: "/images/imagetrail/image7.jpg",
-      alt: "Office Space",
-      title: "Office Space"
+      alt: "Office Space"
     },
     {
       id: 8,
       src: "/images/imagetrail/image8.jpg",
-      alt: "Work Culture",
-      title: "Work Culture"
+      alt: "Work Culture"
     },
     {
       id: 9,
       src: "/images/imagetrail/image9.jpg",
-      alt: "Company Values",
-      title: "Company Values"
+      alt: "Company Values"
     }
   ];
 
@@ -168,9 +159,6 @@ export default function AboutUs() {
                       alt={slide.alt}
                       className="about__img"
                     />
-                    <div className="about__slideTitle">
-                      {slide.title}
-                    </div>
                   </div>
                 ))}
               </div>

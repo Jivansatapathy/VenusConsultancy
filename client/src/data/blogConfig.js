@@ -14,7 +14,7 @@ const blogConfig = {
         author: "Jivan Satapathy",
         date: "2025-08-15",
         tags: ["Hiring", "Engineering"],
-        image: "/images/blog-remote.jpg",
+        image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=250&fit=crop&crop=center",
         readMoreUrl: "/blog/how-to-hire-remote-engineers"
       },
       {
@@ -25,7 +25,7 @@ const blogConfig = {
         author: "Soumya R.",
         date: "2025-07-30",
         tags: ["Diversity", "Recruitment"],
-        image: "/images/blog-inclusive.jpg",
+        image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&h=250&fit=crop&crop=center",
         readMoreUrl: "/blog/build-a-inclusive-interview-process"
       },
       {
@@ -36,7 +36,7 @@ const blogConfig = {
         author: "Pooja K.",
         date: "2025-06-18",
         tags: ["Branding", "Startups"],
-        image: "/images/blog-branding.jpg",
+        image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop&crop=center",
         readMoreUrl: "/blog/employer-branding-matters"
       }
     ],

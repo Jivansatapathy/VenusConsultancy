@@ -97,8 +97,8 @@ const talentConfig = {
         ],
         images: [
           "/images/aero-large.jpeg",
-          "/images/aero-sm1.jpg",
-          "/images/aero-sm2.jpg"
+          "/images/aerospace.jpg",
+          "/images/aerospace1.jpg"
         ],
         learnMoreUrl: "/services",
         shapeColors: [
@@ -125,8 +125,8 @@ const talentConfig = {
         ],
         images: [
           "/images/autotech-large.jpg",
-          "/images/autotech-sm1.jpg",
-          "/images/autotech-sm2.jpg"
+          "/images/autotech-sm12.jpg",
+          "/images/autotech-sm22.jpg"
         ],
         learnMoreUrl: "/services",
         shapeColors: [
@@ -151,9 +151,9 @@ const talentConfig = {
           "Customer Service (Banking)"
         ],
         images: [
-          "/images/support-large.jpg",
-          "/images/support-sm1.jpg",
-          "/images/support-sm2.jpg"
+          "/images/cs1.jpg",
+          "/images/cs2.jpg",
+          "/images/cs3.jpg"
         ],
         learnMoreUrl: "/services",
         shapeColors: [
@@ -181,9 +181,9 @@ const talentConfig = {
           "Country Manager"
         ],
         images: [
-          "/images/executive-large.jpg",
-          "/images/executive-sm1.jpg",
-          "/images/executive-sm2.jpg"
+          "/images/css1.jpg",
+          "/images/css2.jpg",
+          "/images/css3.jpg"
         ],
         learnMoreUrl: "/services",
         shapeColors: [
@@ -282,7 +282,7 @@ const talentConfig = {
         images: [
           "/images/mfg-large.jpg",
           "/images/mfg-sm1.jpg",
-          "/images/mfg-sm2.jpg"
+          "/images/mst.jpg"
         ],
         learnMoreUrl: "/services",
         shapeColors: [
@@ -305,9 +305,9 @@ const talentConfig = {
           "Documentation & QA"
         ],
         images: [
-          "/images/science-large.jpg",
-          "/images/science-sm1.jpg",
-          "/images/science-sm2.jpg"
+          "/images/so3.jpg",
+          "/images/so1.jpg",
+          "/images/so2.jpg"
         ],
         learnMoreUrl: "/services",
         shapeColors: [

@@ -7,7 +7,7 @@ export default function AboutUs() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  // Images from imagetrail folder
+  // Images using online placeholders
   const slides = [
     {
       id: 1,
@@ -112,13 +112,31 @@ export default function AboutUs() {
             </a>
 
             <div className="about__socials">
-              <a href="https://linkedin.com" aria-label="LinkedIn">
+              <a 
+                href="https://www.linkedin.com/company/the-venus-consultancy-ltd/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="about__social-link"
+              >
                 <Linkedin size={22} />
               </a>
-              <a href="https://facebook.com" aria-label="Facebook">
+              <a 
+                href="https://www.facebook.com/venushiring" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="about__social-link"
+              >
                 <Facebook size={22} />
               </a>
-              <a href="https://instagram.com" aria-label="Instagram">
+              <a 
+                href="https://www.instagram.com/venushiring?igsh=MTFyYTMycDlkcXh4NQ==" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="about__social-link"
+              >
                 <Instagram size={22} />
               </a>
             </div>

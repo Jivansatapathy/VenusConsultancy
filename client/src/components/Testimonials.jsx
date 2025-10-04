@@ -58,11 +58,32 @@ const Testimonials = () => {
               <div className="vh-testimonial-profile">
                 <img
                   src={t.avatar}
-                  alt={`${t.name} photo`}
+                  alt="Company logo"
                   className="vh-testimonial-avatar"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
                 />
+                <div 
+                  className="vh-testimonial-avatar-fallback"
+                  style={{ 
+                    display: 'none',
+                    width: '60px',
+                    height: '40px',
+                    borderRadius: '8px',
+                    backgroundColor: '#f3f4f6',
+                    border: '1px solid #e5e7eb',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#6b7280',
+                    fontSize: '10px',
+                    fontWeight: '600'
+                  }}
+                >
+                  LOGO
+                </div>
                 <div>
-                  <div className="vh-testimonial-name">{t.name}</div>
                   <div className="vh-testimonial-title">{t.title}</div>
                 </div>
               </div>

@@ -63,7 +63,10 @@
   color: #111111 !important;
   border: 1.5px solid #111111;
 }
-.btn--outline1:hover { color:#ffffff; background:#111111; }
+.btn--outline1:hover { 
+  color: #ffffff !important; 
+  background: #111111; 
+}
 
 /* media placeholder square */
 .media-placeholder {
@@ -247,12 +250,11 @@
   gap: 8px;
 }
 
-.svc-card__links a {
-  color: #1560d4;
-  text-decoration: none;
+.svc-card__links li {
+  color: #6b7280;
   font-size: 12px;
+  line-height: 1.4;
 }
-.svc-card__links a:hover { text-decoration: underline; }
 
 .svc-card__toggle {
   margin-top: 10px;
@@ -898,5 +900,162 @@
   
   .talent-middle__title {
     font-size: 28px;
+  }
+}
+
+/* Review Modal Styles */
+.review-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.review-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.review-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 0;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+.review-modal__header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.review-modal__close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.review-modal__close:hover {
+  color: #374151;
+}
+
+.review-modal__form {
+  padding: 0 24px 24px;
+}
+
+.review-modal__field {
+  margin-bottom: 20px;
+}
+
+.review-modal__field label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+}
+
+.review-modal__field input,
+.review-modal__field select,
+.review-modal__field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-modal__field input:focus,
+.review-modal__field select:focus,
+.review-modal__field textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.review-modal__field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.review-modal__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.review-modal__cancel,
+.review-modal__submit {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.review-modal__cancel {
+  background: #f9fafb;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.review-modal__cancel:hover {
+  background: #f3f4f6;
+}
+
+.review-modal__submit {
+  background: #3b82f6;
+  color: #ffffff;
+  border: 1px solid #3b82f6;
+}
+
+.review-modal__submit:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+@media (max-width: 640px) {
+  .review-modal {
+    margin: 10px;
+    max-height: 95vh;
+  }
+  
+  .review-modal__header,
+  .review-modal__form {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .review-modal__actions {
+    flex-direction: column;
+  }
+  
+  .review-modal__cancel,
+  .review-modal__submit {
+    width: 100%;
   }
 }

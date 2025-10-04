@@ -9,6 +9,7 @@ const AdminDashboard = () => {
   const [jobs, setJobs] = useState([]);
   const [recruiters, setRecruiters] = useState([]);
   const [applications, setApplications] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showJobModal, setShowJobModal] = useState(false);
   const [showRecruiterModal, setShowRecruiterModal] = useState(false);
@@ -33,6 +34,11 @@ const AdminDashboard = () => {
       } else if (activeTab === "applications") {
         const { data } = await API.get("/applications");
         setApplications(data.applications || []);
+      } else if (activeTab === "reviews") {
+        // For demo purposes, fetch from localStorage
+        // In production, this would be: const { data } = await API.get("/reviews");
+        const storedReviews = JSON.parse(localStorage.getItem('venus_reviews') || '[]');
+        setReviews(storedReviews);
       }
     } catch (err) {
       console.error("Error fetching data:", err);
@@ -77,6 +83,41 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleDeleteReview = async (reviewId) => {
+    if (window.confirm("Are you sure you want to delete this review?")) {
+      try {
+        // For demo purposes, update localStorage
+        // In production, this would be: await API.delete(`/reviews/${reviewId}`);
+        const storedReviews = JSON.parse(localStorage.getItem('venus_reviews') || '[]');
+        const updatedReviews = storedReviews.filter(review => review._id !== reviewId);
+        localStorage.setItem('venus_reviews', JSON.stringify(updatedReviews));
+        setReviews(updatedReviews);
+      } catch (err) {
+        console.error("Error deleting review:", err);
+        alert("Failed to delete review");
+      }
+    }
+  };
+
+  const handleToggleReviewStatus = async (reviewId, currentStatus) => {
+    try {
+      const newStatus = currentStatus === 'approved' ? 'pending' : 'approved';
+      // For demo purposes, update localStorage
+      // In production, this would be: await API.put(`/reviews/${reviewId}`, { status: newStatus });
+      const storedReviews = JSON.parse(localStorage.getItem('venus_reviews') || '[]');
+      const updatedReviews = storedReviews.map(review => 
+        review._id === reviewId 
+          ? { ...review, status: newStatus }
+          : review
+      );
+      localStorage.setItem('venus_reviews', JSON.stringify(updatedReviews));
+      setReviews(updatedReviews);
+    } catch (err) {
+      console.error("Error updating review status:", err);
+      alert("Failed to update review status");
+    }
+  };
+
   if (user?.role !== "admin") {
     return (
       <div className="admin-dashboard">
@@ -114,6 +155,12 @@ const AdminDashboard = () => {
             onClick={() => setActiveTab("applications")}
           >
             Applications ({applications.length})
+          </button>
+          <button 
+            className={activeTab === "reviews" ? "active" : ""}
+            onClick={() => setActiveTab("reviews")}
+          >
+            Reviews ({reviews.length})
           </button>
         </div>
 
@@ -156,6 +203,14 @@ const AdminDashboard = () => {
                 <ApplicationsTab 
                   applications={applications}
                   onDelete={handleDeleteApplication}
+                />
+              )}
+
+              {activeTab === "reviews" && (
+                <ReviewsTab 
+                  reviews={reviews}
+                  onDelete={handleDeleteReview}
+                  onToggleStatus={handleToggleReviewStatus}
                 />
               )}
             </>
@@ -579,6 +634,83 @@ const RecruiterModal = ({ recruiter, onClose, onSave }) => {
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  );
+};
+
+const ReviewsTab = ({ reviews, onDelete, onToggleStatus }) => {
+  const renderStars = (rating) => {
+    return "★".repeat(rating) + "☆".repeat(5 - rating);
+  };
+
+  return (
+    <div className="tab-content">
+      <div className="tab-header">
+        <h2>Review Management</h2>
+        <div className="review-stats">
+          <span className="stat-item">
+            Total: {reviews.length}
+          </span>
+          <span className="stat-item">
+            Approved: {reviews.filter(r => r.status === 'approved').length}
+          </span>
+          <span className="stat-item">
+            Pending: {reviews.filter(r => r.status === 'pending').length}
+          </span>
+        </div>
+      </div>
+
+      <div className="reviews-container">
+        {reviews.length === 0 ? (
+          <div className="empty-state">
+            <p>No reviews submitted yet.</p>
+          </div>
+        ) : (
+          <div className="reviews-grid">
+            {reviews.map(review => (
+              <div key={review._id} className="review-card">
+                <div className="review-header">
+                  <div className="review-meta">
+                    <h4 className="reviewer-name">{review.name}</h4>
+                    <p className="reviewer-company">{review.company}</p>
+                    <div className="review-rating">
+                      <span className="stars">{renderStars(review.rating)}</span>
+                      <span className="rating-number">({review.rating}/5)</span>
+                    </div>
+                  </div>
+                  <div className="review-status">
+                    <span className={`status-badge ${review.status}`}>
+                      {review.status}
+                    </span>
+                    <span className="review-date">
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="review-content">
+                  <p className="review-text">{review.review}</p>
+                </div>
+                
+                <div className="review-actions">
+                  <button 
+                    className={`btn btn-sm ${review.status === 'approved' ? 'btn-warning' : 'btn-success'}`}
+                    onClick={() => onToggleStatus(review._id, review.status)}
+                  >
+                    {review.status === 'approved' ? 'Unapprove' : 'Approve'}
+                  </button>
+                  <button 
+                    className="btn btn-sm btn-danger"
+                    onClick={() => onDelete(review._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

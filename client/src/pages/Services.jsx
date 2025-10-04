@@ -1,8 +1,73 @@
 // client/src/pages/Services.jsx
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Services.css";
 
 const Services = () => {
+  const navigate = useNavigate();
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewForm, setReviewForm] = useState({
+    name: '',
+    company: '',
+    rating: 5,
+    review: ''
+  });
+
+  // Handler functions
+  const handleFindTalents = () => {
+    navigate('/contact');
+  };
+
+  const handleWriteReview = () => {
+    setShowReviewModal(true);
+  };
+
+  const handleCreateJobListing = () => {
+    const phoneNumber = "+16477616277";
+    const message = "Hello! I would like to create a job listing on Venus Hiring.";
+    const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Submit review to backend
+      const reviewData = {
+        ...reviewForm,
+        rating: parseInt(reviewForm.rating),
+        status: 'pending',
+        createdAt: new Date().toISOString()
+      };
+      
+      // For now, we'll store in localStorage as a demo
+      // In production, this would be sent to your backend API
+      const existingReviews = JSON.parse(localStorage.getItem('venus_reviews') || '[]');
+      const newReview = {
+        _id: Date.now().toString(),
+        ...reviewData
+      };
+      existingReviews.push(newReview);
+      localStorage.setItem('venus_reviews', JSON.stringify(existingReviews));
+      
+      console.log('Review submitted:', newReview);
+      alert('Thank you for your review! It will be reviewed and may appear on our website.');
+      setShowReviewModal(false);
+      setReviewForm({ name: '', company: '', rating: 5, review: '' });
+    } catch (error) {
+      console.error('Error submitting review:', error);
+      alert('There was an error submitting your review. Please try again.');
+    }
+  };
+
+  const handleReviewChange = (e) => {
+    const { name, value } = e.target;
+    setReviewForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   const services = [
     {
       title: "Pharmaceutical & Life Science",
@@ -283,7 +348,7 @@ const Services = () => {
         <h3 className="svc-card__title">{title}</h3>
         <ul className="svc-card__links">
           {visible.map((label) => (
-            <li key={label}><a href="#">{label}</a></li>
+            <li key={label}>{label}</li>
           ))}
         </ul>
         {hasMore && (
@@ -360,7 +425,7 @@ const Services = () => {
                   Tell us about your company and hiring goals<br />
                   to generate a custom Talent Brief in minutes.
                 </p>
-                <button className="talent-banner__cta">Find Talents</button>
+                <button className="talent-banner__cta" onClick={handleFindTalents}>Find Talents</button>
               </div>
               <div className="talent-banner__right">
                 <img 
@@ -463,7 +528,7 @@ const Services = () => {
             <p className="testimonial-review__text">
               Leave a review of the talent you've hired through Venus Hiring. Your feedback not only makes your voice heard but also helps other companies hire with confidence, saving them valuable time and resources.
             </p>
-            <button className="testimonial-review__btn" type="button">Write a Review</button>
+            <button className="testimonial-review__btn" type="button" onClick={handleWriteReview}>Write a Review</button>
           </div>
         </div>
       </section>
@@ -481,11 +546,100 @@ const Services = () => {
               <p className="cta-description">
                 Get in front of thousands of companies actively hiring through the leading global talent marketplace.
               </p>
-              <button className="cta-button" type="button">Create a Job Listing</button>
+              <button className="cta-button" type="button" onClick={handleCreateJobListing}>Create a Job Listing</button>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Review Modal */}
+      {showReviewModal && (
+        <div className="review-modal-overlay" onClick={() => setShowReviewModal(false)}>
+          <div className="review-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="review-modal__header">
+              <h3>Write a Review</h3>
+              <button 
+                className="review-modal__close" 
+                onClick={() => setShowReviewModal(false)}
+                aria-label="Close modal"
+              >
+                ×
+              </button>
+            </div>
+            
+            <form onSubmit={handleReviewSubmit} className="review-modal__form">
+              <div className="review-modal__field">
+                <label htmlFor="name">Your Name *</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={reviewForm.name}
+                  onChange={handleReviewChange}
+                  required
+                  placeholder="Enter your full name"
+                />
+              </div>
+
+              <div className="review-modal__field">
+                <label htmlFor="company">Company Name *</label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  value={reviewForm.company}
+                  onChange={handleReviewChange}
+                  required
+                  placeholder="Enter your company name"
+                />
+              </div>
+
+              <div className="review-modal__field">
+                <label htmlFor="rating">Rating *</label>
+                <select
+                  id="rating"
+                  name="rating"
+                  value={reviewForm.rating}
+                  onChange={handleReviewChange}
+                  required
+                >
+                  <option value={5}>⭐⭐⭐⭐⭐ (5 stars)</option>
+                  <option value={4}>⭐⭐⭐⭐ (4 stars)</option>
+                  <option value={3}>⭐⭐⭐ (3 stars)</option>
+                  <option value={2}>⭐⭐ (2 stars)</option>
+                  <option value={1}>⭐ (1 star)</option>
+                </select>
+              </div>
+
+              <div className="review-modal__field">
+                <label htmlFor="review">Your Review *</label>
+                <textarea
+                  id="review"
+                  name="review"
+                  value={reviewForm.review}
+                  onChange={handleReviewChange}
+                  required
+                  rows={4}
+                  placeholder="Share your experience with Venus Hiring..."
+                />
+              </div>
+
+              <div className="review-modal__actions">
+                <button 
+                  type="button" 
+                  className="review-modal__cancel"
+                  onClick={() => setShowReviewModal(false)}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="review-modal__submit">
+                  Submit Review
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
     </main>
   );

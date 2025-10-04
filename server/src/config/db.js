@@ -22,13 +22,9 @@ const connectDB = async () => {
         console.error("🚨 Using development fallback - DO NOT USE IN PRODUCTION!");
         const fallbackUri = "mongodb://127.0.0.1:27017/venus-hiring";
         await mongoose.connect(fallbackUri, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
           maxPoolSize: 10, // Maintain up to 10 socket connections
           serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
           socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-          bufferCommands: false, // Disable mongoose buffering
-          bufferMaxEntries: 0, // Disable mongoose buffering
         });
         isConnected = true;
         console.log("✅ MongoDB Connected (development fallback)");
@@ -37,13 +33,9 @@ const connectDB = async () => {
     }
     
     await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       maxPoolSize: 10, // Maintain up to 10 socket connections
       serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
       socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-      bufferCommands: false, // Disable mongoose buffering
-      bufferMaxEntries: 0, // Disable mongoose buffering
     });
     isConnected = true;
     console.log("✅ MongoDB Connected");

@@ -7,7 +7,7 @@
 .svc-container {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 0px;
 }
 
 /* hero */
@@ -17,7 +17,7 @@
 }
 
 .svc-hero > .svc-container {
-  max-width: 1440px;
+  max-width: 1600px;
 }
 
 .svc-hero__grid {
@@ -71,6 +71,39 @@
   aspect-ratio: 1 / 1;
   background: #d9dde1;
   border-radius: 8px;
+}
+
+/* hero video */
+.hero-video {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  min-width: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #d9dde1;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Hide video controls by default, show on hover */
+.hero-video::-webkit-media-controls {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-video:hover::-webkit-media-controls {
+  opacity: 1;
+}
+
+/* For Firefox */
+.hero-video::-moz-media-controls {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-video:hover::-moz-media-controls {
+  opacity: 1;
 }
 
 /* divider */
@@ -169,11 +202,34 @@
 }
 
 .svc-card__icon {
-  width: 28px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.svc-card__icon:hover {
   background: #ef3340;
-  border-radius: 4px;
-  margin-bottom: 8px;
+  border-color: #ef3340;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 51, 64, 0.2);
+}
+
+.service-icon {
+  width: 24px;
+  height: 24px;
+  color: #6c757d;
+  transition: color 0.3s ease;
+}
+
+.svc-card__icon:hover .service-icon {
+  color: #ffffff;
 }
 
 .svc-card__title {
@@ -243,36 +299,25 @@
 
 /* Red Banner Section */
 .talent-banner {
-  background: #dc2626; /* Red background */
-  padding: 80px 0;
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 20%, #dc2626 20%, #dc2626 100%);
+  padding: 0px 0; /* Keep padding at 0px */
   color: #ffffff;
 }
 
 .talent-banner__grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1.2fr 1fr; /* Text left, image right */
   gap: 60px;
   align-items: center;
 }
 
 .talent-banner__left {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
-.project-brief {
-  background: #60a5fa;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 420px;
-  aspect-ratio: 4 / 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
+/* Removed project-brief styles - now using direct image */
 
 .image-placeholder__label {
   background: rgba(255, 255, 255, 0.9);
@@ -284,34 +329,49 @@
 }
 
 .talent-banner__right {
-  padding-left: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  overflow: visible;
+}
+
+.talent-banner__image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  transform: translateX(20px);
+  z-index: 2;
+  position: relative;
 }
 
 .talent-banner__title {
-  font-size: clamp(28px, 4vw, 48px);
+  font-size: clamp(32px, 5vw, 40px);
   font-weight: 800;
   line-height: 1.1;
-  margin: 0 0 20px;
+  margin: 0 0 24px;
   color: #ffffff;
 }
 
 .talent-banner__subtitle {
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.5;
-  margin: 0 0 32px;
-  color: #fef2f2;
+  margin: 0 0 36px;
+  color: #ffffff;
+  max-width: 500px;
 }
 
 .talent-banner__cta {
   background: #ffffff;
   color: #dc2626;
   border: 2px solid #dc2626;
-  padding: 14px 28px;
+  padding: 10px 16px;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
+  width: fit-content;
 }
 
 .talent-banner__cta:hover {
@@ -696,6 +756,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.talent-image__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
 .feature-card__step {
@@ -796,7 +864,11 @@
   }
   
   .talent-banner__right {
-    padding-left: 0;
+    order: 2; /* Image below on mobile */
+  }
+  
+  .talent-banner__left {
+    order: 1; /* Text above on mobile */
   }
   
   .talent-image-grid { grid-template-columns: 1fr; }
@@ -815,8 +887,9 @@
     padding: 60px 0;
   }
   
-  .project-brief {
+  .talent-banner__image {
     max-width: 100%;
+    transform: translateX(0);
   }
   
   .talent-banner__title {

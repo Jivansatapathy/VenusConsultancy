@@ -59,15 +59,30 @@ const Contact = () => {
 
     setSubmitting(true);
     try {
-      // TODO: replace with API call when backend is ready
-      console.log("Contact form submitted:", form);
-      await new Promise((r) => setTimeout(r, 700));
-      setStatus({
-        type: "success",
-        text: "Thanks — we received your message. We will contact you soon.",
+      const response = await fetch('/api/contact/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
       });
-      setForm({ name: "", phone: "", email: "", source: "", message: "" });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus({
+          type: "success",
+          text: data.message || "Thanks — we received your message. We will contact you soon.",
+        });
+        setForm({ name: "", phone: "", email: "", source: "", message: "" });
+      } else {
+        setStatus({
+          type: "error",
+          text: data.message || "Something went wrong — please try again later.",
+        });
+      }
     } catch (err) {
+      console.error('Contact form error:', err);
       setStatus({
         type: "error",
         text: "Something went wrong — please try again later.",

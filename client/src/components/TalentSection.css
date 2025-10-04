@@ -56,6 +56,14 @@
   .vh-talent__tab.active {
     color: #042f31;
   }
+  .vh-talent__tab.vh-talent__more {
+    color: #e50914;
+    font-weight: 700;
+    border-bottom-color: transparent !important;
+  }
+  .vh-talent__tab.vh-talent__more:hover {
+    color: #b20710;
+  }
   
   /* Arrows */
   .vh-talent__arrows {

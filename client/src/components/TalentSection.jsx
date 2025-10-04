@@ -8,8 +8,17 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
   const defaultKey =
     config.defaultCategory || (categories[0] && categories[0].key);
   const [activeKey, setActiveKey] = useState(defaultKey);
-  const activeIndex = categories.findIndex((c) => c.key === activeKey);
+  const [showAll, setShowAll] = useState(false);
+  const visibleCategories = showAll ? categories : categories.slice(0, 4);
+  const activeIndex = visibleCategories.findIndex((c) => c.key === activeKey);
   const tabsRef = useRef(null);
+
+  // Ensure active tab is within the visible set when toggling showAll
+  useEffect(() => {
+    if (!visibleCategories.find((c) => c.key === activeKey)) {
+      if (visibleCategories[0]) setActiveKey(visibleCategories[0].key);
+    }
+  }, [showAll, categories]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -19,20 +28,20 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
       if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return;
       e.preventDefault();
       if (e.key === "ArrowLeft") {
-        const prev = (activeIndex - 1 + categories.length) % categories.length;
-        setActiveKey(categories[prev].key);
+        const prev = (activeIndex - 1 + visibleCategories.length) % visibleCategories.length;
+        setActiveKey(visibleCategories[prev].key);
       } else if (e.key === "ArrowRight") {
-        const next = (activeIndex + 1) % categories.length;
-        setActiveKey(categories[next].key);
+        const next = (activeIndex + 1) % visibleCategories.length;
+        setActiveKey(visibleCategories[next].key);
       } else if (e.key === "Home") {
-        setActiveKey(categories[0].key);
+        setActiveKey(visibleCategories[0].key);
       } else if (e.key === "End") {
-        setActiveKey(categories[categories.length - 1].key);
+        setActiveKey(visibleCategories[visibleCategories.length - 1].key);
       }
     };
     node.addEventListener("keydown", handleKey);
     return () => node.removeEventListener("keydown", handleKey);
-  }, [activeIndex, categories]);
+  }, [activeIndex, visibleCategories]);
 
   const active = categories.find((c) => c.key === activeKey) || categories[0];
 
@@ -60,7 +69,7 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
             aria-label="Talent categories"
             ref={tabsRef}
           >
-            {categories.map((cat) => (
+            {visibleCategories.map((cat) => (
               <button
                 key={cat.key}
                 role="tab"
@@ -81,6 +90,16 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
                 {cat.label}
               </button>
             ))}
+            {!showAll && categories.length > 4 && (
+              <button
+                type="button"
+                className="vh-talent__tab vh-talent__more"
+                onClick={() => setShowAll(true)}
+                aria-label="Show more categories"
+              >
+                + More
+              </button>
+            )}
           </div>
 
           {config.showArrows && (
@@ -123,12 +142,7 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
               ))}
             </ul>
 
-            <a
-              href={active.learnMoreUrl || "/services"}
-              className="vh-talent__learn"
-            >
-              Know more about our {active.label} solutions →
-            </a>
+            {/* removed learn more link per request */}
           </div>
 
           {/* Right collage */}

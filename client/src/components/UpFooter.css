@@ -41,6 +41,13 @@
   z-index: 3; /* above decorative shapes */
 }
 
+/* Mobile view - center content */
+@media (max-width: 768px) {
+  .vh-upfooter__container {
+    justify-content: center;
+  }
+}
+
 /* Heading (centered, large) */
 .vh-upfooter__heading {
   margin: 0;

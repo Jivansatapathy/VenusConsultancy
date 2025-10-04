@@ -3,7 +3,6 @@ import React from "react";
 import "./AboutUs.css";
 import CurvedLoop from "../components/CurvedLoop";
 import ImageTrail from "../components/ImageTrail";
-import ChromaGrid from "../components/ChromaGrid";
 
 const AboutUs = () => {
   return (
@@ -21,18 +20,15 @@ const AboutUs = () => {
           <div className="hero-image-trail">
             <ImageTrail
               items={[
-                'https://picsum.photos/id/287/300/300',
-                'https://picsum.photos/id/1001/300/300',
-                'https://picsum.photos/id/1025/300/300',
-                'https://picsum.photos/id/1026/300/300',
-                'https://picsum.photos/id/1027/300/300',
-                'https://picsum.photos/id/1028/300/300',
-                'https://picsum.photos/id/1029/300/300',
-                'https://picsum.photos/id/1030/300/300',
-                'https://picsum.photos/id/1031/300/300',
-                'https://picsum.photos/id/1032/300/300',
-                'https://picsum.photos/id/1033/300/300',
-                'https://picsum.photos/id/1034/300/300',
+                '/images/imagetrail/image1.jpg',
+                '/images/imagetrail/image2.jpg',
+                '/images/imagetrail/image3.jpg',
+                '/images/imagetrail/image4.jpg',
+                '/images/imagetrail/image5.jpg',
+                '/images/imagetrail/image6.jpg',
+                '/images/imagetrail/image7.jpg',
+                '/images/imagetrail/image8.jpg',
+                '/images/imagetrail/image9.jpg',
               ]}
               variant={1}
             />
@@ -102,37 +98,168 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Team section: left = text + single bottom image, right = 5-image collage */}
-      <section className="team-section" aria-labelledby="team-title">
-        <div className="team-container">
-          <div className="team-left">
-            <div className="team-text">
-              <h2 id="team-title" className="team-title">Our team</h2>
-              <p className="team-desc">
-                Meet the people who power our mission — a diverse, skilled group united by a
-                commitment to deliver exceptional outcomes. Our strength comes from varied
-                experience, collaborative culture, and a focus on growth and impact.
-              </p>
-              <a href="#" className="team-cta">Join our team</a>
-            </div>
 
-            <div className="team-left-bottom" aria-hidden="true">
-              <div className="photo photo--lb" style={{ backgroundImage: "url('/team1.jpg')" }} role="img" aria-label="Team image placeholder" />
+      {/* Technology & Innovation Section */}
+      <section className="tech-innovation" aria-labelledby="tech-title">
+        <div className="tech-container">
+          <div className="tech-header">
+            <h2 id="tech-title" className="tech-title">Technology & Innovation</h2>
+            <p className="tech-subtitle">
+              We leverage cutting-edge technology to revolutionize talent acquisition and create meaningful connections.
+            </p>
+          </div>
+          
+          <div className="tech-features">
+            <div className="tech-feature">
+              <div className="tech-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.5L19.5 8V16L12 19.5L4.5 16V8L12 4.5Z"/>
+                </svg>
+              </div>
+              <h3 className="tech-feature__title">AI-Powered Matching</h3>
+              <p className="tech-feature__desc">
+                Advanced algorithms analyze skills, experience, and cultural fit to connect the right talent with the right opportunities.
+              </p>
+            </div>
+            
+            <div className="tech-feature">
+              <div className="tech-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"/>
+                </svg>
+              </div>
+              <h3 className="tech-feature__title">Real-Time Analytics</h3>
+              <p className="tech-feature__desc">
+                Comprehensive dashboards provide insights into hiring trends, market demands, and performance metrics.
+              </p>
+            </div>
+            
+            <div className="tech-feature">
+              <div className="tech-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 7C13.1 7 14 7.9 14 9S13.1 11 12 11 10 10.1 10 9 10.9 7 12 7ZM18 11.5C18 12.4 17.4 13 16.5 13S15 12.4 15 11.5 15.6 10 16.5 10 18 10.6 18 11.5Z"/>
+                </svg>
+              </div>
+              <h3 className="tech-feature__title">Secure Platform</h3>
+              <p className="tech-feature__desc">
+                Enterprise-grade security ensures data protection and compliance with global privacy regulations.
+              </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="team-right-collage" aria-hidden="true">
-            <div className="collage-row">
-              <div className="photo photo--r1" />
-              <div className="photo photo--r2" />
+      {/* Culture & Work Environment Section */}
+      <section className="culture-section" aria-labelledby="culture-title">
+        <div className="culture-container">
+          <div className="culture-content">
+            <div className="culture-text">
+              <h2 id="culture-title" className="culture-title">Culture & Work Environment</h2>
+              <p className="culture-subtitle">
+                We believe great talent deserves great culture. Our remote-first approach fosters innovation, collaboration, and work-life balance.
+              </p>
+              
+              <div className="culture-values">
+                <div className="culture-value">
+                  <h4 className="culture-value__title">Remote-First</h4>
+                  <p className="culture-value__desc">Work from anywhere with flexible schedules and global collaboration tools.</p>
+                </div>
+                
+                <div className="culture-value">
+                  <h4 className="culture-value__title">Diversity & Inclusion</h4>
+                  <p className="culture-value__desc">We celebrate different perspectives and create an environment where everyone can thrive.</p>
+                </div>
+                
+                <div className="culture-value">
+                  <h4 className="culture-value__title">Continuous Learning</h4>
+                  <p className="culture-value__desc">Invest in your growth with learning budgets, conferences, and mentorship programs.</p>
+                </div>
+                
+                <div className="culture-value">
+                  <h4 className="culture-value__title">Work-Life Balance</h4>
+                  <p className="culture-value__desc">Flexible hours, unlimited PTO, and wellness programs to support your well-being.</p>
+                </div>
+              </div>
             </div>
-            <div className="collage-row">
-              <div className="photo photo--r3" />
-              <div className="photo photo--r4" />
+            
+            <div className="culture-visual">
+              <div className="culture-stats">
+                <div className="culture-stat">
+                  <div className="stat-number">95%</div>
+                  <div className="stat-label">Employee Satisfaction</div>
+                </div>
+                <div className="culture-stat">
+                  <div className="stat-number">50+</div>
+                  <div className="stat-label">Countries Represented</div>
+                </div>
+                <div className="culture-stat">
+                  <div className="stat-number">4.8/5</div>
+                  <div className="stat-label">Work-Life Balance Rating</div>
+                </div>
+              </div>
             </div>
-            <div className="collage-row">
-              <div className="photo photo--r5" />
+          </div>
+        </div>
+      </section>
+
+      {/* Future Vision Section */}
+      <section className="future-vision" aria-labelledby="future-title">
+        <div className="future-container">
+          <div className="future-header">
+            <h2 id="future-title" className="future-title">Future Vision</h2>
+            <p className="future-subtitle">
+              We're building the future of work, one connection at a time. Here's where we're heading.
+            </p>
+          </div>
+          
+          <div className="vision-roadmap">
+            <div className="vision-item">
+              <div className="vision-timeline">
+                <div className="timeline-dot"></div>
+                <div className="timeline-line"></div>
+              </div>
+              <div className="vision-content">
+                <h3 className="vision-title">2024: AI Integration</h3>
+                <p className="vision-desc">
+                  Launch advanced AI features for smarter matching, automated screening, and predictive analytics.
+                </p>
+              </div>
             </div>
+            
+            <div className="vision-item">
+              <div className="vision-timeline">
+                <div className="timeline-dot"></div>
+                <div className="timeline-line"></div>
+              </div>
+              <div className="vision-content">
+                <h3 className="vision-title">2025: Global Expansion</h3>
+                <p className="vision-desc">
+                  Expand to 50+ countries with localized platforms and regional talent pools.
+                </p>
+              </div>
+            </div>
+            
+            <div className="vision-item">
+              <div className="vision-timeline">
+                <div className="timeline-dot"></div>
+                <div className="timeline-line"></div>
+              </div>
+              <div className="vision-content">
+                <h3 className="vision-title">2026: Industry Leadership</h3>
+                <p className="vision-desc">
+                  Become the global standard for talent acquisition with 10M+ active users and $1B+ in placements.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="future-commitment">
+            <h3 className="commitment-title">Our Commitment</h3>
+            <p className="commitment-text">
+              We're committed to making talent acquisition more transparent, efficient, and human-centered. 
+              Every feature we build, every partnership we form, and every decision we make is guided by our 
+              mission to connect the world's best talent with the world's best opportunities.
+            </p>
           </div>
         </div>
       </section>
@@ -149,136 +276,7 @@ const AboutUs = () => {
         />
       </section>
 
-      {/* Leadership Team Section */}
-      <section className="leadership-section" aria-labelledby="leadership-title">
-        <div className="leadership-container">
-          <div className="leadership-header">
-            <h2 id="leadership-title" className="leadership-title">Leadership team</h2>
-          </div>
-          <div className="leadership-grid">
-            <ChromaGrid 
-              items={[
-                {
-                  image: "https://i.pravatar.cc/300?img=1",
-                  title: "Amanda Baum",
-                  subtitle: "SVP of Product",
-                  borderColor: "#3B82F6",
-                  gradient: "linear-gradient(145deg, #3B82F6, #000)",
-                  url: "https://linkedin.com/in/amandabaum"
-                },
-                {
-                  image: "https://i.pravatar.cc/300?img=2",
-                  title: "Greg Carter",
-                  subtitle: "VP of Marketing",
-                  borderColor: "#10B981",
-                  gradient: "linear-gradient(180deg, #10B981, #000)",
-                  url: "https://linkedin.com/in/gregcarter"
-                },
-                {
-                  image: "https://i.pravatar.cc/300?img=3",
-                  title: "Tim Condon",
-                  subtitle: "Chief Revenue Officer",
-                  borderColor: "#F59E0B",
-                  gradient: "linear-gradient(165deg, #F59E0B, #000)",
-                  url: "https://linkedin.com/in/timcondon"
-                },
-                {
-                  image: "https://i.pravatar.cc/300?img=4",
-                  title: "Sergei Dubograev",
-                  subtitle: "SVP of Development",
-                  borderColor: "#EF4444",
-                  gradient: "linear-gradient(195deg, #EF4444, #000)",
-                  url: "https://linkedin.com/in/sergeidubograev"
-                },
-                {
-                  image: "https://i.pravatar.cc/300?img=5",
-                  title: "Faraz Hamedani",
-                  subtitle: "VP of Strategic Finance",
-                  borderColor: "#8B5CF6",
-                  gradient: "linear-gradient(225deg, #8B5CF6, #000)",
-                  url: "https://linkedin.com/in/farazhamedani"
-                },
-                {
-                  image: "https://i.pravatar.cc/300?img=6",
-                  title: "Eleonora Israele",
-                  subtitle: "Chief of Staff",
-                  borderColor: "#06B6D4",
-                  gradient: "linear-gradient(135deg, #06B6D4, #000)",
-                  url: "https://linkedin.com/in/eleonoraisraele"
-                },
-                {
-                  image: "https://i.pravatar.cc/300?img=7",
-                  title: "Brian Mate",
-                  subtitle: "VP of Revenue",
-                  borderColor: "#EC4899",
-                  gradient: "linear-gradient(120deg, #EC4899, #000)",
-                  url: "https://linkedin.com/in/brianmate"
-                },
-                {
-                  image: "https://i.pravatar.cc/300?img=8",
-                  title: "Stan Misiurev",
-                  subtitle: "Head of Technology",
-                  borderColor: "#84CC16",
-                  gradient: "linear-gradient(150deg, #84CC16, #000)",
-                  url: "https://linkedin.com/in/stanmisiurev"
-                },
-                {
-                  image: "https://i.pravatar.cc/300?img=9",
-                  title: "Angie Piparo",
-                  subtitle: "Chief Operating Officer",
-                  borderColor: "#F97316",
-                  gradient: "linear-gradient(200deg, #F97316, #000)",
-                  url: "https://linkedin.com/in/angiepiparo"
-                },
-                {
-                  image: "https://i.pravatar.cc/300?img=10",
-                  title: "Kimmie Restificar",
-                  subtitle: "VP of Operations",
-                  borderColor: "#6366F1",
-                  gradient: "linear-gradient(175deg, #6366F1, #000)",
-                  url: "https://linkedin.com/in/kimmierestificar"
-                }
-              ]}
-              columns={5}
-              rows={2}
-              radius={300}
-              damping={0.45}
-              fadeOut={0.6}
-              ease="power3.out"
-            />
-          </div>
-        </div>
-      </section>
 
-      {/* Testimonial Section */}
-      <section className="testimonial-section" aria-labelledby="testimonial-title">
-        <div className="testimonial-container">
-          <div className="testimonial-content">
-            <div className="testimonial-image">
-              <div className="image-placeholder">
-                {/* Image placeholder - replace with actual image */}
-              </div>
-            </div>
-            <div className="testimonial-text">
-              <div className="quote-marks">"</div>
-              <p className="testimonial-quote">
-                We started Venus Hiring with a simple mission - to make the talent acquisition process more transparent and efficient. We've spent the last 10 years perfecting our technology to connect millions of businesses with the best fit talent to grow their business.
-              </p>
-              <div className="testimonial-author">
-                <div className="author-info">
-                  <span className="author-name">Paresh Lheru</span>
-                  <div className="linkedin-link">
-                    <svg className="linkedin-icon" viewBox="0 0 24 24">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                  </div>
-                </div>
-                <span className="author-title">CEO, Founder & Chairman</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
     </main>
   );

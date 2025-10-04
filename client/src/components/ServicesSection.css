@@ -9,6 +9,8 @@
     display: flex;
     justify-content: center;
     color: #111;
+    /* prevent any horizontal scroll from internal tracks */
+    overflow-x: hidden;
   }
   
   /* card centered */
@@ -17,6 +19,12 @@
     width: 100%;
     padding: 1rem;
     box-sizing: border-box;
+  }
+  
+  @media (max-width: 480px) {
+    .vh-services__card {
+      padding: 0.5rem;
+    }
   }
   
   .vh-services__heading {
@@ -162,6 +170,7 @@
   }
   .vh-services__pager-text {
     color: #0b2f30;
+    font-size: 10px;
     font-weight: 600;
   }
   
@@ -189,12 +198,12 @@
     .vh-service-card { flex: 0 0 280px; }
     .vh-services__progress { width: 220px; }
   }
-  @media (max-width: 640px) {
-    /* stack cards on small screens */
-    .vh-services__viewport { overflow: visible; }
-    .vh-services__track { gap: 14px; flex-wrap: nowrap; transform: none !important; }
-    .vh-service-card { flex: 0 0 100%; }
-    .vh-services__controls { display: none; }
-    .vh-services__progress { display: none; }
+  @media (max-width: 480px) {
+    /* mobile view with horizontal scrolling cards - 1 card per view */
+    .vh-services__viewport { overflow-x: hidden; }
+    .vh-services__track { gap: 14px; flex-wrap: nowrap; }
+    .vh-service-card { flex: 0 0 calc(100vw - 60px); max-width: calc(100vw - 60px); }
+    .vh-services__controls { display: flex; }
+    .vh-services__progress { display: block; width: 200px; }
   }
   

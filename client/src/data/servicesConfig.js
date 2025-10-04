@@ -11,7 +11,7 @@ const services = {
         title: "Board Advisory Services",
         excerpt:
           "Fortify key appointments that will shape the future of your organisation.",
-        image: "/images/service-board.jpg",
+        image: "/images/service-board.png",
         link: "/services/board"
       },
       {
@@ -19,7 +19,7 @@ const services = {
         title: "Executive Search",
         excerpt:
           "Trusted advisors helping firms hire top-of-the-line leaders and executives.",
-        image: "/images/service-executive.jpg",
+        image: "/images/service-executive.png",
         link: "/services/executive-search"
       },
       {
@@ -35,7 +35,7 @@ const services = {
         title: "Talent Advisory Solutions",
         excerpt:
           "Cultivate a leadership culture that aligns with your values and objectives.",
-        image: "/images/service-advisory.jpg",
+        image: "/images/service-advisory.png",
         link: "/services/talent-advisory"
       }
       // add more items if needed

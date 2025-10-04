@@ -21,7 +21,21 @@ const ServicesSection = () => {
   const cardRef = useRef(null);
   const [cardWidth, setCardWidth] = useState(320);
   const [gap, setGap] = useState(24);
-  const maxIndex = Math.max(0, items.length - Math.floor(VISIBLE_RATIO));
+  // check if we're on mobile (but still allow sliding)
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 480);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // adjust maxIndex based on screen size
+  const maxIndex = isMobile 
+    ? Math.max(0, items.length - 1) // on mobile, show 1 card per view, allow scrolling to last card
+    : Math.max(0, items.length - Math.floor(VISIBLE_RATIO)); // on desktop, use original logic
 
   // measure card width on mount & resize
   useEffect(() => {

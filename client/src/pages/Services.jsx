@@ -5,66 +5,10 @@ import "./Services.css";
 const Services = () => {
   const services = [
     {
-      title: "IT Recruitment",
-      links: [
-        "Developers (Web/Mobile/Full-stack)",
-        "System Administrator",
-        "DevOps / SRE",
-        "Software Tester / QA",
-        "UI/UX Designer",
-        "Network Engineer",
-        "Data Engineer / BI / Analyst",
-        "Cloud Engineer",
-        "Security / GRC",
-        "IT Project Manager",
-        "Business Analyst",
-        "Product Manager",
-      ],
-    },
-    {
-      title: "E-commerce, Logistics & Supply Chain",
-      links: [
-        "Supply Chain",
-        "Logistics",
-        "Transportation",
-        "Construction",
-        "Procurement",
-        "3PL",
-        "Health & Safety",
-        "Quality",
-        "Production",
-        "Distribution",
-        "Trades",
-        "Lean Six Sigma",
-        "Warehousing",
-        "Project Management",
-        "Process Improvement",
-        "Business & Strategic Planning",
-        "Pharmaceuticals",
-        "Consumer Packaged Goods",
-        "Industrial",
-        "Life Sciences",
-      ],
-    },
-    {
-      title: "Automotive & EV",
-      links: [
-        "Utilities Engineer",
-        "System Engineer",
-        "H&S & Sustainability Consultant",
-        "Production Engineer",
-        "HVAC Technician",
-        "Power Engineer",
-        "Battery Cell Manufacturing Engineer",
-        "Electrical Engineer",
-        "Battery Design Engineer",
-      ],
-    },
-    {
-      title: "Clinical Research",
+      title: "Pharmaceutical & Life Science",
       links: [
         "Sales",
-        "Marketing",
+        "Marketing", 
         "Market Research",
         "Regulatory Affairs",
         "Supply Chain Management",
@@ -78,29 +22,87 @@ const Services = () => {
       ],
     },
     {
-      title: "IT Outsourcing",
+      title: "C-suite Executive Search",
       links: [
-        "Web Development",
-        "Hosting",
-        "Software & Application Development",
-        "Website/Application Maintenance",
-        "Technical Support",
-        "Database Development & Management",
-        "Telecommunications",
-        "Infrastructure",
+        "Board Search",
+        "Chief Executive Officer (CEO)",
+        "Chief Financial Officer (CFO)",
+        "Chief Operations Officer (COO)",
+        "Chief Marketing Officer (CMO)",
+        "Chief Technology Officer (CTO)",
+        "Chief Information Officer (CIO)",
+        "Chief Human Resources Officer (CHRO)",
+        "Chief Risk Officer (CRO)",
+        "Chief Strategy Officer (CSO)",
       ],
     },
     {
-      title: "Technical Support & Customer Service",
+      title: "AutoTech",
       links: [
-        "Live Chat Support",
-        "Remote Desktop Support",
-        "PC Networking",
-        "Personal Tech Support Software",
-        "Technical Specialist (IT)",
-        "Customer Service — E-commerce",
-        "Customer Service — Retail",
-        "Customer Service — Banking",
+        "Software Testing",
+        "Embedded Software Developer",
+        "Technical Project Manager",
+        "Validation, Verification & Integration Testing",
+        "Autonomous Vehicle System",
+        "ADAS Engineer",
+        "Machine Learning Engineer",
+        "Computer Vision Engineer",
+        "Robotics Engineer",
+        "IoT Engineer",
+      ],
+    },
+    {
+      title: "Manufacturing & Skilled Trade",
+      links: [
+        "Engineering",
+        "Manufacturing",
+        "Supply Chain",
+        "Logistics",
+        "Transportation",
+        "Construction",
+        "Procurement",
+        "Health & Safety",
+        "Quality",
+        "Production",
+        "Distribution",
+        "Trades",
+        "Lean Six Sigma",
+        "Warehousing",
+        "Project Management",
+      ],
+    },
+    {
+      title: "Accounting & Back Office Outsourcing",
+      links: [
+        "CFO",
+        "VP Finance",
+        "Controller",
+        "AP / AR Clerk",
+        "Staff Accountant",
+        "Senior Accountant",
+        "Financial Analyst",
+        "Tax Specialist",
+        "Auditor",
+        "Bookkeeper",
+        "Payroll Specialist",
+        "Budget Analyst",
+      ],
+    },
+    {
+      title: "Aerospace",
+      links: [
+        "Control System Engineer",
+        "Software Quality Engineer",
+        "System Engineer",
+        "Technical Project Manager",
+        "Embedded Software Engineer",
+        "Aerospace Engineer",
+        "Flight Test Engineer",
+        "Avionics Engineer",
+        "Structural Engineer",
+        "Propulsion Engineer",
+        "Systems Integration Engineer",
+        "DO-178 Certification Experts",
       ],
     },
     {
@@ -228,9 +230,56 @@ const Services = () => {
     const [expanded, setExpanded] = React.useState(false);
     const visible = expanded ? links : links.slice(0, 5);
     const hasMore = links.length > 5;
+
+    // Icon mapping for each service
+    const getServiceIcon = (serviceTitle) => {
+      const icons = {
+        "Pharmaceutical & Life Science": (
+          <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
+            <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z"/>
+          </svg>
+        ),
+        "C-suite Executive Search": (
+          <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
+            <path d="M16 4C18.2 4 20 5.8 20 8S18.2 12 16 12 12 10.2 12 8 13.8 4 16 4ZM16 6C14.9 6 14 6.9 14 8S14.9 10 16 10 18 9.1 18 8 17.1 6 16 6ZM8 4C10.2 4 12 5.8 12 8S10.2 12 8 12 4 10.2 4 8 5.8 4 8 4ZM8 6C6.9 6 6 6.9 6 8S6.9 10 8 10 10 9.1 10 8 9.1 6 8 6ZM16 14C18.2 14 20 15.8 20 18V20H12V18C12 15.8 13.8 14 16 14ZM8 14C10.2 14 12 15.8 12 18V20H4V18C4 15.8 5.8 14 8 14Z"/>
+          </svg>
+        ),
+        "AutoTech": (
+          <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H6.5C5.84 5 5.28 5.42 5.08 6.01L3 12V20C3 20.55 3.45 21 4 21H5C5.55 21 6 20.55 6 20V19H18V20C18 20.55 18.45 21 19 21H20C20.55 21 21 20.55 21 20V12L18.92 6.01ZM6.5 6.5H17.5L19 12H5L6.5 6.5ZM7 13.5C7.83 13.5 8.5 14.17 8.5 15S7.83 16.5 7 16.5 5.5 15.83 5.5 15 6.17 13.5 7 13.5ZM17 13.5C17.83 13.5 18.5 14.17 18.5 15S17.83 16.5 17 16.5 15.5 15.83 15.5 15 16.17 13.5 17 13.5Z"/>
+          </svg>
+        ),
+        "Manufacturing & Skilled Trade": (
+          <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
+            <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.5L19.5 8V16L12 19.5L4.5 16V8L12 4.5ZM12 6L6 9V15L12 18L18 15V9L12 6Z"/>
+            <path d="M8 10H16V12H8V10ZM8 14H16V16H8V14Z"/>
+          </svg>
+        ),
+        "Accounting & Back Office Outsourcing": (
+          <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
+            <path d="M7 4V2C7 1.45 7.45 1 8 1H16C16.55 1 17 1.45 17 2V4H20C20.55 4 21 4.45 21 5S20.55 6 20 6H19V19C19 20.1 18.1 21 17 21H7C5.9 21 5 20.1 5 19V6H4C3.45 6 3 5.55 3 5S3.45 4 4 4H7ZM9 3V4H15V3H9ZM7 6V19H17V6H7Z"/>
+            <path d="M9 8H15V10H9V8ZM9 12H15V14H9V12Z"/>
+          </svg>
+        ),
+        "Aerospace": (
+          <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
+            <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.5L19.5 8V16L12 19.5L4.5 16V8L12 4.5ZM12 6L6 9V15L12 18L18 15V9L12 6Z"/>
+            <path d="M8 10H16V12H8V10ZM8 14H16V16H8V14Z"/>
+          </svg>
+        )
+      };
+      return icons[serviceTitle] || (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
+          <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2Z"/>
+        </svg>
+      );
+    };
+
     return (
       <article className="svc-card">
-        <div className="svc-card__icon" aria-hidden="true" />
+        <div className="svc-card__icon" aria-hidden="true">
+          {getServiceIcon(title)}
+        </div>
         <h3 className="svc-card__title">{title}</h3>
         <ul className="svc-card__links">
           {visible.map((label) => (
@@ -259,7 +308,18 @@ const Services = () => {
             </div>
 
             <div className="svc-hero__right" aria-hidden="false">
-              <div className="media-placeholder" role="img" aria-label="Media placeholder" />
+              <video 
+                className="hero-video" 
+                autoPlay 
+                muted 
+                loop 
+                playsInline
+                controls
+                aria-label="Services video presentation"
+              >
+                <source src="/images/ven01.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </div>
@@ -293,18 +353,21 @@ const Services = () => {
           <div className="svc-container">
             <div className="talent-banner__grid">
               <div className="talent-banner__left">
-                <div className="project-brief image-placeholder" aria-label="Project Brief image placeholder">
-                  <span className="image-placeholder__label">Project Brief Image</span>
-                </div>
-              </div>
-              <div className="talent-banner__right">
                 <h2 className="talent-banner__title">
                   Share your talent needs. Connect with qualified professionals within minutes.
                 </h2>
                 <p className="talent-banner__subtitle">
-                  Tell us about your company and hiring goals to generate a custom Talent Brief in minutes.
+                  Tell us about your company and hiring goals<br />
+                  to generate a custom Talent Brief in minutes.
                 </p>
                 <button className="talent-banner__cta">Find Talents</button>
+              </div>
+              <div className="talent-banner__right">
+                <img 
+                  src="/images/iamge01.png" 
+                  alt="Project Brief" 
+                  className="talent-banner__image"
+                />
               </div>
             </div>
           </div>
@@ -320,14 +383,26 @@ const Services = () => {
               Tools for you, no matter where you are in your research process.
             </p>
             <div className="talent-image-grid">
-              <div className="talent-image" aria-label="Search section image placeholder">
-                <span className="image-placeholder__label">Image Placeholder</span>
+              <div className="talent-image">
+                <img 
+                  src="/images/image01.png" 
+                  alt="Search section" 
+                  className="talent-image__img"
+                />
               </div>
-              <div className="talent-image" aria-label="Find section image placeholder">
-                <span className="image-placeholder__label">Image Placeholder</span>
+              <div className="talent-image">
+                <img 
+                  src="/images/image-004.png" 
+                  alt="Find section" 
+                  className="talent-image__img"
+                />
               </div>
-              <div className="talent-image" aria-label="Decide section image placeholder">
-                <span className="image-placeholder__label">Image Placeholder</span>
+              <div className="talent-image">
+                <img 
+                  src="/images/image-003.webp" 
+                  alt="Decide section" 
+                  className="talent-image__img"
+                />
               </div>
             </div>
           </div>

@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import UpFooter from "./components/UpFooter";
 import About from "./pages/AboutUs";
 import Footer from "./components/Footer";
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 // ✅ Wrapper so we can use useLocation inside Router
 function AppContent() {
@@ -74,6 +75,9 @@ function AppContent() {
       )}
 
       <Footer />
+      
+      {/* WhatsApp Float Button - appears on all pages */}
+      <WhatsAppFloat />
     </>
   );
 }

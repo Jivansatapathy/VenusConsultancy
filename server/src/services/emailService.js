@@ -13,7 +13,20 @@ const createTransporter = () => {
     });
   }
 
-  // Option 2: Custom SMTP (for production)
+  // Option 2: Zoho Mail
+  if (process.env.EMAIL_SERVICE === 'zoho') {
+    return nodemailer.createTransporter({
+      host: 'smtp.zoho.com',
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+  }
+
+  // Option 3: Custom SMTP (for production)
   return nodemailer.createTransporter({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT || 587,

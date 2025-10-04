@@ -22,6 +22,23 @@ CONTACT_EMAIL=info@venushiring.com
    - Generate a new app password for "Mail"
    - Use this password in `EMAIL_PASS`
 
+### Option 2: Zoho Mail (Recommended for business)
+
+```env
+# Email Configuration
+EMAIL_SERVICE=zoho
+EMAIL_USER=your-email@yourdomain.com
+EMAIL_PASS=your-zoho-password
+CONTACT_EMAIL=info@venushiring.com
+```
+
+**Zoho Mail Setup Steps:**
+1. Go to your Zoho Mail account
+2. Go to Settings → Mail Accounts → IMAP/POP Access
+3. Enable IMAP access
+4. Use your regular Zoho Mail password (no app password needed)
+5. Configure your domain's SPF and DKIM records for better deliverability
+
 ### Option 2: Custom SMTP (For production)
 
 ```env

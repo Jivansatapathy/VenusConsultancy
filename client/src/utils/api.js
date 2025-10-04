@@ -8,11 +8,32 @@ let refreshQueue = [];
 // call this from AuthContext after login
 export function setAccessToken(token) {
   accessToken = token;
+  // Also store in localStorage for persistence
+  if (token) {
+    localStorage.setItem("venus_token", token);
+  }
 }
 
 // call on logout
 export function clearAccessToken() {
   accessToken = null;
+  // Clear from localStorage
+  localStorage.removeItem("venus_token");
+}
+
+// Initialize token from localStorage on app start
+export function initializeTokenFromStorage() {
+  try {
+    const savedToken = localStorage.getItem("venus_token");
+    if (savedToken) {
+      accessToken = savedToken;
+      return savedToken;
+    }
+  } catch (error) {
+    console.error("[API] Error loading token from storage:", error);
+    localStorage.removeItem("venus_token");
+  }
+  return null;
 }
 
 function processQueue(err, token = null) {

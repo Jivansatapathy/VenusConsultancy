@@ -171,13 +171,8 @@ const Navbar = () => {
             Book A Call
           </Link>
 
-
-          {/* Auth area: Login or user + Logout */}
-          {!isAuthenticated ? (
-            <Link to="/admin/login" className="vh-btn vh-btn--outline" tabIndex={menuOpen ? -1 : 0}>
-              Login
-            </Link>
-          ) : (
+          {/* Auth area: Only show logout for authenticated users */}
+          {isAuthenticated && (
             <>
               <span style={{ marginLeft: 8, color: "#333", fontSize: 14 }}>
                 {user?.name || user?.email}
@@ -253,34 +248,23 @@ const Navbar = () => {
             Book A Call
           </Link>
 
-          {/* Mobile auth actions */}
-          <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
-            {!isAuthenticated ? (
-              <Link
-                to="/admin/login"
+          {/* Mobile auth actions - Only show for authenticated users */}
+          {isAuthenticated && (
+            <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
+              <div style={{ padding: ".6rem .8rem", fontWeight: 700 }}>{user?.name || user?.email}</div>
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  handleLogout();
+                }}
                 className="vh-mobile-menu__link"
-                onClick={() => setMenuOpen(false)}
+                style={{ textAlign: "left", border: "none", background: "transparent", cursor: "pointer" }}
                 role="menuitem"
               >
-                Login
-              </Link>
-            ) : (
-              <>
-                <div style={{ padding: ".6rem .8rem", fontWeight: 700 }}>{user?.name || user?.email}</div>
-                <button
-                  onClick={() => {
-                    setMenuOpen(false);
-                    handleLogout();
-                  }}
-                  className="vh-mobile-menu__link"
-                  style={{ textAlign: "left", border: "none", background: "transparent", cursor: "pointer" }}
-                  role="menuitem"
-                >
-                  Logout
-                </button>
-              </>
-            )}
-          </div>
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

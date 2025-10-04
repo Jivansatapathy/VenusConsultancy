@@ -153,18 +153,27 @@ export function AuthProvider({ children }) {
   }, [saveUserToStorage]);
 
   const logout = useCallback(async () => {
+    console.log("[AuthContext] Logging out...");
+    
+    // Immediately clear all authentication data for instant logout
+    clearAccessToken();
+    setUser(null);
+    clearUserFromStorage();
+    console.log("[AuthContext] User logged out and data cleared instantly");
+    
+    // Try to notify server in background (non-blocking)
     try {
-      console.log("[AuthContext] Logging out...");
-      await API.post("/auth/logout");
+      // Set a 5-second timeout for the logout request
+      const logoutPromise = API.post("/auth/logout");
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Logout timeout')), 5000)
+      );
+      
+      await Promise.race([logoutPromise, timeoutPromise]);
+      console.log("[AuthContext] Server logout successful");
     } catch (err) {
-      // ignore network errors on logout
-      console.warn("[AuthContext] Logout error (ignored):", err);
-    } finally {
-      // Clear all authentication data
-      clearAccessToken();
-      setUser(null);
-      clearUserFromStorage();
-      console.log("[AuthContext] User logged out and data cleared");
+      // ignore network errors and timeouts on logout
+      console.warn("[AuthContext] Server logout failed or timed out (ignored):", err.message);
     }
   }, [clearUserFromStorage]);
 

@@ -100,10 +100,13 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await logout();
+      // Start logout process (non-blocking)
+      logout();
+      // Immediately navigate to login page
+      navigate("/admin/login");
     } catch (err) {
       console.warn("Logout failed", err);
-    } finally {
+      // Still navigate even if logout fails
       navigate("/admin/login");
     }
   };

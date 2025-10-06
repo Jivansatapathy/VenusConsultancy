@@ -90,11 +90,11 @@
 .stat__value {
   color: #0f2833;
   font-weight: 800;
-  font-size: clamp(24px, 3vw, 32px);
+  font-size: clamp(20px, 2.5vw, 28px); /* Reduced from 24px-32px to 20px-28px */
 }
 .stat__label {
   color: #6b7280;
-  font-size: 12px;
+  font-size: 11px; /* Reduced from 12px to 11px */
   margin-top: 6px;
 }
 
@@ -183,60 +183,85 @@
 /* Curved Text Section */
 .curved-text-section {
   background: #0f0f0f;
-  padding: 80px 0;
   overflow: hidden;
-}
-
-/* Leadership Team Section */
-.leadership-section {
-  background: #0f0f0f;
-  padding: 100px 0;
-  color: #ffffff;
-}
-
-.leadership-container {
-  width: min(1400px, 100%);
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.leadership-header {
-  margin-bottom: 80px;
-  text-align: center;
-}
-
-.leadership-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0;
-  color: #ffffff;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  letter-spacing: -0.02em;
-}
-
-.leadership-grid {
-  height: auto;
-  min-height: 800px;
-  position: relative;
-  width: fit-content;
 }
 
 .curved-text {
   fill: #ffffff;
-  font-size: 4rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
 
-@media (max-width: 768px) {
-  .curved-text {
-    font-size: 2.5rem;
-  }
+.curved-loop-jacket {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 @media (max-width: 900px) {
-  .stats-row { grid-template-columns: 1fr; gap: 12px; }
+  .stats-row { 
+    grid-template-columns: repeat(3, 1fr); /* Keep side-by-side layout */
+    gap: 16px; /* Reduce gap slightly for smaller screens */
+  }
+  
+  .stat__value {
+    font-size: clamp(19px, 2.5vw, 28px);
+  }
+  
+  .stat__label {
+    font-size: 11px; /* Smaller label for mobile */
+  }
+  
+  .about-stats__title {
+    font-size: clamp(18px, 2vw, 22px); /* Smaller title for mobile */
+  }
+}
+
+/* Laptop styles */
+@media (min-width: 1025px) {
+  .curved-text-section {
+    padding: 80px 0;
+  }
+  
+  .curved-text {
+    font-size: 4rem;
+  }
+  
+  .curved-loop-jacket {
+    min-height: 80vh;
+  }
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .curved-text-section {
+    padding: 0;
+  }
+  
+  .curved-text {
+    font-size: 4rem;
+  }
+  
+  .curved-loop-jacket {
+    min-height: 70vh;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .curved-text-section {
+    padding: 0;
+  }
+  
+  .curved-text {
+    font-size: 6.5rem;
+  }
+  
+  .curved-loop-jacket {
+    min-height: 60vh;
+  }
 }
 
 /* Background section (Background.png) */

@@ -29,7 +29,7 @@ const BlogSection = () => {
             <article key={b.slug} className="vh-blog__item">
               <a href={b.readMoreUrl} className="vh-blog__media-link" aria-label={`Read full article: ${b.title}`}>
                 <div className="vh-blog__media">
-                  <img src={b.image} alt={b.title} loading="lazy" />
+                  <img src={b.image} alt={b.title} loading="lazy" decoding="async" />
                 </div>
               </a>
 

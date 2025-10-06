@@ -79,19 +79,19 @@ const AboutUs = () => {
                 <p className="bp-card__text">
                   Solve your business challenge by searching our vetted database of 350,000+ service providers
                 </p>
-                <a href="#" className="bp-card__link">Start your search</a>
+                <a href="/services" className="bp-card__link" aria-label="Start your search in services">Start your search</a>
               </div>
-              <img className="bp-card__graphic" src="/graphic1.png" alt="Buyer graphic" />
+              <img className="bp-card__graphic" src="/graphic1.png" alt="Buyer graphic" loading="lazy" decoding="async" />
             </article>
 
             <article className="bp-card bp-card--providers">
-              <img className="bp-card__graphic" src="/graphic2.png" alt="Provider graphic" />
+              <img className="bp-card__graphic" src="/graphic2.png" alt="Provider graphic" loading="lazy" decoding="async" />
               <div className="bp-card__content">
                 <h3 className="bp-card__title">FOR PROVIDERS</h3>
                 <p className="bp-card__text">
                   Get listed where buying decisions are made so you can capture the attention of in-market prospects
                 </p>
-                <a href="#" className="bp-card__link">Create a profile</a>
+                <a href="/contact" className="bp-card__link" aria-label="Create a profile by contacting us">Create a profile</a>
               </div>
             </article>
           </div>

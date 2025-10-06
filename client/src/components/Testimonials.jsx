@@ -60,6 +60,8 @@ const Testimonials = () => {
                   src={t.avatar}
                   alt="Company logo"
                   className="vh-testimonial-avatar"
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextSibling.style.display = 'flex';

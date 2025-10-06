@@ -31,7 +31,7 @@ export default function Hero({ showImage = false, imageSrc = "/hero-person.webp"
         {/* Optional Hero Image (keeps stacking below buttons) */}
         {showImage && (
           <div className="hero-image">
-            <img src={imageSrc} alt="hero person" />
+            <img src={imageSrc} alt="hero person" loading="lazy" decoding="async" />
           </div>
         )}
       </div>

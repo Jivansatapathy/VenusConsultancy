@@ -178,7 +178,7 @@ const Contact = () => {
 
             <div className="follow-label">Follow Us</div>
             <div className="social-row" aria-label="Follow us on social media">
-              <a className="social-icon" href="#" aria-label="LinkedIn">
+              <a className="social-icon" href="https://www.linkedin.com/company/the-venus-consultancy-ltd/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -195,7 +195,7 @@ const Contact = () => {
                   <circle cx="4" cy="4" r="2" />
                 </svg>
               </a>
-              <a className="social-icon" href="#" aria-label="Facebook">
+              <a className="social-icon" href="https://www.facebook.com/venushiring" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -210,7 +210,7 @@ const Contact = () => {
                   <path d="M18 2h-3a4 4 0 0 0-4 4v4H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 0 1 1-1h3z" />
                 </svg>
               </a>
-              <a className="social-icon" href="#" aria-label="Instagram">
+              <a className="social-icon" href="https://www.instagram.com/venushiring?igsh=MTFyYTMycDlkcXh4NQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"

@@ -176,6 +176,8 @@ export default function AboutUs() {
                       src={slide.src}
                       alt={slide.alt}
                       className="about__img"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 ))}

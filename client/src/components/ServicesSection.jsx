@@ -101,7 +101,7 @@ const ServicesSection = () => {
                 ref={i === 0 ? cardRef : null} // measure first card
               >
                 <div className="vh-service-card__media">
-                  <img src={it.image} alt={it.title} />
+                  <img src={it.image} alt={it.title} loading="lazy" decoding="async" />
                 </div>
                 <div className="vh-service-card__body">
                   <h3 className="vh-service-card__title">{it.title}</h3>

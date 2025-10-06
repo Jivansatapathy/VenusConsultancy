@@ -11,13 +11,26 @@ const Footer = () => {
           <div className="vh-footer__tagline">Hire Smarter. Grow Faster.</div>
         </div>
 
-        <nav className="vh-footer__nav" aria-label="Footer navigation">
+        {/* Desktop/Laptop nav */}
+        <nav className="vh-footer__nav vh-footer__nav--desktop" aria-label="Footer navigation">
           <a href="/" className="vh-footer__link">Home</a>
           <a href="/find-jobs" className="vh-footer__link">Find Jobs</a>
-          <a href="/find-talent" className="vh-footer__link">Find Talent</a>
+          <a href="/services" className="vh-footer__link">Services</a>
           <a href="/about" className="vh-footer__link">About</a>
           <a href="/contact" className="vh-footer__link">Contact</a>
         </nav>
+
+        {/* Mobile/Tablet accordion */}
+        <details className="vh-footer__accordion" aria-label="Footer navigation">
+          <summary>Navigation</summary>
+          <div className="vh-footer__accordion-panel">
+            <a href="/" className="vh-footer__link">Home</a>
+            <a href="/find-jobs" className="vh-footer__link">Find Jobs</a>
+            <a href="/services" className="vh-footer__link">Services</a>
+            <a href="/about" className="vh-footer__link">About</a>
+            <a href="/contact" className="vh-footer__link">Contact</a>
+          </div>
+        </details>
 
         <div className="vh-footer__newsletter" aria-labelledby="newsletter-heading">
           <h3 id="newsletter-heading" className="vh-footer__h3">Subscribe</h3>

@@ -1,10 +1,24 @@
 // client/src/pages/Services.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, useMotionTemplate, useMotionValue, animate } from "framer-motion";
 import "./Services.css";
 
 const Services = () => {
   const navigate = useNavigate();
+  // Aurora background for mobile/tablet hero
+  const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
+  const color = useMotionValue(COLORS_TOP[0]);
+  useEffect(() => {
+    const controls = animate(color, COLORS_TOP, {
+      ease: "easeInOut",
+      duration: 10,
+      repeat: Infinity,
+      repeatType: "mirror",
+    });
+    return () => controls.stop();
+  }, []);
+  const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewForm, setReviewForm] = useState({
     name: '',
@@ -361,6 +375,7 @@ const Services = () => {
   };
   return (
     <main className="services-page">
+      {/* Desktop/Laptop hero (hidden on tablet/mobile) */}
       <header className="svc-hero" role="banner">
         <div className="svc-container">
           <div className="svc-hero__grid" aria-label="Hero two column layout">
@@ -390,6 +405,26 @@ const Services = () => {
         </div>
       </header>
 
+      {/* Tablet/Mobile hero (hidden on desktop/laptop) */}
+      <header className="svc-hero-mobile" role="banner" aria-label="Services hero (mobile/tablet)">
+        <div className="svc-hero-mobile__container">
+          {/* Animated aurora background layer (behind content) */}
+          <motion.div
+            className="svc-hero-mobile__bg"
+            style={{ backgroundImage }}
+            aria-hidden
+          />
+          <div className="svc-hero-mobile__content">
+            <h1 className="svc-hero-mobile__title">Your partner in hiring the right talent for every role.</h1>
+            <p className="svc-hero-mobile__sub">Whatever your hiring challenge, explore our talent solutions to find the right professionals across 2,000+ specialized roles.</p>
+            <div className="svc-hero-mobile__ctas" role="group" aria-label="Primary actions">
+              <a className="btn btn--primary" href="/contact">Contact Us</a>
+              <a className="btn btn--outline-invert" href="#services">Browse on your own</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
       <div className="svc-divider" aria-hidden="true" />
 
       <section id="services" className="svc-services" aria-labelledby="svc-services-title">
@@ -406,7 +441,7 @@ const Services = () => {
           </div>
 
           <div className="svc-services__footer">
-            <a className="svc-browse-all" href="#">Browse All Services <span aria-hidden>→</span></a>
+            <a className="svc-browse-all" href="/services" aria-label="Browse all services">Browse All Services <span aria-hidden>→</span></a>
           </div>
         </div>
 
@@ -432,46 +467,14 @@ const Services = () => {
                   src="/images/iamge01.png" 
                   alt="Project Brief" 
                   className="talent-banner__image"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Unified content: heading + image placeholders only */}
-        <div className="talent-body">
-          <div className="svc-container">
-            <h2 className="talent-middle__title">
-              Your one-stop-shop for better business decisions.
-            </h2>
-            <p className="talent-middle__subtitle">
-              Tools for you, no matter where you are in your research process.
-            </p>
-            <div className="talent-image-grid">
-              <div className="talent-image">
-                <img 
-                  src="/images/image01.png" 
-                  alt="Search section" 
-                  className="talent-image__img"
-                />
-              </div>
-              <div className="talent-image">
-                <img 
-                  src="/images/image-004.png" 
-                  alt="Find section" 
-                  className="talent-image__img"
-                />
-              </div>
-              <div className="talent-image">
-                <img 
-                  src="/images/image-003.webp" 
-                  alt="Decide section" 
-                  className="talent-image__img"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
               {/* Trusted-by / Testimonial Hero Section (placed right after talent body) */}
               <section className="trusted-hero" aria-labelledby="trusted-hero-title">

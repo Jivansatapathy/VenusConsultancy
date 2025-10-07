@@ -1,0 +1,13 @@
+# Allow all search engines to crawl the site except sensitive pages
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /cgi-bin/
+Disallow: /config/
+Disallow: /temp/
+
+# Allow everything else
+Allow: /
+
+# Link to sitemap
+Sitemap: https://www.venushiring.com/sitemap.xml

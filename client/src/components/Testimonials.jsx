@@ -9,20 +9,59 @@ const Testimonials = () => {
   const { heading, subheading, items } = testimonials;
   const [index, setIndex] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const timerRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+
+  // Check screen size
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      setIsTablet(window.innerWidth > 768 && window.innerWidth <= 1024);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   const next = () => {
-    setIndex((prev) => (prev + 1) % items.length);
-    setProgress(0); // reset loader
+    if (isMobile || isTablet) {
+      // For mobile/tablet, scroll horizontally
+      const container = scrollContainerRef.current;
+      if (container) {
+        const cardWidth = isMobile ? container.offsetWidth : container.offsetWidth / 2;
+        const scrollAmount = cardWidth + 16; // 16px gap
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    } else {
+      // For desktop, use carousel
+      setIndex((prev) => (prev + 1) % items.length);
+      setProgress(0);
+    }
   };
 
   const prev = () => {
-    setIndex((prev) => (prev - 1 + items.length) % items.length);
-    setProgress(0);
+    if (isMobile || isTablet) {
+      // For mobile/tablet, scroll horizontally
+      const container = scrollContainerRef.current;
+      if (container) {
+        const cardWidth = isMobile ? container.offsetWidth : container.offsetWidth / 2;
+        const scrollAmount = cardWidth + 16; // 16px gap
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      }
+    } else {
+      // For desktop, use carousel
+      setIndex((prev) => (prev - 1 + items.length) % items.length);
+      setProgress(0);
+    }
   };
 
-  // Main timer loop
+  // Main timer loop (only for desktop)
   useEffect(() => {
+    if (isMobile || isTablet) return; // No auto-rotation on mobile/tablet
+    
     const step = 100; // ms
     timerRef.current = setInterval(() => {
       setProgress((p) => {
@@ -36,7 +75,7 @@ const Testimonials = () => {
     }, step);
 
     return () => clearInterval(timerRef.current);
-  }, [index]);
+  }, [index, isMobile, isTablet]);
 
   return (
     <section className="vh-testimonials" aria-labelledby="vh-testimonials-heading">
@@ -46,15 +85,18 @@ const Testimonials = () => {
         </h2>
         <p className="vh-testimonials__sub">{subheading}</p>
 
-        {/* Carousel */}
-        <div className="vh-testimonials__carousel">
+        {/* Carousel/Scroll Container */}
+        <div 
+          className={`vh-testimonials__carousel ${isMobile ? 'mobile-scroll' : isTablet ? 'tablet-scroll' : 'desktop-carousel'}`}
+          ref={scrollContainerRef}
+        >
           {items.map((t, i) => (
             <div
               key={i}
-              className={`vh-testimonial-card ${i === index ? "active" : "inactive"}`}
-              aria-hidden={i !== index}
+              className={`vh-testimonial-card ${!isMobile && !isTablet ? (i === index ? "active" : "inactive") : ""}`}
+              aria-hidden={!isMobile && !isTablet ? i !== index : false}
             >
-              <blockquote className="vh-testimonial-quote">“{t.quote}”</blockquote>
+              <blockquote className="vh-testimonial-quote">"{t.quote}"</blockquote>
               <div className="vh-testimonial-profile">
                 <img
                   src={t.avatar}
@@ -90,8 +132,8 @@ const Testimonials = () => {
                 </div>
               </div>
 
-              {/* Progress circle */}
-              {i === index && (
+              {/* Progress circle - only for desktop */}
+              {!isMobile && !isTablet && i === index && (
                 <div className="vh-testimonial-progress">
                   <svg className="progress-ring" viewBox="0 0 36 36">
                     <path

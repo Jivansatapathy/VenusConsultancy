@@ -197,12 +197,74 @@
     transition: stroke-dashoffset 0.1s linear;
   }
   
+  /* Mobile Scroll Layout */
+  .vh-testimonials__carousel.mobile-scroll {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    height: auto;
+    gap: 16px;
+    padding: 0 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vh-testimonials__carousel.mobile-scroll .vh-testimonial-card {
+    position: relative;
+    transform: none;
+    left: auto;
+    top: auto;
+    opacity: 1 !important;
+    margin-bottom: 0;
+    flex: 0 0 calc(100% - 2rem);
+    scroll-snap-align: start;
+    width: calc(100% - 2rem);
+  }
+
+  /* Tablet Scroll Layout */
+  .vh-testimonials__carousel.tablet-scroll {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    height: auto;
+    gap: 16px;
+    padding: 0 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vh-testimonials__carousel.tablet-scroll .vh-testimonial-card {
+    position: relative;
+    transform: none;
+    left: auto;
+    top: auto;
+    opacity: 1 !important;
+    margin-bottom: 0;
+    flex: 0 0 calc(50% - 8px);
+    scroll-snap-align: start;
+    width: calc(50% - 8px);
+  }
+
+  /* Hide scrollbars but keep functionality */
+  .vh-testimonials__carousel.mobile-scroll::-webkit-scrollbar,
+  .vh-testimonials__carousel.tablet-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vh-testimonials__carousel.mobile-scroll,
+  .vh-testimonials__carousel.tablet-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   /* Responsive */
-  @media (max-width: 640px) {
-    .vh-testimonials__carousel {
+  @media (max-width: 768px) {
+    .vh-testimonials__carousel:not(.mobile-scroll):not(.tablet-scroll) {
       height: auto;
     }
-    .vh-testimonial-card {
+    .vh-testimonial-card:not(.mobile-scroll .vh-testimonial-card):not(.tablet-scroll .vh-testimonial-card) {
       position: relative;
       transform: none;
       left: auto;
@@ -211,7 +273,13 @@
       margin-bottom: 1.25rem;
     }
     .vh-testimonials__controls {
-      display: none;
+      display: flex;
+    }
+  }
+
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .vh-testimonials__controls {
+      display: flex;
     }
   }
   

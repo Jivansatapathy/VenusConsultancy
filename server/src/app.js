@@ -91,6 +91,15 @@ app.set("trust proxy", 1);
 
 app.use("/api/auth", authRoutes);
 
+// Fast preflight handling for refresh (helps some proxies)
+app.options("/api/auth/refresh", cors({
+  origin: (origin, callback) => {
+    if (!origin || config.CORS_ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    return callback(new Error("Not allowed by CORS"), false);
+  },
+  credentials: true,
+}));
+
 // ---- Connect to DB ----
 (async () => {
   try {

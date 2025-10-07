@@ -294,20 +294,19 @@ const ApplyModal = ({ job, onClose }) => {
       formDataToSend.append("coverMessage", formData.coverMessage);
       formDataToSend.append("resume", resume);
 
-      const response = await fetch("http://localhost:5000/api/applications", {
-        method: "POST",
-        body: formDataToSend
-      });
+      const { data } = await API.post(
+        "/applications",
+        formDataToSend,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (data && (data.ok || data._id || data.message)) {
         setMessage({ type: "success", text: "Application submitted successfully!" });
         setTimeout(() => {
           onClose();
         }, 2000);
       } else {
-        setMessage({ type: "error", text: data.error || "Failed to submit application" });
+        setMessage({ type: "error", text: (data && (data.error || data.message)) || "Failed to submit application" });
       }
     } catch (err) {
       setMessage({ type: "error", text: "Network error. Please try again." });

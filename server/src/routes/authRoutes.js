@@ -212,7 +212,8 @@ router.post("/logout", async (req, res) => {
         }
       }
     }
-    res.clearCookie("vh_rt", { path: "/api/auth" });
+    // Clear cookie using the same path it was set on
+    res.clearCookie("vh_rt", { path: "/api", httpOnly: true, secure: config.NODE_ENV === "production", sameSite: config.NODE_ENV === "production" ? "none" : "lax" });
     return res.json({ ok: true });
   } catch (err) {
     console.error("[auth] logout error:", err && err.stack ? err.stack : err);

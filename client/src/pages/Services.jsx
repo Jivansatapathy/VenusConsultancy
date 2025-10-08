@@ -1,7 +1,8 @@
 // client/src/pages/Services.jsx
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion, useMotionTemplate, useMotionValue, animate } from "framer-motion";
+import { jobRolesData } from "../data/jobRolesData";
 import "./Services.css";
 
 const Services = () => {
@@ -114,58 +115,6 @@ const Services = () => {
         "Chief Human Resources Officer (CHRO)",
         "Chief Risk Officer (CRO)",
         "Chief Strategy Officer (CSO)",
-      ],
-    },
-    {
-      title: "AutoTech",
-      links: [
-        "Software Testing",
-        "Embedded Software Developer",
-        "Technical Project Manager",
-        "Validation, Verification & Integration Testing",
-        "Autonomous Vehicle System",
-        "ADAS Engineer",
-        "Machine Learning Engineer",
-        "Computer Vision Engineer",
-        "Robotics Engineer",
-        "IoT Engineer",
-      ],
-    },
-    {
-      title: "Manufacturing & Skilled Trade",
-      links: [
-        "Engineering",
-        "Manufacturing",
-        "Supply Chain",
-        "Logistics",
-        "Transportation",
-        "Construction",
-        "Procurement",
-        "Health & Safety",
-        "Quality",
-        "Production",
-        "Distribution",
-        "Trades",
-        "Lean Six Sigma",
-        "Warehousing",
-        "Project Management",
-      ],
-    },
-    {
-      title: "Accounting & Back Office Outsourcing",
-      links: [
-        "CFO",
-        "VP Finance",
-        "Controller",
-        "AP / AR Clerk",
-        "Staff Accountant",
-        "Senior Accountant",
-        "Financial Analyst",
-        "Tax Specialist",
-        "Auditor",
-        "Bookkeeper",
-        "Payroll Specialist",
-        "Budget Analyst",
       ],
     },
     {
@@ -292,24 +241,33 @@ const Services = () => {
         "Audit Partner",
       ],
     },
-    {
-      title: "Aerospace",
-      links: [
-        "Control System Engineer",
-        "Software Quality Engineer",
-        "System Engineer",
-        "Technical Project Manager",
-        "Embedded Software Engineer",
-        "Validation, Verification & Integration Engineer",
-        "DO-178 Certification Experts",
-      ],
-    },
   ];
 
   const ServiceCard = ({ title, links }) => {
     const [expanded, setExpanded] = React.useState(false);
     const visible = expanded ? links : links.slice(0, 5);
     const hasMore = links.length > 5;
+
+    // Function to find the job role key from the role name
+    const getJobRoleKey = (roleName) => {
+      // Try to find exact match first
+      for (const [key, jobData] of Object.entries(jobRolesData)) {
+        if (jobData.title === roleName) {
+          return key;
+        }
+      }
+      
+      // Try partial matches for common variations
+      const lowerRoleName = roleName.toLowerCase();
+      for (const [key, jobData] of Object.entries(jobRolesData)) {
+        const lowerTitle = jobData.title.toLowerCase();
+        if (lowerTitle.includes(lowerRoleName) || lowerRoleName.includes(lowerTitle)) {
+          return key;
+        }
+      }
+      
+      return null; // No match found
+    };
 
     // Icon mapping for each service
     const getServiceIcon = (serviceTitle) => {
@@ -362,9 +320,18 @@ const Services = () => {
         </div>
         <h3 className="svc-card__title">{title}</h3>
         <ul className="svc-card__links">
-          {visible.map((label) => (
-            <li key={label}>{label}</li>
-          ))}
+          {visible.map((label) => {
+            const jobRoleKey = getJobRoleKey(label);
+            return jobRoleKey ? (
+              <li key={label}>
+                <Link to={`/hiring/${jobRoleKey}`} className="svc-card__link">
+                  {label}
+                </Link>
+              </li>
+            ) : (
+              <li key={label}>{label}</li>
+            );
+          })}
         </ul>
         {hasMore && (
           <button className="svc-card__toggle" type="button" onClick={() => setExpanded((v) => !v)}>

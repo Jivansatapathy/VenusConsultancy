@@ -20,6 +20,7 @@ import candidateRoutes from "./routes/candidateRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
 import connectDB from "./config/db.js";
 
 const app = express();
@@ -118,6 +119,7 @@ app.use("/api/candidates", candidateRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 // ---- Serve Frontend (guarded) ----
 import fs from "fs";

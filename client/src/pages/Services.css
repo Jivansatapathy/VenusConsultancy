@@ -348,6 +348,23 @@
   line-height: 1.4;
 }
 
+/* Styling for clickable links in ServiceCard */
+.svc-card__link {
+  color: #2563eb; /* Blue color */
+  text-decoration: underline; /* Underline */
+  transition: all 0.2s ease;
+  padding: 2px 4px;
+  border-radius: 3px;
+  margin: -2px -4px;
+  display: block;
+}
+
+.svc-card__link:hover {
+  color: #1d4ed8; /* Darker blue on hover */
+  background: rgba(37, 99, 235, 0.05);
+  text-decoration: underline;
+}
+
 .svc-card__toggle {
   margin-top: 10px;
   background: transparent;

@@ -1,0 +1,521 @@
+/* Hiring Page Styles */
+.hiring-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.hiring-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Breadcrumb Navigation */
+.hiring-breadcrumb {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 0;
+}
+
+.hiring-breadcrumb nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.breadcrumb-link {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  color: #6b7280;
+  margin: 0 0.25rem;
+}
+
+.breadcrumb-current {
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Main Content */
+.hiring-main {
+  padding: 2rem 0;
+}
+
+.hiring-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.hiring-content {
+  max-width: none;
+}
+
+.job-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.job-description h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.job-description h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 1.5rem 0 1rem 0;
+}
+
+.job-description p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+}
+
+.duties-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.duties-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.duties-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #2563eb;
+  font-weight: bold;
+}
+
+/* CTA Section */
+.hiring-cta {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.hiring-cta h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.hiring-cta p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0 0 1.5rem 0;
+}
+
+.cta-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cta-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.cta-actions .btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+}
+
+.cta-actions .btn-primary {
+  background: #2563eb;
+  color: #ffffff;
+  border: 1px solid #2563eb;
+}
+
+.cta-actions .btn-primary:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.cta-actions .btn-outline {
+  background: #ffffff;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+
+.cta-actions .btn-outline:hover {
+  background: #2563eb;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Sidebar */
+.hiring-sidebar {
+  position: sticky;
+  top: 2rem;
+}
+
+.salary-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.salary-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.bookmark-icon {
+  font-size: 1.5rem;
+}
+
+.salary-header h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.salary-range {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #059669;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.salary-breakdown {
+  margin-bottom: 1.5rem;
+}
+
+.salary-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.salary-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.salary-label.low {
+  color: #dc2626;
+}
+
+.salary-label.mid {
+  color: #d97706;
+}
+
+.salary-label.high {
+  color: #059669;
+}
+
+.salary-bar {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.bar-segment {
+  flex: 1;
+}
+
+.bar-segment.low {
+  background: #dc2626;
+}
+
+.bar-segment.mid {
+  background: #d97706;
+}
+
+.bar-segment.high {
+  background: #059669;
+}
+
+.salary-amounts {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.salary-amount {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.salary-arrows {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.arrow {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.salary-descriptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.salary-desc {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #6b7280;
+  margin: 0;
+}
+
+.salary-footer {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.salary-footer p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Related Positions Section */
+.related-positions-section {
+  background: #f8fafc;
+  padding: 3rem 0;
+  margin-top: 3rem;
+}
+
+.positions-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.positions-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legend-dot.low {
+  background: #dc2626;
+}
+
+.legend-dot.mid {
+  background: #d97706;
+}
+
+.legend-dot.high {
+  background: #059669;
+}
+
+.legend-item span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.positions-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f3f4f6;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  align-items: center;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.position-title {
+  font-weight: 500;
+  color: #1f2937;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.position-title:hover {
+  color: #2563eb;
+}
+
+.position-salary {
+  font-weight: 500;
+  color: #374151;
+  text-align: right;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hiring-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .hiring-sidebar {
+    position: static;
+  }
+  
+  .cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .cta-actions .btn {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .hiring-container {
+    padding: 0 0.75rem;
+  }
+  
+  .job-title {
+    font-size: 2rem;
+  }
+  
+  .hiring-cta {
+    padding: 1.5rem;
+  }
+  
+  .salary-card {
+    padding: 1.25rem;
+  }
+  
+  .positions-card {
+    padding: 1.5rem;
+  }
+  
+  .table-header,
+  .table-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .table-header span:not(:first-child),
+  .table-row span:not(:first-child) {
+    text-align: left;
+  }
+  
+  .legend {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .job-title {
+    font-size: 1.75rem;
+  }
+  
+  .hiring-cta {
+    padding: 1rem;
+  }
+  
+  .salary-card {
+    padding: 1rem;
+  }
+  
+  .positions-card {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,227 @@
+/* client/src/pages/BookCall.css */
+.book-call-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-call-container {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.book-call-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.book-call-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.book-call-header p {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.book-call-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.book-call-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.book-call-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.book-call-form .form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.book-call-form .form-group input,
+.book-call-form .form-group select,
+.book-call-form .form-group textarea {
+  padding: 0.875rem 1rem;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+.book-call-form .form-group input:focus,
+.book-call-form .form-group select:focus,
+.book-call-form .form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.book-call-form .form-group input::placeholder,
+.book-call-form .form-group textarea::placeholder {
+  color: #999;
+}
+
+.book-call-form .form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+.book-call-form .form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.book-call-form .btn {
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+}
+
+.book-call-form .btn--primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.book-call-form .btn--primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.book-call-form .btn--primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.book-call-form .btn--outline {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.book-call-form .btn--outline:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.success-message {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.success-message h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.success-message p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.error-message {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.error-message h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.error-message p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .book-call-page {
+    padding: 1rem;
+  }
+  
+  .book-call-container {
+    padding: 2rem 1.5rem;
+  }
+  
+  .book-call-header h1 {
+    font-size: 2rem;
+  }
+  
+  .book-call-form .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .book-call-form .form-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .book-call-form .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-call-container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .book-call-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .book-call-header p {
+    font-size: 1rem;
+  }
+}

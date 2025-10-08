@@ -10,6 +10,7 @@ const AdminDashboard = () => {
   const [recruiters, setRecruiters] = useState([]);
   const [applications, setApplications] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showJobModal, setShowJobModal] = useState(false);
   const [showRecruiterModal, setShowRecruiterModal] = useState(false);
@@ -39,6 +40,9 @@ const AdminDashboard = () => {
         // In production, this would be: const { data } = await API.get("/reviews");
         const storedReviews = JSON.parse(localStorage.getItem('venus_reviews') || '[]');
         setReviews(storedReviews);
+      } else if (activeTab === "bookings") {
+        const { data } = await API.get("/bookings");
+        setBookings(data.bookings || []);
       }
     } catch (err) {
       console.error("Error fetching data:", err);
@@ -118,6 +122,35 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleUpdateBookingStatus = async (bookingId, status, adminNotes) => {
+    try {
+      await API.patch(`/bookings/${bookingId}/status`, {
+        status,
+        adminNotes
+      });
+      // Refresh bookings data
+      const { data } = await API.get("/bookings");
+      setBookings(data.bookings || []);
+    } catch (err) {
+      console.error("Error updating booking status:", err);
+      alert("Failed to update booking status");
+    }
+  };
+
+  const handleDeleteBooking = async (bookingId) => {
+    if (window.confirm("Are you sure you want to delete this booking request?")) {
+      try {
+        await API.delete(`/bookings/${bookingId}`);
+        // Refresh bookings data
+        const { data } = await API.get("/bookings");
+        setBookings(data.bookings || []);
+      } catch (err) {
+        console.error("Error deleting booking:", err);
+        alert("Failed to delete booking");
+      }
+    }
+  };
+
   if (user?.role !== "admin") {
     return (
       <div className="admin-dashboard">
@@ -161,6 +194,12 @@ const AdminDashboard = () => {
             onClick={() => setActiveTab("reviews")}
           >
             Reviews ({reviews.length})
+          </button>
+          <button 
+            className={activeTab === "bookings" ? "active" : ""}
+            onClick={() => setActiveTab("bookings")}
+          >
+            Bookings ({bookings.length})
           </button>
         </div>
 
@@ -211,6 +250,13 @@ const AdminDashboard = () => {
                   reviews={reviews}
                   onDelete={handleDeleteReview}
                   onToggleStatus={handleToggleReviewStatus}
+                />
+              )}
+              {activeTab === "bookings" && (
+                <BookingsTab 
+                  bookings={bookings}
+                  onUpdateStatus={handleUpdateBookingStatus}
+                  onDelete={handleDeleteBooking}
                 />
               )}
             </>
@@ -712,6 +758,211 @@ const ReviewsTab = ({ reviews, onDelete, onToggleStatus }) => {
           </div>
         )}
       </div>
+    </div>
+  );
+};
+
+// BookingsTab Component
+const BookingsTab = ({ bookings, onUpdateStatus, onDelete }) => {
+  const [editingBooking, setEditingBooking] = useState(null);
+  const [statusForm, setStatusForm] = useState({ status: '', adminNotes: '' });
+
+  const handleStatusUpdate = (booking) => {
+    setEditingBooking(booking);
+    setStatusForm({ 
+      status: booking.status, 
+      adminNotes: booking.adminNotes || '' 
+    });
+  };
+
+  const handleSubmitStatus = () => {
+    if (editingBooking) {
+      onUpdateStatus(editingBooking._id, statusForm.status, statusForm.adminNotes);
+      setEditingBooking(null);
+      setStatusForm({ status: '', adminNotes: '' });
+    }
+  };
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  const formatTime = (timeString) => {
+    const [hours, minutes] = timeString.split(':');
+    const date = new Date();
+    date.setHours(parseInt(hours), parseInt(minutes));
+    return date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'pending': return '#f59e0b';
+      case 'confirmed': return '#10b981';
+      case 'completed': return '#6b7280';
+      case 'cancelled': return '#ef4444';
+      default: return '#6b7280';
+    }
+  };
+
+  return (
+    <div className="bookings-tab">
+      <div className="tab-header">
+        <h3>Call Booking Requests</h3>
+        <div className="stats">
+          <span className="stat-item">
+            Total: {bookings.length}
+          </span>
+          <span className="stat-item">
+            Pending: {bookings.filter(b => b.status === 'pending').length}
+          </span>
+          <span className="stat-item">
+            Confirmed: {bookings.filter(b => b.status === 'confirmed').length}
+          </span>
+          <span className="stat-item">
+            Completed: {bookings.filter(b => b.status === 'completed').length}
+          </span>
+        </div>
+      </div>
+
+      <div className="bookings-container">
+        {bookings.length === 0 ? (
+          <div className="empty-state">
+            <p>No booking requests yet.</p>
+          </div>
+        ) : (
+          <div className="bookings-grid">
+            {bookings.map(booking => (
+              <div key={booking._id} className="booking-card">
+                <div className="booking-header">
+                  <div className="booking-info">
+                    <h4>{booking.name}</h4>
+                    <p className="booking-email">{booking.email}</p>
+                    {booking.company && <p className="booking-company">{booking.company}</p>}
+                  </div>
+                  <div 
+                    className="booking-status"
+                    style={{ backgroundColor: getStatusColor(booking.status) }}
+                  >
+                    {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                  </div>
+                </div>
+
+                <div className="booking-details">
+                  <div className="detail-row">
+                    <span className="detail-label">Phone:</span>
+                    <span className="detail-value">{booking.phone}</span>
+                  </div>
+                  <div className="detail-row">
+                    <span className="detail-label">Call Type:</span>
+                    <span className="detail-value">{booking.callType.replace('-', ' ')}</span>
+                  </div>
+                  <div className="detail-row">
+                    <span className="detail-label">Preferred Date:</span>
+                    <span className="detail-value">{formatDate(booking.preferredDate)}</span>
+                  </div>
+                  <div className="detail-row">
+                    <span className="detail-label">Preferred Time:</span>
+                    <span className="detail-value">{formatTime(booking.preferredTime)} ({booking.timezone})</span>
+                  </div>
+                  {booking.message && (
+                    <div className="detail-row">
+                      <span className="detail-label">Message:</span>
+                      <span className="detail-value">{booking.message}</span>
+                    </div>
+                  )}
+                  {booking.adminNotes && (
+                    <div className="detail-row">
+                      <span className="detail-label">Admin Notes:</span>
+                      <span className="detail-value">{booking.adminNotes}</span>
+                    </div>
+                  )}
+                  <div className="detail-row">
+                    <span className="detail-label">Submitted:</span>
+                    <span className="detail-value">{formatDate(booking.createdAt)}</span>
+                  </div>
+                </div>
+
+                <div className="booking-actions">
+                  <button
+                    className="btn btn-sm btn-primary"
+                    onClick={() => handleStatusUpdate(booking)}
+                  >
+                    Update Status
+                  </button>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => onDelete(booking._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Status Update Modal */}
+      {editingBooking && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <div className="modal-header">
+              <h3>Update Booking Status</h3>
+              <button 
+                className="modal-close"
+                onClick={() => setEditingBooking(null)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="form-group">
+                <label>Status:</label>
+                <select
+                  value={statusForm.status}
+                  onChange={(e) => setStatusForm(prev => ({ ...prev, status: e.target.value }))}
+                >
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Admin Notes:</label>
+                <textarea
+                  value={statusForm.adminNotes}
+                  onChange={(e) => setStatusForm(prev => ({ ...prev, adminNotes: e.target.value }))}
+                  rows="3"
+                  placeholder="Add any notes about this booking..."
+                />
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                className="btn btn-secondary"
+                onClick={() => setEditingBooking(null)}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={handleSubmitStatus}
+              >
+                Update Status
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

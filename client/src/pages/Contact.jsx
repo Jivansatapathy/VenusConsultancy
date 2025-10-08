@@ -1,5 +1,5 @@
 // client/src/pages/Contact.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Contact.css";
 
 const offices = [
@@ -30,6 +30,16 @@ const Contact = () => {
   });
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
+
+  // Ensure proper CSS loading when component mounts
+  useEffect(() => {
+    // Force a re-render to ensure CSS is properly applied
+    const timer = setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

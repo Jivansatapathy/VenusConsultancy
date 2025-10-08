@@ -192,7 +192,7 @@ const ServiceSection = ({ service, index, expanded: expandedProp, onToggle }) =>
 
             <div className="svc-section__more-actions1">
               <a className="btn btn--outline" href="/contact">Learn more</a>
-              <a className="btn btn--alt" href="/book-call">Book a call</a>
+              <a className="btn btn--alt" href="/contact">Book a call</a>
             </div>
           </div>
         </div>

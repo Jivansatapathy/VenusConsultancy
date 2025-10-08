@@ -167,7 +167,7 @@ const Navbar = () => {
         </div>
 
         <div className="vh-navbar__actions">
-          <Link to="/book-call" className="vh-btn vh-btn--outline" tabIndex={menuOpen ? -1 : 0}>
+          <Link to="/contact" className="vh-btn vh-btn--outline" tabIndex={menuOpen ? -1 : 0}>
             Book A Call
           </Link>
 
@@ -240,7 +240,7 @@ const Navbar = () => {
           })}
 
           <Link
-            to="/book-call"
+            to="/contact"
             className="vh-mobile-menu__cta"
             onClick={() => setMenuOpen(false)}
             role="menuitem"

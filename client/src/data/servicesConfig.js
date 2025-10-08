@@ -12,7 +12,7 @@ const services = {
         excerpt:
           "Fortify key appointments that will shape the future of your organisation.",
         image: "/images/service-board.png",
-        link: "/services/board"
+        link: "/contact"
       },
       {
         key: "executive",
@@ -20,7 +20,7 @@ const services = {
         excerpt:
           "Trusted advisors helping firms hire top-of-the-line leaders and executives.",
         image: "/images/service-executive.png",
-        link: "/services/executive-search"
+        link: "/contact"
       },
       {
         key: "leadership",
@@ -28,7 +28,7 @@ const services = {
         excerpt:
           "We enable firms to build strong and diverse leadership teams.",
         image: "/images/service-leadership.jpg",
-        link: "/services/leadership"
+        link: "/contact"
       },
       {
         key: "talent-advisory",
@@ -36,7 +36,7 @@ const services = {
         excerpt:
           "Cultivate a leadership culture that aligns with your values and objectives.",
         image: "/images/service-advisory.png",
-        link: "/services/talent-advisory"
+        link: "/contact"
       }
       // add more items if needed
     ]

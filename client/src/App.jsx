@@ -1,5 +1,5 @@
 // client/src/App.jsx
-import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
@@ -35,6 +35,7 @@ const LoadingFallback = () => (
 // ✅ Wrapper so we can use useLocation inside Router
 function AppContent() {
   const location = useLocation();
+
 
   // Scroll to top on route change
   useEffect(() => {

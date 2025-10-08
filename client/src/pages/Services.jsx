@@ -6,6 +6,7 @@ import "./Services.css";
 
 const Services = () => {
   const navigate = useNavigate();
+  
   // Aurora background for mobile/tablet hero
   const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
   const color = useMotionValue(COLORS_TOP[0]);
@@ -440,9 +441,6 @@ const Services = () => {
             ))}
           </div>
 
-          <div className="svc-services__footer">
-            <a className="svc-browse-all" href="/services" aria-label="Browse all services">Browse All Services <span aria-hidden>→</span></a>
-          </div>
         </div>
 
 

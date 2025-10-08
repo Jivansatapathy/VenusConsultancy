@@ -5,13 +5,13 @@ import services from "../data/servicesConfig.js";
 
 /**
  * ServicesSection
- * - shows ~2.5 cards at once (third card partially visible)
+ * - shows 3 cards at once (3 full cards visible)
  * - clicking next moves by one card to the left (so you see cards 2,3,4 etc.)
  * - centered max-width 1200px
  * - accessible buttons and indicators
  */
 
-const VISIBLE_RATIO = 2.5; // number of cards visible (2.5 -> 2 full + 1 partial)
+const VISIBLE_RATIO = 3; // number of cards visible (3 full cards)
 const STEP = 1; // move by 1 card per click
 
 const ServicesSection = () => {
@@ -128,7 +128,7 @@ const ServicesSection = () => {
 
           <div className="vh-services__pager">
             <span className="vh-services__pager-text">
-              {currentStep} / {items.length} Services
+              {currentStep} / 2 Services
             </span>
             <div
               className="vh-services__progress"

@@ -1,5 +1,5 @@
 // server/src/models/Booking.js
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const bookingSchema = new mongoose.Schema({
   name: {
@@ -66,4 +66,4 @@ const bookingSchema = new mongoose.Schema({
 bookingSchema.index({ email: 1, createdAt: -1 });
 bookingSchema.index({ status: 1, preferredDate: 1 });
 
-module.exports = mongoose.model('Booking', bookingSchema);
+export default mongoose.model('Booking', bookingSchema);

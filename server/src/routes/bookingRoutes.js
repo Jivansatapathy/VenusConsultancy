@@ -1,8 +1,9 @@
 // server/src/routes/bookingRoutes.js
-const express = require('express');
+import express from 'express';
+import Booking from '../models/Booking.js';
+import { requireAuth } from '../middleware/authMiddleware.js';
+
 const router = express.Router();
-const Booking = require('../models/Booking');
-const authMiddleware = require('../middleware/authMiddleware');
 
 // Create a new booking request (public endpoint)
 router.post('/', async (req, res) => {
@@ -87,7 +88,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all bookings (admin only)
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -139,7 +140,7 @@ router.get('/', authMiddleware, async (req, res) => {
 });
 
 // Get single booking by ID (admin only)
-router.get('/:id', authMiddleware, async (req, res) => {
+router.get('/:id', requireAuth, async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -173,7 +174,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
 });
 
 // Update booking status (admin only)
-router.patch('/:id/status', authMiddleware, async (req, res) => {
+router.patch('/:id/status', requireAuth, async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -219,7 +220,7 @@ router.patch('/:id/status', authMiddleware, async (req, res) => {
 });
 
 // Delete booking (admin only)
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/:id', requireAuth, async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -252,4 +253,4 @@ router.delete('/:id', authMiddleware, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

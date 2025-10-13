@@ -1,8 +1,12 @@
 // client/src/components/Footer.jsx
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import "./Footer.css";
 
 const Footer = () => {
+  const { isAuthenticated } = useContext(AuthContext);
+
   return (
     <footer className="vh-footer u-card" role="contentinfo" aria-label="Site footer">
       <div className="vh-footer__container">
@@ -72,6 +76,17 @@ const Footer = () => {
             <a href="mailto:hello@venushiring.com" aria-label="Email Venus Hiring" className="vh-footer__social-link">✉</a>
           </div>
         </div>
+
+        {/* Login section - only show for unauthenticated users */}
+        {!isAuthenticated && (
+          <div className="vh-footer__login" aria-label="Admin access">
+            <h3 className="vh-footer__h3">Admin Access</h3>
+            <p className="vh-footer__small">Access your dashboard</p>
+            <Link to="/admin/login" className="vh-footer__login-btn">
+              Login
+            </Link>
+          </div>
+        )}
       </div>
 
       <div className="vh-footer__bottom">

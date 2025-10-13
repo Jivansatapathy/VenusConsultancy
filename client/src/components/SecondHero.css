@@ -1,0 +1,269 @@
+/* Second Hero Section - Dark Green Theme */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+.second-hero {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1A3635 0%, #0F2B2A 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+}
+
+.second-hero__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+/* Left side content */
+.second-hero__left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.second-hero__greeting {
+  font-size: 1rem;
+  color: #4ade80;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.second-hero__title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.title-line-1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.title-line-2 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #4ade80;
+}
+
+.second-hero__subtitle {
+  font-size: 1.25rem;
+  color: #e5e7eb;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.second-hero__buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn--primary-green {
+  background: #4ade80;
+  color: #000;
+  border-color: #4ade80;
+}
+
+.btn--primary-green:hover {
+  background: #22c55e;
+  border-color: #22c55e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(74, 222, 128, 0.3);
+}
+
+.btn--outline-white {
+  background: transparent;
+  color: #fff;
+  border-color: #fff;
+}
+
+.btn--outline-white:hover {
+  background: #fff;
+  color: #1A3635;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+}
+
+.second-hero__hot-vacancies {
+  margin-top: 1rem;
+}
+
+.hot-vacancies-text {
+  font-size: 0.95rem;
+  color: #d1d5db;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Right side images */
+.second-hero__right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.second-hero__images {
+  width: 100%;
+  max-width: 600px;
+  height: 500px;
+}
+
+.image-stack {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.5rem;
+  height: 100%;
+  width: 100%;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-image:hover {
+  transform: translateY(-4px);
+  z-index: 10;
+}
+
+.hero-image:hover img {
+  transform: scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.hero-image--top {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  /* Large vertical panel on the left */
+}
+
+.hero-image--middle {
+  grid-column: 2;
+  grid-row: 1;
+  /* Medium horizontal panel on top-right */
+}
+
+.hero-image--bottom {
+  grid-column: 2;
+  grid-row: 2;
+  /* Medium horizontal panel on bottom-right */
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .second-hero__container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+  
+  .second-hero__right {
+    order: -1;
+  }
+  
+  .second-hero__images {
+    max-width: 500px;
+    height: 400px;
+    margin: 0 auto;
+  }
+  
+  .image-stack {
+    gap: 0.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .second-hero {
+    padding: 2rem 0;
+  }
+  
+  .second-hero__container {
+    padding: 0 1rem;
+    gap: 2rem;
+  }
+  
+  .second-hero__buttons {
+    justify-content: center;
+  }
+  
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .second-hero__images {
+    max-width: 400px;
+    height: 350px;
+  }
+  
+  .image-stack {
+    gap: 0.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .second-hero__buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .hot-vacancies-text {
+    font-size: 0.9rem;
+  }
+  
+  .second-hero__images {
+    max-width: 320px;
+    height: 280px;
+  }
+  
+  .image-stack {
+    gap: 0.25rem;
+  }
+}

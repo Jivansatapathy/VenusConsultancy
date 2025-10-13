@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react";
-import Hero from "../components/Hero";
+import Hero from "../components/ThirdHero";
 import AboutUs from "../components/AboutUs";
 
 // Lazy load heavy components that are below the fold

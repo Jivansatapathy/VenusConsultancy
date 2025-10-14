@@ -1,0 +1,31 @@
+name: Keep Render Backend Alive
+
+on:
+  schedule:
+    # Run every 12 minutes to keep the server awake
+    - cron: '*/12 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Keep server alive
+      env:
+        SERVER_URL: ${{ secrets.RENDER_SERVER_URL }}
+      run: |
+        echo "🚀 Starting keep-alive for: $SERVER_URL"
+        node keep-alive.js
+      timeout-minutes: 5

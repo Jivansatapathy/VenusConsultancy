@@ -21,6 +21,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
+import healthRoutes from "./routes/healthRoutes.js";
 import connectDB from "./config/db.js";
 
 const app = express();
@@ -120,6 +121,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/health", healthRoutes);
 
 // ---- Serve Frontend (guarded) ----
 import fs from "fs";

@@ -20,7 +20,7 @@ Your MongoDB credentials have been exposed in your git repository. This is a **C
 
 2. **Change Database User Password:**
    - Go to Database Access
-   - Find the user `venus_admin`
+   - Find the user that was exposed (check your MongoDB Atlas dashboard)
    - Click "Edit" → "Edit Password"
    - Generate a new secure password
    - Save the changes
@@ -59,7 +59,7 @@ Copy the generated secrets to your `.env` file.
    ```env
    PORT=5000
    NODE_ENV=development
-   MONGO_URI=mongodb+srv://venus_admin:NEW_SECURE_PASSWORD@venushiring.zhh9efb.mongodb.net/venus-hiring?retryWrites=true&w=majority&appName=Venushiring
+   MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/database-name?retryWrites=true&w=majority&appName=AppName
    ACCESS_SECRET=your-new-access-secret
    REFRESH_SECRET=your-new-refresh-secret
    CLIENT_ORIGIN=http://localhost:5173

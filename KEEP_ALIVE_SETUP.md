@@ -116,8 +116,16 @@ Check your GitHub Actions logs or console output to monitor the service.
    - Ensure the secret `RENDER_SERVER_URL` is set
    - Check the Actions tab for error details
    - Verify the workflow file syntax
+   - **If the main workflow fails, try the simple version:**
+     - Go to Actions tab → "Keep Render Backend Alive (Simple)"
+     - This version has fewer dependencies and is more reliable
 
 3. **Still sleeping:**
    - Reduce ping interval to 8-10 minutes
    - Add more endpoints to ping
    - Check if the endpoints are working
+
+4. **Workflow timeout issues:**
+   - The simple workflow (`.github/workflows/keep-alive-simple.yml`) is designed to complete quickly
+   - It has a 2-minute timeout and uses basic curl commands
+   - Use this if the main workflow continues to fail

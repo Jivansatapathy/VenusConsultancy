@@ -1,0 +1,36 @@
+name: Keep Render Backend Alive (Simple)
+
+on:
+  schedule:
+    # Run every 12 minutes to keep the server awake
+    - cron: '*/12 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    
+    steps:
+    - name: Keep server alive
+      env:
+        SERVER_URL: ${{ secrets.RENDER_SERVER_URL }}
+      run: |
+        echo "🚀 Pinging server: $SERVER_URL"
+        
+        if [ -z "$SERVER_URL" ]; then
+          echo "❌ SERVER_URL secret is not set"
+          echo "Please add RENDER_SERVER_URL secret to your repository"
+          exit 1
+        fi
+        
+        # Simple ping to keep server awake
+        curl -f "$SERVER_URL/api/health/keepalive" || {
+          echo "⚠️  Server might be sleeping, trying to wake it up..."
+          curl -f "$SERVER_URL/api/health/ping" || {
+            echo "❌ Server is not responding"
+            exit 1
+          }
+        }
+        
+        echo "✅ Server is alive and responding"

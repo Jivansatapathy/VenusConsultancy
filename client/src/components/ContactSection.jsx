@@ -15,7 +15,6 @@ const ContactSection = () => {
           <div className="office-card">
             <h4 className="office-title">🇨🇦 Toronto, Canada</h4>
             <div className="office-details">
-              <p className="office-company">Venus Global Technologies</p>
               <p className="office-address">#205 - 1085 Bellamy Road North</p>
               <p className="office-address">Toronto, ON</p>
               <p className="office-phone">Ph: <a href="tel:647-722-0837" className="phone-link">647-722-0837</a></p>

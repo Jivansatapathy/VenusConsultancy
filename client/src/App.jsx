@@ -4,6 +4,7 @@ import { Suspense, lazy, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import UpFooter from "./components/UpFooter";
+import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 
@@ -150,6 +151,11 @@ function AppContent() {
           ctaText="Get In Touch"
           ctaHref="/contact"
         />
+      )}
+
+      {/* ✅ Show ContactSection everywhere except Contact and Services pages */}
+      {location.pathname !== "/contact" && location.pathname !== "/services" && (
+        <ContactSection />
       )}
 
       <Footer />

@@ -139,6 +139,7 @@
 .vh-footer__social-link:focus,
 .vh-footer__social-link:hover { background: rgba(255,255,255,0.06); color: #e50914; }
 
+
 /* Login section */
 .vh-footer__login {
   display: flex;
@@ -186,6 +187,7 @@
 .vh-footer__legal { display:flex; gap:0.6rem; }
 .vh-footer__legal-link { color:#bfbfbf; text-decoration:none; font-size:0.9rem; }
 .vh-footer__legal-link:hover { color:#fff; }
+
 
 /* small helpers */
 .vh-footer__sr { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); border:0; }

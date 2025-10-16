@@ -215,6 +215,7 @@
   .vh-upfooter .vh-upfooter__container::after { filter: blur(18px); }
 }
 
+
 /* Utility: make --vh-primary available as RGB parts for gradients if user sets hex */
 :root {
   /* helper CSS custom properties — optionally override to pass RGB breakdown of your primary color */

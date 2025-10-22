@@ -14,12 +14,25 @@ const CustomCursor = () => {
     };
 
     const handleMouseEnter = () => setIsVisible(true);
-    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseLeave = () => {
+      setIsVisible(false);
+      // Remove zoom class from all text elements when mouse leaves
+      document.querySelectorAll('.cursor-zoom').forEach(el => {
+        el.classList.remove('cursor-zoom');
+      });
+    };
 
     const handleMouseOver = (e) => {
-      // Check if hovering over interactive elements
+      // Check if hovering over interactive elements only
       const target = e.target;
       const isInteractive = target.matches('a, button, input, textarea, select, [role="button"], [tabindex]');
+      
+      // Completely disable zoom effects - remove all cursor-zoom classes
+      document.querySelectorAll('.cursor-zoom').forEach(el => {
+        el.classList.remove('cursor-zoom');
+      });
+      
+      // Only set hovering state for interactive elements
       setIsHovering(isInteractive);
     };
 

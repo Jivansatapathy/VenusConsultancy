@@ -1,225 +1,234 @@
-/* UpFooter.css
-   Universal CTA band. Tweak colors via CSS variables below.
-   Primary shape tints use --vh-primary and are blended with opacity so they are decorative.
-*/
+/* UpFooter.css - Redesigned to match reference image */
 
-/* Branding variables - change to match your app's theme */
-:root {
-  --vh-upfooter-bg: #b2060f;         /* main band color (blue) */
-  --vh-primary: #e50914;             /* Venus primary color (used for shape tints) */
-  --vh-upfooter-text: #ffffff;       /* text color */
-  --vh-upfooter-accent: rgba(255,255,255,0.95);
-  --vh-upfooter-height: clamp(140px, 18vw, 220px);
+/* Prevent custom cursor from affecting UpFooter */
+.vh-upfooter,
+.vh-upfooter * {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Branding variables - scoped to UpFooter only */
+.vh-upfooter {
+  --vh-upfooter-bg: #ffffff;
+  --vh-upfooter-text: #1a1a1a;
+  --vh-upfooter-accent: #ff3535;
+  --vh-upfooter-border: #ff6b35;
+  --vh-upfooter-gray: #666666;
   --vh-upfooter-max-width: 1200px;
 }
 
 /* Section wrapper */
 .vh-upfooter {
-  position: relative;
-  overflow: hidden;
   background: var(--vh-upfooter-bg);
   color: var(--vh-upfooter-text);
-  padding: clamp(1.2rem, 3.2vw, 2.4rem) 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
 }
 
-/* container centered (max 1200px) */
+/* Container */
 .vh-upfooter__container {
   width: min(100%, var(--vh-upfooter-max-width));
   margin: 0 auto;
-  padding: 0 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  min-height: var(--vh-upfooter-height);
+  padding: 0 2rem;
   box-sizing: border-box;
-  position: relative;
-  z-index: 3; /* above decorative shapes */
 }
 
-/* Mobile view - center content */
-@media (max-width: 768px) {
-  .vh-upfooter__container {
-    justify-content: center;
-  }
-}
-
-/* Heading (centered, large) */
-.vh-upfooter__heading {
-  margin: 0;
-  text-align: left;
-  font-weight: 800;
-  color: var(--vh-upfooter-text);
-  line-height: 1.05;
-  font-size: clamp(1.6rem, 4.2vw, 2.6rem);
-  letter-spacing: -0.02em;
-  flex: 1 1 60%;
-}
-
-/* On small screens center heading */
-@media (max-width: 880px) {
-  .vh-upfooter__heading {
-    text-align: center;
-    flex-basis: 100%;
-    font-size: clamp(1.25rem, 6vw, 1.8rem);
-  }
-}
-
-/* CTA pill */
-.vh-upfooter__cta {
-  display: inline-flex;
+/* Main content layout */
+.vh-upfooter__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
   align-items: center;
-  gap: 0.9rem;
-  background: rgba(0,0,0,0.85);
-  color: var(--vh-upfooter-accent);
-  padding: 0.6rem 1.05rem;
-  border-radius: 999px;
-  min-height: 48px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-  text-decoration: none;
+}
+
+/* Text section */
+.vh-upfooter__text-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* GET STARTED label */
+.vh-upfooter__label {
+  font-size: 0.875rem;
   font-weight: 700;
-  transition: transform 220ms cubic-bezier(.2,.9,.2,1), background 220ms ease, color 220ms ease;
-  border: 3px solid rgba(255,255,255,0.06);
-  flex: 0 0 auto;
+  color: var(--vh-upfooter-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
 }
 
-/* CTA hover/focus */
-.vh-upfooter__cta:hover,
-.vh-upfooter__cta:focus {
-  transform: translateY(-4px);
-  background: var(--vh-upfooter-accent);
-  color: var(--vh-upfooter-bg);
-  outline: none;
+/* Main heading */
+.vh-upfooter__heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--vh-upfooter-text);
+  line-height: 1.2;
+  margin: 0;
+  letter-spacing: -0.02em;
 }
 
-/* CTA text and small white circle for arrow */
-.vh-upfooter__cta-text {
-  display: inline-block;
-  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
-  color: inherit;
-  padding-left: 4px;
+/* Description text */
+.vh-upfooter__description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--vh-upfooter-gray);
+  margin: 0;
+  max-width: 500px;
 }
 
-.vh-upfooter__cta-circle {
+/* Buttons container */
+.vh-upfooter__buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Button base styles */
+.vh-upfooter__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: var(--vh-upfooter-accent);
-  color: var(--vh-upfooter-bg);
-  border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-  transition: transform 200ms ease, background 200ms ease;
-}
-.vh-upfooter__cta:hover .vh-upfooter__cta-circle,
-.vh-upfooter__cta:focus .vh-upfooter__cta-circle {
-  transform: translateX(6px);
-}
-
-/* Decorative shapes rendered using pseudo elements and gradients */
-/* primary tinted shapes placed left/mid/right behind heading */
-.vh-upfooter::before,
-.vh-upfooter::after,
-.vh-upfooter .vh-upfooter__container::before,
-.vh-upfooter .vh-upfooter__container::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-  border-radius: 24px;
-  filter: blur(26px);
-  opacity: 0.42;
-  transform: rotate(-6deg);
+  padding: 0.875rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  min-width: 140px;
+  text-align: center;
 }
 
-/* large soft rounded shape left (uses primary color tint) */
-.vh-upfooter::before {
-  left: -6%;
-  top: 6%;
-  width: 320px;
-  height: 160px;
-  background: linear-gradient(180deg, rgba(var(--vh-primary-r, 229),var(--vh-primary-g,9),var(--vh-primary-b,20),0.20), rgba(var(--vh-primary-r,229),var(--vh-primary-g,9),var(--vh-primary-b,20),0.08));
-  transform: rotate(-12deg);
-  opacity: 0.45;
+/* Primary button (orange) */
+.vh-upfooter__btn--primary {
+  background-color: var(--vh-upfooter-accent);
+  color: #ffffff;
+  border-color: var(--vh-upfooter-accent);
 }
 
-/* medium soft shape centered below heading */
-.vh-upfooter .vh-upfooter__container::before {
-  right: 18%;
-  top: 18%;
-  width: 360px;
-  height: 220px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  filter: blur(28px);
-  opacity: 0.14;
-  transform: rotate(2deg);
+.vh-upfooter__btn--primary:hover {
+  background-color: #fcfcfc;
+  border-color: #e55a2b;
+  color: #1a1a1a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
 }
 
-/* rounded shape on right (primary color but lighter) */
-.vh-upfooter::after {
-  right: -6%;
-  bottom: 4%;
-  width: 420px;
-  height: 200px;
-  background: linear-gradient(180deg, rgba(var(--vh-primary-r,229),var(--vh-primary-g,9),var(--vh-primary-b,20),0.18), rgba(var(--vh-primary-r,229),var(--vh-primary-g,9),var(--vh-primary-b,20),0.06));
-  transform: rotate(6deg);
-  opacity: 0.42;
+/* Secondary button (white with orange border) */
+.vh-upfooter__btn--secondary {
+  background-color: #ffffff;
+  color: var(--vh-upfooter-accent);
+  border-color: var(--vh-upfooter-accent);
 }
 
-/* diagonal stripes on the right to match reference */
-.vh-upfooter .vh-upfooter__container::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 2;
-  width: 48%;
-  height: 100%;
-  background-image: linear-gradient(135deg, rgba(255,255,255,0.02) 0 7%, transparent 7% 100%);
-  opacity: 0.06;
-  border-radius: 18px;
-  pointer-events: none;
+.vh-upfooter__btn--secondary:hover {
+  background-color: var(--vh-upfooter-accent);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
 }
 
-/* Accessibility/focus */
-.vh-upfooter__cta:focus {
-  box-shadow: 0 0 0 4px rgba(229,9,20,0.18);
+/* Image section */
+.vh-upfooter__image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Responsiveness */
-@media (max-width: 880px) {
-  .vh-upfooter__cta {
-    min-height: 44px;
-    padding: 0.5rem 0.9rem;
+.vh-upfooter__image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 0.75rem;
+  object-fit: cover;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .vh-upfooter__content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
   }
-  /* hide decorative heavy shapes on small screens to avoid clutter */
-  .vh-upfooter::before,
-  .vh-upfooter::after,
-  .vh-upfooter .vh-upfooter__container::before {
-    display: none;
+  
+  .vh-upfooter__image-section {
+    order: -1;
+  }
+  
+  .vh-upfooter__image {
+    max-width: 400px;
   }
 }
 
-/* Respect reduced motion */
+@media (max-width: 768px) {
+  .vh-upfooter {
+    padding: 3rem 0;
+  }
+  
+  .vh-upfooter__container {
+    padding: 0 1.5rem;
+  }
+  
+  .vh-upfooter__heading {
+    font-size: 2rem;
+  }
+  
+  .vh-upfooter__buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .vh-upfooter__btn {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .vh-upfooter__image {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vh-upfooter {
+    padding: 2rem 0;
+  }
+  
+  .vh-upfooter__container {
+    padding: 0 1rem;
+  }
+  
+  .vh-upfooter__heading {
+    font-size: 1.75rem;
+  }
+  
+  .vh-upfooter__description {
+    font-size: 0.9rem;
+  }
+  
+  .vh-upfooter__btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Focus styles for accessibility */
+.vh-upfooter__btn:focus {
+  outline: 2px solid var(--vh-upfooter-accent);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .vh-upfooter__cta,
-  .vh-upfooter__cta-circle { transition: none; transform: none; }
-  .vh-upfooter::before,
-  .vh-upfooter::after,
-  .vh-upfooter .vh-upfooter__container::before,
-  .vh-upfooter .vh-upfooter__container::after { filter: blur(18px); }
-}
-
-
-/* Utility: make --vh-primary available as RGB parts for gradients if user sets hex */
-:root {
-  /* helper CSS custom properties — optionally override to pass RGB breakdown of your primary color */
-  --vh-primary-r: 229;
-  --vh-primary-g: 9;
-  --vh-primary-b: 20;
+  .vh-upfooter__btn {
+    transition: none;
+  }
+  
+  .vh-upfooter__btn:hover {
+    transform: none;
+  }
 }

@@ -1,6 +1,7 @@
 // client/src/App.jsx
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import UpFooter from "./components/UpFooter";
@@ -8,6 +9,7 @@ import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import CustomCursor from "./components/CustomCursor";
+import PageTransition from "./components/PageTransition";
 
 // Lazy load heavy components
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
@@ -56,7 +58,9 @@ function AppContent() {
       {/* Navbar is always visible */}
       <Navbar />
 
-      <Routes>
+      <AnimatePresence mode="wait">
+        <PageTransition key={location.pathname}>
+          <Routes location={location}>
         <Route path="/admin/login" element={
           <Suspense fallback={<LoadingFallback />}>
             <AdminLogin />
@@ -147,20 +151,13 @@ function AppContent() {
             <Home />
           </Suspense>
         } />
-      </Routes>
+          </Routes>
+        </PageTransition>
+      </AnimatePresence>
 
       {/* ✅ Show UpFooter everywhere except Contact and Services pages */}
       {location.pathname !== "/contact" && location.pathname !== "/services" && (
-        <UpFooter
-          heading={
-            <>
-              Strengthen your Human Resource
-              <br />Strategy with Venus Consultancy
-            </>
-          }
-          ctaText="Get In Touch"
-          ctaHref="/contact"
-        />
+        <UpFooter />
       )}
 
       {/* ✅ Show ContactSection everywhere except Contact and Services pages */}

@@ -1,4 +1,4 @@
-/* Custom Cursor Styles */
+/* Custom Cursor Styles - Individual Values */
 .custom-cursor {
   position: fixed;
   width: 40px;
@@ -9,8 +9,8 @@
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: all 0.1s ease-out;
-  backdrop-filter: invert(1) blur(0px);
+  transition: width 0.2s ease-out, height 0.2s ease-out, background 0.2s ease-out, border 0.2s ease-out, backdrop-filter 0.2s ease-out;
+  backdrop-filter: invert(1);
   mix-blend-mode: difference;
   opacity: 0;
   visibility: hidden;
@@ -22,11 +22,11 @@
 }
 
 .custom-cursor.hovering {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   background: rgba(229, 9, 20, 0.2);
   border: 2px solid #e50914;
-  backdrop-filter: invert(1) blur(2px);
+  backdrop-filter: invert(1);
 }
 
 /* Keep default cursor visible - custom cursor will follow it */
@@ -34,33 +34,34 @@
   cursor: auto !important;
 }
 
-/* Magnify effect for text elements */
-.custom-cursor.visible ~ * {
-  transition: transform 0.2s ease-out;
+/* Remove section elevation effects - only target specific text elements */
+
+/* Completely disable cursor zoom effects to prevent section elevation */
+
+/* Prevent section elevation - be more specific to avoid breaking animations */
+
+/* Specifically protect all major sections and components - but NOT Lottie containers */
+section:not(.third-hero), 
+article, header, footer, nav, main, 
+div[class*="container"]:not(.lottie-container), 
+div[class*="section"]:not(.third-hero), 
+div[class*="wrapper"],
+div[class*="card"], div[class*="component"], div[class*="page"],
+.vh-upfooter, .vh-upfooter *, 
+.vh-footer, .vh-footer *,
+.vh-navbar, .vh-navbar * {
+  transform: none !important;
+  transition: none !important;
 }
 
-/* When cursor is over text, magnify it slightly */
-.custom-cursor.visible:hover ~ p,
-.custom-cursor.visible:hover ~ h1,
-.custom-cursor.visible:hover ~ h2,
-.custom-cursor.visible:hover ~ h3,
-.custom-cursor.visible:hover ~ h4,
-.custom-cursor.visible:hover ~ h5,
-.custom-cursor.visible:hover ~ h6,
-.custom-cursor.visible:hover ~ span,
-.custom-cursor.visible:hover ~ div {
-  transform: scale(1.02);
+/* Allow button hover effects to work */
+.btn:hover,
+button:hover,
+a:hover {
+  transform: unset !important;
 }
 
-/* Smooth transitions */
-.custom-cursor {
-  transition: 
-    width 0.2s ease-out,
-    height 0.2s ease-out,
-    background 0.2s ease-out,
-    border 0.2s ease-out,
-    backdrop-filter 0.2s ease-out;
-}
+/* Smooth transitions are now defined in the main .custom-cursor rule */
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -76,15 +77,15 @@
   }
 }
 
-/* High contrast mode */
+/* High contrast mode - Individual Values */
 @media (prefers-contrast: high) {
   .custom-cursor {
-    border: 3px solid #000;
+    border: 3px solid #000000;
     background: rgba(255, 255, 255, 0.8);
   }
 }
 
-/* Dark mode adjustments */
+/* Dark mode adjustments - Individual Values */
 @media (prefers-color-scheme: dark) {
   .custom-cursor {
     background: rgba(255, 255, 255, 0.1);

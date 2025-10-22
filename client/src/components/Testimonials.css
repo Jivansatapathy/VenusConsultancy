@@ -33,7 +33,7 @@
   .vh-testimonials__carousel {
     position: relative;
     overflow: hidden;
-    height: 320px; /* ensures consistent height */
+    height: 250px; /* ensures consistent height */
     margin-bottom: 2rem;
   }
   
@@ -41,7 +41,7 @@
   .vh-testimonial-card {
     position: absolute;
     top: 0;
-    left: 50%;
+    left: 15%;
     transform: translateX(-50%) scale(0.95);
     width: min(820px, 92%);
     background: #fff;
@@ -197,54 +197,60 @@
     transition: stroke-dashoffset 0.1s linear;
   }
   
-  /* Mobile Scroll Layout */
-  .vh-testimonials__carousel.mobile-scroll {
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    height: auto;
-    gap: 16px;
-    padding: 0 1rem;
-    -webkit-overflow-scrolling: touch;
+  /* Mobile Scroll Layout - Only apply on mobile */
+  @media (max-width: 768px) {
+    .vh-testimonials__carousel.mobile-scroll {
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      height: auto;
+      gap: 16px;
+      padding: 0 1rem;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 
-  .vh-testimonials__carousel.mobile-scroll .vh-testimonial-card {
-    position: relative;
-    transform: none;
-    left: auto;
-    top: auto;
-    opacity: 1 !important;
-    margin-bottom: 0;
-    flex: 0 0 calc(100% - 2rem);
-    scroll-snap-align: start;
-    width: calc(100% - 2rem);
+  @media (max-width: 768px) {
+    .vh-testimonials__carousel.mobile-scroll .vh-testimonial-card {
+      position: relative;
+      transform: none;
+      left: auto;
+      top: auto;
+      opacity: 1 !important;
+      margin-bottom: 0;
+      flex: 0 0 calc(100% - 2rem);
+      scroll-snap-align: start;
+      width: calc(100% - 2rem);
+    }
   }
 
-  /* Tablet Scroll Layout */
-  .vh-testimonials__carousel.tablet-scroll {
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    height: auto;
-    gap: 16px;
-    padding: 0 1rem;
-    -webkit-overflow-scrolling: touch;
-  }
+  /* Tablet Scroll Layout - Only apply on tablet */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .vh-testimonials__carousel.tablet-scroll {
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      height: auto;
+      gap: 16px;
+      padding: 0 1rem;
+      -webkit-overflow-scrolling: touch;
+    }
 
-  .vh-testimonials__carousel.tablet-scroll .vh-testimonial-card {
-    position: relative;
-    transform: none;
-    left: auto;
-    top: auto;
-    opacity: 1 !important;
-    margin-bottom: 0;
-    flex: 0 0 calc(50% - 8px);
-    scroll-snap-align: start;
-    width: calc(50% - 8px);
+    .vh-testimonials__carousel.tablet-scroll .vh-testimonial-card {
+      position: relative;
+      transform: none;
+      left: auto;
+      top: auto;
+      opacity: 1 !important;
+      margin-bottom: 0;
+      flex: 0 0 calc(50% - 8px);
+      scroll-snap-align: start;
+      width: calc(50% - 8px);
+    }
   }
 
   /* Hide scrollbars but keep functionality */

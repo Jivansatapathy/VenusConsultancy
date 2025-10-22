@@ -7,7 +7,7 @@
 .svc-container {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 0 12px; /* mobile/tablet padding without altering desktop container */
+  padding: 0 100px; /* mobile/tablet padding without altering desktop container */
 }
 
 /* hero */
@@ -257,7 +257,7 @@
 /* services section */
 .svc-services {
   background: #F6FBFD;
-  padding: 28px 0 56px;
+  padding: 28px 40px 56px;
   padding-bottom: 10px;
 }
 

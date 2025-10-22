@@ -1,6 +1,26 @@
 /* Third Hero Section - White Background with Dark Text */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
 
+/* ThirdHero section protection is now in the main .third-hero rule below */
+
+.third-hero__right {
+  position: relative;
+  overflow: hidden;
+}
+
+.lottie-container {
+  width: 100%;
+  max-width: 900px;
+  height: 700px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #f8f9fa;
+}
+
 .third-hero {
   width: 100%;
   min-height: 78vh;
@@ -46,11 +66,7 @@
   align-items: center;
 }
 
-.lottie-container {
-  width: 100%;
-  max-width: 900px;
-  height: 700px;
-}
+/* Removed duplicate .lottie-container rule - using the simple one above */
 
 .lottie-placeholder {
   width: 100%;
@@ -62,6 +78,16 @@
   border-radius: 8px;
   color: #6b7280;
   font-size: 1rem;
+}
+
+/* Simple Lottie animation containment */
+.lottie-container > div {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  position: relative;
 }
 
 .third-hero__greeting {
@@ -135,7 +161,7 @@
 .btn--primary-dark:hover {
   background: #2d3748;
   border-color: #2d3748;
-  transform: translateY(-2px);
+  transform: translateY(-2px) !important;
 }
 
 .btn--outline-dark {
@@ -147,7 +173,7 @@
 .btn--outline-dark:hover {
   background: #1A2020;
   color: #fff;
-  transform: translateY(-2px);
+  transform: translateY(-2px) !important;
 }
 
 .third-hero__stats {
@@ -193,6 +219,7 @@
   .lottie-container {
     max-width: 400px;
     height: 350px;
+    overflow: hidden;
   }
   
   .third-hero__stats {
@@ -228,6 +255,7 @@
   .lottie-container {
     max-width: 500px;
     height: 500px;
+    overflow: hidden;
   }
   
   .third-hero__buttons {
@@ -268,6 +296,7 @@
   .lottie-container {
     max-width: 400px;
     height: 500px;
+    overflow: hidden;
   }
   
   .third-hero__buttons {

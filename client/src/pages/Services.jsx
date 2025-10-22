@@ -100,6 +100,7 @@ const Services = () => {
         "Chemical Engineering",
         "Laboratory Support",
         "Quality Control",
+        "Pharmacology",
       ],
     },
     {
@@ -115,6 +116,8 @@ const Services = () => {
         "Chief Human Resources Officer (CHRO)",
         "Chief Risk Officer (CRO)",
         "Chief Strategy Officer (CSO)",
+        "General Manager",
+        "Country Manager",
       ],
     },
     {
@@ -132,40 +135,6 @@ const Services = () => {
         "Propulsion Engineer",
         "Systems Integration Engineer",
         "DO-178 Certification Experts",
-      ],
-    },
-    {
-      title: "Pharmaceutical & Life Science",
-      links: [
-        "Sales",
-        "Marketing",
-        "Market Research",
-        "Regulatory Affairs",
-        "Supply Chain Management",
-        "Clinical Trials Assistant",
-        "Clinical Research",
-        "Business Development",
-        "Legal",
-        "Chemical Engineering",
-        "Laboratory Support",
-        "Quality Control",
-        "Pharmacology",
-      ],
-    },
-    {
-      title: "C-suite Executive Search",
-      links: [
-        "Board Search",
-        "Chief Executive Officer (CEO)",
-        "Chief Financial Officer (CFO)",
-        "Chief Operations Officer (COO)",
-        "Chief Marketing Officer (CMO)",
-        "Chief Revenue Officer (CRO)",
-        "Chief Information Officer (CIO)",
-        "Chief Technical Officer (CTO)",
-        "Chief Human Resources Officer (CHRO)",
-        "General Manager",
-        "Country Manager",
       ],
     },
     {
@@ -241,7 +210,182 @@ const Services = () => {
         "Audit Partner",
       ],
     },
+    {
+      title: "Technology & Software Development",
+      links: [
+        "Full Stack Developer",
+        "Frontend Developer",
+        "Backend Developer",
+        "Mobile App Developer",
+        "DevOps Engineer",
+        "Cloud Architect",
+        "Data Engineer",
+        "Machine Learning Engineer",
+        "AI Specialist",
+        "Cybersecurity Analyst",
+        "IT Support Specialist",
+        "System Administrator",
+        "Network Engineer",
+        "Database Administrator",
+        "QA Engineer",
+        "Test Automation Engineer",
+        "Technical Writer",
+        "Solution Architect",
+        "Product Owner",
+        "Scrum Master",
+        "Agile Coach",
+        "Technical Lead",
+        "Engineering Manager",
+        "CTO",
+      ],
+    },
+    {
+      title: "Healthcare & Medical",
+      links: [
+        "Physician",
+        "Nurse Practitioner",
+        "Registered Nurse",
+        "Licensed Practical Nurse",
+        "Medical Assistant",
+        "Physician Assistant",
+        "Pharmacist",
+        "Pharmacy Technician",
+        "Medical Technologist",
+        "Radiology Technician",
+        "Laboratory Technician",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Speech Therapist",
+        "Respiratory Therapist",
+        "Medical Social Worker",
+        "Healthcare Administrator",
+        "Medical Billing Specialist",
+        "Health Information Manager",
+        "Clinical Research Coordinator",
+        "Medical Device Specialist",
+        "Healthcare IT Specialist",
+        "Telemedicine Coordinator",
+        "Patient Care Coordinator",
+      ],
+    },
+    {
+      title: "Finance & Banking",
+      links: [
+        "Investment Banker",
+        "Financial Analyst",
+        "Portfolio Manager",
+        "Risk Manager",
+        "Credit Analyst",
+        "Loan Officer",
+        "Mortgage Specialist",
+        "Insurance Agent",
+        "Actuary",
+        "Compliance Officer",
+        "Anti-Money Laundering Specialist",
+        "Treasury Analyst",
+        "Corporate Finance Manager",
+        "Mergers & Acquisitions Specialist",
+        "Private Equity Associate",
+        "Hedge Fund Manager",
+        "Financial Planner",
+        "Wealth Manager",
+        "Tax Advisor",
+        "Audit Manager",
+        "Financial Controller",
+        "Treasury Manager",
+        "Capital Markets Specialist",
+        "Fintech Specialist",
+      ],
+    },
+    {
+      title: "Sales & Business Development",
+      links: [
+        "Sales Representative",
+        "Account Executive",
+        "Sales Manager",
+        "Regional Sales Director",
+        "VP of Sales",
+        "Business Development Manager",
+        "Partnership Manager",
+        "Channel Sales Manager",
+        "Inside Sales Representative",
+        "Outside Sales Representative",
+        "Sales Engineer",
+        "Customer Success Manager",
+        "Account Manager",
+        "Key Account Manager",
+        "Sales Operations Manager",
+        "Sales Analyst",
+        "Lead Generation Specialist",
+        "Sales Trainer",
+        "Territory Manager",
+        "Retail Sales Manager",
+        "E-commerce Sales Manager",
+        "International Sales Manager",
+        "Sales Consultant",
+        "Revenue Operations Manager",
+      ],
+    },
+    {
+      title: "Human Resources & Talent",
+      links: [
+        "HR Generalist",
+        "HR Manager",
+        "HR Director",
+        "CHRO",
+        "Recruiter",
+        "Senior Recruiter",
+        "Talent Acquisition Manager",
+        "Head of Talent",
+        "HR Business Partner",
+        "Compensation Analyst",
+        "Benefits Administrator",
+        "Employee Relations Specialist",
+        "Training & Development Manager",
+        "Organizational Development Specialist",
+        "HRIS Specialist",
+        "Payroll Specialist",
+        "HR Coordinator",
+        "Talent Development Manager",
+        "Diversity & Inclusion Manager",
+        "HR Analytics Specialist",
+        "Workplace Culture Manager",
+        "Employee Engagement Specialist",
+        "HR Consultant",
+        "People Operations Manager",
+      ],
+    },
+    {
+      title: "Marketing & Communications",
+      links: [
+        "Marketing Manager",
+        "Marketing Director",
+        "CMO",
+        "Digital Marketing Specialist",
+        "Content Marketing Manager",
+        "Social Media Manager",
+        "SEO Specialist",
+        "PPC Specialist",
+        "Email Marketing Manager",
+        "Brand Manager",
+        "Product Marketing Manager",
+        "Marketing Analyst",
+        "Marketing Automation Specialist",
+        "Growth Marketing Manager",
+        "Performance Marketing Manager",
+        "Public Relations Manager",
+        "Communications Manager",
+        "Content Creator",
+        "Copywriter",
+        "Graphic Designer",
+        "Video Producer",
+        "Marketing Operations Manager",
+        "Campaign Manager",
+        "Marketing Consultant",
+      ],
+    },
   ];
+
 
   const ServiceCard = ({ title, links }) => {
     const [expanded, setExpanded] = React.useState(false);
@@ -250,7 +394,12 @@ const Services = () => {
 
     // Function to find the job role key from the role name
     const getJobRoleKey = (roleName) => {
-      // Try to find exact match first
+      // First, try to find exact match with the key name
+      if (jobRolesData[roleName]) {
+        return roleName;
+      }
+      
+      // Try to find exact match with the title
       for (const [key, jobData] of Object.entries(jobRolesData)) {
         if (jobData.title === roleName) {
           return key;
@@ -261,12 +410,27 @@ const Services = () => {
       const lowerRoleName = roleName.toLowerCase();
       for (const [key, jobData] of Object.entries(jobRolesData)) {
         const lowerTitle = jobData.title.toLowerCase();
-        if (lowerTitle.includes(lowerRoleName) || lowerRoleName.includes(lowerTitle)) {
+        const lowerKey = key.toLowerCase();
+        if (lowerTitle.includes(lowerRoleName) || lowerRoleName.includes(lowerTitle) ||
+            lowerKey.includes(lowerRoleName) || lowerRoleName.includes(lowerKey)) {
           return key;
         }
       }
       
       return null; // No match found
+    };
+
+    // Function to get service category key from title
+    const getServiceCategoryKey = (serviceTitle) => {
+      const categoryMap = {
+        "Technology & Software Development": "technology-software-development",
+        "Healthcare & Medical": "healthcare-medical",
+        "Finance & Banking": "finance-banking",
+        "Sales & Business Development": "sales-business-development",
+        "Human Resources & Talent": "human-resources-talent",
+        "Marketing & Communications": "marketing-communications"
+      };
+      return categoryMap[serviceTitle] || null;
     };
 
     // Icon mapping for each service
@@ -313,12 +477,20 @@ const Services = () => {
       );
     };
 
+    const serviceCategoryKey = getServiceCategoryKey(title);
+
     return (
       <article className="svc-card">
         <div className="svc-card__icon" aria-hidden="true">
           {getServiceIcon(title)}
         </div>
-        <h3 className="svc-card__title">{title}</h3>
+        {serviceCategoryKey ? (
+          <Link to={`/service-category/${serviceCategoryKey}`} className="svc-card__title-link">
+            <h3 className="svc-card__title">{title}</h3>
+          </Link>
+        ) : (
+          <h3 className="svc-card__title">{title}</h3>
+        )}
         <ul className="svc-card__links">
           {visible.map((label) => {
             const jobRoleKey = getJobRoleKey(label);
@@ -341,6 +513,8 @@ const Services = () => {
       </article>
     );
   };
+
+
   return (
     <main className="services-page">
       {/* Desktop/Laptop hero (hidden on tablet/mobile) */}

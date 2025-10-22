@@ -21,20 +21,28 @@ const ServicesSection = () => {
   const cardRef = useRef(null);
   const [cardWidth, setCardWidth] = useState(320);
   const [gap, setGap] = useState(24);
-  // check if we're on mobile (but still allow sliding)
-  const [isMobile, setIsMobile] = useState(false);
+  // check screen size for responsive behavior
+  const [screenSize, setScreenSize] = useState('desktop');
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 480);
+    const checkScreenSize = () => {
+      if (window.innerWidth <= 480) {
+        setScreenSize('mobile');
+      } else if (window.innerWidth <= 768) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
     };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   // adjust maxIndex based on screen size
-  const maxIndex = isMobile 
-    ? Math.max(0, items.length - 1) // on mobile, show 1 card per view, allow scrolling to last card
+  const maxIndex = screenSize === 'mobile' 
+    ? Math.max(0, items.length - 1) // on mobile, show 1 card per view
+    : screenSize === 'tablet'
+    ? Math.max(0, items.length - 2) // on tablet, show 2 cards per view
     : Math.max(0, items.length - Math.floor(VISIBLE_RATIO)); // on desktop, use original logic
 
   // measure card width on mount & resize
@@ -115,41 +123,66 @@ const ServicesSection = () => {
           </div>
         </div>
 
-        {/* controls and progress */}
-        <div className="vh-services__controls">
-          <button
-            className="vh-services__arrow"
-            onClick={goPrev}
-            aria-label="Previous services"
-            disabled={index <= 0}
-          >
-            ‹
-          </button>
-
-          <div className="vh-services__pager">
-            <span className="vh-services__pager-text">
-              {currentStep} / 2 Services
-            </span>
-            <div
-              className="vh-services__progress"
-              aria-hidden="true"
+        {/* Desktop controls with progress bar */}
+        {(screenSize === 'desktop') && (
+          <div className="vh-services__controls">
+            <button
+              className="vh-services__arrow"
+              onClick={goPrev}
+              aria-label="Previous services"
+              disabled={index <= 0}
             >
-              <div
-                className="vh-services__progress-fill"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-          </div>
+              ‹
+            </button>
 
-          <button
-            className="vh-services__arrow"
-            onClick={goNext}
-            aria-label="Next services"
-            disabled={index >= maxIndex}
-          >
-            ›
-          </button>
-        </div>
+            <div className="vh-services__pager">
+              <span className="vh-services__pager-text">
+                {currentStep} / 2 Services
+              </span>
+              <div
+                className="vh-services__progress"
+                aria-hidden="true"
+              >
+                <div
+                  className="vh-services__progress-fill"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
+            </div>
+
+            <button
+              className="vh-services__arrow"
+              onClick={goNext}
+              aria-label="Next services"
+              disabled={index >= maxIndex}
+            >
+              ›
+            </button>
+          </div>
+        )}
+
+        {/* Mobile and tablet navigation arrows only */}
+        {(screenSize === 'mobile' || screenSize === 'tablet') && (
+          <div className="vh-services__mobile-controls">
+            <button
+              className="vh-services__mobile-arrow"
+              onClick={goPrev}
+              aria-label="Previous services"
+              disabled={index <= 0}
+            >
+              ‹
+            </button>
+
+            <button
+              className="vh-services__mobile-arrow"
+              onClick={goNext}
+              aria-label="Next services"
+              disabled={index >= maxIndex}
+            >
+              ›
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

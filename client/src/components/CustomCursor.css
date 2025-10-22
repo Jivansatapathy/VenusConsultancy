@@ -1,0 +1,98 @@
+/* Custom Cursor Styles */
+.custom-cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s ease-out;
+  backdrop-filter: invert(1) blur(0px);
+  mix-blend-mode: difference;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.custom-cursor.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.custom-cursor.hovering {
+  width: 60px;
+  height: 60px;
+  background: rgba(229, 9, 20, 0.2);
+  border: 2px solid #e50914;
+  backdrop-filter: invert(1) blur(2px);
+}
+
+/* Keep default cursor visible - custom cursor will follow it */
+* {
+  cursor: auto !important;
+}
+
+/* Magnify effect for text elements */
+.custom-cursor.visible ~ * {
+  transition: transform 0.2s ease-out;
+}
+
+/* When cursor is over text, magnify it slightly */
+.custom-cursor.visible:hover ~ p,
+.custom-cursor.visible:hover ~ h1,
+.custom-cursor.visible:hover ~ h2,
+.custom-cursor.visible:hover ~ h3,
+.custom-cursor.visible:hover ~ h4,
+.custom-cursor.visible:hover ~ h5,
+.custom-cursor.visible:hover ~ h6,
+.custom-cursor.visible:hover ~ span,
+.custom-cursor.visible:hover ~ div {
+  transform: scale(1.02);
+}
+
+/* Smooth transitions */
+.custom-cursor {
+  transition: 
+    width 0.2s ease-out,
+    height 0.2s ease-out,
+    background 0.2s ease-out,
+    border 0.2s ease-out,
+    backdrop-filter 0.2s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-cursor {
+    display: none;
+  }
+}
+
+/* Accessibility - respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor {
+    display: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .custom-cursor {
+    border: 3px solid #000;
+    background: rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .custom-cursor {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+  }
+  
+  .custom-cursor.hovering {
+    background: rgba(229, 9, 20, 0.3);
+    border: 2px solid #e50914;
+  }
+}

@@ -7,6 +7,7 @@ import UpFooter from "./components/UpFooter";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
+import CustomCursor from "./components/CustomCursor";
 
 // Lazy load heavy components
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
@@ -21,6 +22,7 @@ const About = lazy(() => import("./pages/AboutUs"));
 const BookCall = lazy(() => import("./pages/BookCall"));
 const Hiring = lazy(() => import("./pages/Hiring"));
 const JobRoles = lazy(() => import("./pages/JobRoles"));
+const ServiceCategory = lazy(() => import("./pages/ServiceCategory"));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -48,6 +50,9 @@ function AppContent() {
 
   return (
     <>
+      {/* Custom Cursor */}
+      <CustomCursor />
+      
       {/* Navbar is always visible */}
       <Navbar />
 
@@ -128,6 +133,11 @@ function AppContent() {
         <Route path="/job-roles" element={
           <Suspense fallback={<LoadingFallback />}>
             <JobRoles />
+          </Suspense>
+        } />
+        <Route path="/service-category/:categoryKey" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <ServiceCategory />
           </Suspense>
         } />
 

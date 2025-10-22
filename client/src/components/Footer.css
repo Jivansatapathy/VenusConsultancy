@@ -115,6 +115,46 @@
   padding: 0.6rem 0.9rem;
   border-radius: 8px;
   font-weight: 600;
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+/* Mobile responsive button sizing */
+@media (max-width: 560px) {
+  .vh-footer__submit {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    min-width: 70px;
+    width: 100%;
+  }
+  
+  .vh-footer__form-row {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  
+  .vh-footer__input {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+  
+  .vh-footer__newsletter {
+    width: 100%;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .vh-footer__submit {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+    min-width: 60px;
+  }
+  
+  .vh-footer__input {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.6rem;
+  }
 }
 
 /* Social */

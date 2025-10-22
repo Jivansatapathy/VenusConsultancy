@@ -334,6 +334,20 @@
   margin: 0 0 8px;
 }
 
+.svc-card__title-link {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.svc-card__title-link:hover {
+  color: #007bff;
+}
+
+.svc-card__title-link:hover .svc-card__title {
+  color: #007bff;
+}
+
 .svc-card__links {
   list-style: none;
   padding: 0;
@@ -1210,3 +1224,4 @@
     width: 100%;
   }
 }
+

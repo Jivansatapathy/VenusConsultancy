@@ -221,10 +221,7 @@
 
 /* Laptop styles */
 @media (min-width: 1025px) {
-  .curved-text-section {
-    padding: 80px 0;
-  }
-  
+
   .curved-text {
     font-size: 4rem;
   }

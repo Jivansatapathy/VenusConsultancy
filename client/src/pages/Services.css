@@ -257,8 +257,7 @@
 /* services section */
 .svc-services {
   background: #F6FBFD;
-  padding: 28px 40px 56px;
-  padding-bottom: 10px;
+  padding: 28px 40px 10px;
 }
 
 .svc-services__head {

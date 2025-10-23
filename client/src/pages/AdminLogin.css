@@ -83,7 +83,8 @@
 }
 
 .forgot a:hover, .signup a:hover {
-  text-decoration: underline rgba(167, 139, 250, 1);
+  text-decoration: underline;
+  text-decoration-color: rgba(167, 139, 250, 1);
 }
 
 .sign {

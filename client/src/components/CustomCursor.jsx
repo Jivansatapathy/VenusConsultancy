@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CustomCursor.css';
 
 const CustomCursor = () => {
-  const cursorRef = useRef(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -16,7 +15,7 @@ const CustomCursor = () => {
     const handleMouseEnter = () => setIsVisible(true);
     const handleMouseLeave = () => {
       setIsVisible(false);
-      // Remove zoom class from all text elements when mouse leaves
+      // Always query DOM to remove any cursor-zoom classes
       document.querySelectorAll('.cursor-zoom').forEach(el => {
         el.classList.remove('cursor-zoom');
       });
@@ -27,7 +26,7 @@ const CustomCursor = () => {
       const target = e.target;
       const isInteractive = target.matches('a, button, input, textarea, select, [role="button"], [tabindex]');
       
-      // Completely disable zoom effects - remove all cursor-zoom classes
+      // Always query DOM to remove any cursor-zoom classes
       document.querySelectorAll('.cursor-zoom').forEach(el => {
         el.classList.remove('cursor-zoom');
       });
@@ -53,11 +52,10 @@ const CustomCursor = () => {
 
   return (
     <div
-      ref={cursorRef}
       className={`custom-cursor ${isVisible ? 'visible' : ''} ${isHovering ? 'hovering' : ''}`}
       style={{
-        left: mousePosition.x,
-        top: mousePosition.y,
+        left: mousePosition.x + 8,
+        top: mousePosition.y + 8,
       }}
     />
   );

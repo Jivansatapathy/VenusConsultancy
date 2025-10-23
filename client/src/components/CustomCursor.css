@@ -1,19 +1,17 @@
-/* Custom Cursor Styles - Individual Values */
+/* Custom Cursor Styles - Black Dot Following Original Cursor */
 .custom-cursor {
   position: fixed;
-  width: 40px;
-  height: 40px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: #000000 !important;
+  border: 1px solid #000000 !important;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: width 0.2s ease-out, height 0.2s ease-out, background 0.2s ease-out, border 0.2s ease-out, backdrop-filter 0.2s ease-out;
-  backdrop-filter: invert(1);
-  mix-blend-mode: difference;
-  opacity: 0;
-  visibility: hidden;
+  transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.2s ease-out;
+  opacity: 1;
+  visibility: visible;
 }
 
 .custom-cursor.visible {
@@ -22,11 +20,11 @@
 }
 
 .custom-cursor.hovering {
-  width: 40px;
-  height: 40px;
-  background: rgba(229, 9, 20, 0.2);
-  border: 2px solid #e50914;
-  backdrop-filter: invert(1);
+  width: 12px;
+  height: 12px;
+  background: #000000 !important;
+  border: 1px solid #000000 !important;
+  transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.2s ease-out, height 0.2s ease-out;
 }
 
 /* Keep default cursor visible - custom cursor will follow it */
@@ -77,23 +75,28 @@ a:hover {
   }
 }
 
-/* High contrast mode - Individual Values */
+/* High contrast mode - Black Dot */
 @media (prefers-contrast: high) {
   .custom-cursor {
-    border: 3px solid #000000;
-    background: rgba(255, 255, 255, 0.8);
-  }
-}
-
-/* Dark mode adjustments - Individual Values */
-@media (prefers-color-scheme: dark) {
-  .custom-cursor {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.4);
+    border: 2px solid #000000 !important;
+    background: #000000 !important;
   }
   
   .custom-cursor.hovering {
-    background: rgba(229, 9, 20, 0.3);
-    border: 2px solid #e50914;
+    background: #000000 !important;
+    border: 2px solid #000000 !important;
+  }
+}
+
+/* Dark mode adjustments - Keep Black Dot */
+@media (prefers-color-scheme: dark) {
+  .custom-cursor {
+    background: #000000 !important;
+    border: 1px solid #000000 !important;
+  }
+  
+  .custom-cursor.hovering {
+    background: #000000 !important;
+    border: 1px solid #000000 !important;
   }
 }

@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import CustomCursor from "./components/CustomCursor";
 import PageTransition from "./components/PageTransition";
+import ImagePreloader from "./components/ImagePreloader";
 
 // Lazy load heavy components
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
@@ -54,6 +55,13 @@ function AppContent() {
     <>
       {/* Custom Cursor */}
       <CustomCursor />
+      
+      {/* Preload critical images */}
+      <ImagePreloader images={[
+        '/01.jpeg',
+        '/venuslogo.png',
+        '/Background.png'
+      ]} />
       
       {/* Navbar is always visible */}
       <Navbar />

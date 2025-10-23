@@ -10,7 +10,10 @@ const ThirdHero = () => {
     // Load the Lottie animation
     const loadLottieAnimation = async () => {
       try {
-        const response = await fetch('/job hunting.json');
+        const response = await fetch('/job-hunting.json');
+        if (!response.ok) {
+          throw new Error(`Failed to load animation: ${response.status} ${response.statusText}`);
+        }
         const data = await response.json();
         setAnimationData(data);
       } catch (error) {
@@ -67,7 +70,16 @@ const ThirdHero = () => {
                   animationData={animationData}
                   loop={true}
                   autoplay={true}
-                  style={{ width: '100%', height: '100%' }}
+                  style={{ 
+                    width: '100%', 
+                    height: '100%',
+                    margin: 0,
+                    padding: 0,
+                    display: 'block',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain'
+                  }}
                 />
               ) : (
                 <div className="lottie-placeholder">

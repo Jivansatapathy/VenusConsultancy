@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import "./ServiceCategory.css";
 
@@ -530,7 +530,16 @@ const ServiceCategory = () => {
               <div 
                 key={index} 
                 className="service-category-job-card"
+                role="button"
+                tabIndex={0}
                 onClick={() => handleJobClick(job)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleJobClick(job);
+                  }
+                }}
+                aria-label={`Hire ${job}`}
               >
                 <h3>{job}</h3>
                 <p>Click to hire this role</p>

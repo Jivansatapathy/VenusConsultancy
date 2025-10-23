@@ -254,8 +254,7 @@ export const jobRolesData = {
 
   "Aerospace Engineer": {
     title: "Aerospace Engineer",
-     industry: "Aerospace",
-    salary: { low: 75000, mid: 105000, high: 145000 },
+    industry: "Aerospace",    salary: { low: 75000, mid: 105000, high: 145000 },
     description: "Aerospace engineers must have strong engineering knowledge, analytical skills, and aerospace domain expertise. This position involves designing and developing aircraft, spacecraft, and related systems. Previous experience in aerospace engineering may be preferred. Candidates will engage in system design, analysis, and testing. A degree in aerospace engineering, mechanical engineering, or related field is preferred as well as 3-7 years of prior relevant aerospace experience.",
     duties: [
       "Designing aircraft and spacecraft systems",

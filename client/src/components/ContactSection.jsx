@@ -13,7 +13,7 @@ const ContactSection = () => {
         
         <div className="offices-grid">
           <div className="office-card">
-            <h4 className="office-title">🇨🇦 Toronto, Canada</h4>
+            <h4 className="office-title" aria-label="Toronto, Canada">🇨🇦 Toronto, Canada</h4>
             <div className="office-details">
               <p className="office-address">#205 - 1085 Bellamy Road North</p>
               <p className="office-address">Toronto, ON</p>
@@ -22,7 +22,7 @@ const ContactSection = () => {
           </div>
 
           <div className="office-card">
-            <h4 className="office-title">🇺🇸 Michigan, USA</h4>
+            <h4 className="office-title" aria-label="Michigan, USA">🇺🇸 Michigan, USA</h4>
             <div className="office-details">
               <p className="office-address">880 W Long Lake Rd Ste 225</p>
               <p className="office-address">Troy, MI 48098</p>
@@ -32,7 +32,7 @@ const ContactSection = () => {
           </div>
 
           <div className="office-card">
-            <h4 className="office-title">🇮🇳 India</h4>
+            <h4 className="office-title" aria-label="India">🇮🇳 India</h4>
             <div className="office-details">
               <p className="office-address">Mumbai, Surat, Chennai, Hyderabad</p>
               <p className="office-phone">Ph: <a href="tel:+91-261-2601177" className="phone-link">+91-261-2601177</a></p>

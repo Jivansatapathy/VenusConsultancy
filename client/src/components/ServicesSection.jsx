@@ -137,7 +137,7 @@ const ServicesSection = () => {
 
             <div className="vh-services__pager">
               <span className="vh-services__pager-text">
-                {currentStep} / 2 Services
+                {currentStep} / {totalSteps} Services
               </span>
               <div
                 className="vh-services__progress"
@@ -149,7 +149,6 @@ const ServicesSection = () => {
                 />
               </div>
             </div>
-
             <button
               className="vh-services__arrow"
               onClick={goNext}

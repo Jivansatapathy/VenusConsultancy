@@ -6,6 +6,7 @@ import fs from "fs";
 import Application from "../models/Application.js";
 import Job from "../models/Job.js";
 import { requireAuth, requireRole, authAndRole } from "../middleware/authMiddleware.js";
+import { sendJobApplicationNotification, sendApplicationConfirmation } from "../services/emailService.js";
 
 const router = express.Router();
 
@@ -89,6 +90,20 @@ router.post("/", upload.single("resume"), async (req, res) => {
     });
 
     await application.save();
+
+    // Send email notifications (async, don't block response)
+    try {
+      // Send notification to admin/recruiter
+      await sendJobApplicationNotification(application, job);
+      
+      // Send confirmation to applicant
+      await sendApplicationConfirmation(application, job);
+      
+      console.log('Email notifications sent successfully for application:', application._id);
+    } catch (emailError) {
+      // Log email errors but don't fail the application submission
+      console.error('Error sending email notifications:', emailError);
+    }
 
     res.status(201).json({ 
       message: "Application submitted successfully",

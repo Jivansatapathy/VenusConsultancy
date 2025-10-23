@@ -140,3 +140,212 @@ export const sendAutoReply = async (contactData) => {
     return { success: false, error: error.message };
   }
 };
+
+// Send notification to admin/recruiter about new job application
+export const sendJobApplicationNotification = async (applicationData, jobData) => {
+  try {
+    const transporter = createTransporter();
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER || 'satapathyjjivan@gmail.com',
+      to: process.env.ADMIN_EMAIL || 'satapathyjjivan@gmail.com', // Where to receive job application notifications
+      subject: `New Job Application: ${jobData.title} - ${applicationData.name}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto;">
+          <h2 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">
+            🎯 New Job Application Received
+          </h2>
+          
+          <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+            <h3 style="color: #1e40af; margin-top: 0;">📋 Job Details</h3>
+            <p><strong>Position:</strong> ${jobData.title}</p>
+            <p><strong>Location:</strong> ${jobData.location}</p>
+            <p><strong>Type:</strong> ${jobData.type}</p>
+            <p><strong>Department:</strong> ${jobData.department}</p>
+          </div>
+          
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #333; margin-top: 0;">👤 Applicant Information</h3>
+            <p><strong>Name:</strong> ${applicationData.name}</p>
+            <p><strong>Email:</strong> ${applicationData.email}</p>
+            <p><strong>Phone:</strong> ${applicationData.phone || 'Not provided'}</p>
+            <p><strong>Applied At:</strong> ${new Date(applicationData.appliedAt).toLocaleString()}</p>
+            <p><strong>Resume File:</strong> ${applicationData.resumeOriginalName}</p>
+          </div>
+          
+          ${applicationData.coverMessage ? `
+          <div style="background: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #333; margin-top: 0;">💬 Cover Message</h3>
+            <p style="white-space: pre-wrap; line-height: 1.6; background: #f9fafb; padding: 15px; border-radius: 6px;">${applicationData.coverMessage}</p>
+          </div>
+          ` : ''}
+          
+          <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">
+            <h3 style="color: #92400e; margin-top: 0;">⚡ Action Required</h3>
+            <p style="margin: 0; color: #92400e;">
+              <strong>Next Steps:</strong><br>
+              • Review the attached resume<br>
+              • Contact the candidate within 48 hours<br>
+              • Update application status in the admin dashboard
+            </p>
+          </div>
+          
+          <div style="margin-top: 30px; text-align: center;">
+            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/dashboard" 
+               style="background: #dc2626; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; display: inline-block;">
+              View in Admin Dashboard
+            </a>
+          </div>
+          
+          <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+          <p style="color: #6b7280; font-size: 12px; text-align: center;">
+            This notification was sent from the Venus Hiring job application system.<br>
+            Application ID: ${applicationData._id}
+          </p>
+        </div>
+      `,
+      text: `
+        New Job Application Received
+        
+        Job Details:
+        - Position: ${jobData.title}
+        - Location: ${jobData.location}
+        - Type: ${jobData.type}
+        - Department: ${jobData.department}
+        
+        Applicant Information:
+        - Name: ${applicationData.name}
+        - Email: ${applicationData.email}
+        - Phone: ${applicationData.phone || 'Not provided'}
+        - Applied At: ${new Date(applicationData.appliedAt).toLocaleString()}
+        - Resume File: ${applicationData.resumeOriginalName}
+        
+        ${applicationData.coverMessage ? `Cover Message:\n${applicationData.coverMessage}\n` : ''}
+        
+        Action Required:
+        - Review the attached resume
+        - Contact the candidate within 48 hours
+        - Update application status in the admin dashboard
+        
+        View in Admin Dashboard: ${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/dashboard
+        
+        ---
+        Application ID: ${applicationData._id}
+        This notification was sent from the Venus Hiring job application system.
+      `
+    };
+
+    const result = await transporter.sendMail(mailOptions);
+    console.log('Job application notification sent successfully:', result.messageId);
+    return { success: true, messageId: result.messageId };
+  } catch (error) {
+    console.error('Error sending job application notification:', error);
+    return { success: false, error: error.message };
+  }
+};
+
+// Send confirmation email to applicant
+export const sendApplicationConfirmation = async (applicationData, jobData) => {
+  try {
+    const transporter = createTransporter();
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER || 'satapathyjjivan@gmail.com',
+      to: applicationData.email,
+      subject: `Application Confirmation - ${jobData.title} at Venus Hiring`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #dc2626;">✅ Application Received Successfully!</h2>
+          
+          <p>Dear ${applicationData.name},</p>
+          
+          <p>Thank you for your interest in joining our team! We have successfully received your application for the <strong>${jobData.title}</strong> position.</p>
+          
+          <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+            <h3 style="color: #1e40af; margin-top: 0;">📋 Application Summary</h3>
+            <p><strong>Position Applied For:</strong> ${jobData.title}</p>
+            <p><strong>Location:</strong> ${jobData.location}</p>
+            <p><strong>Job Type:</strong> ${jobData.type}</p>
+            <p><strong>Department:</strong> ${jobData.department}</p>
+            <p><strong>Application Date:</strong> ${new Date(applicationData.appliedAt).toLocaleString()}</p>
+            <p><strong>Resume Submitted:</strong> ${applicationData.resumeOriginalName}</p>
+          </div>
+          
+          ${applicationData.coverMessage ? `
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #333; margin-top: 0;">Your Cover Message</h3>
+            <p style="white-space: pre-wrap; line-height: 1.6; background: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #e5e7eb;">${applicationData.coverMessage}</p>
+          </div>
+          ` : ''}
+          
+          <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #22c55e;">
+            <h3 style="color: #166534; margin-top: 0;">⏰ What Happens Next?</h3>
+            <ul style="color: #166534; margin: 0; padding-left: 20px;">
+              <li>Our HR team will review your application within 2-3 business days</li>
+              <li>If shortlisted, you'll receive a call or email for the next steps</li>
+              <li>We'll keep you updated on the status of your application</li>
+            </ul>
+          </div>
+          
+          <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">
+            <h3 style="color: #92400e; margin-top: 0;">💡 Pro Tip</h3>
+            <p style="margin: 0; color: #92400e;">
+              While you wait, feel free to explore other opportunities on our website or follow us on social media for company updates and career tips!
+            </p>
+          </div>
+          
+          <p>If you have any questions about your application, please don't hesitate to contact us.</p>
+          
+          <p>Best regards,<br>
+          <strong>The Venus Hiring Team</strong></p>
+          
+          <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+          <p style="color: #6b7280; font-size: 12px; text-align: center;">
+            Venus Hiring | Building Careers, Building Organizations<br>
+            Phone: +647-722-0837 | Email: info@venushiring.com<br>
+            Application ID: ${applicationData._id}
+          </p>
+        </div>
+      `,
+      text: `
+        Application Received Successfully!
+        
+        Dear ${applicationData.name},
+        
+        Thank you for your interest in joining our team! We have successfully received your application for the ${jobData.title} position.
+        
+        Application Summary:
+        - Position Applied For: ${jobData.title}
+        - Location: ${jobData.location}
+        - Job Type: ${jobData.type}
+        - Department: ${jobData.department}
+        - Application Date: ${new Date(applicationData.appliedAt).toLocaleString()}
+        - Resume Submitted: ${applicationData.resumeOriginalName}
+        
+        ${applicationData.coverMessage ? `Your Cover Message:\n${applicationData.coverMessage}\n` : ''}
+        
+        What Happens Next?
+        - Our HR team will review your application within 2-3 business days
+        - If shortlisted, you'll receive a call or email for the next steps
+        - We'll keep you updated on the status of your application
+        
+        If you have any questions about your application, please don't hesitate to contact us.
+        
+        Best regards,
+        The Venus Hiring Team
+        
+        ---
+        Venus Hiring | Building Careers, Building Organizations
+        Phone: +647-722-0837 | Email: info@venushiring.com
+        Application ID: ${applicationData._id}
+      `
+    };
+
+    const result = await transporter.sendMail(mailOptions);
+    console.log('Application confirmation sent successfully:', result.messageId);
+    return { success: true, messageId: result.messageId };
+  } catch (error) {
+    console.error('Error sending application confirmation:', error);
+    return { success: false, error: error.message };
+  }
+};

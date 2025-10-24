@@ -45,21 +45,23 @@ function processQueue(err, token = null) {
 const RUNTIME_API =
   (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_URL) ||
   (typeof process !== "undefined" && process.env && process.env.NEXT_PUBLIC_API_URL) ||
-  (process.env.NODE_ENV === 'development' ? "http://localhost:5000" : null);
+  (typeof process !== "undefined" && process.env.NODE_ENV === 'development' ? "http://localhost:5000" : null);
 
 // In production, VITE_API_URL must be set
 if (!RUNTIME_API) {
   throw new Error(
-    'VITE_API_URL environment variable is required for production. ' +
-    'Please set VITE_API_URL to your production API domain (e.g., https://venusconsultancy.onrender.com).'
+    'API URL environment variable is required for production. ' +
+    'Please set VITE_API_URL (Vite) or NEXT_PUBLIC_API_URL (Next.js) to your production API domain (e.g., https://venusconsultancy.onrender.com).'
   );
 }
 
 // Ensure baseURL ends without trailing slash and points to /api
 const API_BASE = RUNTIME_API.replace(/\/$/, "") + "/api";
 
-console.log("[API] Runtime API URL:", RUNTIME_API);
-console.log("[API] Final API Base:", API_BASE);
+if (typeof process !== "undefined" && process.env.NODE_ENV === 'development') {
+  console.log("[API] Runtime API URL:", RUNTIME_API);
+  console.log("[API] Final API Base:", API_BASE);
+}
 
 const API = axios.create({
   baseURL: API_BASE,

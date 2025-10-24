@@ -27,11 +27,17 @@ JWT_EXPIRE=7d
 REFRESH_TOKEN_SECRET=your-refresh-token-secret-here
 REFRESH_TOKEN_EXPIRE=30d
 
-# Email Configuration - Gmail Setup
-EMAIL_SERVICE=gmail
-EMAIL_USER=satapathyjjivan@gmail.com
-EMAIL_PASS=your-app-password-here
-CONTACT_EMAIL=satapathyjjivan@gmail.com
+# Email Configuration - Zoho Mail Setup
+EMAIL_SERVICE=zoho
+EMAIL_USER=paresh@venushiring.com
+EMAIL_PASS=your-zoho-password-here
+SMTP_HOST=smtp.zoho.com
+SMTP_PORT=587
+SMTP_SECURE=false
+CONTACT_EMAIL=paresh@venushiring.com
+
+# Frontend URL (for email links)
+FRONTEND_URL=http://localhost:5173
 
 # Frontend serving
 SERVE_CLIENT=false`;
@@ -44,25 +50,26 @@ try {
   console.log('');
   console.log('📧 EMAIL SETUP INSTRUCTIONS:');
   console.log('');
-  console.log('1. Gmail Setup (Required):');
-  console.log('   - Go to your Gmail account: satapathyjjivan@gmail.com');
-  console.log('   - Enable 2-Factor Authentication');
-  console.log('   - Go to: Google Account → Security → 2-Step Verification → App passwords');
-  console.log('   - Generate a new app password for "Mail"');
-  console.log('   - Copy the generated password');
+  console.log('1. Zoho Mail Setup (Required):');
+  console.log('   - Log into your Zoho Mail account: paresh@venushiring.com');
+  console.log('   - Go to Settings → Security → App Passwords');
+  console.log('   - Generate a new App Password for "Mail Client"');
+  console.log('   - Copy the generated password (16 characters)');
+  console.log('   - OR use your regular Zoho password if 2FA is disabled');
   console.log('');
   console.log('2. Update .env file:');
   console.log('   - Open server/.env file');
-  console.log('   - Replace "your-app-password-here" with your Gmail app password');
+  console.log('   - Replace "your-zoho-password-here" with your Zoho password');
   console.log('   - Save the file');
   console.log('');
   console.log('3. Test the setup:');
-  console.log('   - Start your server: npm run dev');
-  console.log('   - Go to your contact page');
-  console.log('   - Submit the contact form');
-  console.log('   - Check satapathyjjivan@gmail.com for the email');
+  console.log('   - Run: node test-email-notifications.js');
+  console.log('   - Check emails at: megan@venushiring.com, paresh@venushiring.ca, jivan@venushiring.com');
   console.log('');
-  console.log('📧 All contact form emails will be sent to: satapathyjjivan@gmail.com');
+  console.log('📧 Job application notifications will be sent to:');
+  console.log('   - megan@venushiring.com');
+  console.log('   - paresh@venushiring.ca');
+  console.log('   - jivan@venushiring.com');
 } catch (error) {
   console.error('❌ Error creating .env file:', error.message);
   console.log('');

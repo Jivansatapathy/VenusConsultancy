@@ -53,16 +53,19 @@ async function testEmailNotifications() {
 
     console.log('🎉 Email notification test completed!');
     console.log('\n📋 Check your email inboxes:');
-    console.log(`   Admin Email: ${process.env.ADMIN_EMAIL || 'satapathyjjivan@gmail.com'}`);
+    console.log('   Venus Hiring Team: megan@venushiring.com, paresh@venushiring.ca, jivan@venushiring.com');
     console.log(`   Applicant Email: ${mockApplication.email}`);
 
   } catch (error) {
     console.error('❌ Test failed with error:', error.message);
     console.log('\n🔧 Troubleshooting:');
-    console.log('1. Check your .env file has correct email settings');
+    console.log('1. Check your .env file has correct Zoho email settings');
     console.log('2. Ensure EMAIL_USER and EMAIL_PASS are set');
-    console.log('3. For Gmail, use an App Password (not your regular password)');
-    console.log('4. Check that ADMIN_EMAIL is set to receive notifications');
+    console.log('3. For Zoho Mail:');
+    console.log('   - Use your regular Zoho password, OR');
+    console.log('   - Generate an App Password in Zoho Settings → Security → App Passwords');
+    console.log('4. Verify EMAIL_SERVICE=zoho in your .env file');
+    console.log('5. Check that SMTP_HOST=smtp.zoho.com and SMTP_PORT=587');
   }
 }
 

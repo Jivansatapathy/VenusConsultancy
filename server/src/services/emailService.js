@@ -2,9 +2,9 @@ import nodemailer from 'nodemailer';
 
 // Create transporter - you'll need to configure this with your email provider
 const createTransporter = () => {
-  // Option 1: Gmail (recommended for testing)
+  // Option 1: Gmail
   if (process.env.EMAIL_SERVICE === 'gmail') {
-    return nodemailer.createTransporter({
+    return nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
@@ -13,8 +13,21 @@ const createTransporter = () => {
     });
   }
 
-  // Option 2: Custom SMTP (for production)
-  return nodemailer.createTransporter({
+  // Option 2: Zoho Mail
+  if (process.env.EMAIL_SERVICE === 'zoho') {
+    return nodemailer.createTransport({
+      host: 'smtppro.zoho.in',
+      port: 465,
+      secure: true, // SSL for port 465
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+  }
+
+  // Option 3: Custom SMTP (for other providers)
+  return nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT || 587,
     secure: process.env.SMTP_SECURE === 'true',
@@ -31,7 +44,7 @@ export const sendContactEmail = async (contactData) => {
 
     const mailOptions = {
       from: process.env.EMAIL_USER || 'satapathyjjivan@gmail.com',
-      to: process.env.CONTACT_EMAIL || 'satapathyjjivan@gmail.com', // Where to receive contact forms
+      to: process.env.CONTACT_EMAIL || 'paresh@venushiring.ca,info@venushiring.com,jivan@venushiring.com', // Where to receive contact forms
       subject: `New Contact Form Submission from ${contactData.name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -148,7 +161,7 @@ export const sendJobApplicationNotification = async (applicationData, jobData) =
 
     const mailOptions = {
       from: process.env.EMAIL_USER || 'satapathyjjivan@gmail.com',
-      to: process.env.ADMIN_EMAIL || 'satapathyjjivan@gmail.com', // Where to receive job application notifications
+      to: 'megan@venushiring.com, paresh@venushiring.ca, jivan@venushiring.com', // Venus Hiring team notifications
       subject: `New Job Application: ${jobData.title} - ${applicationData.name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto;">

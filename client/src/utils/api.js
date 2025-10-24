@@ -45,7 +45,15 @@ function processQueue(err, token = null) {
 const RUNTIME_API =
   (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_URL) ||
   (typeof process !== "undefined" && process.env && process.env.NEXT_PUBLIC_API_URL) ||
-  "http://localhost:5000";
+  (process.env.NODE_ENV === 'development' ? "http://localhost:5000" : null);
+
+// In production, VITE_API_URL must be set
+if (!RUNTIME_API) {
+  throw new Error(
+    'VITE_API_URL environment variable is required for production. ' +
+    'Please set VITE_API_URL to your production API domain (e.g., https://venusconsultancy.onrender.com).'
+  );
+}
 
 // Ensure baseURL ends without trailing slash and points to /api
 const API_BASE = RUNTIME_API.replace(/\/$/, "") + "/api";

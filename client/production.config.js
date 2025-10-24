@@ -1,8 +1,28 @@
 // Production Configuration for Venus Hiring Application
+// 
+// IMPORTANT: This configuration requires VITE_API_URL to be set in your production environment.
+// The insecure fallback URL has been removed to prevent 404 errors from broken domains.
+//
+// To set up your production environment:
+// 1. Set VITE_API_URL environment variable to your production API domain
+// 2. If using Render free tier, upgrade to paid plan or migrate to dedicated infrastructure
+// 3. Ensure your API domain is accessible and properly configured
+//
+// Example: VITE_API_URL=https://your-production-api.com
 export const productionConfig = {
   // API Configuration
   api: {
-    baseURL: process.env.VITE_API_URL || 'https://your-production-api.com',
+    baseURL: (() => {
+      const apiUrl = process.env.VITE_API_URL;
+      if (!apiUrl) {
+        throw new Error(
+          'VITE_API_URL environment variable is required for production. ' +
+          'Please set VITE_API_URL to your production API domain (e.g., https://your-api-domain.com). ' +
+          'If using Render, upgrade to a paid plan or migrate to dedicated infrastructure.'
+        );
+      }
+      return apiUrl;
+    })(),
     timeout: 30000,
     retries: 3
   },

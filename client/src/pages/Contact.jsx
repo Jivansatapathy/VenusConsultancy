@@ -69,7 +69,12 @@ const Contact = () => {
 
     setSubmitting(true);
     try {
-      const response = await fetch('/api/contact/submit', {
+      // Get the API base URL from environment - no fallback for production safety
+      const API_BASE = import.meta.env.VITE_API_URL;
+      if (!API_BASE) {
+        throw new Error('VITE_API_URL environment variable is required');
+      }
+      const response = await fetch(`${API_BASE}/api/contact/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

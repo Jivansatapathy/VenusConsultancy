@@ -50,7 +50,7 @@ export const config = {
   CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || "http://localhost:5173",
   CORS_ALLOWED_ORIGINS: process.env.CORS_ALLOWED_ORIGINS 
     ? process.env.CORS_ALLOWED_ORIGINS.split(",").map(origin => origin.trim())
-    : ["http://localhost:5173"],
+    : ["http://localhost:5173", "https://venushiring.com", "https://www.venushiring.com"],
   
   // Security
   RATE_LIMIT_WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes

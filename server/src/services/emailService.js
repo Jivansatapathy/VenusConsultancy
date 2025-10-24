@@ -161,7 +161,7 @@ export const sendJobApplicationNotification = async (applicationData, jobData) =
 
     const mailOptions = {
       from: process.env.EMAIL_USER || 'satapathyjjivan@gmail.com',
-      to: 'megan@venushiring.com, paresh@venushiring.ca, jivan@venushiring.com', // Venus Hiring team notifications
+      to: process.env.JOB_APPLICATION_EMAIL || 'megan@venushiring.com, paresh@venushiring.ca, jivan@venushiring.com', // Venus Hiring team notifications
       subject: `New Job Application: ${jobData.title} - ${applicationData.name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto;">

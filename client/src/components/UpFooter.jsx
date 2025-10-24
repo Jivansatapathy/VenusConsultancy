@@ -1,7 +1,6 @@
 // client/src/components/UpFooter.jsx
 import React from "react";
 import "./UpFooter.css";
-import OptimizedImage from "./OptimizedImage";
 
 /**
  * UpFooter - universal CTA band that appears above the main footer.
@@ -30,14 +29,13 @@ const UpFooter = () => {
             </div>
           </div>
           <div className="vh-upfooter__image-section">
-            <OptimizedImage 
+            <img 
               src="/01.jpeg" 
               alt="Professional team meeting" 
               className="vh-upfooter__image"
               loading="lazy"
               width={500}
               height={400}
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
             />
           </div>
         </div>

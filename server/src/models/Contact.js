@@ -10,9 +10,14 @@ const contactSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    lowercase: true
-  },
-  phone: {
+    lowercase: true,
+    validate: {
+      validator: function(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      },
+      message: props => `${props.value} is not a valid email address`
+    }
+  },  phone: {
     type: String,
     required: true,
     trim: true

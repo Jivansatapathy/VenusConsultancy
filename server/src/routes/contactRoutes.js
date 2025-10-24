@@ -1,38 +1,12 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import Contact from '../models/Contact.js';
 import { sendContactEmail, sendAutoReply } from '../services/emailService.js';
 import { authAndRole } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Test route to check email service (remove in production)
-router.get('/test-email', async (req, res) => {
-  try {
-    console.log('Testing email service...');
-    const testData = {
-      name: 'Test User',
-      email: 'test@example.com',
-      phone: '+1234567890',
-      source: 'Test',
-      message: 'This is a test email'
-    };
-    
-    const result = await sendContactEmail(testData);
-    res.json({ 
-      success: true, 
-      emailResult: result,
-      message: 'Email test completed' 
-    });
-  } catch (error) {
-    console.error('Email test failed:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: error.message,
-      message: 'Email test failed' 
-    });
-  }
-});
-
+// Remaining routes...
 // Contact form submission endpoint
 router.post('/submit', async (req, res) => {
   try {
@@ -130,25 +104,55 @@ router.get('/admin', authAndRole('admin'), async (req, res) => {
   try {
     const { status, page = 1, limit = 10 } = req.query;
     
+    // Define allowed status values matching the Contact model enum
+    const allowedStatuses = ['new', 'contacted', 'responded', 'closed'];
+    
+    // Validate and sanitize page parameter
+    const pageNum = parseInt(page);
+    if (!Number.isInteger(pageNum) || pageNum < 1) {
+      return res.status(400).json({ 
+        error: 'Invalid page parameter. Must be a positive integer.' 
+      });
+    }
+    
+    // Validate and sanitize limit parameter
+    const limitNum = parseInt(limit);
+    if (!Number.isInteger(limitNum) || limitNum < 1) {
+      return res.status(400).json({ 
+        error: 'Invalid limit parameter. Must be a positive integer.' 
+      });
+    }
+    
+    // Clamp limit to a safe maximum
+    const maxLimit = 100;
+    const sanitizedLimit = Math.min(limitNum, maxLimit);
+    
+    // Validate status parameter if provided
+    if (status && !allowedStatuses.includes(status)) {
+      return res.status(400).json({ 
+        error: `Invalid status parameter. Must be one of: ${allowedStatuses.join(', ')}` 
+      });
+    }
+    
     let query = {};
     if (status) {
       query.status = status;
     }
     
-    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const skip = (pageNum - 1) * sanitizedLimit;
     
     const contacts = await Contact.find(query)
       .sort({ submittedAt: -1 })
       .skip(skip)
-      .limit(parseInt(limit));
+      .limit(sanitizedLimit);
     
     const total = await Contact.countDocuments(query);
     
     res.json({
       contacts,
       pagination: {
-        current: parseInt(page),
-        total: Math.ceil(total / parseInt(limit)),
+        current: pageNum,
+        total: Math.ceil(total / sanitizedLimit),
         count: contacts.length,
         totalContacts: total
       }
@@ -164,6 +168,23 @@ router.patch('/admin/:id', authAndRole('admin'), async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
+    
+    // Validate ID parameter using mongoose.Types.ObjectId.isValid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ 
+        error: 'Invalid contact ID format' 
+      });
+    }
+    
+    // Define allowed status values matching the Contact model enum
+    const allowedStatuses = ['new', 'contacted', 'responded', 'closed'];
+    
+    // Validate status parameter
+    if (!status || !allowedStatuses.includes(status)) {
+      return res.status(400).json({ 
+        error: `Invalid status. Must be one of: ${allowedStatuses.join(', ')}` 
+      });
+    }
     
     const contact = await Contact.findByIdAndUpdate(
       id, 

@@ -23,7 +23,14 @@ export default defineConfig(({ mode }) => {
       port: 5173,
       open: !isProduction, // Don't auto-open in production
       host: true, // Allow external connections
-      cors: true
+      cors: true,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+          secure: false
+        }
+      }
     },
     build: {
       outDir: "dist",

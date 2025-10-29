@@ -49,7 +49,7 @@ const ThirdHero = () => {
             
             <div className="third-hero__stats">
               <div className="stat-item">
-                <span className="stat-number">10,000+</span>
+                <span className="stat-number">100+</span>
                 <span className="stat-label">Jobs Available</span>
               </div>
               <div className="stat-item">

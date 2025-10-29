@@ -85,9 +85,9 @@ export default function JourneyStats() {
     <section className="journey-band" ref={rootRef} aria-labelledby="journey-title">
       <div className="journey container">
         <header className="journey__head">
-          <h2 id="journey-title">An integral part of corporate India’s journey</h2>
+          <h2 id="journey-title">An integral part of global hiring journeys</h2>
           <p className="journey__lead">
-            Trusted advisors to multinationals, leading Indian businesses and leadership professionals.
+            Trusted advisors to multinationals, leading businesses and leadership professionals worldwide.
           </p>
         </header>
 

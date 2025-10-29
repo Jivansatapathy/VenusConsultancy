@@ -15,11 +15,12 @@ export const productionConfig = {
     baseURL: (() => {
       const apiUrl = process.env.VITE_API_URL;
       if (!apiUrl) {
-        throw new Error(
-          'VITE_API_URL environment variable is required for production. ' +
-          'Please set VITE_API_URL to your production API domain (e.g., https://your-api-domain.com). ' +
-          'If using Render, upgrade to a paid plan or migrate to dedicated infrastructure.'
+        console.warn(
+          'VITE_API_URL environment variable not set. Using fallback URL.',
+          'To fix this, set VITE_API_URL to your production API domain.'
         );
+        // Provide a fallback URL instead of throwing an error
+        return 'https://venusconsultancy.onrender.com';
       }
       return apiUrl;
     })(),

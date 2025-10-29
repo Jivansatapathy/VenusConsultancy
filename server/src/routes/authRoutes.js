@@ -98,7 +98,7 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       secure: config.NODE_ENV === "production",
       sameSite: config.NODE_ENV === "production" ? "none" : "lax",
-      path: "/api",
+      path: "/", // Changed from "/api" to "/" to allow cookies on all routes
       maxAge: REFRESH_TOKEN_MS,
     };
     
@@ -182,7 +182,7 @@ router.post("/refresh", async (req, res) => {
       httpOnly: true,
       secure: config.NODE_ENV === "production",
       sameSite: config.NODE_ENV === "production" ? "none" : "lax",
-      path: "/api",
+      path: "/", // Changed from "/api" to "/" to allow cookies on all routes
       maxAge: REFRESH_TOKEN_MS,
     });
 
@@ -213,7 +213,7 @@ router.post("/logout", async (req, res) => {
       }
     }
     // Clear cookie using the same path it was set on
-    res.clearCookie("vh_rt", { path: "/api", httpOnly: true, secure: config.NODE_ENV === "production", sameSite: config.NODE_ENV === "production" ? "none" : "lax" });
+    res.clearCookie("vh_rt", { path: "/", httpOnly: true, secure: config.NODE_ENV === "production", sameSite: config.NODE_ENV === "production" ? "none" : "lax" });
     return res.json({ ok: true });
   } catch (err) {
     console.error("[auth] logout error:", err && err.stack ? err.stack : err);

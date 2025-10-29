@@ -3,13 +3,13 @@
 const whyStats = {
     heading: "Why Venus Hiring",
     left: {
-      value: "500,000+",
-      caption: "job placements in 2024"
+      value: "10,000+",
+      caption: "job placements to date"
     },
     right: [
       {
-        value: "300+",
-        caption: "locations worldwide, offering local expertise backed by global scale"
+        value: "Global",
+        caption: "Serving companies globally"
       },
       {
         value: "80%",

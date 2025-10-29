@@ -79,9 +79,7 @@ const Footer = () => {
 
         {/* Login section - only show for unauthenticated users */}
         {!isAuthenticated && (
-          <div className="vh-footer__login" aria-label="Admin access">
-            <h3 className="vh-footer__h3">Admin Access</h3>
-            <p className="vh-footer__small">Access your dashboard</p>
+          <div className="vh-footer__login" aria-label="Login">
             <Link to="/admin/login" className="vh-footer__login-btn">
               Login
             </Link>

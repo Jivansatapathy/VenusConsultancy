@@ -47,19 +47,37 @@ const RUNTIME_API =
   (typeof process !== "undefined" && process.env && process.env.NEXT_PUBLIC_API_URL) ||
   (typeof process !== "undefined" && process.env.NODE_ENV === 'development' ? "http://localhost:5000" : null);
 
-// In production, VITE_API_URL must be set
-if (!RUNTIME_API) {
-  throw new Error(
-    'API URL environment variable is required for production. ' +
-    'Please set VITE_API_URL (Vite) or NEXT_PUBLIC_API_URL (Next.js) to your production API domain (e.g., https://venusconsultancy.onrender.com).'
-  );
+// Provide fallback for production if VITE_API_URL is not set
+let API_URL = RUNTIME_API;
+if (!API_URL) {
+  // Try to detect if we're in production and provide a reasonable fallback
+  const isProduction = typeof process !== "undefined" && process.env.NODE_ENV === 'production';
+  if (isProduction) {
+    // Common production API URLs - you can customize these
+    const possibleUrls = [
+      'https://venusconsultancy.onrender.com',
+      'https://venus-hiring-api.herokuapp.com',
+      'https://api.venushiring.com'
+    ];
+    
+    // Use the first available URL or show a helpful error
+    API_URL = possibleUrls[0];
+    
+    console.warn(
+      'VITE_API_URL not set in production. Using fallback:', API_URL,
+      '\nTo fix this permanently, set VITE_API_URL environment variable to your production API domain.'
+    );
+  } else {
+    // Development fallback
+    API_URL = "http://localhost:5000";
+  }
 }
 
 // Ensure baseURL ends without trailing slash and points to /api
-const API_BASE = RUNTIME_API.replace(/\/$/, "") + "/api";
+const API_BASE = API_URL.replace(/\/$/, "") + "/api";
 
 if (typeof process !== "undefined" && process.env.NODE_ENV === 'development') {
-  console.log("[API] Runtime API URL:", RUNTIME_API);
+  console.log("[API] Runtime API URL:", API_URL);
   console.log("[API] Final API Base:", API_BASE);
 }
 
@@ -118,6 +136,7 @@ API.interceptors.response.use(
         original.headers.Authorization = `Bearer ${newAccess}`;
         return API(original);
       } catch (e) {
+        console.error("[API] Refresh token failed:", e.message);
         processQueue(e, null);
         clearAccessToken();
         return Promise.reject(e);

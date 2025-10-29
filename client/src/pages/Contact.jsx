@@ -1,6 +1,7 @@
 // client/src/pages/Contact.jsx
 import React, { useState, useEffect } from "react";
 import "./Contact.css";
+import API from "../utils/api";
 
 const offices = [
   {
@@ -69,20 +70,8 @@ const Contact = () => {
 
     setSubmitting(true);
     try {
-      // Get the API base URL from environment - no fallback for production safety
-      const API_BASE = import.meta.env.VITE_API_URL;
-      if (!API_BASE) {
-        throw new Error('VITE_API_URL environment variable is required');
-      }
-      const response = await fetch(`${API_BASE}/api/contact/submit`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      });
-
-      const data = await response.json();
+      const response = await API.post('/contact/submit', form);
+      const data = response.data;
 
       if (data.success) {
         setStatus({
@@ -163,33 +152,7 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Address */}
-            <div className="contact-block">
-              <div className="icon-tile" aria-hidden>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  stroke="#e50914"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-              </div>
-              <div className="contact-meta">
-                <div className="meta-label">Corporate Office</div>
-                <div className="meta-value">
-                  205 - 1085 Bellamy Road North, Toronto, ON
-                </div>
-              </div>
-            </div>
-
-            <hr className="contact-sep" />
+            
 
             <div className="follow-label">Follow Us</div>
             <div className="social-row" aria-label="Follow us on social media">

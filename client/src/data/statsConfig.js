@@ -21,17 +21,9 @@ export const STATS = [
       key: "consultants",
       value: 150,
       suffix: "+",
-      label: "Consultants across India",
+      label: "Global consultants",
       icon: "briefcase",
       tooltip: "Experienced consultants serving clients nationwide",
-    },
-    {
-      key: "specialisations",
-      value: 21,
-      suffix: "",
-      label: "Industry specialisations",
-      icon: "map",
-      tooltip: "Domain expertise across 21 industry verticals",
     },
   ];
   

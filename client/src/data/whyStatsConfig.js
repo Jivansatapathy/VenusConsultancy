@@ -8,8 +8,8 @@ const whyStats = {
     },
     right: [
       {
-        value: "Global",
-        caption: "Serving companies globally"
+        value: "Worldwide",
+        caption: "Trusted by companies worldwide"
       },
       {
         value: "80%",

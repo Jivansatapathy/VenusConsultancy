@@ -6,16 +6,19 @@ import API from "../utils/api";
 const offices = [
   {
     title: "Toronto, Canada",
+    flag: "https://flagcdn.com/w40/ca.png",
     addr: "205 - 1085 Bellamy Road North, Toronto, ON",
     phone: ["647-722-0837"],
   },
   {
     title: "Michigan, USA",
+    flag: "https://flagcdn.com/w40/us.png",
     addr: "880 W Long Lake Rd Ste 225 | Troy, MI 48098",
     phone: ["248-275-1077", "718-715-0770"],
   },
   {
     title: "India",
+    flag: "https://flagcdn.com/w40/in.png",
     addr: "Mumbai, Surat, Chennai, Hyderabad",
     phone: ["+91-261-2601177", "+91-261-391177"],
   },
@@ -286,26 +289,22 @@ const Contact = () => {
         <div className="offices-grid">
           {offices.map((o) => (
             <article key={o.title} className="office-card" aria-labelledby={o.title}>
-              <div className="office-icon" aria-hidden>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="44"
-                  height="44"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#111"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3 21h18" />
-                  <path d="M7 21V9h10v12" />
-                  <path d="M7 9h10" />
-                  <path d="M12 3v6" />
-                </svg>
-              </div>
-
-              <h4 className="office-title">{o.title}</h4>
+              <h4 className="office-title">
+                <img 
+                  src={o.flag} 
+                  alt={`${o.title} flag`} 
+                  className="office-flag"
+                  style={{
+                    width: '24px',
+                    height: '18px',
+                    marginRight: '8px',
+                    borderRadius: '2px',
+                    display: 'inline-block',
+                    verticalAlign: 'middle'
+                  }}
+                />
+                {o.title}
+              </h4>
               <div className="office-addr">
                 {o.addr.split("\n").map((line, idx) => (
                   <div key={idx}>{line}</div>

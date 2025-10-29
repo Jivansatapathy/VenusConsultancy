@@ -29,9 +29,7 @@ export default function Home() {
     <>
       <Hero />
       <AboutUs />
-      <Suspense fallback={<LazyFallback />}>
-        <Certifications />
-      </Suspense>
+      {/* Certifications section removed as requested */}
       <Suspense fallback={<LazyFallback />}>
         <JourneyStats />
       </Suspense>

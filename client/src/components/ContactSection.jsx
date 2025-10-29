@@ -9,7 +9,7 @@ const ContactSection = () => {
   return (
     <section className="contact-section" aria-label="Contact information">
       <div className="contact-container">
-        <h3 className="contact-title">Our Global Offices</h3>
+        <h3 className="contact-title">Our Office Locations</h3>
         
         <div className="offices-grid">
           <div className="office-card">

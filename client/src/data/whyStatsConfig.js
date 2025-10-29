@@ -12,8 +12,8 @@ const whyStats = {
         caption: "Trusted by companies worldwide"
       },
       {
-        value: "80%",
-        caption: "of Fortune 500 companies are clients"
+        value: "500+",
+        caption: "successful placements completed"
       }
     ]
   };

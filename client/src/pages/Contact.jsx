@@ -27,7 +27,6 @@ const offices = [
 const Contact = () => {
   const [form, setForm] = useState({
     name: "",
-    phone: "",
     email: "",
     source: "",
     message: "",
@@ -52,9 +51,6 @@ const Contact = () => {
 
   const validate = () => {
     if (!form.name.trim()) return "Please enter your name.";
-    if (!form.phone.trim()) return "Please enter your phone number.";
-    if (!/^\+?[0-9\s-]{7,20}$/.test(form.phone.trim()))
-      return "Please enter a valid phone number.";
     if (!form.email.trim()) return "Please enter your email.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()))
       return "Please enter a valid email.";
@@ -227,15 +223,6 @@ const Contact = () => {
 
               <div className="form-row">
                 <input
-                  name="phone"
-                  placeholder="PhoneNo."
-                  value={form.phone}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-row">
-                <input
                   name="email"
                   placeholder="Email"
                   value={form.email}
@@ -281,7 +268,7 @@ const Contact = () => {
 
       {/* OFFICES SECTION */}
       <section className="offices-section container">
-        <h3 className="offices-title">Our offices</h3>
+        <h3 className="offices-title">Our Office Locations</h3>
         <p className="offices-sub">
           Combined with our role as trusted advisors for professionals translates into our core capability — Building careers. Building Organisations.
         </p>

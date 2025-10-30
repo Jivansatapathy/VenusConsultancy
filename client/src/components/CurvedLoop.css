@@ -22,3 +22,10 @@
   line-height: 1;
   margin-top: -250px;
 }
+
+@media (max-width: 768px) {
+  .curved-loop-jacket {
+    min-height: 5vh !important;
+    padding: 20px 0 0 0;
+  }
+}

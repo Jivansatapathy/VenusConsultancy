@@ -83,36 +83,67 @@ const WhyStats = () => {
 
   return (
     <section className="vh-why u-container" aria-labelledby="why-heading" ref={rootRef}>
-      <div className="vh-why__inner">
+      <div className="vh-why__inner" style={{ gridTemplateColumns: '1fr' }}>
         <div className="vh-why__left">
-          <h2 id="why-heading" className="vh-why__heading">{whyStats.heading}</h2>
-          <div className="vh-why__left-value" aria-hidden="false">
-            <span
-              className="vh-why__stat-value"
-              data-target={whyStats.left.value}
-              role="text"
-              aria-label={`${whyStats.left.value} — ${whyStats.left.caption}`}
-            >
-              {whyStats.left.value}
-            </span>
-            <div className="vh-why__left-caption">{whyStats.left.caption}</div>
-          </div>
+          <h2 id="why-heading" className="vh-why__heading">Why Choose Us?</h2>
         </div>
 
         <div className="vh-why__right" aria-hidden="false">
-          {whyStats.right.map((s, i) => (
-            <div className="vh-why__right-item" key={i}>
+          {[{
+            title: 'Beyond Algorithm',
+            lines: [
+              'Each candidate and employer is evaluated by Venus Consultancy through a human-based process, not solely relying on algorithms.',
+              'We use a mathematical calculation to match employer needs to personality and skills.',
+              'Our goal is to find the right candidate using skills that a robot cannot offer.'
+            ]
+          }, {
+            title: 'Diversity Supplier',
+            lines: [
+              'We offer recruitment services in IT, Engineering, Scientific, Skilled Trade, Light Industrial, Office & Clerical, Outsource, Onsite, Recruitment Process Outsourcing, and Technical Support Outsourcing.',
+              'We also provide Executive & Board Recruitment services.'
+            ]
+          }, {
+            title: 'Social & Integrity Skills',
+            lines: [
+              'We take responsibility for hiring candidates with strong social and integrity skills.',
+              'These skills are essential in the workplace.',
+              'We ensure candidates are well-prepared for interviews and job roles.'
+            ]
+          }, {
+            title: 'Immigrant Pool',
+            lines: [
+              'We support and welcome immigrants to Canada and America.',
+              'We assist in providing job opportunities across the globe.',
+              'We offer staffing solutions for employers.'
+            ]
+          }].map((item, idx) => (
+            <div className="vh-why__right-item" key={item.title}>
               <div className="vh-why__right-value-wrap">
-                <span
-                  className="vh-why__stat-value"
-                  data-target={s.value}
-                  role="text"
-                  aria-label={`${s.value} — ${s.caption}`}
-                >
-                  {s.value}
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png"
+                  alt="icon static"
+                  className="vh-why__icon vh-why__icon--static"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  src={idx === 1 ? "/iconanimated/union.gif" : "/iconanimated/algorithm.gif"}
+                  alt="icon animated"
+                  className="vh-why__icon vh-why__icon--gif"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className="vh-why__stat-value" role="text" aria-label={item.title}>
+                  {item.title}
                 </span>
               </div>
-              <div className="vh-why__right-caption">{s.caption}</div>
+              <div className="vh-why__right-caption">
+                <ul className="vh-why__bullets">
+                  {item.lines.map((line, idx) => (
+                    <li key={idx}>{line}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>

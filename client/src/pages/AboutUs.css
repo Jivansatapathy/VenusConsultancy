@@ -90,11 +90,11 @@
 .stat__value {
   color: #0f2833;
   font-weight: 800;
-  font-size: clamp(20px, 2.5vw, 28px); /* Reduced from 24px-32px to 20px-28px */
+  font-size: clamp(26px, 3vw, 36px);
 }
 .stat__label {
   color: #6b7280;
-  font-size: 11px; /* Reduced from 12px to 11px */
+  font-size: 15px;
   margin-top: 6px;
 }
 
@@ -136,7 +136,7 @@
 .bp-card__title {
   color: #0f2833;
   font-weight: 800;
-  font-size: 12px;
+  font-size: 18px;
   text-align: left;
   margin: 0 0 8px;
   text-transform: uppercase;
@@ -144,21 +144,34 @@
 
 .bp-card__text {
   color: #6b7280;
-  font-size: 13px;
+  font-size: 17px;
   line-height: 1.6;
   text-align: left;
   margin: 0 0 12px;
 }
 
 .bp-card__link {
-  color: #0f5a60;
+  display: inline-block;
+  color: #ffffff;
+  background: #0f5a60;
+  border: 1px solid #0f5a60;
   font-weight: 700;
-  font-size: 12.5px;
+  font-size: 14px;
   text-decoration: none;
-  text-align: left;
+  text-align: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 
-.bp-card__link:hover { text-decoration: underline; }
+.bp-card__link:hover { 
+  background: #0b4650; 
+  border-color: #0b4650;
+  color: #ffffff;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15,90,96,0.22);
+}
 
 .bp-card__graphic {
   width: 120px;
@@ -249,7 +262,10 @@
 /* Mobile styles */
 @media (max-width: 768px) {
   .curved-text-section {
-    padding: 0;
+    padding-top: 120px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
   }
   
   .curved-text {
@@ -257,7 +273,8 @@
   }
   
   .curved-loop-jacket {
-    min-height: 60vh;
+    min-height: 5vh !important;
+    width: 100%;
   }
 }
 
@@ -849,20 +866,22 @@
 }
 
 .tech-icon {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  border-radius: 12px;
+  width: auto;
+  height: auto;
+  background: transparent;
+  border: none;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 24px;
-  color: #ffffff;
+  color: #111111;
+  box-shadow: none;
 }
 
 .tech-icon svg {
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
 }
 
 .tech-feature__title {
@@ -881,86 +900,104 @@
 /* Culture & Work Environment Section */
 .culture-section {
   background: #ffffff;
-  padding: 80px 0;
+  padding: 56px 0;
 }
 
 .culture-container {
-  max-width: 1200px;
+  width: min(1160px, 100%);
   margin: 0 auto;
   padding: 0 24px;
 }
 
 .culture-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
   align-items: center;
 }
 
 .culture-title {
-  font-size: clamp(32px, 4vw, 48px);
+  font-size: clamp(28px, 3.6vw, 40px);
   font-weight: 800;
-  color: #1f2937;
-  margin-bottom: 16px;
+  color: #0f2833;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
 }
 
 .culture-subtitle {
-  font-size: 18px;
+  font-size: 15px;
   color: #6b7280;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   line-height: 1.6;
 }
 
 .culture-values {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  gap: 40px;
 }
 
 .culture-value {
-  padding: 24px;
-  background: #f8fafc;
-  border-radius: 12px;
-  border-left: 4px solid #3b82f6;
+  padding: 40px 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.culture-value:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
 }
 
 .culture-value__title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f2833;
+  margin-bottom: 6px;
 }
 
 .culture-value__desc {
-  font-size: 14px;
-  color: #6b7280;
+  font-size: 13px;
+  color: #556070;
   line-height: 1.5;
 }
 
 .culture-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
 }
 
 .culture-stat {
   text-align: center;
-  padding: 32px;
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  padding: 40px 32px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 16px;
-  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  color: #0f2833;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.culture-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
 }
 
 .stat-number {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 800;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  color: #e50914;
 }
 
 .stat-label {
   font-size: 14px;
   opacity: 0.9;
-  font-weight: 500;
+  font-weight: 600;
+  color: #556070;
+  line-height: 1.5;
 }
 
 /* Future Vision Section */
@@ -1074,11 +1111,68 @@
   margin: 0 auto;
 }
 
+/* Commitment (standalone) section matching page style */
+.commitment-section {
+  background: #ffffff;
+  padding: 56px 0;
+}
+.commitment-container {
+  width: min(1160px, 100%);
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+.commitment-header { margin-bottom: 28px; }
+
+.commitment-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 40px;
+}
+
+.commitment-card {
+  background: #ffffff;
+  padding: 40px 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 160px;
+}
+.commitment-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+}
+
+.commit-card__head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.commit-card__icon {
+  width: 36px; height: 36px; display: inline-block;
+  padding: 8px; border-radius: 12px; background: #f6f7f8; border: 1px solid #eef1f3;
+  color: #0f2833;
+}
+.commit-card__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f2833;
+}
+.commit-card__desc {
+  margin: 0;
+  font-size: 15px;
+  color: #556070;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .commitment-cards { grid-template-columns: 1fr; }
+}
+
 /* Responsive Design for New Sections */
 @media (max-width: 768px) {
   .culture-content {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 24px;
   }
   
   .culture-values {

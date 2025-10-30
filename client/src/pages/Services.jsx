@@ -584,6 +584,7 @@ const Services = () => {
 
         </div>
 
+      </section>
 
       {/* New Talent Discovery Section */}
       <section className="talent-discovery">
@@ -614,39 +615,6 @@ const Services = () => {
           </div>
         </div>
 
-      </section>
-              {/* Trusted-by / Testimonial Hero Section (placed right after talent body) */}
-              <section className="trusted-hero" aria-labelledby="trusted-hero-title">
-          <div className="svc-container">
-            <div className="trusted-card">
-              <header className="trusted-head">
-                <h2 id="trusted-hero-title" className="trusted-title">Join leaders who choose Venus Hiring to power their hiring success.</h2>
-                <p className="trusted-sub">Explore our talent marketplace and see why leaders trust us to hire the right people.</p>
-              </header>
-
-              <div className="trusted-logos" role="list" aria-label="Client logos">
-                <div className="trusted-logo" aria-label="IBM logo placeholder">IBM</div>
-                <div className="trusted-logo" aria-label="eBay logo placeholder">eBay</div>
-                <div className="trusted-logo" aria-label="Delta logo placeholder">Delta</div>
-                <div className="trusted-logo" aria-label="Mastercard logo placeholder">Mastercard</div>
-                <div className="trusted-logo" aria-label="Comedy Central logo placeholder">Comedy Central</div>
-                <div className="trusted-logo" aria-label="HelloFresh logo placeholder">HelloFresh</div>
-              </div>
-
-              <div className="trusted-divider" aria-hidden="true">
-                <span className="trusted-quote">“</span>
-              </div>
-
-              <div className="trusted-testimonial">
-                <p className="trusted-quote-text">Finding the right talent became effortless with Venus Hiring. It cut down our hiring time and optimized our resources.</p>
-                <div className="trusted-meta">
-                  <span className="meta-icon" aria-hidden="true" />
-                  <span className="meta-text">Six Industries</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </section>
 
       {/* Testimonial Review Section */}

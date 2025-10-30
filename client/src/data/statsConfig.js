@@ -11,19 +11,19 @@ export const STATS = [
     },
     {
       key: "careers",
-      value: 200,
+      value: 10,
       suffix: "k+",
-      label: "Careers built to date",
+      label: "Careers made",
       icon: "users",
-      tooltip: "Over 200,000 career placements and hires",
+      tooltip: "Over 10,000 career placements and hires",
     },
     {
       key: "consultants",
-      value: 150,
+      value: 100,
       suffix: "+",
-      label: "Global consultants",
+      label: "Global clients",
       icon: "briefcase",
-      tooltip: "Experienced consultants serving clients nationwide",
+      tooltip: "Trusted by 100+ clients worldwide",
     },
   ];
   

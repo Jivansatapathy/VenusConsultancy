@@ -7,7 +7,18 @@
 .svc-container {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 0 100px; /* mobile/tablet padding without altering desktop container */
+  padding: 0 100px; /* default desktop padding */
+}
+
+/* Container responsive padding */
+@media (max-width: 1200px) {
+  .svc-container { padding: 0 60px; }
+}
+@media (max-width: 900px) {
+  .svc-container { padding: 0 24px; }
+}
+@media (max-width: 600px) {
+  .svc-container { padding: 0 16px; }
 }
 
 /* hero */
@@ -267,13 +278,13 @@
 .svc-services__title {
   font-weight: 800;
   color: #1b2b36;
-  font-size: 22px;
+  font-size: clamp(20px, 2.4vw, 26px);
   margin: 0 0 8px;
 }
 
 .svc-services__sub {
   color: #6b7780;
-  font-size: 13px;
+  font-size: clamp(12px, 1.8vw, 14px);
   margin: 0;
 }
 
@@ -419,7 +430,7 @@
 /* Talent Discovery Section */
 .talent-discovery {
   background: linear-gradient(180deg, #ffffff 0%, #ffffff 50%, #dfdddd 80%, #000000 100%);
-  padding-top: 150px;
+  padding-top: 90px; /* reduced overall section height */
 }
 
 /* Red Banner Section */
@@ -429,8 +440,7 @@
   color: #ffffff;
   position: relative;
   z-index: 1;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: 100%;
 }
 
 .talent-banner__grid {
@@ -444,7 +454,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 20px; /* Add top padding to ensure text stays within red area */
+  align-items: center;
+  text-align: center;
+  padding-top: 20px; /* original spacing */
 }
 
 /* Removed project-brief styles - now using direct image */
@@ -465,29 +477,32 @@
   overflow: visible;
 }
 
+/* Reorder so image appears first on larger screens */
+/* default (desktop): keep text left, image right */
+
 .talent-banner__image {
   width: 100%;
   max-width: 500px;
   height: auto;
   object-fit: contain;
-  transform: translateY(0px);
+  position: relative;
+  top: 0;
   z-index: 2;
   position: relative;
-  margin-top: -90px;
+  margin-top: 0;
 }
 
 /* Tablet view - reduce image size */
 @media (max-width: 1024px) {
   .talent-banner__grid {
     grid-template-columns: 1.2fr 1fr; /* Keep left-right layout on tablet */
-    gap: 30px; /* Reduce gap for tablet */
+    gap: 30px;
     text-align: left; /* Keep left alignment */
   }
   
   .talent-banner__image {
     max-width: 350px; /* Medium image size for tablet */
-    transform: translateY(0px);
-    margin-top: -75px; /* Moderate upward extension for tablet */
+    top: -40px;
   }
   
   .talent-banner__title {
@@ -508,24 +523,45 @@
 
 /* Mobile view - further reduce image size */
 @media (max-width: 770px) {
+  .talent-banner {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 0 0 36px; /* slightly less height on mobile */
+  }
+  .talent-banner__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: center;
+    justify-items: center;
+  }
+  .talent-banner__left { order: 2; margin-top: -70px; }
+  .talent-banner__right { order: 1; }
   .talent-banner__image {
     max-width: 300px;
-    transform: translateY(-10px); /* Minimal upward extension on mobile */
+    top: -48px;
   }
+}
+
+/* Laptop/Desktop: make banner full-bleed and remove side padding inside container */
+@media (min-width: 1025px) {
+  .talent-banner { width: 100vw; margin-left: calc(-50vw + 50%); }
+  .talent-banner .svc-container { max-width: none; padding-left: 0; padding-right: 0; }
+  /* On laptop/desktop keep content aligned left with safe padding */
+  .talent-banner__left { align-items: flex-start; text-align: left; padding-left: 60px; }
 }
 
 .talent-banner__title {
   font-size: clamp(32px, 5vw, 40px);
   font-weight: 800;
   line-height: 1.1;
-  margin: 0 0 24px;
+  margin: 0 0 16px; /* tighter spacing */
   color: #ffffff;
 }
 
 .talent-banner__subtitle {
   font-size: 20px;
   line-height: 1.5;
-  margin: 0 0 36px;
+  margin: 0 0 20px; /* tighter spacing */
   color: #ffffff;
   max-width: 500px;
 }
@@ -997,21 +1033,22 @@
 
 @media (max-width: 770px) {
   .talent-banner {
-    padding: 0; /* Remove padding to match laptop */
+    padding: 0 0 48px; /* keep a bit of red after button */
   }
   
   .talent-banner__grid {
-    grid-template-columns: 1.2fr 1fr; /* Keep left-right layout on mobile */
-    gap: 20px; /* Reduce gap for mobile */
-    text-align: left; /* Keep left alignment */
+    grid-template-columns: 1fr; /* Stack on mobile */
+    gap: 16px;
+    text-align: center;
+    justify-items: center;
   }
   
   .talent-banner__left {
-    order: 1; /* Text on left */
+    order: 2; /* Text second */
   }
   
   .talent-banner__right {
-    order: 2; /* Image on right */
+    order: 1; /* Image first */
   }
   
   
@@ -1020,25 +1057,27 @@
   }
   
   .talent-banner__image {
-    max-width: 250px; /* Smaller image for mobile */
-    transform: translateY(0px);
-    margin-top: -60px; /* Reduced upward extension for mobile */
+    max-width: 260px; /* Smaller image for mobile */
+    transform: none;
+    margin-top: 0;
+    top: -60px;
   }
   
   .talent-banner__title {
-    font-size: 15px;
+    font-size: 20px;
     line-height: 1.2;
   }
   
   .talent-banner__subtitle {
-    font-size: 10px;
+    font-size: 13px;
     line-height: 1.4;
     margin: 0 0 8px;
+    max-width: 100%;
   }
   
   .talent-banner__cta {
     padding: 8px 12px;
-    font-size: 10px;
+    font-size: 14px;
   }
   
 }
@@ -1046,24 +1085,24 @@
 /* Lock styles for very narrow screens - prevent further changes below 770px */
 @media (max-width: 480px) {
   .talent-banner__title {
-    font-size: 12px !important;
+    font-size: 18px !important;
     line-height: 1.2 !important;
   }
   
   .talent-banner__subtitle {
-    font-size: 8px !important;
+    font-size: 12px !important;
     line-height: 1.4 !important;
     margin: 0 0 8px !important;
   }
   
   .talent-banner__cta {
     padding: 8px 12px !important;
-    font-size: 10px !important;
+    font-size: 13px !important;
   }
   
   .talent-banner__image {
-    max-width: 250px !important;
-    margin-top: -16px !important;
+    max-width: 220px !important;
+    margin-top: 0 !important;
   }
 }
 

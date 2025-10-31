@@ -53,10 +53,6 @@ const ThirdHero = () => {
                 <span className="stat-label">Jobs Available</span>
               </div>
               <div className="stat-item">
-                <span className="stat-number">500+</span>
-                <span className="stat-label">Companies</span>
-              </div>
-              <div className="stat-item">
                 <span className="stat-number">95%</span>
                 <span className="stat-label">Success Rate</span>
               </div>

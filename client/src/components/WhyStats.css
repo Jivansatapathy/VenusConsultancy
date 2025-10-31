@@ -91,8 +91,9 @@
   .vh-why__right-value-wrap {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     position: relative;
+    z-index: 1;
   }
   /* remove placeholder dot when icons are always visible */
   .vh-why__right-value-wrap::before { display: none; }
@@ -104,6 +105,8 @@
     background: #fff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     transition: transform 200ms ease, opacity 160ms ease, visibility 0s linear 0s;
+    flex-shrink: 0;
+    z-index: 0;
   }
   .vh-why__icon--gif { opacity: 1; visibility: visible; }
   .vh-why__icon--static { display: none; }
@@ -117,12 +120,33 @@
   }
   .vh-why__right-item:hover .vh-why__right-value-wrap::before { display: none; }
   .vh-why__right .vh-why__stat-value {
-    font-size: clamp(1.2rem, 2.6vw, 1.4rem);
-    color: #111;
-    font-weight: 800;
+    font-size: clamp(1.6rem, 3.5vw, 2rem) !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
     position: relative;
-    display: inline-block;
-    padding-bottom: 6px;
+    display: inline-block !important;
+    padding: 0 0 8px 0 !important;
+    margin: 0 !important;
+    line-height: 1.4;
+    z-index: 2;
+    opacity: 1 !important;
+    visibility: visible !important;
+    width: auto;
+    min-width: 0;
+    overflow: visible;
+    flex: 1;
+  }
+  
+  /* Ensure h3 headings are visible */
+  .vh-why__right-item h3.vh-why__stat-value {
+    font-size: clamp(1.6rem, 3.5vw, 2rem) !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+    margin: 0 !important;
+    padding: 0 0 8px 0 !important;
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   .vh-why__right .vh-why__stat-value::after {

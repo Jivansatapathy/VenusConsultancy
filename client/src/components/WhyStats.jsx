@@ -133,9 +133,9 @@ const WhyStats = () => {
                   loading="lazy"
                   decoding="async"
                 />
-                <span className="vh-why__stat-value" role="text" aria-label={item.title}>
+                <h3 className="vh-why__stat-value" role="text" aria-label={item.title}>
                   {item.title}
-                </span>
+                </h3>
               </div>
               <div className="vh-why__right-caption">
                 <ul className="vh-why__bullets">

@@ -47,12 +47,23 @@
 }
 
 /* brand logo */
-.vh-navbar__brand { display: inline-flex; align-items: center; text-decoration: none; }
+.vh-navbar__brand { 
+  display: inline-flex; 
+  align-items: center; 
+  text-decoration: none; 
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
 .vh-navbar__logo {
   height: 72px;
   width: auto;
   transition: height 220ms ease, transform 220ms ease;
   display: block;
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
 /* desktop nav */

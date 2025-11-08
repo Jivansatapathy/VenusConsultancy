@@ -7,38 +7,45 @@ const services = {
       "We provide tailored hiring and advisory services to help organisations build strong teams and leadership.",
     items: [
       {
-        key: "board",
-        title: "Board Advisory Services",
+        key: "permanent-staffing",
+        title: "Permanent Staffing",
         excerpt:
-          "Fortify key appointments that will shape the future of your organisation.",
+          "Connecting organizations with full-time professionals across technology, engineering, corporate, and skilled trades.",
         image: "/images/service-board.png",
         link: "/contact"
       },
       {
-        key: "executive",
-        title: "Executive Search",
+        key: "contract-temporary",
+        title: "Contract & Temporary Staffing",
         excerpt:
-          "Trusted advisors helping firms hire top-of-the-line leaders and executives.",
+          "Flexible talent solutions for short- or long-term projects to meet dynamic business needs.",
         image: "/images/service-executive.png",
         link: "/contact"
       },
       {
-        key: "leadership",
-        title: "Leadership Hiring",
+        key: "fractional-hr",
+        title: "Fractional HR & HR Advisory",
         excerpt:
-          "We enable firms to build strong and diverse leadership teams.",
+          "Providing part-time or interim HR leadership for workforce planning, compliance, and engagement.",
         image: "/images/service-leadership.jpg",
         link: "/contact"
       },
       {
-        key: "talent-advisory",
-        title: "Talent Advisory Solutions",
+        key: "sow-project",
+        title: "Statement of Work (SOW) & Project-Based Solutions",
         excerpt:
-          "Cultivate a leadership culture that aligns with your values and objectives.",
+          "Deploying specialized talent for defined projects or deliverables without long-term commitments.",
         image: "/images/service-advisory.png",
         link: "/contact"
+      },
+      {
+        key: "startup-hiring",
+        title: "Startup Hiring",
+        excerpt:
+          "Specialized recruitment solutions for startups and growing companies, connecting them with innovative talent ready to scale.",
+        image: "/images/service-board.png",
+        link: "/contact"
       }
-      // add more items if needed
     ]
   };
   

@@ -11,8 +11,8 @@ export const STATS = [
     },
     {
       key: "careers",
-      value: 10,
-      suffix: "k+",
+      value: 10000,
+      suffix: "+",
       label: "Careers made",
       icon: "users",
       tooltip: "Over 10,000 career placements and hires",

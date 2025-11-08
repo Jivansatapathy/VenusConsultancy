@@ -64,6 +64,16 @@
 .title-line.line-3 { font-size: clamp(20px, 4.8vw, 64px); }
 .title-line.line-4 { font-size: clamp(18px, 4.5vw, 60px); }
 
+/* Hero description */
+.hero-description {
+  font-size: clamp(16px, 2.5vw, 20px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 400;
+  margin-top: 0.5rem;
+  max-width: 600px;
+}
+
 /* Buttons */
 .hero-buttons {
   display: flex;

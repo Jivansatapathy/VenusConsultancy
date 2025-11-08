@@ -29,33 +29,22 @@ const ThirdHero = () => {
       <div className="third-hero__container">
         <div className="third-hero__content">
           <div className="third-hero__left">
-            <div className="third-hero__greeting">- Welcome to the future -</div>
+            <div className="third-hero__greeting">- Empower Your Workforce -</div>
             <h1 className="third-hero__title">
-              <span className="title-line-1">Build Your Dream</span>
-              <span className="title-line-2">Career Today</span>
+              <span className="title-line-1">Shape the Future of</span>
+              <span className="title-line-2">Your Organization Today</span>
             </h1>
             <p className="third-hero__subtitle">
-              Join thousands of professionals who have found their perfect match through our platform.
+            Connect with top-tier talent and discover professionals who drive growth, innovation, and success.
             </p>
             
             <div className="third-hero__buttons">
-              <Link to="/find-jobs" className="btn btn--primary-dark">
-                Find Your Job
+              <Link to="/book-call" className="btn btn--primary-dark">
+                Book a Consultation
               </Link>
               <Link to="/services" className="btn btn--outline-dark">
                 Our Services
               </Link>
-            </div>
-            
-            <div className="third-hero__stats">
-              <div className="stat-item">
-                <span className="stat-number">100+</span>
-                <span className="stat-label">Jobs Available</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">95%</span>
-                <span className="stat-label">Success Rate</span>
-              </div>
             </div>
           </div>
           

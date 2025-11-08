@@ -1,280 +1,182 @@
 /* ServicesSection.css
-   - centered max-width 1200px
-   - shows 3 cards at once (3 full cards visible)
-   - pure CSS, Poppins from global index.css
+   - Grid layout: 3 cards top row, 2 cards bottom row
 */
 
 .vh-services {
-    padding: clamp(2rem, 4.5vw, 3.5rem) 0;
-    display: flex;
-    justify-content: center;
-    color: #111;
-    /* prevent any horizontal scroll from internal tracks */
-    overflow-x: hidden;
-  }
-  
-  /* Mobile specific overflow handling */
-  @media (max-width: 480px) {
-    .vh-services {
-      padding: clamp(1.5rem, 4vw, 2.5rem) 0;
-      overflow-x: hidden;
-    }
-  }
-  
-  /* card centered */
-  .vh-services__card {
-    max-width: 1200px;
-    width: 100%;
-    padding: 1rem;
-    box-sizing: border-box;
-  }
-  
-  @media (max-width: 480px) {
-    .vh-services__card {
-      padding: 0.5rem 0; /* Remove horizontal padding on mobile */
-    }
-  }
-  
-  .vh-services__heading {
-    font-size: clamp(1.6rem, 3vw, 2.4rem);
-    text-align: center;
-    margin: 0 0 0.5rem 0;
-    font-weight: 600;
-  }
-  
-  .vh-services__desc {
-    text-align: center;
-    color: #444;
-    max-width: 860px;
-    margin: 0.25rem auto 1.1rem auto;
-  }
-  
-  /* viewport with overflow hidden; controls translate track via JS */
-  .vh-services__viewport {
-    overflow: hidden;
-    width: 100%;
-    margin: 1rem auto 0.85rem auto;
-    /* Limit to show exactly 3 cards on desktop */
-    max-width: calc(3 * 320px + 2 * 24px); /* 3 cards + 2 gaps */
-  }
-  
-  /* track (flex row), will be translated in px by JS */
-  .vh-services__track {
-    display: flex;
-    align-items: stretch;
-    gap: 24px;
-    transition: transform 420ms cubic-bezier(.2,.9,.2,1);
-    will-change: transform;
-  }
-  
-  /* card size: fixed-width responsive; to create partial third visible we rely on JS measurement.
-     fallback: flex-basis responsive to available space */
-  .vh-service-card {
-    flex: 0 0 320px; /* base width */
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(8, 18, 20, 0.06);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* media */
-  .vh-service-card__media {
-    height: 160px;
-    overflow: hidden;
-    background: #eaeef0;
-  }
-  .vh-service-card__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  
-  /* body */
-  .vh-service-card__body {
-    padding: 1rem 1rem 1.2rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    flex: 1;
-  }
-  .vh-service-card__title {
-    font-size: 1.05rem;
-    margin: 0;
-    color: #0b2f30;
-    font-weight: 600;
-  }
-  .vh-service-card__excerpt {
-    margin: 0;
-    color: #4a5a5a;
-    font-size: 0.95rem;
-    line-height: 1.45;
-    flex: 1;
-  }
-  .vh-service-card__link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 1px solid rgba(11,47,48,0.15);
-    color: #0b5658;
-    text-decoration: none;
-    font-weight: 700;
-    margin-top: 0.5rem;
-    background: #fff;
-    transition: all 0.3s cubic-bezier(.2, .9, .2, 1);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  }
-  
-  .vh-service-card__link:hover {
-    background: #e50914;
-    color: #fff;
-    border-color: #e50914;
-    transform: translateY(-2px) scale(1.1);
-    box-shadow: 0 6px 14px rgba(229,9,20,0.3);
-  }
-  
-  .vh-service-card__link:focus {
-    outline: 3px solid rgba(229,9,20,0.4);
-    outline-offset: 2px;
-  }
-  
-  /* bottom controls row */
-  .vh-services__controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  
-  /* arrows */
-  .vh-services__arrow {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid rgba(11,47,48,0.08);
-    background: #fff;
-    cursor: pointer;
-    font-size: 1.2rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .vh-services__arrow:disabled {
-    opacity: 0.4;
-    cursor: default;
+  padding: clamp(2rem, 4.5vw, 3.5rem) 0;
+  display: flex;
+  justify-content: center;
+  color: #111;
+}
+
+.vh-services__card {
+  max-width: 1200px;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.vh-services__heading {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  text-align: center;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.vh-services__desc {
+  text-align: center;
+  color: #444;
+  max-width: 860px;
+  margin: 0.25rem auto 2rem auto;
+}
+
+/* Grid layout: 3 cards top, 2 cards bottom */
+.vh-services__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* First 3 cards in top row - each spans 2 columns */
+.vh-services__grid > .vh-service-card:nth-child(1),
+.vh-services__grid > .vh-service-card:nth-child(2),
+.vh-services__grid > .vh-service-card:nth-child(3) {
+  grid-column: span 2;
+}
+
+/* 4th and 5th cards in bottom row - centered */
+.vh-services__grid > .vh-service-card:nth-child(4) {
+  grid-column: 2 / 4;
+}
+
+.vh-services__grid > .vh-service-card:nth-child(5) {
+  grid-column: 4 / 6;
+}
+
+/* Service card */
+.vh-service-card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(8, 18, 20, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.vh-service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(8, 18, 20, 0.12);
+}
+
+/* Media */
+.vh-service-card__media {
+  height: 160px;
+  overflow: hidden;
+  background: #eaeef0;
+}
+
+.vh-service-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Body */
+.vh-service-card__body {
+  padding: 1rem 1rem 1.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+.vh-service-card__title {
+  font-size: 1.05rem;
+  margin: 0;
+  color: #0b2f30;
+  font-weight: 600;
+}
+
+.vh-service-card__excerpt {
+  margin: 0;
+  color: #4a5a5a;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  flex: 1;
+}
+
+.vh-service-card__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(11,47,48,0.15);
+  color: #0b5658;
+  text-decoration: none;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  background: #fff;
+  transition: all 0.3s cubic-bezier(.2, .9, .2, 1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.vh-service-card__link:hover {
+  background: #e50914;
+  color: #fff;
+  border-color: #e50914;
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 6px 14px rgba(229,9,20,0.3);
+}
+
+.vh-service-card__link:focus {
+  outline: 3px solid rgba(229,9,20,0.4);
+  outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .vh-services__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
 
-  /* Mobile and tablet navigation arrows */
-  .vh-services__mobile-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* Reset grid column spans for tablet */
+  .vh-services__grid > .vh-service-card:nth-child(1),
+  .vh-services__grid > .vh-service-card:nth-child(2),
+  .vh-services__grid > .vh-service-card:nth-child(3),
+  .vh-services__grid > .vh-service-card:nth-child(4),
+  .vh-services__grid > .vh-service-card:nth-child(5) {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .vh-services__grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  /* Reset for mobile - single column */
+  .vh-services__grid > .vh-service-card:nth-child(1),
+  .vh-services__grid > .vh-service-card:nth-child(2),
+  .vh-services__grid > .vh-service-card:nth-child(3),
+  .vh-services__grid > .vh-service-card:nth-child(4),
+  .vh-services__grid > .vh-service-card:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .vh-services__card {
+    padding: 0.5rem;
+  }
+
+  .vh-services__grid {
     gap: 1rem;
-    margin-top: 1rem;
   }
-  
-  .vh-services__mobile-arrow {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid #e50914;
-    background: #fff;
-    cursor: pointer;
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #e50914;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(229, 9, 20, 0.2);
-  }
-  
-  .vh-services__mobile-arrow:hover:not(:disabled) {
-    background: #e50914;
-    color: #fff;
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
-  }
-  
-  .vh-services__mobile-arrow:disabled {
-    opacity: 0.3;
-    cursor: default;
-    border-color: #ccc;
-    color: #ccc;
-  }
-  
-  /* pager + progress */
-  .vh-services__pager {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex: 1;
-    justify-content: center;
-  }
-  .vh-services__pager-text {
-    color: #0b2f30;
-    font-size: 10px;
-    font-weight: 600;
-  }
-  
-  /* progress bar */
-  .vh-services__progress {
-    height: 6px;
-    width: 320px;
-    background: rgba(11,47,48,0.08);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .vh-services__progress-fill {
-    height: 100%;
-    background: #e50914;
-    width: 0%;
-    transition: width 360ms ease;
-  }
-  
-  /* responsive */
-  @media (max-width: 1100px) {
-    .vh-service-card { flex: 0 0 300px; }
-    .vh-services__viewport { max-width: calc(3 * 300px + 2 * 24px); }
-    .vh-services__progress { width: 260px; }
-  }
-  
-  /* Desktop - hide mobile controls */
-  @media (min-width: 769px) {
-    .vh-services__mobile-controls { display: none; }
-  }
-  
-  /* Tablet view - 2 cards visible, mobile controls only */
-  @media (max-width: 768px) {
-    .vh-service-card { flex: 0 0 calc(50vw - 30px); }
-    .vh-services__viewport { 
-      max-width: calc(2 * (50vw - 30px) + 24px); /* 2 cards + 1 gap */
-      margin: 1rem auto 0 auto;
-    }
-    .vh-services__controls { display: none; }
-    .vh-services__mobile-controls { display: flex; }
-  }
-  
-  /* Mobile view - 1 card visible, mobile controls only */
-  @media (max-width: 480px) {
-    .vh-service-card { 
-      flex: 0 0 calc(100vw - 32px); 
-      max-width: calc(100vw - 32px); 
-    }
-    .vh-services__viewport { 
-      max-width: calc(100vw - 32px); /* 1 card */
-      margin: 1rem 16px 0 16px; /* Use margin instead of auto to prevent centering issues */
-      width: calc(100vw - 32px);
-    }
-    .vh-services__track { gap: 16px; }
-    .vh-services__controls { display: none; }
-    .vh-services__mobile-controls { display: flex; }
-  }
-  
+}

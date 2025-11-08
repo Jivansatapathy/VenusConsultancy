@@ -122,7 +122,7 @@ const Navbar = () => {
       <nav className="vh-navbar__inner u-container" aria-label="Main navigation">
         <Link to="/" className="vh-navbar__brand" aria-label="Venus Hiring home">
           <img
-            src="/venuslogo.png"
+            src="/venuslo.png"
             alt="Venus Hiring"
             className={`vh-navbar__logo ${isScrolled ? "vh-navbar__logo--small" : ""}`}
           />

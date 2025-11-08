@@ -1,179 +1,166 @@
 /* client/src/components/WhyStats.css */
-/* Ensure Poppins loaded globally; this file only defines layout and styles */
 
 .vh-why {
-    padding: clamp(1rem, 3vw, 2.5rem) 0;
-    color: #111;
-  }
-  
-  .vh-why__inner {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    align-items: center;
+  padding: clamp(3rem, 6vw, 5rem) 0;
+  color: #111;
+  background: #fff;
+}
+
+.vh-why__inner {
+  width: min(1400px, 92%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+/* Header */
+.vh-why__header {
+  text-align: center;
+}
+
+.vh-why__heading {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+  color: #111;
+  letter-spacing: -0.02em;
+}
+
+/* Cards Container - 2x2 Grid */
+.vh-why__cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  width: 100%;
+}
+
+/* Card */
+.vh-why__card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100%;
+}
+
+.vh-why__card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  border-color: rgba(229, 9, 20, 0.2);
+}
+
+/* Card Header */
+.vh-why__card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.vh-why__card-icon {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-bottom: 0.25rem;
+}
+
+.vh-why__card-title {
+  font-size: clamp(1.5rem, 2.5vw, 1.85rem);
+  font-weight: 800;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3;
+  display: block;
+  width: 100%;
+}
+
+.vh-why__card-underline {
+  width: 60px;
+  height: 4px;
+  background: #e50914;
+  border-radius: 2px;
+  margin: 0.5rem 0 0.75rem 0;
+}
+
+.vh-why__card-summary {
+  margin: 0;
+  padding: 0;
+  color: #e50914;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Card Content */
+.vh-why__card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.vh-why__card-description {
+  margin: 0;
+  padding: 0;
+  color: #4b5563;
+  font-size: 1rem;
+  line-height: 1.75;
+  font-weight: 400;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .vh-why__cards {
     gap: 2rem;
-    width: min(1180px, 92%);
-    margin: 0 auto;
   }
   
-  /* Responsive */
-  @media (max-width: 900px) {
-    .vh-why__inner { grid-template-columns: 1fr; gap: 1.25rem; }
+  .vh-why__card {
+    padding: 2rem;
   }
-  
-  /* LEFT */
-  .vh-why__left {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-  .vh-why__heading {
-    font-size: clamp(22px, 2.6vw, 40px);
-    font-weight: 800;
-    line-height: 1.08;
-    margin: 0;
-    color: #111;
-    letter-spacing: -0.02em;
-  }
-  
-  /* big primary stat on left */
-  .vh-why__left-value {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    align-items: flex-start;
-  }
-  .vh-why__stat-value {
-    font-weight: 800;
-    color: #e50914; /* brand red */
-    font-size: clamp(2.4rem, 6vw, 4.5rem);
-    line-height: 1;
-    display: inline-block;
-    min-height: 1.1em;
-  }
-  .vh-why__left-caption {
-    color: #4b5563;
-    font-size: clamp(0.95rem, 1.8vw, 1.05rem);
-  }
-  
-  /* RIGHT: stacked two items with divider */
-.vh-why__right {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(260px, 1fr));
-    gap: 1.25rem;
-    padding-left: 0;
-    border-left: none;
-  }
-  
-  /* Remove border for small screens (becomes vertical stack) */
-  @media (max-width: 900px) {
-    .vh-why__right { grid-template-columns: 1fr; }
-  }
-  
-.vh-why__right-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    padding: 1rem 1rem 1rem 1rem;
-    position: relative;
-    background: #fff;
-    border: 1px solid rgba(0,0,0,0.07);
-    border-radius: 12px;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
-    transform: translateZ(0);
-    will-change: transform, box-shadow;
-    transition: transform 240ms cubic-bezier(.22,.9,.34,1), box-shadow 240ms cubic-bezier(.22,.9,.34,1);
-  }
-  
-  /* small vertical separators between right items for desktop */
-  .vh-why__right-item:not(:last-child)::after { display: none; }
-  
-  .vh-why__right-value-wrap {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: relative;
-    z-index: 1;
-  }
-  /* remove placeholder dot when icons are always visible */
-  .vh-why__right-value-wrap::before { display: none; }
-  .vh-why__icon {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    transition: transform 200ms ease, opacity 160ms ease, visibility 0s linear 0s;
-    flex-shrink: 0;
-    z-index: 0;
-  }
-  .vh-why__icon--gif { opacity: 1; visibility: visible; }
-  .vh-why__icon--static { display: none; }
-  /* Elevate card and reveal/scale animated icon on hover */
-  .vh-why__right-item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.10);
-  }
-  .vh-why__right-item:hover .vh-why__icon--gif {
-    transform: scale(1.15);
-  }
-  .vh-why__right-item:hover .vh-why__right-value-wrap::before { display: none; }
-  .vh-why__right .vh-why__stat-value {
-    font-size: clamp(1.6rem, 3.5vw, 2rem) !important;
-    color: #000000 !important;
-    font-weight: 800 !important;
-    position: relative;
-    display: inline-block !important;
-    padding: 0 0 8px 0 !important;
-    margin: 0 !important;
-    line-height: 1.4;
-    z-index: 2;
-    opacity: 1 !important;
-    visibility: visible !important;
-    width: auto;
-    min-width: 0;
-    overflow: visible;
-    flex: 1;
-  }
-  
-  /* Ensure h3 headings are visible */
-  .vh-why__right-item h3.vh-why__stat-value {
-    font-size: clamp(1.6rem, 3.5vw, 2rem) !important;
-    color: #000000 !important;
-    font-weight: 800 !important;
-    margin: 0 !important;
-    padding: 0 0 8px 0 !important;
-    display: inline-block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+}
+
+@media (max-width: 768px) {
+  .vh-why {
+    padding: clamp(2rem, 5vw, 3.5rem) 0;
   }
 
-  .vh-why__right .vh-why__stat-value::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 44px;
-    height: 3px;
-    background: #e50914;
-    border-radius: 2px;
+  .vh-why__inner {
+    gap: 2.5rem;
   }
-  
-  /* right captions */
-  .vh-why__right-caption {
-    color: #4b5563;
-    font-size: 0.975rem;
-    line-height: 1.45;
+
+  .vh-why__cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-  .vh-why__bullets { margin: 0.25rem 0 0; padding-left: 1.1rem; }
-  .vh-why__bullets li { margin: 0 0 0.35rem; }
-  
-  /* Accessibility and motion preferences */
-  @media (prefers-reduced-motion: reduce) {
-    .vh-why__stat-value { transition: none; }
+
+  .vh-why__card {
+    padding: 1.5rem;
   }
-  
-  /* Ensure good contrast focus states */
-  .vh-why :focus { outline: 3px solid rgba(229,9,20,0.12); outline-offset: 2px; border-radius: 6px; }
-  
+
+  .vh-why__card-header {
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .vh-why__card-icon {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .vh-why__card {
+    transition: none;
+  }
+}

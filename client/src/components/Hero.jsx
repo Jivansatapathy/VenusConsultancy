@@ -16,11 +16,14 @@ export default function Hero({ showImage = false, imageSrc = "/hero-person.webp"
       <div className="hero-container">
         {/* Title */}
         <div className="hero-title">
-          <div className="title-line line-1">Helping Companies</div>
-          <div className="title-line line-2">Hire Smarter</div>
-          <div className="title-line line-3">Helping Talent</div>
-          <div className="title-line line-4">Thrive</div>
+          <div className="title-line line-1">Empower Your Workforce</div>
+          <div className="title-line line-2">Shape the Future of Your Organization Today</div>
         </div>
+
+        {/* Description */}
+        <p className="hero-description">
+          Connect with top-tier talent and discover professionals who drive growth, innovation, and success.
+        </p>
 
         {/* Buttons */}
         <div className="hero-buttons">

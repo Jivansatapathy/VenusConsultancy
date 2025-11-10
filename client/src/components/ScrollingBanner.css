@@ -1,0 +1,106 @@
+/* Scrolling Banner Section */
+.scrolling-banner {
+  width: 100%;
+  background: #e50914;
+  padding: 1.5rem 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.scrolling-banner__container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.scrolling-banner__track {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: scroll 30s linear infinite;
+  width: fit-content;
+}
+
+.scrolling-banner__track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.scrolling-banner__item {
+  flex-shrink: 0;
+}
+
+.scrolling-banner__box {
+  background: transparent;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.scrolling-banner__box:hover {
+  transform: scale(1.05);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.scrolling-banner__icon {
+  flex-shrink: 0;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+}
+
+.scrolling-banner__icon--star {
+  opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .scrolling-banner {
+    padding: 1rem 0;
+  }
+
+  .scrolling-banner__track {
+    gap: 0.75rem;
+    animation-duration: 25s;
+  }
+
+  .scrolling-banner__box {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .scrolling-banner__icon {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 480px) {
+  .scrolling-banner__track {
+    gap: 0.5rem;
+    animation-duration: 20s;
+  }
+
+  .scrolling-banner__box {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .scrolling-banner__icon {
+    transform: scale(0.8);
+  }
+}
+

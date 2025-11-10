@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import Hero from "../components/ThirdHero";
+import ScrollingBanner from "../components/ScrollingBanner";
 import StatAbout from "../components/StatAbout";
 import HowWeWork from "../components/HowWeWork";
 
@@ -28,6 +29,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <ScrollingBanner />
       <StatAbout />
       <HowWeWork />
       {/* Certifications section removed as requested */}

@@ -1,14 +1,13 @@
 // client/src/components/Navbar.jsx
 import { useState, useEffect, useRef, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import "./Navbar.css";
 import { AuthContext } from "../context/AuthContext";
-import servicesConfig from "../data/servicesConfig";
 
 const NAV_LINKS = [
   { to: "/", label: "Home" },
-  { to: "/services", label: "Services", hasDropdown: true },
+  { to: "/services", label: "Services" },
   { to: "/find-jobs", label: "Find Jobs" },
   { to: "/about", label: "About Us" },
   { to: "/contact", label: "Contact Us" }
@@ -23,7 +22,6 @@ const Navbar = () => {
   const { user, isAuthenticated, logout } = useContext(AuthContext);
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -31,9 +29,6 @@ const Navbar = () => {
   const firstLinkRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const focusTimeoutRef = useRef(null);
-  const servicesDropdownRef = useRef(null);
-  const servicesLinkRef = useRef(null);
-  const dropdownTimeoutRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -44,70 +39,7 @@ const Navbar = () => {
   // Close mobile menu when route changes
   useEffect(() => {
     setMenuOpen(false);
-    setServicesDropdownOpen(false);
   }, [location.pathname]);
-
-  // Handle Services dropdown hover with delay
-  useEffect(() => {
-    const handleMouseEnter = () => {
-      if (dropdownTimeoutRef.current) {
-        clearTimeout(dropdownTimeoutRef.current);
-        dropdownTimeoutRef.current = null;
-      }
-      setServicesDropdownOpen(true);
-    };
-
-    const handleMouseLeave = () => {
-      dropdownTimeoutRef.current = setTimeout(() => {
-        setServicesDropdownOpen(false);
-      }, 200); // 200ms delay before closing
-    };
-
-    const linkElement = servicesLinkRef.current;
-    const dropdownElement = servicesDropdownRef.current;
-
-    if (linkElement) {
-      linkElement.addEventListener('mouseenter', handleMouseEnter);
-      linkElement.addEventListener('mouseleave', handleMouseLeave);
-    }
-
-    if (dropdownElement) {
-      dropdownElement.addEventListener('mouseenter', handleMouseEnter);
-      dropdownElement.addEventListener('mouseleave', handleMouseLeave);
-    }
-
-    // Close dropdown when clicking outside
-    const handleClickOutside = (event) => {
-      if (
-        linkElement &&
-        dropdownElement &&
-        !linkElement.contains(event.target) &&
-        !dropdownElement.contains(event.target)
-      ) {
-        setServicesDropdownOpen(false);
-      }
-    };
-
-    if (servicesDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      if (linkElement) {
-        linkElement.removeEventListener('mouseenter', handleMouseEnter);
-        linkElement.removeEventListener('mouseleave', handleMouseLeave);
-      }
-      if (dropdownElement) {
-        dropdownElement.removeEventListener('mouseenter', handleMouseEnter);
-        dropdownElement.removeEventListener('mouseleave', handleMouseLeave);
-      }
-      document.removeEventListener('mousedown', handleClickOutside);
-      if (dropdownTimeoutRef.current) {
-        clearTimeout(dropdownTimeoutRef.current);
-        dropdownTimeoutRef.current = null;
-      }
-    };
-  }, [servicesDropdownOpen]);
 
   // Manage focus trap + ESC while menu open
   useEffect(() => {
@@ -203,58 +135,7 @@ const Navbar = () => {
             if (link.internalOnly && !canSeeInternal()) return null;
 
             const isActive = location.pathname === link.to;
-            
-            // Services dropdown
-            if (link.hasDropdown) {
-              return (
-                <div
-                  key={link.to}
-                  className="vh-navlink-wrapper"
-                  ref={servicesLinkRef}
-                >
-                  <Link
-                    to={link.to}
-                    className={`vh-navlink vh-navlink--dropdown ${isActive ? "active" : ""} ${servicesDropdownOpen ? "vh-navlink--dropdown-open" : ""}`}
-                    aria-current={isActive ? "page" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={servicesDropdownOpen}
-                    tabIndex={menuOpen ? -1 : 0}
-                  >
-                    {link.label}
-                    <ChevronDown size={16} className="vh-navlink__chevron" />
-                  </Link>
-                  {servicesDropdownOpen && (
-                    <div
-                      ref={servicesDropdownRef}
-                      className="vh-dropdown"
-                      role="menu"
-                    >
-                      {servicesConfig.items.map((service) => (
-                        <Link
-                          key={service.key}
-                          to={`/service-category/${service.key}`}
-                          className="vh-dropdown__item"
-                          role="menuitem"
-                          onClick={() => setServicesDropdownOpen(false)}
-                        >
-                          {service.title}
-                        </Link>
-                      ))}
-                      <Link
-                        to="/services"
-                        className="vh-dropdown__item vh-dropdown__item--view-all"
-                        role="menuitem"
-                        onClick={() => setServicesDropdownOpen(false)}
-                      >
-                        View All Services →
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              );
-            }
 
-            // Regular link
             return (
               <Link
                 key={link.to}

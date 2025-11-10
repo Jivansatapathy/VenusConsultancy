@@ -1,25 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FileText, Search, Handshake, Workflow } from "lucide-react";
+import { FileText, Search, Handshake } from "lucide-react";
 import "./HowWeWork.css";
 
 export default function HowWeWork() {
   const [inView, setInView] = useState(false);
   const sectionRef = useRef(null);
+  const stepRefs = useRef([]);
 
   const steps = [
     {
       icon: FileText,
-      title: "APPLICANT REVIEW",
+      title: "Applicant Review",
       description: "The applicant review process is a vital step in ensuring that only the most qualified candidates move forward in our recruitment pipeline."
     },
     {
       icon: Search,
-      title: "JOB ANALYSIS",
+      title: "Job Analysis",
       description: "Job analysis is a critical process for understanding and defining the specific requirements, responsibilities, and qualifications needed for each position."
     },
     {
       icon: Handshake,
-      title: "TALENT PLACEMENT",
+      title: "Talent Placement",
       description: "Our talent placement process focuses on connecting your organization with professionals who not only meet the job requirements but also align with your company culture and strategic goals."
     }
   ];
@@ -27,13 +28,17 @@ export default function HowWeWork() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setInView(true);
+            observer.disconnect();
+          }
+        });
       },
-      { threshold: 0.2 }
+      { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
     );
 
     if (sectionRef.current) {
@@ -46,57 +51,51 @@ export default function HowWeWork() {
   return (
     <section className="how-we-work" ref={sectionRef}>
       <div className="how-we-work__container">
-        {/* Header Badge */}
-        <div className={`how-we-work__badge ${inView ? 'how-we-work__badge--animate' : ''}`}>
-          <Workflow size={16} className="how-we-work__badge-icon" />
-          <span>HOW WE WORK</span>
+        {/* Header */}
+        <div className={`how-we-work__header ${inView ? 'how-we-work__header--visible' : ''}`}>
+          <h2 className="how-we-work__title">How We Work</h2>
+          <p className="how-we-work__subtitle">
+            A streamlined approach to connecting exceptional talent with forward-thinking organizations
+          </p>
         </div>
 
         {/* Steps */}
         <div className="how-we-work__steps">
           {steps.map((step, index) => {
             const IconComponent = step.icon;
+            const isLast = index === steps.length - 1;
+            
             return (
               <React.Fragment key={index}>
                 <div 
-                  className={`how-we-work__step ${inView ? 'how-we-work__step--animate' : ''}`}
-                  style={{ ['--delay']: `${index * 0.2}s` }}
+                  ref={(el) => (stepRefs.current[index] = el)}
+                  className={`how-we-work__step ${inView ? 'how-we-work__step--visible' : ''}`}
+                  style={{ 
+                    transitionDelay: `${index * 100}ms`
+                  }}
                 >
-                  <div className="how-we-work__step-number">{index + 1}</div>
-                  <div className="how-we-work__icon-circle">
-                    <div className="how-we-work__icon-bg"></div>
-                    <IconComponent size={36} className="how-we-work__icon" />
+                  <div className="how-we-work__step-number">
+                    {String(index + 1).padStart(2, '0')}
                   </div>
-                  <h3 className="how-we-work__step-title">{step.title}</h3>
-                  <p className="how-we-work__step-description">{step.description}</p>
+                  
+                  <div className="how-we-work__icon-container">
+                    <IconComponent size={40} className="how-we-work__icon" strokeWidth={1.5} />
+                  </div>
+
+                  <div className="how-we-work__step-content">
+                    <h3 className="how-we-work__step-title">{step.title}</h3>
+                    <p className="how-we-work__step-description">{step.description}</p>
+                  </div>
                 </div>
-                {index < steps.length - 1 && (
-                  <div className={`how-we-work__arrow ${inView ? 'how-we-work__arrow--animate' : ''}`}>
-                    <svg
-                      width="80"
-                      height="40"
-                      viewBox="0 0 80 40"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5 20 L75 20"
-                        stroke="#e50914"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        fill="none"
-                        className="how-we-work__arrow-line"
-                      />
-                      <path
-                        d="M70 15 L75 20 L70 25"
-                        stroke="#e50914"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        fill="none"
-                        className="how-we-work__arrow-head"
-                      />
-                    </svg>
+
+                {!isLast && (
+                  <div 
+                    className={`how-we-work__connector ${inView ? 'how-we-work__connector--visible' : ''}`}
+                    style={{ 
+                      transitionDelay: `${(index + 1) * 100 + 200}ms`
+                    }}
+                  >
+                    <div className="how-we-work__connector-line"></div>
                   </div>
                 )}
               </React.Fragment>
@@ -107,4 +106,3 @@ export default function HowWeWork() {
     </section>
   );
 }
-

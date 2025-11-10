@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import Hero from "../components/ThirdHero";
 import StatAbout from "../components/StatAbout";
+import HowWeWork from "../components/HowWeWork";
 
 // Lazy load heavy components that are below the fold
 const Certifications = lazy(() => import("../components/Certifications"));
@@ -28,6 +29,7 @@ export default function Home() {
     <>
       <Hero />
       <StatAbout />
+      <HowWeWork />
       {/* Certifications section removed as requested */}
       <Suspense fallback={<LazyFallback />}>
         <JourneyStats />

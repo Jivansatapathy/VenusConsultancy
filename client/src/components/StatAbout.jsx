@@ -84,7 +84,7 @@ export default function StatAbout() {
           <div className="stat-about__stats">
             <div className="stat-about__stat">
               <div className="stat-about__stat-number">1K+</div>
-              <div className="stat-about__stat-label">Expert Team</div>
+              <div className="stat-about__stat-label">Global Clients</div>
             </div>
             <div className="stat-about__stat">
               <div className="stat-about__stat-number">98%</div>

@@ -7,13 +7,13 @@ const offices = [
   {
     title: "Toronto, Canada",
     flag: "https://flagcdn.com/w40/ca.png",
-    addr: "205 - 1085 Bellamy Road North, Toronto, ON",
+    addr: "#205 - 1085 Bellamy Road North\nToronto, ON",
     phone: ["647-722-0837"],
   },
   {
     title: "Michigan, USA",
     flag: "https://flagcdn.com/w40/us.png",
-    addr: "880 W Long Lake Rd Ste 225 | Troy, MI 48098",
+    addr: "880 W Long Lake Rd Ste 225\nTroy, MI 48098",
     phone: ["248-275-1077", "718-715-0770"],
   },
   {

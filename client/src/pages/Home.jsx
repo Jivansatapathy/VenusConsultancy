@@ -31,19 +31,19 @@ export default function Home() {
       <Hero />
       <ScrollingBanner />
       <StatAbout />
+      <Suspense fallback={<LazyFallback />}>
+        <ServicesSection/>
+      </Suspense>
       <HowWeWork />
+      <Suspense fallback={<LazyFallback />}>
+        <TalentSection/>
+      </Suspense>
       {/* Certifications section removed as requested */}
       <Suspense fallback={<LazyFallback />}>
         <JourneyStats />
       </Suspense>
       <Suspense fallback={<LazyFallback />}>
         <WhyStats />
-      </Suspense>
-      <Suspense fallback={<LazyFallback />}>
-        <TalentSection/>
-      </Suspense>
-      <Suspense fallback={<LazyFallback />}>
-        <ServicesSection/>
       </Suspense>
       <Suspense fallback={<LazyFallback />}>
         <BlogSection/>

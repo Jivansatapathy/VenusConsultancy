@@ -1,10 +1,82 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./StatAbout.css";
 
 export default function StatAbout() {
+  const sectionRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const [counts, setCounts] = useState({ clients: 0, satisfaction: 0, success: 0 });
+
+  // IntersectionObserver to detect when section comes into view
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Counter animation when in view
+  useEffect(() => {
+    if (!inView) return;
+
+    const duration = 2000; // 2 seconds
+    const startTime = performance.now();
+    
+    const targets = {
+      clients: 1000, // 1K
+      satisfaction: 98, // 98%
+      success: 99 // 99%
+    };
+
+    // Ease out cubic function
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+    let rafId;
+    const animate = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      const eased = easeOutCubic(progress);
+
+      setCounts({
+        clients: Math.round(targets.clients * eased),
+        satisfaction: Math.round(targets.satisfaction * eased),
+        success: Math.round(targets.success * eased)
+      });
+
+      if (progress < 1) {
+        rafId = requestAnimationFrame(animate);
+      }
+    };
+
+    rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
+  }, [inView]);
+
+  // Format number with suffix
+  const formatStat = (value, suffix) => {
+    if (suffix === 'K+') {
+      if (value >= 1000) {
+        return '1K+';
+      }
+      return `${value}+`;
+    }
+    return `${value}${suffix}`;
+  };
+
   return (
-    <section className="stat-about">
+    <section className="stat-about" ref={sectionRef}>
       <div className="stat-about__container">
         {/* Left Side - Image Grid */}
         <div className="stat-about__left">
@@ -83,15 +155,21 @@ export default function StatAbout() {
           {/* Stats */}
           <div className="stat-about__stats">
             <div className="stat-about__stat">
-              <div className="stat-about__stat-number">1K+</div>
+              <div className="stat-about__stat-number">
+                {formatStat(counts.clients, 'K+')}
+              </div>
               <div className="stat-about__stat-label">Global Clients</div>
             </div>
             <div className="stat-about__stat">
-              <div className="stat-about__stat-number">98%</div>
+              <div className="stat-about__stat-number">
+                {formatStat(counts.satisfaction, '%')}
+              </div>
               <div className="stat-about__stat-label">Client Satisfaction</div>
             </div>
             <div className="stat-about__stat">
-              <div className="stat-about__stat-number">99%</div>
+              <div className="stat-about__stat-number">
+                {formatStat(counts.success, '%')}
+              </div>
               <div className="stat-about__stat-label">Success Rate</div>
             </div>
           </div>

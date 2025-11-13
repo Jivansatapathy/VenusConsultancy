@@ -35,7 +35,7 @@ export default function StatAbout() {
     const startTime = performance.now();
     
     const targets = {
-      clients: 1000, // 1K
+      clients: 77, // 77+
       satisfaction: 98, // 98%
       success: 99 // 99%
     };
@@ -67,9 +67,6 @@ export default function StatAbout() {
   // Format number with suffix
   const formatStat = (value, suffix) => {
     if (suffix === 'K+') {
-      if (value >= 1000) {
-        return '1K+';
-      }
       return `${value}+`;
     }
     return `${value}${suffix}`;

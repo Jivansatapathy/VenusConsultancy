@@ -21,9 +21,11 @@
 
 .offices-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
-  align-items: start;
+  align-items: stretch;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .office-card {
@@ -32,7 +34,7 @@
   border-radius: 12px;
   padding: 1.5rem;
   transition: all 0.3s ease;
-  min-height: 220px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -80,6 +82,12 @@
 }
 
 .office-phone {
+  font-size: 0.95rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+.office-email {
   font-size: 0.95rem;
   color: #ffffff;
   margin: 0;

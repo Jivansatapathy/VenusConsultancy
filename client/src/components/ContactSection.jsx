@@ -29,9 +29,10 @@ const ContactSection = () => {
               Toronto, Canada
             </h4>
             <div className="office-details">
-              <p className="office-address">#205 - 1085 Bellamy Road North</p>
-              <p className="office-address">Toronto, ON</p>
+              <p className="office-address">205 – 1085 Bellamy Road North</p>
+              <p className="office-address">Toronto, ON M1H 3C7</p>
               <p className="office-phone">Ph: <a href="tel:647-722-0837" className="phone-link">647-722-0837</a></p>
+              <p className="office-email">Email: <a href="mailto:info@venushiring.ca" className="phone-link">info@venushiring.ca</a></p>
             </div>
           </div>
 
@@ -52,33 +53,11 @@ const ContactSection = () => {
               Michigan, USA
             </h4>
             <div className="office-details">
-              <p className="office-address">880 W Long Lake Rd Ste 225</p>
+              <p className="office-address">225 – 880 W Long Lake Road</p>
               <p className="office-address">Troy, MI 48098</p>
               <p className="office-phone">Ph: <a href="tel:248-275-1077" className="phone-link">248-275-1077</a></p>
               <p className="office-phone">Ph: <a href="tel:718-715-0770" className="phone-link">718-715-0770</a></p>
-            </div>
-          </div>
-
-          <div className="office-card">
-            <h4 className="office-title" aria-label="India">
-              <img 
-                src="https://flagcdn.com/w40/in.png" 
-                alt="India flag" 
-                style={{
-                  width: '24px',
-                  height: '18px',
-                  marginRight: '8px',
-                  borderRadius: '2px',
-                  display: 'inline-block',
-                  verticalAlign: 'middle'
-                }}
-              />
-              India
-            </h4>
-            <div className="office-details">
-              <p className="office-address">Mumbai, Surat, Chennai, Hyderabad</p>
-              <p className="office-phone">Ph: <a href="tel:+91-261-2601177" className="phone-link">+91-261-2601177</a></p>
-              <p className="office-phone">Ph: <a href="tel:+91-261-391177" className="phone-link">+91-261-391177</a></p>
+              <p className="office-email">Email: <a href="mailto:info@venushiring.com" className="phone-link">info@venushiring.com</a></p>
             </div>
           </div>
         </div>

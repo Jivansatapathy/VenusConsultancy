@@ -7,20 +7,16 @@ const offices = [
   {
     title: "Toronto, Canada",
     flag: "https://flagcdn.com/w40/ca.png",
-    addr: "#205 - 1085 Bellamy Road North\nToronto, ON",
+    addr: "205 – 1085 Bellamy Road North\nToronto, ON M1H 3C7",
     phone: ["647-722-0837"],
+    email: "info@venushiring.ca",
   },
   {
     title: "Michigan, USA",
     flag: "https://flagcdn.com/w40/us.png",
-    addr: "880 W Long Lake Rd Ste 225\nTroy, MI 48098",
+    addr: "225 – 880 W Long Lake Road\nTroy, MI 48098",
     phone: ["248-275-1077", "718-715-0770"],
-  },
-  {
-    title: "India",
-    flag: "https://flagcdn.com/w40/in.png",
-    addr: "Mumbai, Surat, Chennai, Hyderabad",
-    phone: ["+91-261-2601177", "+91-261-391177"],
+    email: "info@venushiring.com",
   },
 ];
 
@@ -305,6 +301,9 @@ const Contact = () => {
                 {o.phone.map((ph, idx) => (
                   <div key={idx}>Ph: {ph}</div>
                 ))}
+                {o.email && (
+                  <div>Email: <a href={`mailto:${o.email}`} style={{ color: 'inherit' }}>{o.email}</a></div>
+                )}
               </div>
             </article>
           ))}

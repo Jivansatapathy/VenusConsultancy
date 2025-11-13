@@ -77,7 +77,7 @@ const AboutUs = () => {
               <div className="bp-card__content">
                 <h3 className="bp-card__title">FOR EMPLOYERS</h3>
                 <p className="bp-card__text">
-                  Post roles and connect with vetted candidates. Receive tailored shortlists fast and hire confidently with our dedicated support.
+                  We help you find talent who don't just fill a role—they make an impact. Receive tailored shortlists fast and hire confidently with our dedicated support.
                 </p>
                 <a href="/contact" className="bp-card__link" aria-label="Hire talent with Venus Hiring">Hire talent</a>
               </div>

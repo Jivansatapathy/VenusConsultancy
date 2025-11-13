@@ -15,7 +15,9 @@ const UpFooter = () => {
           <div className="vh-upfooter__text-section">
             <div className="vh-upfooter__label">GET STARTED</div>
             <h2 id="vh-upfooter-heading" className="vh-upfooter__heading">
-              Find the Right People. Build the Right Teams.
+              Find the Right People.
+              <br />
+              Build the Right Teams.
             </h2>
             <p className="vh-upfooter__description">
               At Venus Consultancy, we connect exceptional talent with forward-thinking companies.

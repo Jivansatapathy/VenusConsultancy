@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
 :root{
   --vh-red: #e50914;
   --vh-black: #000;
@@ -54,6 +56,7 @@
   border: none;
   padding: 0;
   margin: 0;
+  gap: 0.75rem;
 }
 .vh-navbar__logo {
   height: 72px;
@@ -63,6 +66,21 @@
   background: transparent;
   border: none;
   padding: 0;
+}
+.vh-navbar__company-name {
+  font-family: 'Montserrat', 'Raleway', 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #000000 0%, #e50914 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+  transition: font-size 220ms ease;
+  white-space: nowrap;
+}
+.vh-navbar--scrolled .vh-navbar__company-name {
+  font-size: 1.2rem;
 }
 
 /* desktop nav */
@@ -262,7 +280,14 @@
   .vh-btn--outline { display: none; }
   .vh-navbar__toggle { display: inline-flex; }
   .vh-navbar__logo { height: 56px; }
+  .vh-navbar__company-name { font-size: 1.1rem; }
   /* show mobile menu when open (class controls it) */
+}
+@media (max-width: 768px) {
+  .vh-navbar__company-name { font-size: 1rem; }
+}
+@media (max-width: 480px) {
+  .vh-navbar__company-name { font-size: 0.9rem; }
 }
 
 /* small screens */

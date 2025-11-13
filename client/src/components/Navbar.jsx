@@ -126,6 +126,7 @@ const Navbar = () => {
             alt="Venus Hiring"
             className={`vh-navbar__logo ${isScrolled ? "vh-navbar__logo--small" : ""}`}
           />
+          <span className="vh-navbar__company-name">Venus Consultancy</span>
         </Link>
 
         {/* Desktop links: when mobile menu is open we set tabIndex=-1 to prevent tabbing into them */}

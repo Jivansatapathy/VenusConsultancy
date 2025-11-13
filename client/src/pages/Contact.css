@@ -161,108 +161,151 @@
 }
 
 /* OFFICES SECTION */
+/* offices section - Matching reference image design */
 .offices-section {
-  width: 100%;
-  max-width: 1200px;
-  margin: 2rem auto 4rem;
+  background: #2a2a2a;
+  width: calc(100% + 2rem);
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding: clamp(3rem, 5vw, 4.5rem) clamp(1.5rem, 4vw, 3rem);
   color: #fff;
-  padding: 0 1rem;
   text-align: center;
+  box-sizing: border-box;
 }
 .offices-title {
-  font-size: 36px;
-  font-weight: 800;
-  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  margin: 0 0 0.75rem;
   color: #fff;
 }
 .offices-sub {
   max-width: 900px;
-  margin: 0 auto 24px;
-  color: rgba(255, 255, 255, 0.9);
+  margin: 0 auto clamp(2.5rem, 4vw, 3.5rem);
+  color: rgba(255, 255, 255, 0.7);
   line-height: 1.5;
-  font-size: 15px;
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
 }
 .offices-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  max-width: 800px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  max-width: 1200px;
   margin: 0 auto;
   align-items: stretch;
+  padding: 0;
 }
 .office-card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
+  background: #1f1f1f;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: clamp(1.5rem, 3vw, 2rem);
   text-align: left;
-  color: #111;
-  box-shadow: 0 8px 20px rgba(10, 10, 10, 0.08);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 0;
   transition: all 0.3s ease;
-  cursor: pointer;
+  cursor: default;
 }
 
 .office-card:hover {
-  background: #111;
-  color: #fff;
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(10, 10, 10, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
 }
-.office-icon {
-  width: 50px;
-  height: 50px;
-  display: inline-flex;
+
+.office-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.office-flag-wrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.office-card:hover .office-icon svg {
-  stroke: #fff;
+.office-flag-wrapper--canada {
+  background: #d32f2f;
 }
+
+.office-flag-wrapper--usa {
+  background: #1976d2;
+}
+
+.office-flag-wrapper--india {
+  background: #ff9800;
+}
+
+.office-flag {
+  width: 24px;
+  height: 18px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
 .office-title {
-  font-size: 18px;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
   font-weight: 700;
-  margin: 0 0 4px;
+  margin: 0;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.office-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.office-detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.office-icon {
   flex-shrink: 0;
-  color: inherit;
-}
-.office-addr {
-  font-size: 14px;
-  color: #444;
-  line-height: 1.45;
-  margin-bottom: 8px;
-  flex-grow: 1;
+  margin-top: 2px;
 }
 
-.office-card:hover .office-addr {
-  color: rgba(255, 255, 255, 0.8);
-}
-.office-sep {
-  border: none;
-  border-top: 1px solid rgba(0,0,0,0.06);
-  margin: 8px 0;
+.office-icon--green {
+  color: #4caf50;
 }
 
-.office-card:hover .office-sep {
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.office-contact {
-  margin-top: auto;
-  font-size: 14px;
-  color: #222;
-  flex-shrink: 0;
-}
-
-.office-card:hover .office-contact {
+.office-address,
+.office-phone {
+  font-size: clamp(0.9rem, 1.6vw, 1rem);
   color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.5;
 }
-.office-contact a {
-  color: #0f6b8f;
+
+.office-phone {
+  color: #ffffff;
+}
+
+.office-email {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: clamp(0.9rem, 1.6vw, 1rem);
+  line-height: 1.5;
+  transition: color 0.2s ease;
+}
+
+.office-email:hover {
+  color: #4caf50;
   text-decoration: underline;
 }
 
@@ -280,7 +323,7 @@
     border-radius: 8px;
   }
 }
-@media (max-width: 1100px) {
+@media (max-width: 1024px) {
   .offices-grid {
     grid-template-columns: repeat(2, 1fr);
   }

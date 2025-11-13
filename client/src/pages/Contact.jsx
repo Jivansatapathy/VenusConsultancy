@@ -1,5 +1,6 @@
 // client/src/pages/Contact.jsx
 import React, { useState, useEffect } from "react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import "./Contact.css";
 import API from "../utils/api";
 
@@ -7,16 +8,25 @@ const offices = [
   {
     title: "Toronto, Canada",
     flag: "https://flagcdn.com/w40/ca.png",
-    addr: "205 – 1085 Bellamy Road North\nToronto, ON M1H 3C7",
+    flagBg: "canada",
+    addr: "#205 - 1085 Bellamy Road North, Toronto, ON",
     phone: ["647-722-0837"],
     email: "info@venushiring.ca",
   },
   {
     title: "Michigan, USA",
     flag: "https://flagcdn.com/w40/us.png",
-    addr: "225 – 880 W Long Lake Road\nTroy, MI 48098",
+    flagBg: "usa",
+    addr: "880 W Long Lake Rd Ste 225 | Troy, MI 48098",
     phone: ["248-275-1077", "718-715-0770"],
     email: "info@venushiring.com",
+  },
+  {
+    title: "India",
+    flag: "https://flagcdn.com/w40/in.png",
+    flagBg: "india",
+    addr: "Mumbai, Surat, Chennai, Hyderabad",
+    phone: ["+91-261-2601177", "+91-261-391177"],
   },
 ];
 
@@ -268,46 +278,43 @@ const Contact = () => {
       </section>
 
       {/* OFFICES SECTION */}
-      <section className="offices-section container">
+      <section className="offices-section">
         <h3 className="offices-title">Our Office Locations</h3>
         <p className="offices-sub">
-          Combined with our role as trusted advisors for professionals translates into our core capability — Building careers. Building Organisations.
+          Connect with us across multiple locations worldwide
         </p>
 
         <div className="offices-grid">
           {offices.map((o) => (
             <article key={o.title} className="office-card" aria-labelledby={o.title}>
-              <h4 className="office-title">
-                <img 
-                  src={o.flag} 
-                  alt={`${o.title} flag`} 
-                  className="office-flag"
-                  style={{
-                    width: '24px',
-                    height: '18px',
-                    marginRight: '8px',
-                    borderRadius: '2px',
-                    display: 'inline-block',
-                    verticalAlign: 'middle'
-                  }}
-                />
-                {o.title}
-              </h4>
-              <div className="office-addr">
-                {o.addr.split("\n").map((line, idx) => (
-                  <div key={idx}>{line}</div>
-                ))}
+              <div className="office-header">
+                <div className={`office-flag-wrapper office-flag-wrapper--${o.flagBg}`}>
+                  <img 
+                    src={o.flag} 
+                    alt={`${o.title} flag`} 
+                    className="office-flag"
+                  />
+                </div>
+                <h4 className="office-title">
+                  {o.title}
+                </h4>
               </div>
-
-              <hr className="office-sep" />
-
-              <div className="office-contact">
-                <div><strong>Contact</strong></div>
+              <div className="office-details">
+                <div className="office-detail-item">
+                  <MapPin size={18} className="office-icon office-icon--green" />
+                  <p className="office-address">{o.addr}</p>
+                </div>
                 {o.phone.map((ph, idx) => (
-                  <div key={idx}>Ph: {ph}</div>
+                  <div key={idx} className="office-detail-item">
+                    <Phone size={18} className="office-icon office-icon--green" />
+                    <p className="office-phone">{ph}</p>
+                  </div>
                 ))}
                 {o.email && (
-                  <div>Email: <a href={`mailto:${o.email}`} style={{ color: 'inherit' }}>{o.email}</a></div>
+                  <div className="office-detail-item">
+                    <Mail size={18} className="office-icon office-icon--green" />
+                    <a href={`mailto:${o.email}`} className="office-email">{o.email}</a>
+                  </div>
                 )}
               </div>
             </article>

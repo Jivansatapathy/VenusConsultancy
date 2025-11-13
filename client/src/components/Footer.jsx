@@ -1,11 +1,8 @@
 // client/src/components/Footer.jsx
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import React from "react";
 import "./Footer.css";
 
 const Footer = () => {
-  const { isAuthenticated } = useContext(AuthContext);
 
   return (
     <footer className="vh-footer u-card" role="contentinfo" aria-label="Site footer">
@@ -77,14 +74,12 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Login section - only show for unauthenticated users */}
-        {!isAuthenticated && (
-          <div className="vh-footer__login" aria-label="Login">
-            <Link to="/admin/login" className="vh-footer__login-btn">
-              Login
-            </Link>
-          </div>
-        )}
+        {/* Company Description */}
+        <div className="vh-footer__description" aria-label="Company description">
+          <p className="vh-footer__desc-text">
+            Venus Consultancy connects exceptional talent with forward-thinking companies across the USA. We help businesses find the right people and professionals discover their next opportunity.
+          </p>
+        </div>
       </div>
 
       <div className="vh-footer__bottom">

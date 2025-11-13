@@ -146,7 +146,7 @@ export default function StatAbout() {
 
           {/* Description */}
           <p className="stat-about__description">
-            At Venus Hiring, we understand that the key to business success lies in having the right people on your team. That's why we're committed to connecting you with top-tier talent.
+            At Venus Consultancy, we understand that the key to business success lies in having the right people on your team. That's why we're committed to connecting USA companies with top-tier talent across North America and beyond.
           </p>
 
           {/* Stats */}

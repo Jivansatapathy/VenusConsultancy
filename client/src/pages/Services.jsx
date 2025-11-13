@@ -525,7 +525,7 @@ const Services = () => {
         <div className="svc-container">
           <div className="svc-hero__grid" aria-label="Hero two column layout">
             <div className="svc-hero__left">
-              <h1 className="svc-hero__title">Your partner in hiring the right talent for every role.</h1>
+              <h1 className="svc-hero__title">Your partner in hiring the right talent for every role across the USA.</h1>
               <div className="svc-hero__ctas" role="group" aria-label="Primary actions">
                 <a className="btn btn--primary" href="/contact">Contact Us</a>
                 <a className="btn btn--outline1" href="#services">Browse on your own</a>
@@ -560,8 +560,8 @@ const Services = () => {
             aria-hidden
           />
           <div className="svc-hero-mobile__content">
-            <h1 className="svc-hero-mobile__title">Your partner in hiring the right talent for every role.</h1>
-            <p className="svc-hero-mobile__sub">Whatever your hiring challenge, explore our talent solutions to find the right professionals across 2,000+ specialized roles.</p>
+            <h1 className="svc-hero-mobile__title">Your partner in hiring the right talent for every role across the USA.</h1>
+            <p className="svc-hero-mobile__sub">Whatever your hiring challenge, explore our talent solutions to find the right professionals across 2,000+ specialized roles for USA companies.</p>
             <div className="svc-hero-mobile__ctas" role="group" aria-label="Primary actions">
               <a className="btn btn--primary" href="/contact">Contact Us</a>
               <a className="btn btn--outline-invert" href="#services">Browse on your own</a>

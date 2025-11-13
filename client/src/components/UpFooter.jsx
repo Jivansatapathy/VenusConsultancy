@@ -20,7 +20,7 @@ const UpFooter = () => {
               Build the Right Teams.
             </h2>
             <p className="vh-upfooter__description">
-              At Venus Consultancy, we connect exceptional talent with forward-thinking companies.
+              At Venus Consultancy, we connect exceptional talent with forward-thinking companies across the USA.
               <br />
               Whether you're hiring or looking for your next role, we make the perfect match happen.
             </p>

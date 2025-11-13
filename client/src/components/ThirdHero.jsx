@@ -35,7 +35,7 @@ const ThirdHero = () => {
               <span className="title-line-2">Your Organization Today</span>
             </h1>
             <p className="third-hero__subtitle">
-            Connect with top-tier talent and discover professionals who drive growth, innovation, and success.
+            Connect with top-tier talent across the USA and discover professionals who drive growth, innovation, and success for American businesses.
             </p>
             
             <div className="third-hero__buttons">

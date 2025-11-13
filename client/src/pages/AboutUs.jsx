@@ -14,7 +14,7 @@ const AboutUs = () => {
             About Venus Hiring
           </h1>
           <p className="about-hero__sub">
-            We connect ambitious teams with the right talent to build the future—faster and with confidence.
+            We connect ambitious teams across the USA and beyond with the right talent to build the future—faster and with confidence.
           </p>
           <div className="hero-image-trail">
             <ImageTrail

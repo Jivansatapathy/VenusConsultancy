@@ -119,7 +119,12 @@ const Contact = () => {
               </div>
               <div className="contact-meta">
                 <div className="meta-label">Phone Number</div>
-                <div className="meta-value">+647-722-0837</div>
+                <div className="meta-value">
+                  <a href="tel:248-275-1077" style={{ color: 'inherit', textDecoration: 'none' }}>248-275-1077</a>
+                </div>
+                <div className="meta-value" style={{ marginTop: '0.5rem' }}>
+                  <a href="tel:718-715-0770" style={{ color: 'inherit', textDecoration: 'none' }}>718-715-0770</a>
+                </div>
               </div>
             </div>
 

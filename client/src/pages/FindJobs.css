@@ -26,8 +26,9 @@
 .jobs-header p {
   font-size: 1.1rem;
   color: #6c757d;
-  max-width: 600px;
   margin: 0 auto;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .jobs-content {

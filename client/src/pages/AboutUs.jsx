@@ -1,7 +1,6 @@
 // client/src/pages/AboutUs.jsx
 import React from "react";
 import "./AboutUs.css";
-import CurvedLoop from "../components/CurvedLoop";
 import ImageTrail from "../components/ImageTrail";
 
 const AboutUs = () => {
@@ -182,7 +181,7 @@ const AboutUs = () => {
                 </div>
                 <div className="culture-stat">
                   <div className="stat-number">15+</div>
-                  <div className="stat-label">industries, one recruitment powerhouse.</div>
+                  <div className="stat-label">Industries, one recruitment powerhouse.</div>
                 </div>
                 <div className="culture-stat">
                   <div className="stat-number">4.8/5</div>
@@ -243,20 +242,6 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
-
-      {/* Curved Loop Text Section */}
-      <section className="curved-text-section">
-        <CurvedLoop 
-          marqueeText="Hiring the best For the Best ✦ Connecting Talent with Opportunity. ✦ Shaping Careers, Building Futures. ✦"
-          speed={2}
-          curveAmount={300}
-          direction="left"
-          interactive={true}
-          className="curved-text"
-        />
-      </section>
-
-
 
     </main>
   );

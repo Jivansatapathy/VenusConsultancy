@@ -41,13 +41,13 @@ const AboutUs = () => {
         <div className="about-stats__container">
           <div className="stats-row" role="group" aria-label="Key metrics">
             <div className="stat">
-              <div className="stat__value">10k+</div>
+              <div className="stat__value">1000+</div>
               <div className="stat__label">
                 candidates placed
               </div>
             </div>
             <div className="stat">
-              <div className="stat__value">100+</div>
+              <div className="stat__value">77+</div>
               <div className="stat__label">companies served globally</div>
             </div>
             <div className="stat">
@@ -57,9 +57,7 @@ const AboutUs = () => {
           </div>
 
           <h2 className="about-stats__title">
-            When you’re ready to execute,
-            <br />
-            you need firms that deliver.
+            Connecting Top Talent with Forward-Thinking Companies
           </h2>
 
           <div className="buyers-providers">

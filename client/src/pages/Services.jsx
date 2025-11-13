@@ -1,9 +1,12 @@
 // client/src/pages/Services.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, useMotionTemplate, useMotionValue, animate } from "framer-motion";
 import { jobRolesData } from "../data/jobRolesData";
 import "./Services.css";
+
+// Lazy load ServicesSection
+const ServicesSection = lazy(() => import("../components/ServicesSection"));
 
 const Services = () => {
   const navigate = useNavigate();
@@ -566,6 +569,11 @@ const Services = () => {
           </div>
         </div>
       </header>
+
+      {/* Services Section from Home Page */}
+      <Suspense fallback={<div style={{ padding: '3rem 0', textAlign: 'center' }}>Loading...</div>}>
+        <ServicesSection />
+      </Suspense>
 
       <div className="svc-divider" aria-hidden="true" />
 

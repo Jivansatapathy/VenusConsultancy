@@ -153,8 +153,8 @@
 .bp-card__link {
   display: inline-block;
   color: #ffffff;
-  background: #0f5a60;
-  border: 1px solid #0f5a60;
+  background: #e50914;
+  border: 1px solid #e50914;
   font-weight: 700;
   font-size: 14px;
   text-decoration: none;
@@ -165,12 +165,12 @@
 }
 
 .bp-card__link:hover { 
-  background: #0b4650; 
-  border-color: #0b4650;
+  background: #b2060f; 
+  border-color: #b2060f;
   color: #ffffff;
   text-decoration: none;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(15,90,96,0.22);
+  box-shadow: 0 6px 16px rgba(229,9,20,0.22);
 }
 
 .bp-card__graphic {

@@ -22,7 +22,6 @@
   background: var(--vh-white);
   z-index: 1100;
   transition: box-shadow 220ms ease, padding 220ms ease, background 220ms ease;
-  border-bottom: 1px solid rgba(0,0,0,0.03);
   box-sizing: border-box;
 }
 
@@ -182,8 +181,38 @@
 .vh-navbar__actions { display: flex; gap: .6rem; align-items: center; }
 
 /* book button */
-.vh-btn { display: inline-block; padding: .5rem .9rem; border-radius: 8px; font-weight: 700; text-decoration: none; }
-.vh-btn--outline { border: 1px solid rgba(0,0,0,0.08); background: transparent; color: var(--vh-black); }
+.vh-btn { 
+  display: inline-block; 
+  padding: 0.65rem 1.5rem; 
+  border-radius: 8px; 
+  font-weight: 700; 
+  text-decoration: none; 
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.vh-btn--outline { 
+  background: var(--vh-red); 
+  color: var(--vh-white); 
+  box-shadow: 0 2px 8px rgba(229, 9, 20, 0.2);
+}
+.vh-btn--outline:hover {
+  background: #b2060f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
+}
+/* Default button style (for logout, etc.) */
+.vh-btn:not(.vh-btn--outline) {
+  background: var(--vh-red);
+  color: var(--vh-white);
+  box-shadow: 0 2px 8px rgba(229, 9, 20, 0.2);
+}
+.vh-btn:not(.vh-btn--outline):hover {
+  background: #b2060f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
+}
 
 /* mobile toggle */
 .vh-navbar__toggle { display: none; border: none; background: transparent; cursor: pointer; padding: 8px; border-radius: 8px; }

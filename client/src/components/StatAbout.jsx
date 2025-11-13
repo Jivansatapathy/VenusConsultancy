@@ -155,7 +155,7 @@ export default function StatAbout() {
               <div className="stat-about__stat-number">
                 {formatStat(counts.clients, 'K+')}
               </div>
-              <div className="stat-about__stat-label">Global Clients</div>
+              <div className="stat-about__stat-label">Trusted Partnerships</div>
             </div>
             <div className="stat-about__stat">
               <div className="stat-about__stat-number">

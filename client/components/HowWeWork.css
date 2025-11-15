@@ -1,0 +1,335 @@
+/* How We Work Section - Professional UI/UX Design */
+
+.how-we-work {
+  width: 100%;
+  background: #ffffff;
+  padding: clamp(5rem, 8vw, 7.5rem) 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  position: relative;
+}
+
+.how-we-work__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+}
+
+/* Header */
+.how-we-work__header {
+  text-align: center;
+  margin-bottom: clamp(3.5rem, 7vw, 5.5rem);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.how-we-work__header--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.how-we-work__title {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 700;
+  color: #1A2020;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.how-we-work__subtitle {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: #6b7280;
+  line-height: 1.6;
+  max-width: 640px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+/* Steps Container */
+.how-we-work__steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+  position: relative;
+}
+
+/* Step Card */
+.how-we-work__step {
+  position: relative;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: clamp(2.5rem, 4vw, 3rem) clamp(2rem, 3vw, 2.5rem);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: transform, opacity;
+}
+
+.how-we-work__step--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.how-we-work__step:hover {
+  transform: translateY(-8px);
+  border-color: rgba(229, 9, 20, 0.3);
+  box-shadow: 0 12px 40px rgba(229, 9, 20, 0.12);
+}
+
+/* Step Number */
+.how-we-work__step-number {
+  position: absolute;
+  top: -18px;
+  right: clamp(1.5rem, 3vw, 2rem);
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #e50914 0%, #b2060f 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(229, 9, 20, 0.25);
+  transition: transform 0.3s ease-out;
+}
+
+.how-we-work__step:hover .how-we-work__step-number {
+  transform: scale(1.1);
+}
+
+/* Icon Container */
+.how-we-work__icon-container {
+  width: 96px;
+  height: 96px;
+  background: #ffffff;
+  border: 3px solid #000000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+
+.how-we-work__icon-container::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(229, 9, 20, 0.1);
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.how-we-work__step:hover .how-we-work__icon-container {
+  border-color: #e50914;
+  transform: scale(1.05);
+}
+
+.how-we-work__step:hover .how-we-work__icon-container::before {
+  opacity: 1;
+}
+
+.how-we-work__icon {
+  color: #e50914;
+  transition: transform 0.3s ease-out;
+  position: relative;
+  z-index: 1;
+}
+
+.how-we-work__step:hover .how-we-work__icon {
+  transform: scale(1.1);
+}
+
+/* Step Content */
+.how-we-work__step-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.how-we-work__step-title {
+  font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+  font-weight: 700;
+  color: #1A2020;
+  margin: 0;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease-out;
+}
+
+.how-we-work__step:hover .how-we-work__step-title {
+  color: #e50914;
+}
+
+.how-we-work__step-description {
+  font-size: clamp(0.95rem, 1.8vw, 1rem);
+  line-height: 1.7;
+  color: #6b7280;
+  margin: 0;
+  transition: color 0.3s ease-out;
+}
+
+.how-we-work__step:hover .how-we-work__step-description {
+  color: #4b5563;
+}
+
+/* Connector */
+.how-we-work__connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  opacity: 0;
+  transform: scaleX(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.how-we-work__connector--visible {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.how-we-work__connector-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #e5e7eb 20%, #e5e7eb 80%, transparent 100%);
+  position: relative;
+}
+
+.how-we-work__connector-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, #e50914 20%, #e50914 80%, transparent 100%);
+  transition: width 0.8s ease-out 0.3s;
+}
+
+.how-we-work__connector--visible .how-we-work__connector-line::after {
+  width: 100%;
+}
+
+.how-we-work__connector-line::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid #e50914;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  opacity: 0;
+  transition: opacity 0.4s ease-out 0.8s;
+}
+
+.how-we-work__connector--visible .how-we-work__connector-line::before {
+  opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .how-we-work {
+    padding: clamp(4rem, 6vw, 6rem) 0;
+  }
+
+  .how-we-work__steps {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .how-we-work__connector {
+    display: none;
+  }
+
+  .how-we-work__step {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .how-we-work {
+    padding: clamp(3.5rem, 5vw, 5rem) 0;
+  }
+
+  .how-we-work__header {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .how-we-work__step {
+    padding: clamp(2rem, 4vw, 2.5rem) clamp(1.75rem, 3vw, 2rem);
+  }
+
+  .how-we-work__icon-container {
+    width: 88px;
+    height: 88px;
+    margin-bottom: 1.5rem;
+  }
+
+  .how-we-work__icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .how-we-work__step-number {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
+    top: -16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .how-we-work {
+    padding: clamp(3rem, 4vw, 4rem) 0;
+  }
+
+  .how-we-work__step-number {
+    width: 40px;
+    height: 40px;
+    font-size: 0.95rem;
+    top: -14px;
+    right: 1.5rem;
+  }
+
+  .how-we-work__icon-container {
+    width: 80px;
+    height: 80px;
+    border-width: 2.5px;
+  }
+
+  .how-we-work__icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  .how-we-work__header,
+  .how-we-work__step,
+  .how-we-work__connector {
+    transition: none;
+  }
+  
+  .how-we-work__step:hover {
+    transform: none;
+  }
+}

@@ -1,5 +1,13 @@
 {
+  "buildCommand": "cd client && npm run build",
+  "outputDirectory": "client/.next",
+  "devCommand": "cd client && npm run dev",
+  "installCommand": "cd client && npm install",
+  "framework": "nextjs",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/:path*",
+      "destination": "https://venusconsultancy.onrender.com/api/:path*"
+    }
   ]
 }

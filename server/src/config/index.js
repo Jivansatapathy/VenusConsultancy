@@ -47,10 +47,10 @@ export const config = {
   NODE_ENV: process.env.NODE_ENV || "development",
   
   // CORS
-  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || "http://localhost:3000",
   CORS_ALLOWED_ORIGINS: process.env.CORS_ALLOWED_ORIGINS 
     ? process.env.CORS_ALLOWED_ORIGINS.split(",").map(origin => origin.trim())
-    : ["http://localhost:5173"],  
+    : ["http://localhost:3000"],  
   // Security
   RATE_LIMIT_WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes
   RATE_LIMIT_MAX_REQUESTS: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 200,

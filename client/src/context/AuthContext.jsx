@@ -1,4 +1,5 @@
 // client/src/context/AuthContext.jsx
+'use client';
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import API, { setAccessToken, clearAccessToken, initializeTokenFromStorage } from "../utils/api";
 
@@ -72,10 +73,17 @@ export function AuthProvider({ children }) {
   // on mount, try to restore session from localStorage or refresh token
   useEffect(() => {
     let mounted = true;
+    let isInitialized = false;
     
     const initializeAuth = async () => {
+      // Prevent double initialization in React StrictMode
+      if (isInitialized) return;
+      isInitialized = true;
+      
       try {
-        console.log("[AuthContext] Initializing authentication...");
+        if (process.env.NODE_ENV === 'development') {
+          console.log("[AuthContext] Initializing authentication...");
+        }
         
         // Initialize token from localStorage first
         const savedToken = initializeTokenFromStorage();
@@ -83,42 +91,74 @@ export function AuthProvider({ children }) {
         // First, try to restore from localStorage
         const savedUser = restoreUserFromStorage();
         if (savedUser && savedToken) {
-          console.log("[AuthContext] User and token restored from localStorage");
-          setUser(savedUser);
-          setLoading(false);
+          if (process.env.NODE_ENV === 'development') {
+            console.log("[AuthContext] User and token restored from localStorage");
+          }
+          if (mounted) {
+            setUser(savedUser);
+            setLoading(false);
+          }
           return;
         }
         
         // If no saved user/token, try refresh token
-        console.log("[AuthContext] Attempting refresh token...");
-        const resp = await API.post("/auth/refresh");
-        console.log("[AuthContext] Refresh response:", resp.data);
-        
-        if (resp?.data?.accessToken) {
-          setAccessToken(resp.data.accessToken);
-          
-          // Set user from refresh response or try localStorage
-          if (resp.data.user) {
-            setUser(resp.data.user);
-            saveUserToStorage(resp.data.user);
-          } else {
-            // Try to restore user from localStorage
-            const restoredUser = restoreUserFromStorage();
-            if (restoredUser) {
-              setUser(restoredUser);
-            }
-          }
+        if (process.env.NODE_ENV === 'development') {
+          console.log("[AuthContext] Attempting refresh token...");
         }
         
-        if (mounted) setLoading(false);
+        try {
+          const resp = await API.post("/auth/refresh");
+          
+          if (resp?.data?.accessToken) {
+            setAccessToken(resp.data.accessToken);
+            
+            // Set user from refresh response or try localStorage
+            if (resp.data.user) {
+              if (mounted) {
+                setUser(resp.data.user);
+              }
+              saveUserToStorage(resp.data.user);
+            } else {
+              // Try to restore user from localStorage
+              const restoredUser = restoreUserFromStorage();
+              if (restoredUser && mounted) {
+                setUser(restoredUser);
+              }
+            }
+          }
+          
+          if (mounted) setLoading(false);
+        } catch (refreshError) {
+          // Handle network errors gracefully (backend might not be running)
+          const isNetworkError = 
+            refreshError.code === 'ERR_NETWORK' || 
+            refreshError.message?.includes('Network Error') ||
+            refreshError.message?.includes('ERR_CONNECTION_REFUSED') ||
+            (refreshError.request && !refreshError.response);
+            
+          if (isNetworkError) {
+            // Backend not available - silently fail and use localStorage if available
+            if (mounted) {
+              setLoading(false);
+            }
+            return;
+          }
+          throw refreshError;
+        }
       } catch (err) {
         // no session or refresh failed
-        console.log("[AuthContext] No valid session found:", err.message);
-        console.log("[AuthContext] Error details:", err.response?.data);
+        if (process.env.NODE_ENV === 'development') {
+          // Only log non-network errors
+          if (err.code !== 'ERR_NETWORK' && !err.message?.includes('Network Error')) {
+            console.log("[AuthContext] No valid session found:", err.message);
+          }
+        }
         clearAccessToken();
-        setUser(null);
+        if (mounted) {
+          setUser(null);
+          setLoading(false);
+        }
         clearUserFromStorage();
-        if (mounted) setLoading(false);
       }
     };
 
@@ -144,7 +184,9 @@ export function AuthProvider({ children }) {
         localStorage.setItem(STORAGE_KEYS.TOKEN, accessToken);
       }
       
-      console.log("[AuthContext] Login successful, user persisted");
+      if (process.env.NODE_ENV === 'development') {
+        console.log("[AuthContext] Login successful, user persisted");
+      }
       return resp.data;
     } catch (error) {
       console.error("[AuthContext] Login failed:", error);
@@ -153,13 +195,14 @@ export function AuthProvider({ children }) {
   }, [saveUserToStorage]);
 
   const logout = useCallback(async () => {
-    console.log("[AuthContext] Logging out...");
+    if (process.env.NODE_ENV === 'development') {
+      console.log("[AuthContext] Logging out...");
+    }
     
     // Immediately clear all authentication data for instant logout
     clearAccessToken();
     setUser(null);
     clearUserFromStorage();
-    console.log("[AuthContext] User logged out and data cleared instantly");
     
     // Try to notify server in background (non-blocking)
     try {
@@ -170,10 +213,14 @@ export function AuthProvider({ children }) {
       );
       
       await Promise.race([logoutPromise, timeoutPromise]);
-      console.log("[AuthContext] Server logout successful");
+      if (process.env.NODE_ENV === 'development') {
+        console.log("[AuthContext] Server logout successful");
+      }
     } catch (err) {
-      // ignore network errors and timeouts on logout
-      console.warn("[AuthContext] Server logout failed or timed out (ignored):", err.message);
+      // ignore network errors and timeouts on logout (silently fail)
+      if (process.env.NODE_ENV === 'development' && err.message !== 'Logout timeout') {
+        console.warn("[AuthContext] Server logout failed (ignored):", err.message);
+      }
     }
   }, [clearUserFromStorage]);
 

@@ -27,3 +27,8 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+/* Remove old React root styles */
+#root {
+  display: contents;
+}

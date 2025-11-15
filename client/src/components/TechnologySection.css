@@ -1,0 +1,82 @@
+/* client/src/components/TechnologySection.css */
+.technology-section {
+  padding: clamp(3rem, 5vw, 5rem) 0;
+  background: #f8f9fa;
+  width: 100%;
+}
+
+.technology-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.technology-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: #1a1a1a;
+}
+
+.technology-subtitle {
+  font-size: clamp(1rem, 1.8vw, 1.1rem);
+  color: #666;
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+  line-height: 1.6;
+}
+
+.technology-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+}
+
+.technology-badge {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: default;
+  width: 100%;
+  text-align: center;
+}
+
+.technology-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #e50914;
+  color: #e50914;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .technology-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+  }
+  
+  .technology-badge {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .technology-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .technology-badge {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+

@@ -1,0 +1,350 @@
+/* Third Hero Section - White Background with Dark Text */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+/* ThirdHero section protection is now in the main .third-hero rule below */
+
+
+.lottie-container {
+  width: 100%;
+  max-width: 650px;
+  height: 550px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: transparent;
+  padding: 20px;
+  margin: 0;
+  overflow: visible;
+}
+
+.third-hero {
+  width: 100%;
+  min-height: 85vh;
+  background: #ffffff;
+  color: #1A2020;
+  display: flex;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+}
+
+.third-hero__container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.third-hero__content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.third-hero__left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.third-hero__right {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Removed duplicate .lottie-container rule - using the simple one above */
+
+.lottie-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border-radius: 8px;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Simple Lottie animation containment */
+.lottie-container > div {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  transform: scale(0.9);
+  transform-origin: center;
+}
+
+.third-hero__greeting {
+  font-size: 0.875rem;
+  color: #e50914;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  opacity: 1;
+}
+
+.third-hero__title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.title-line-1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1A2020;
+  letter-spacing: -0.5px;
+}
+
+.title-line-2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1A2020;
+  letter-spacing: -0.5px;
+}
+
+.third-hero__subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: #4b5563;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.7;
+  max-width: 580px;
+  margin-top: 0.5rem;
+}
+
+.third-hero__buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.btn {
+  padding: 0.875rem 1.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+}
+
+.btn--primary-dark {
+  background: #1A2020;
+  color: #fff;
+  border-color: #1A2020;
+}
+
+.btn--primary-dark:hover {
+  background: #2d3748;
+  border-color: #2d3748;
+  transform: translateY(-2px) !important;
+}
+
+.btn--outline-dark {
+  background: transparent;
+  color: #1A2020;
+  border-color: #1A2020;
+}
+
+.btn--outline-dark:hover {
+  background: #1A2020;
+  color: #fff;
+  transform: translateY(-2px) !important;
+}
+
+.third-hero__stats {
+  display: flex;
+  gap: 3rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1A2020;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .third-hero__container {
+    padding: 0 1.5rem;
+  }
+  
+  .third-hero__content {
+    gap: 3rem;
+  }
+  
+  .lottie-container {
+    max-width: 500px;
+    height: 400px;
+    padding: 15px;
+    overflow: visible;
+  }
+  
+  .third-hero__stats {
+    gap: 2rem;
+    justify-content: flex-start;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .third-hero {
+    padding: 3rem 0;
+    min-height: auto;
+  }
+  
+  .third-hero__container {
+    padding: 0 1rem;
+  }
+  
+  .third-hero__content {
+    flex-direction: column;
+    gap: 2.5rem;
+    text-align: center;
+  }
+  
+  .third-hero__left {
+    align-items: center;
+    text-align: center;
+    gap: 1.25rem;
+  }
+  
+  .third-hero__greeting {
+    font-size: 0.75rem;
+  }
+  
+  .lottie-container {
+    max-width: 450px;
+    height: 400px;
+    padding: 15px;
+    overflow: visible;
+  }
+  
+  .third-hero__buttons {
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+    min-width: 150px;
+  }
+  
+  .third-hero__stats {
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .third-hero__content {
+    gap: 1.5rem;
+  }
+  
+  .third-hero__left {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .lottie-container {
+    max-width: 350px;
+    height: 350px;
+    padding: 10px;
+    overflow: visible;
+  }
+  
+  .third-hero__buttons {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .third-hero__stats {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .stat-item {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .stat-number {
+    font-size: 1.5rem;
+  }
+  
+  .stat-label {
+    font-size: 0.85rem;
+  }
+}

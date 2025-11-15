@@ -1,0 +1,48 @@
+/* client/src/components/services/LeadModal.css (same styling used earlier) */
+.vh-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  background: rgba(8,9,10,0.45);
+  padding: 1.25rem;
+}
+
+.vh-modal {
+  width: 100%;
+  max-width: 720px;
+  background: #fff;
+  border-radius: 12px;
+  padding: clamp(1rem, 2.5vw, 1.6rem);
+  box-shadow: 0 20px 40px rgba(7,8,9,0.12);
+  position: relative;
+}
+
+.vh-modal__close {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+  font-size: 1.6rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.vh-modal__title { margin: 0 0 0.2rem; font-size: clamp(1.05rem, 2.6vw, 1.4rem); }
+.vh-modal__subtitle { margin: 0 0 1rem; color: rgba(0,0,0,0.65); }
+
+.vh-modal__form { display: grid; gap: 0.6rem; grid-template-columns: repeat(2, 1fr); }
+.vh-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.vh-field__label { font-size: 0.85rem; color: rgba(0,0,0,0.7); }
+.vh-field input { padding: 0.55rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); font-size: 0.95rem; }
+
+.vh-modal__actions { display: flex; gap: 0.6rem; justify-content: flex-end; margin-top: 0.6rem; grid-column: 1 / -1; }
+
+.vh-modal__error { color: #b00020; margin-top: 0.4rem; }
+.vh-modal__success { color: #0a7a3f; margin-top: 0.4rem; }
+
+@media (max-width: 720px) {
+  .vh-modal__form { grid-template-columns: 1fr; }
+}

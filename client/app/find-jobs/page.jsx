@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import API from "@/lib/utils/api";
-import "../../src/pages/FindJobs.css";
 
 const FindJobs = () => {
   const [jobs, setJobs] = useState([]);

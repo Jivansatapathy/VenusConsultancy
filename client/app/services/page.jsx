@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, useMotionTemplate, useMotionValue, animate } from "framer-motion";
 import { jobRolesData } from "@/lib/data/jobRolesData";
-import "../../src/pages/Services.css";
 
 // Lazy load ServicesSection
 import ServicesSection from "@/components/ServicesSection";

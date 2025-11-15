@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { getAllIndustries, getJobRolesByIndustry, jobRolesData } from "@/lib/data/jobRolesData";
-import "../../src/pages/JobRoles.css";
 
 const JobRoles = () => {
   const [selectedIndustry, setSelectedIndustry] = useState("All");

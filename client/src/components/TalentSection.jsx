@@ -1,12 +1,16 @@
 // client/src/components/TalentSection.jsx
 import React, { useState, useRef, useEffect } from "react";
+import { useSEOContent } from "../context/SEOContentContext";
 import "./TalentSection.css";
 import config from "../data/talentConfig";
 
 const TalentSection = ({ brandColor = config.brandColor }) => {
-  const categories = config.categories;
+  const { content } = useSEOContent();
+  const seoTalent = content?.home?.talent;
+  const talentConfig = seoTalent?.categories?.length > 0 ? seoTalent : config;
+  const categories = talentConfig.categories || config.categories;
   const defaultKey =
-    config.defaultCategory || (categories[0] && categories[0].key);
+    talentConfig.defaultCategory || config.defaultCategory || (categories[0] && categories[0].key);
   const [activeKey, setActiveKey] = useState(defaultKey);
   const [showAll, setShowAll] = useState(false);
   const visibleCategories = showAll ? categories : categories.slice(0, 4);
@@ -58,7 +62,7 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
     <section className="vh-talent" aria-labelledby="vh-talent-heading">
       <div className="vh-talent__card">
         <h2 id="vh-talent-heading" className="vh-talent__heading">
-          {config.heading}
+          {talentConfig.heading || config.heading}
         </h2>
 
         {/* Tabs */}

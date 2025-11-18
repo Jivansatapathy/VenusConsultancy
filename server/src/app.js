@@ -22,6 +22,7 @@ import contactRoutes from "./routes/contactRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import healthRoutes from "./routes/healthRoutes.js";
+import contentRoutes from "./routes/contentRoutes.js";
 import connectDB from "./config/db.js";
 
 const app = express();
@@ -122,6 +123,7 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/health", healthRoutes);
+app.use("/api/content", contentRoutes);
 
 // ---- Serve Frontend (guarded) ----
 import fs from "fs";
@@ -166,8 +168,9 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 // ---- Start server ----
-const PORT = config.PORT;
-app.listen(PORT, () => {
+// Cloud Run sets PORT environment variable, default to 5000 for local development
+const PORT = process.env.PORT || config.PORT || 5000;
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`NODE_ENV=${config.NODE_ENV}`);
   console.log(`CLIENT_ORIGIN=${config.CLIENT_ORIGIN}`);

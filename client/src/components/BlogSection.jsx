@@ -1,5 +1,6 @@
 // client/src/components/BlogSection.jsx
 import React from "react";
+import { useSEOContent } from "../context/SEOContentContext";
 import "./BlogSection.css";
 import blogConfig from "../data/blogConfig.js";
 
@@ -13,7 +14,10 @@ const formatDate = (iso) => {
 };
 
 const BlogSection = () => {
-  const { heading, subheading, items, readMoreUrl } = blogConfig;
+  const { content } = useSEOContent();
+  const seoBlog = content?.home?.blog;
+  const blogData = seoBlog?.items?.length > 0 ? seoBlog : blogConfig;
+  const { heading, subheading, items, readMoreUrl } = blogData;
   const visible = items.slice(0, 3);
 
   return (

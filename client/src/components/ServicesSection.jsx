@@ -2,11 +2,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { useSEOContent } from "../context/SEOContentContext";
 import "./ServicesSection.css";
 import services from "../data/servicesConfig.js";
 
 const ServicesSection = () => {
-  const { heading, description, items } = services;
+  const { content } = useSEOContent();
+  const seoServices = content?.home?.services;
+  const { heading, description, items } = seoServices?.items?.length > 0 
+    ? seoServices 
+    : services;
 
   return (
     <section className="vh-services" aria-labelledby="vh-services-heading">

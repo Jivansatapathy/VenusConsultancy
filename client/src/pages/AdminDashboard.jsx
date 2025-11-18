@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import API from "../utils/api";
+import SEOContentManager from "../components/SEOContentManager";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
@@ -201,6 +202,12 @@ const AdminDashboard = () => {
           >
             Bookings ({bookings.length})
           </button>
+          <button 
+            className={activeTab === "seo-content" ? "active" : ""}
+            onClick={() => setActiveTab("seo-content")}
+          >
+            SEO Content
+          </button>
         </div>
 
         <div className="dashboard-content">
@@ -258,6 +265,9 @@ const AdminDashboard = () => {
                   onUpdateStatus={handleUpdateBookingStatus}
                   onDelete={handleDeleteBooking}
                 />
+              )}
+              {activeTab === "seo-content" && (
+                <SEOContentManager />
               )}
             </>
           )}
@@ -406,6 +416,28 @@ const RecruitersTab = ({ recruiters, onEdit, onDelete, onAdd }) => {
 };
 
 const ApplicationsTab = ({ applications, onDelete }) => {
+  const handleViewResume = async (applicationId, resumeName) => {
+    try {
+      // Get the resume file from the API
+      const response = await API.get(`/applications/${applicationId}/resume`, {
+        responseType: 'blob' // Important for file downloads
+      });
+      
+      // Create a blob URL and trigger download
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', resumeName || 'resume.pdf');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Error downloading resume:", err);
+      alert("Failed to download resume. Please try again.");
+    }
+  };
+
   return (
     <div className="tab-content">
       <div className="tab-header">
@@ -420,6 +452,7 @@ const ApplicationsTab = ({ applications, onDelete }) => {
               <th>Email</th>
               <th>Job</th>
               <th>Status</th>
+              <th>Resume</th>
               <th>Applied</th>
               <th>Actions</th>
             </tr>
@@ -434,6 +467,19 @@ const ApplicationsTab = ({ applications, onDelete }) => {
                   <span className={`status ${application.status}`}>
                     {application.status}
                   </span>
+                </td>
+                <td>
+                  {application.resumeOriginalName ? (
+                    <button 
+                      className="btn btn-sm btn-outline"
+                      onClick={() => handleViewResume(application._id, application.resumeOriginalName)}
+                      title={`Download ${application.resumeOriginalName}`}
+                    >
+                      📄 View Resume
+                    </button>
+                  ) : (
+                    <span className="text-muted">No resume</span>
+                  )}
                 </td>
                 <td>{new Date(application.appliedAt).toLocaleDateString()}</td>
                 <td>

@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useSEOContent } from "../context/SEOContentContext";
 import "./StatAbout.css";
 
 export default function StatAbout() {
+  const { content } = useSEOContent();
+  const statContent = content?.home?.statAbout || {};
   const sectionRef = useRef(null);
   const [inView, setInView] = useState(false);
   const [counts, setCounts] = useState({ clients: 0, satisfaction: 0, success: 0 });
@@ -35,9 +38,9 @@ export default function StatAbout() {
     const startTime = performance.now();
     
     const targets = {
-      clients: 77, // 77+
-      satisfaction: 98, // 98%
-      success: 99 // 99%
+      clients: parseInt(statContent.stat1Number || 77),
+      satisfaction: parseInt(statContent.stat2Number || 98),
+      success: parseInt(statContent.stat3Number || 99)
     };
 
     // Ease out cubic function
@@ -81,7 +84,7 @@ export default function StatAbout() {
             {/* Top Left Image */}
             <div className="stat-about__image-item stat-about__image-item--1">
               <img 
-                src="/images/imagetrail/image1.jpg" 
+                src={statContent.images?.image1 || "/images/imagetrail/image1.jpg"} 
                 alt="Team collaboration" 
                 loading="lazy"
               />
@@ -90,7 +93,7 @@ export default function StatAbout() {
             {/* Top Right Image */}
             <div className="stat-about__image-item stat-about__image-item--2">
               <img 
-                src="/images/imagetrail/image2.jpg" 
+                src={statContent.images?.image2 || "/images/imagetrail/image2.jpg"} 
                 alt="Team working together" 
                 loading="lazy"
               />
@@ -99,31 +102,31 @@ export default function StatAbout() {
             {/* Bottom Left - Purple Card */}
             <div className="stat-about__image-item stat-about__image-item--card">
               <div className="stat-about__experience-card">
-              <div className="stat-about__experience-number">18+</div>
-              <div className="stat-about__experience-label">Years Of Experience</div>
+              <div className="stat-about__experience-number">{statContent.experienceNumber || "18+"}</div>
+              <div className="stat-about__experience-label">{statContent.experienceLabel || "Years Of Experience"}</div>
               <div className="stat-about__team-avatars">
                 <div className="stat-about__avatar">
-                  <img src="/images/imagetrail/image1.jpg" alt="Team member" />
+                  <img src={statContent.images?.image1 || "/images/imagetrail/image1.jpg"} alt="Team member" />
                 </div>
                 <div className="stat-about__avatar">
-                  <img src="/images/imagetrail/image2.jpg" alt="Team member" />
+                  <img src={statContent.images?.image2 || "/images/imagetrail/image2.jpg"} alt="Team member" />
                 </div>
                 <div className="stat-about__avatar">
-                  <img src="/images/imagetrail/image3.jpg" alt="Team member" />
+                  <img src={statContent.images?.image3 || "/images/imagetrail/image3.jpg"} alt="Team member" />
                 </div>
                 <div className="stat-about__avatar">
-                  <img src="/images/imagetrail/image4.jpg" alt="Team member" />
+                  <img src={statContent.images?.image4 || "/images/imagetrail/image4.jpg"} alt="Team member" />
                 </div>
                 <div className="stat-about__avatar stat-about__avatar--plus">+</div>
               </div>
-              <div className="stat-about__team-text">We Are Awesome Team</div>
+              <div className="stat-about__team-text">{statContent.teamText || "We Are Awesome Team"}</div>
             </div>
             </div>
             
             {/* Bottom Right Image */}
             <div className="stat-about__image-item stat-about__image-item--3">
               <img 
-                src="/images/imagetrail/image3.jpg" 
+                src={statContent.images?.image3 || "/images/imagetrail/image3.jpg"} 
                 alt="Professional team member" 
                 loading="lazy"
               />
@@ -136,44 +139,44 @@ export default function StatAbout() {
           {/* Tag */}
           <div className="stat-about__tag">
             <span className="stat-about__tag-icon">🏢</span>
-            <span>ABOUT VENUS HIRING</span>
+            <span>{statContent.tag || "ABOUT VENUS HIRING"}</span>
           </div>
 
           {/* Title */}
           <h2 className="stat-about__title">
-            Driving Success With An Expert Staffing
+            {statContent.title || "Driving Success With An Expert Staffing"}
           </h2>
 
           {/* Description */}
           <p className="stat-about__description">
-            At Venus Consultancy, we understand that the key to business success lies in having the right people on your team. That's why we're committed to connecting USA companies with top-tier talent across North America and beyond.
+            {statContent.description || "At Venus Consultancy, we understand that the key to business success lies in having the right people on your team. That's why we're committed to connecting USA companies with top-tier talent across North America and beyond."}
           </p>
 
           {/* Stats */}
           <div className="stat-about__stats">
             <div className="stat-about__stat">
               <div className="stat-about__stat-number">
-                {formatStat(counts.clients, 'K+')}
+                {formatStat(counts.clients, statContent.stat1Suffix || 'K+')}
               </div>
-              <div className="stat-about__stat-label">Trusted Partnerships</div>
+              <div className="stat-about__stat-label">{statContent.stat1Label || "Trusted Partnerships"}</div>
             </div>
             <div className="stat-about__stat">
               <div className="stat-about__stat-number">
-                {formatStat(counts.satisfaction, '%')}
+                {formatStat(counts.satisfaction, statContent.stat2Suffix || '%')}
               </div>
-              <div className="stat-about__stat-label">Client Satisfaction</div>
+              <div className="stat-about__stat-label">{statContent.stat2Label || "Client Satisfaction"}</div>
             </div>
             <div className="stat-about__stat">
               <div className="stat-about__stat-number">
-                {formatStat(counts.success, '%')}
+                {formatStat(counts.success, statContent.stat3Suffix || '%')}
               </div>
-              <div className="stat-about__stat-label">Success Rate</div>
+              <div className="stat-about__stat-label">{statContent.stat3Label || "Success Rate"}</div>
             </div>
           </div>
 
           {/* CTA Button */}
-          <Link to="/book-call" className="stat-about__cta">
-            JOIN OUR NETWORK
+          <Link to={statContent.ctaLink || "/book-call"} className="stat-about__cta">
+            {statContent.ctaText || "JOIN OUR NETWORK"}
           </Link>
         </div>
       </div>

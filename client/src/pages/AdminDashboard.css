@@ -198,6 +198,22 @@
   margin-right: 0.5rem;
 }
 
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.action-buttons .btn-sm {
+  margin-right: 0;
+}
+
+.text-muted {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
 .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;

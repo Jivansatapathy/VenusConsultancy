@@ -103,6 +103,17 @@ app.options("/api/auth/refresh", cors({
   credentials: true,
 }));
 
+// Fast preflight handling for content routes (helps with CORS)
+app.options("/api/content/*", cors({
+  origin: (origin, callback) => {
+    if (!origin || config.CORS_ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    return callback(new Error("Not allowed by CORS"), false);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 // ---- Connect to DB (non-blocking for Cloud Run) ----
 // Start server even if DB connection is pending to meet Cloud Run startup timeout
 (async () => {

@@ -47,16 +47,23 @@ router.get("/", async (req, res) => {
   try {
     // Fetch content from MongoDB database
     let content = await Content.findOne();
+    console.log(`[Backend] 📖 Content fetch request`);
+    
     if (!content || !content.data || Object.keys(content.data).length === 0) {
       // If no content exists, return empty structure
       // Frontend will merge with defaults
+      console.log(`[Backend] ⚠️  No content found in database, returning empty structure`);
       return res.json({ data: {} });
     }
+    
+    console.log(`[Backend] ✅ Content found in database`);
+    console.log(`[Backend] 📋 Pages available:`, Object.keys(content.data).join(', '));
+    console.log(`[Backend] 📋 Content preview:`, JSON.stringify(content.data).substring(0, 200) + '...');
     
     // Return content from database
     res.json({ data: content.data || {} });
   } catch (err) {
-    console.error("Error fetching content from database:", err);
+    console.error("[Backend] ❌ Error fetching content from database:", err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -129,8 +136,13 @@ router.post("/save", authAndRole("admin"), async (req, res) => {
       content.data[page] = {};
     }
 
-    // Update the specific section in the database
-    content.data[page][section] = data;
+    // Merge new data with existing section data (don't replace entire section)
+    // This preserves fields that weren't included in the update
+    const existingSection = content.data[page][section] || {};
+    content.data[page][section] = {
+      ...existingSection,
+      ...data
+    };
     content.updatedAt = new Date();
     content.updatedBy = req.user?.id || null;
 
@@ -143,6 +155,15 @@ router.post("/save", authAndRole("admin"), async (req, res) => {
     await content.save();
     console.log(`[Backend] ✅ Content saved successfully to MongoDB`);
     console.log(`[Backend] 📋 Saved data preview:`, JSON.stringify(content.data[page][section]).substring(0, 150) + '...');
+    
+    // Verify the save by re-fetching from database
+    const verifyContent = await Content.findOne();
+    if (verifyContent && verifyContent.data && verifyContent.data[page] && verifyContent.data[page][section]) {
+      console.log(`[Backend] ✅ Verification: Content confirmed in database`);
+      console.log(`[Backend] 📋 Verified data:`, JSON.stringify(verifyContent.data[page][section]).substring(0, 150) + '...');
+    } else {
+      console.error(`[Backend] ⚠️  WARNING: Content not found in database after save!`);
+    }
 
     res.json({ 
       success: true, 

@@ -56,7 +56,8 @@ export const testSEOContentFrontend = async () => {
 
     // Test 3: Check authentication (if token exists)
     console.log('\n3️⃣  Testing authentication...');
-    const token = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
+    // Check for token in the correct storage key (venus_token)
+    const token = localStorage.getItem('venus_token') || localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
     if (token) {
       logTest('Access token found', true, 'User appears to be logged in');
       

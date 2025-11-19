@@ -107,37 +107,28 @@ export const SEOContentProvider = ({ children }) => {
   useEffect(() => {
     const loadContent = async () => {
       try {
+        console.log('[SEO Content] 🔄 Loading content from backend...');
         // Fetch all content from database
         const response = await API.get('/content');
         const databaseContent = response.data?.data || {};
         
-        // Merge database content with defaults (database content takes precedence)
-        const defaultContent = getDefaultContent();
-        const merged = { ...defaultContent };
-        
-        // Deep merge database content into defaults
-        const deepMerge = (target, source) => {
-          Object.keys(source).forEach(key => {
-            if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-              if (!target[key]) target[key] = {};
-              deepMerge(target[key], source[key]);
-            } else {
-              target[key] = source[key];
-            }
-          });
-        };
-        
-        Object.keys(databaseContent).forEach(page => {
-          if (merged[page]) {
-            deepMerge(merged[page], databaseContent[page]);
-          } else {
-            merged[page] = databaseContent[page];
-          }
+        console.log('[SEO Content] 📦 Content received from backend:', {
+          pages: Object.keys(databaseContent),
+          hasData: Object.keys(databaseContent).length > 0
         });
         
-        setContent(merged);
+        // If database has content, use it directly (don't merge with defaults)
+        // This ensures saved content is not overwritten by defaults
+        if (databaseContent && Object.keys(databaseContent).length > 0) {
+          console.log('[SEO Content] ✅ Using content from database');
+          setContent(databaseContent);
+        } else {
+          console.log('[SEO Content] ⚠️  No content in database, using defaults');
+          // Only use defaults if database is empty
+          setContent(getDefaultContent());
+        }
       } catch (error) {
-        console.error('Error loading content from database:', error);
+        console.error('[SEO Content] ❌ Error loading content from database:', error);
         // Fallback to defaults if database fetch fails
         setContent(getDefaultContent());
       } finally {
@@ -155,8 +146,27 @@ export const SEOContentProvider = ({ children }) => {
     const sectionPath = keys.slice(1); // e.g., ['hero', 'greeting']
     const section = sectionPath[0]; // Top-level section name
     
-    // Update local state immediately for instant UI feedback
+    // Build the complete updated section BEFORE updating state
+    // This ensures we have all existing fields
+    let updatedSection = null;
+    
     setContent(prev => {
+      // Get current section data (deep clone to avoid mutations)
+      const currentPageContent = prev[page] || {};
+      const currentSection = currentPageContent[section] || {};
+      updatedSection = JSON.parse(JSON.stringify(currentSection));
+      
+      // Update the nested value in the section copy
+      let sectionCurrent = updatedSection;
+      for (let i = 1; i < sectionPath.length - 1; i++) {
+        if (!sectionCurrent[sectionPath[i]]) {
+          sectionCurrent[sectionPath[i]] = {};
+        }
+        sectionCurrent = sectionCurrent[sectionPath[i]];
+      }
+      sectionCurrent[sectionPath[sectionPath.length - 1]] = value;
+      
+      // Now update the state for UI
       const newContent = { ...prev };
       let current = newContent;
       
@@ -170,26 +180,24 @@ export const SEOContentProvider = ({ children }) => {
       
       // Set the value
       current[keys[keys.length - 1]] = value;
+      
       return newContent;
     });
 
     // Save to MongoDB database asynchronously
     try {
-      // Get the current page content from state (use functional update to get latest)
-      const currentPageContent = content[page] || {};
-      
-      // Build the updated section data
-      const updatedSection = { ...currentPageContent[section] };
-      
-      // Navigate through the section path and update the nested value
-      let sectionCurrent = updatedSection;
-      for (let i = 1; i < sectionPath.length - 1; i++) {
-        if (!sectionCurrent[sectionPath[i]]) {
+      // Ensure we have valid section data to save
+      if (!updatedSection) {
+        console.warn(`[SEO Content] ⚠️  No section data to save for ${page}.${section}`);
+        // Build a minimal section with just the updated field
+        updatedSection = {};
+        let sectionCurrent = updatedSection;
+        for (let i = 1; i < sectionPath.length - 1; i++) {
           sectionCurrent[sectionPath[i]] = {};
+          sectionCurrent = sectionCurrent[sectionPath[i]];
         }
-        sectionCurrent = sectionCurrent[sectionPath[i]];
+        sectionCurrent[sectionPath[sectionPath.length - 1]] = value;
       }
-      sectionCurrent[sectionPath[sectionPath.length - 1]] = value;
       
       // Log backend save attempt with timestamp
       const timestamp = new Date().toISOString();
@@ -198,7 +206,8 @@ export const SEOContentProvider = ({ children }) => {
         section, 
         path, 
         value: typeof value === 'string' ? value.substring(0, 50) : value,
-        endpoint: '/content/save'
+        endpoint: '/content/save',
+        sectionDataKeys: Object.keys(updatedSection)
       });
       
       // Track API call start
@@ -217,6 +226,20 @@ export const SEOContentProvider = ({ children }) => {
         message: response.data.message,
         dataPreview: JSON.stringify(response.data.data || {}).substring(0, 100)
       });
+      
+      // Reload content from backend to ensure we have the latest merged data
+      // This ensures all fields are preserved (including ones not in the update)
+      try {
+        const reloadResponse = await API.get('/content');
+        const reloadedContent = reloadResponse.data?.data || {};
+        if (reloadedContent && Object.keys(reloadedContent).length > 0) {
+          setContent(reloadedContent);
+          console.log(`[SEO Content] ✅ Content reloaded from backend after save`);
+        }
+      } catch (reloadError) {
+        console.warn(`[SEO Content] ⚠️  Could not reload content after save:`, reloadError.message);
+        // Don't throw - the save was successful, just couldn't reload
+      }
       
       // Dispatch custom event for monitoring
       if (typeof window !== 'undefined') {
@@ -307,6 +330,18 @@ export const SEOContentProvider = ({ children }) => {
         
         const apiCallDuration = (performance.now() - apiCallStart).toFixed(2);
         console.log(`[SEO Content] [${timestamp}] ✅ API Success: Saved nested content (${apiCallDuration}ms)`);
+        
+        // Reload content from backend to ensure we have the latest merged data
+        try {
+          const reloadResponse = await API.get('/content');
+          const reloadedContent = reloadResponse.data?.data || {};
+          if (reloadedContent && Object.keys(reloadedContent).length > 0) {
+            setContent(reloadedContent);
+            console.log(`[SEO Content] ✅ Content reloaded from backend after nested save`);
+          }
+        } catch (reloadError) {
+          console.warn(`[SEO Content] ⚠️  Could not reload content after nested save:`, reloadError.message);
+        }
         
         if (typeof window !== 'undefined') {
           window.dispatchEvent(new CustomEvent('seo-content-saved', {

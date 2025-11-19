@@ -85,13 +85,20 @@ export function AuthProvider({ children }) {
         if (savedUser && savedToken) {
           console.log("[AuthContext] User and token restored from localStorage");
           setUser(savedUser);
-          setLoading(false);
+          if (mounted) setLoading(false);
           return;
         }
         
-        // If no saved user/token, try refresh token
+        // If no saved user/token, try refresh token (with timeout)
         console.log("[AuthContext] Attempting refresh token...");
-        const resp = await API.post("/auth/refresh");
+        
+        // Add timeout to prevent hanging (5 seconds)
+        const refreshPromise = API.post("/auth/refresh");
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Refresh timeout')), 5000)
+        );
+        
+        const resp = await Promise.race([refreshPromise, timeoutPromise]);
         console.log("[AuthContext] Refresh response:", resp.data);
         
         if (resp?.data?.accessToken) {
@@ -109,15 +116,17 @@ export function AuthProvider({ children }) {
             }
           }
         }
-        
-        if (mounted) setLoading(false);
       } catch (err) {
-        // no session or refresh failed
+        // no session or refresh failed - this is normal for first-time visitors
         console.log("[AuthContext] No valid session found:", err.message);
-        console.log("[AuthContext] Error details:", err.response?.data);
+        if (err.response) {
+          console.log("[AuthContext] Error details:", err.response?.data);
+        }
         clearAccessToken();
         setUser(null);
         clearUserFromStorage();
+      } finally {
+        // Always set loading to false, even if there's an unexpected error
         if (mounted) setLoading(false);
       }
     };

@@ -16,8 +16,34 @@ const SEOContentManager = () => {
   const showMessage = (type, text) => {
     setMessage({ type, text });
     console.log(`[SEO Manager] ${type.toUpperCase()}: ${text}`);
-    setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+    setTimeout(() => setMessage({ type: '', text: '' }), 5000);
   };
+
+  // Listen for save events from SEOContentContext
+  useEffect(() => {
+    const handleSaveSuccess = (event) => {
+      console.log('[SEO Manager] Save success event received:', event.detail);
+      showMessage('success', `Content saved: ${event.detail.path}`);
+    };
+
+    const handleSaveError = (event) => {
+      console.error('[SEO Manager] Save error event received:', event.detail);
+      const errorMsg = event.detail.status === 401 
+        ? 'Not authenticated. Please login again.'
+        : event.detail.status === 403
+        ? 'Permission denied. Admin access required.'
+        : `Failed to save: ${event.detail.error || 'Unknown error'}`;
+      showMessage('error', errorMsg);
+    };
+
+    window.addEventListener('seo-content-saved', handleSaveSuccess);
+    window.addEventListener('seo-content-error', handleSaveError);
+
+    return () => {
+      window.removeEventListener('seo-content-saved', handleSaveSuccess);
+      window.removeEventListener('seo-content-error', handleSaveError);
+    };
+  }, []);
 
   const handleImageUpload = async (path, file) => {
     if (!file) return;

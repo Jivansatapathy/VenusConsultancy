@@ -7,7 +7,9 @@
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
     "seed": "node src/scripts/seedData.js",
-    "test": "node src/scripts/testEndpoints.js"
+    "seed:content": "node src/scripts/seedContent.js",
+    "test": "node src/scripts/testEndpoints.js",
+    "test:seo": "node src/scripts/testSEOContent.js"
   },
   "dependencies": {
     "axios": "^1.11.0",

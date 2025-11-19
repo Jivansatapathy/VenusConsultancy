@@ -26,6 +26,7 @@ const BookCall = lazy(() => import("./pages/BookCall"));
 const Hiring = lazy(() => import("./pages/Hiring"));
 const JobRoles = lazy(() => import("./pages/JobRoles"));
 const ServiceCategory = lazy(() => import("./pages/ServiceCategory"));
+const TestSEOContent = lazy(() => import("./pages/TestSEOContent"));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -80,6 +81,16 @@ function AppContent() {
             <PrivateRoute allowedRoles={["admin"]}>
               <Suspense fallback={<LoadingFallback />}>
                 <AdminDashboard />
+              </Suspense>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/test-seo"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <Suspense fallback={<LoadingFallback />}>
+                <TestSEOContent />
               </Suspense>
             </PrivateRoute>
           }

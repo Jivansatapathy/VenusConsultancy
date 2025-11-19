@@ -46,9 +46,10 @@ const uploadImage = multer({
 router.get("/", async (req, res) => {
   try {
     // Fetch content from MongoDB database
-    const content = await Content.findOne();
-    if (!content || !content.data) {
-      // Return empty structure if no content exists in database
+    let content = await Content.findOne();
+    if (!content || !content.data || Object.keys(content.data).length === 0) {
+      // If no content exists, return empty structure
+      // Frontend will merge with defaults
       return res.json({ data: {} });
     }
     
@@ -105,6 +106,9 @@ router.post("/save", authAndRole("admin"), async (req, res) => {
   try {
     const { page, section, data } = req.body;
 
+    console.log(`[Backend] 📝 Content save request: page="${page}", section="${section}"`);
+    console.log(`[Backend] 📦 Data received:`, JSON.stringify(data).substring(0, 100) + '...');
+
     if (!page || !section || data === undefined) {
       return res.status(400).json({ error: "Page, section, and data are required" });
     }
@@ -114,6 +118,7 @@ router.post("/save", authAndRole("admin"), async (req, res) => {
     
     if (!content) {
       content = new Content({ data: {} });
+      console.log(`[Backend] ✨ Created new content document`);
     }
 
     if (!content.data) {
@@ -129,8 +134,15 @@ router.post("/save", authAndRole("admin"), async (req, res) => {
     content.updatedAt = new Date();
     content.updatedBy = req.user?.id || null;
 
+    // Mark the data field as modified (required for Mixed types in Mongoose)
+    content.markModified('data');
+    content.markModified(`data.${page}`);
+    content.markModified(`data.${page}.${section}`);
+
     // Save to MongoDB
     await content.save();
+    console.log(`[Backend] ✅ Content saved successfully to MongoDB`);
+    console.log(`[Backend] 📋 Saved data preview:`, JSON.stringify(content.data[page][section]).substring(0, 150) + '...');
 
     res.json({ 
       success: true, 
@@ -138,7 +150,7 @@ router.post("/save", authAndRole("admin"), async (req, res) => {
       data: content.data[page][section]
     });
   } catch (err) {
-    console.error("Error saving content to database:", err);
+    console.error("[Backend] ❌ Error saving content to database:", err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -177,6 +189,83 @@ router.post("/save-page", authAndRole("admin"), async (req, res) => {
     });
   } catch (err) {
     console.error("Error saving page content:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Initialize base content (Admin only) - Uploads default content structure
+router.post("/initialize", authAndRole("admin"), async (req, res) => {
+  try {
+    let content = await Content.findOne();
+    
+    // Base content structure
+    const baseContent = {
+      home: {
+        hero: {
+          greeting: "- Empower Your Workforce -",
+          titleLine1: "Shape the Future of",
+          titleLine2: "Your Organization Today",
+          subtitle: "Connect with top-tier talent across the USA and discover professionals who drive growth, innovation, and success for American businesses.",
+          button1Text: "Book a Consultation",
+          button1Link: "/book-call",
+          button2Text: "Our Services",
+          button2Link: "/services",
+          image: null
+        },
+        statAbout: {
+          tag: "ABOUT VENUS HIRING",
+          title: "Driving Success With An Expert Staffing",
+          description: "At Venus Consultancy, we understand that the key to business success lies in having the right people on your team. That's why we're committed to connecting USA companies with top-tier talent across North America and beyond.",
+          stat1Number: "77",
+          stat1Suffix: "K+",
+          stat1Label: "Trusted Partnerships",
+          stat2Number: "98",
+          stat2Suffix: "%",
+          stat2Label: "Client Satisfaction",
+          stat3Number: "99",
+          stat3Suffix: "%",
+          stat3Label: "Success Rate",
+          ctaText: "JOIN OUR NETWORK",
+          ctaLink: "/book-call",
+          images: {
+            image1: "/images/imagetrail/image1.jpg",
+            image2: "/images/imagetrail/image2.jpg",
+            image3: "/images/imagetrail/image3.jpg",
+            image4: "/images/imagetrail/image4.jpg"
+          },
+          experienceNumber: "18+",
+          experienceLabel: "Years Of Experience",
+          teamText: "We Are Awesome Team"
+        }
+      },
+      meta: {
+        home: {
+          title: "Venus Hiring - Top Talent Recruitment Services",
+          description: "Connect with top-tier talent across the USA. Expert staffing solutions for American businesses.",
+          keywords: "recruitment, staffing, talent acquisition, hiring, USA"
+        }
+      }
+    };
+
+    if (!content) {
+      content = new Content({ data: baseContent });
+    } else {
+      // Merge base content with existing content (don't overwrite existing)
+      const existingData = content.data || {};
+      content.data = { ...baseContent, ...existingData };
+    }
+    
+    content.updatedAt = new Date();
+    content.updatedBy = req.user?.id || null;
+    await content.save();
+
+    res.json({ 
+      success: true, 
+      message: "Base content initialized successfully",
+      data: content.data
+    });
+  } catch (err) {
+    console.error("Error initializing content:", err);
     res.status(500).json({ error: err.message });
   }
 });

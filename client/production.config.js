@@ -10,17 +10,19 @@
 //
 // Example: VITE_API_URL=https://your-production-api.com
 export const productionConfig = {
-  // API Configuration
+  // API Configuration - ONLY Cloud Run Backend
   api: {
     baseURL: (() => {
       const apiUrl = process.env.VITE_API_URL;
       if (!apiUrl) {
+        // Default to Cloud Run backend (ONLY allowed backend)
+        const cloudRunBackend = 'https://venus-backend-841304788329.asia-south1.run.app';
         console.warn(
-          'VITE_API_URL environment variable not set. Using fallback URL.',
-          'To fix this, set VITE_API_URL to your production API domain.'
+          'VITE_API_URL environment variable not set. Using Cloud Run backend:',
+          cloudRunBackend,
+          '\nTo customize, set VITE_API_URL environment variable.'
         );
-        // Provide a fallback URL instead of throwing an error
-        return 'https://venusconsultancy.onrender.com';
+        return cloudRunBackend;
       }
       return apiUrl;
     })(),

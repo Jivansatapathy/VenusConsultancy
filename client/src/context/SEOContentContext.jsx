@@ -175,7 +175,7 @@ export const SEOContentProvider = ({ children }) => {
 
     // Save to MongoDB database asynchronously
     try {
-      // Get the current page content from state
+      // Get the current page content from state (use functional update to get latest)
       const currentPageContent = content[page] || {};
       
       // Build the updated section data
@@ -191,14 +191,55 @@ export const SEOContentProvider = ({ children }) => {
       }
       sectionCurrent[sectionPath[sectionPath.length - 1]] = value;
       
+      // Log backend save attempt with timestamp
+      const timestamp = new Date().toISOString();
+      console.log(`[SEO Content] [${timestamp}] 🔄 API Call: Saving to backend`, { 
+        page, 
+        section, 
+        path, 
+        value: typeof value === 'string' ? value.substring(0, 50) : value,
+        endpoint: '/content/save'
+      });
+      
+      // Track API call start
+      const apiCallStart = performance.now();
+      
       // Save the entire section to database
-      await API.post('/content/save', {
+      const response = await API.post('/content/save', {
         page,
         section: section,
         data: updatedSection
       });
+      
+      const apiCallDuration = (performance.now() - apiCallStart).toFixed(2);
+      console.log(`[SEO Content] [${timestamp}] ✅ API Success: Saved to backend (${apiCallDuration}ms)`, {
+        success: response.data.success,
+        message: response.data.message,
+        dataPreview: JSON.stringify(response.data.data || {}).substring(0, 100)
+      });
+      
+      // Dispatch custom event for monitoring
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('seo-content-saved', {
+          detail: { path, value, response: response.data, duration: apiCallDuration }
+        }));
+      }
     } catch (error) {
-      console.error('Error saving content to database:', error);
+      const timestamp = new Date().toISOString();
+      console.error(`[SEO Content] [${timestamp}] ❌ API Error: Failed to save to backend`, {
+        path,
+        error: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+      });
+      
+      // Dispatch custom event for monitoring
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('seo-content-error', {
+          detail: { path, value, error: error.message, status: error.response?.status }
+        }));
+      }
+      
       // Revert local state on error
       setContent(prev => {
         const newContent = { ...prev };
@@ -214,10 +255,15 @@ export const SEOContentProvider = ({ children }) => {
     }
   };
 
-  const updateNestedContent = (path, key, value) => {
+  const updateNestedContent = async (path, key, value) => {
+    const keys = path.split('.');
+    const page = keys[0];
+    const section = keys[1];
+    
+    // Update local state immediately and capture the updated section
+    let updatedSection = null;
     setContent(prev => {
       const newContent = { ...prev };
-      const keys = path.split('.');
       let current = newContent;
       
       for (const k of keys) {
@@ -234,8 +280,49 @@ export const SEOContentProvider = ({ children }) => {
         current[key] = value;
       }
       
+      // Capture the updated section for backend save
+      updatedSection = newContent[page]?.[section];
+      
       return newContent;
     });
+
+    // Save to backend (similar to updateContent)
+    try {
+      if (updatedSection) {
+        const timestamp = new Date().toISOString();
+        console.log(`[SEO Content] [${timestamp}] 🔄 API Call: Saving nested content`, { 
+          page, 
+          section, 
+          path, 
+          key,
+          endpoint: '/content/save'
+        });
+        
+        const apiCallStart = performance.now();
+        const response = await API.post('/content/save', {
+          page,
+          section: section,
+          data: updatedSection
+        });
+        
+        const apiCallDuration = (performance.now() - apiCallStart).toFixed(2);
+        console.log(`[SEO Content] [${timestamp}] ✅ API Success: Saved nested content (${apiCallDuration}ms)`);
+        
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('seo-content-saved', {
+            detail: { path, value, response: response.data, duration: apiCallDuration }
+          }));
+        }
+      }
+    } catch (error) {
+      const timestamp = new Date().toISOString();
+      console.error(`[SEO Content] [${timestamp}] ❌ API Error: Failed to save nested content`, error);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('seo-content-error', {
+          detail: { path, value, error: error.message, status: error.response?.status }
+        }));
+      }
+    }
   };
 
   const addArrayItem = (path, item) => {

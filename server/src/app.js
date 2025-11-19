@@ -103,13 +103,16 @@ app.options("/api/auth/refresh", cors({
   credentials: true,
 }));
 
-// ---- Connect to DB ----
+// ---- Connect to DB (non-blocking for Cloud Run) ----
+// Start server even if DB connection is pending to meet Cloud Run startup timeout
 (async () => {
   try {
     await connectDB();
   } catch (err) {
-    console.error("Failed to connect to DB during startup:", err);
-    process.exit(1);
+    console.error("⚠️  Failed to connect to DB during startup:", err.message);
+    // Don't exit - let the server start and retry connection later
+    // This is important for Cloud Run which has strict startup timeout
+    console.log("🔄 Server will start, but database operations may fail until connection is established.");
   }
 })();
 
@@ -170,10 +173,14 @@ process.on("unhandledRejection", (reason, promise) => {
 // ---- Start server ----
 // Cloud Run sets PORT environment variable, default to 5000 for local development
 const PORT = process.env.PORT || config.PORT || 5000;
+
+// Start server immediately to meet Cloud Run startup timeout requirements
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📡 Listening on 0.0.0.0:${PORT}`);
   console.log(`NODE_ENV=${config.NODE_ENV}`);
   console.log(`CLIENT_ORIGIN=${config.CLIENT_ORIGIN}`);
   console.log(`CORS_ALLOWED_ORIGINS=${config.CORS_ALLOWED_ORIGINS.join(", ")}`);
   console.log(`Rate limiting: ${config.RATE_LIMIT_MAX_REQUESTS} requests per ${config.RATE_LIMIT_WINDOW_MS / 1000 / 60} minutes`);
+  console.log(`✅ Server is ready to accept connections`);
 });

@@ -34,15 +34,28 @@ const connectDB = async () => {
     
     await mongoose.connect(uri, {
       maxPoolSize: 10, // Maintain up to 10 socket connections
-      serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+      serverSelectionTimeoutMS: 10000, // Keep trying to send operations for 10 seconds (increased for Cloud Run)
       socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      connectTimeoutMS: 10000, // Connection timeout (increased for Cloud Run)
     });
     isConnected = true;
     console.log("✅ MongoDB Connected");
   } catch (err) {
     console.error("❌ MongoDB Connection Failed:", err.message);
     isConnected = false;
-    process.exit(1);
+    // Don't exit in production - let server start and retry
+    // Cloud Run needs the server to start listening quickly
+    if (process.env.NODE_ENV !== "production") {
+      process.exit(1);
+    } else {
+      console.log("🔄 Will retry MongoDB connection in background...");
+      // Retry connection after 5 seconds
+      setTimeout(() => {
+        connectDB().catch(err => {
+          console.error("❌ MongoDB retry failed:", err.message);
+        });
+      }, 5000);
+    }
   }
 };
 

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSEOContent } from '../context/SEOContentContext';
+import API from '../utils/api';
+import APICallMonitor from './APICallMonitor';
 import './SEOContentManager.css';
 
 const SEOContentManager = () => {
@@ -8,10 +10,12 @@ const SEOContentManager = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [initializing, setInitializing] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
   const showMessage = (type, text) => {
     setMessage({ type, text });
+    console.log(`[SEO Manager] ${type.toUpperCase()}: ${text}`);
     setTimeout(() => setMessage({ type: '', text: '' }), 3000);
   };
 
@@ -37,6 +41,29 @@ const SEOContentManager = () => {
       setSaving(false);
       showMessage('success', 'Content saved successfully!');
     }, 500);
+  };
+
+  const handleInitializeBaseContent = async () => {
+    if (!window.confirm('This will initialize base content in the database. Continue?')) {
+      return;
+    }
+
+    setInitializing(true);
+    try {
+      const response = await API.post('/content/initialize');
+      if (response.data.success) {
+        showMessage('success', 'Base content initialized successfully! Please refresh the page.');
+        // Reload the page after 2 seconds to show updated content
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Error initializing base content:', error);
+      showMessage('error', error.response?.data?.error || 'Failed to initialize base content. Please try again.');
+    } finally {
+      setInitializing(false);
+    }
   };
 
   const pages = [
@@ -89,6 +116,14 @@ const SEOContentManager = () => {
       <div className="seo-header">
         <h2>SEO Content Management</h2>
         <div className="seo-actions">
+          <button 
+            className="btn btn-primary" 
+            onClick={handleInitializeBaseContent} 
+            disabled={initializing}
+            title="Upload base content structure to database"
+          >
+            {initializing ? 'Initializing...' : 'Initialize Base Content'}
+          </button>
           <button className="btn btn-secondary" onClick={handleSave} disabled={saving}>
             {saving ? 'Saving...' : 'Save All Changes'}
           </button>
@@ -180,6 +215,9 @@ const SEOContentManager = () => {
           {activePage === 'meta' && <MetaEditor content={content.meta || {}} updateContent={updateContent} />}
         </div>
       </div>
+      
+      {/* API Call Monitor */}
+      <APICallMonitor />
     </div>
   );
 };

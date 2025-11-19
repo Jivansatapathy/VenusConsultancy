@@ -41,35 +41,34 @@ function processQueue(err, token = null) {
   refreshQueue = [];
 }
 
-// Resolve runtime API base from environment (cover Vite and NEXT_PUBLIC usage)
-const RUNTIME_API =
-  (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_URL) ||
-  (typeof process !== "undefined" && process.env && process.env.NEXT_PUBLIC_API_URL) ||
-  (typeof process !== "undefined" && process.env.NODE_ENV === 'development' ? "http://localhost:5000" : null);
+// Cloud Run Backend URL - ONLY source of truth
+const CLOUD_RUN_BACKEND = 'https://venus-backend-841304788329.asia-south1.run.app';
 
-// Provide fallback for production if VITE_API_URL is not set
-let API_URL = RUNTIME_API;
-if (!API_URL) {
-  // Try to detect if we're in production and provide a reasonable fallback
+// Resolve API URL from environment variable or use Cloud Run backend
+// In development, allow localhost if explicitly set, otherwise use Cloud Run
+const RUNTIME_API = 
+  (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_URL) ||
+  (typeof process !== "undefined" && process.env && process.env.VITE_API_URL);
+
+// Determine API URL - ONLY use Cloud Run backend or explicit VITE_API_URL
+let API_URL;
+if (RUNTIME_API) {
+  // Use explicit VITE_API_URL if set
+  API_URL = RUNTIME_API;
+  console.log('[API] Using VITE_API_URL:', API_URL);
+} else {
+  // Default to Cloud Run backend (ONLY allowed backend)
+  API_URL = CLOUD_RUN_BACKEND;
+  console.log('[API] Using Cloud Run backend:', API_URL);
+  
+  // Warn if in production and VITE_API_URL is not set
   const isProduction = typeof process !== "undefined" && process.env.NODE_ENV === 'production';
   if (isProduction) {
-    // Common production API URLs - you can customize these
-    const possibleUrls = [
-      'https://venusconsultancy.onrender.com',
-      'https://venus-hiring-api.herokuapp.com',
-      'https://api.venushiring.com'
-    ];
-    
-    // Use the first available URL or show a helpful error
-    API_URL = possibleUrls[0];
-    
     console.warn(
-      'VITE_API_URL not set in production. Using fallback:', API_URL,
-      '\nTo fix this permanently, set VITE_API_URL environment variable to your production API domain.'
+      '[API] VITE_API_URL not set. Using Cloud Run backend:',
+      CLOUD_RUN_BACKEND,
+      '\nTo customize, set VITE_API_URL environment variable.'
     );
-  } else {
-    // Development fallback
-    API_URL = "http://localhost:5000";
   }
 }
 
@@ -97,12 +96,32 @@ API.interceptors.request.use((config) => {
       Authorization: `Bearer ${accessToken}`,
     };
   }
+  
+  // Log API requests (especially for content endpoints)
+  if (config.url?.includes('/content')) {
+    const timestamp = new Date().toISOString();
+    console.log(`[API Request] [${timestamp}] ${config.method?.toUpperCase()} ${config.url}`, {
+      baseURL: config.baseURL,
+      data: config.data ? (typeof config.data === 'string' ? config.data.substring(0, 100) : JSON.stringify(config.data).substring(0, 100)) : undefined
+    });
+  }
+  
   return config;
 });
 
 // response interceptor: handle 401 by attempting refresh
 API.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    // Log API responses (especially for content endpoints)
+    if (res.config?.url?.includes('/content')) {
+      const timestamp = new Date().toISOString();
+      console.log(`[API Response] [${timestamp}] ${res.config.method?.toUpperCase()} ${res.config.url} - Status: ${res.status}`, {
+        success: res.data?.success,
+        message: res.data?.message
+      });
+    }
+    return res;
+  },
   async (error) => {
     const original = error.config;
     if (!original || original._retry) return Promise.reject(error);

@@ -11,11 +11,11 @@ const rootDir = path.join(__dirname, "../../");
 dotenv.config({ path: path.join(rootDir, ".env") });
 
 // Required environment variables for production
+// Note: PORT is set automatically by Cloud Run, so it's not required here
 const requiredEnvVars = [
   "ACCESS_SECRET",
   "REFRESH_SECRET", 
-  "MONGO_URI",
-  "PORT"
+  "MONGO_URI"
 ];
 
 // Validate required environment variables in production

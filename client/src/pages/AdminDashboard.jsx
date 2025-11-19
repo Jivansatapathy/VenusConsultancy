@@ -208,6 +208,13 @@ const AdminDashboard = () => {
           >
             SEO Content
           </button>
+          <a
+            href="/admin/test-seo"
+            className="btn btn-outline"
+            style={{ marginLeft: 'auto', textDecoration: 'none' }}
+          >
+            🧪 Test SEO
+          </a>
         </div>
 
         <div className="dashboard-content">

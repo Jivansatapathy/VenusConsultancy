@@ -65,7 +65,20 @@ async function testEndpoints() {
     console.log("🎉 All tests passed!");
 
   } catch (error) {
-    console.error("❌ Test failed:", error.response?.data || error.message);
+    if (error.code === 'ECONNREFUSED' || error.message.includes('connect')) {
+      console.error("❌ Test failed: Cannot connect to server!");
+      console.error("   Make sure the server is running on http://localhost:5000");
+      console.error("   Start the server with: npm run dev");
+      console.error("   Then run tests in a separate terminal");
+    } else if (error.response) {
+      console.error("❌ Test failed:", error.response.status, error.response.statusText);
+      console.error("   Response:", error.response.data);
+    } else {
+      console.error("❌ Test failed:", error.message);
+      if (error.stack) {
+        console.error("   Stack:", error.stack);
+      }
+    }
     process.exit(1);
   }
 }

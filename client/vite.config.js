@@ -26,9 +26,11 @@ export default defineConfig(({ mode }) => {
       cors: true,
       proxy: {
         '/api': {
-          target: 'http://localhost:5000',
+          // In development, proxy to Cloud Run backend or localhost if running locally
+          target: process.env.VITE_API_URL || 'https://venus-backend-841304788329.asia-south1.run.app',
           changeOrigin: true,
-          secure: false
+          secure: true,
+          rewrite: (path) => path.replace(/^\/api/, '/api')
         }
       }
     },

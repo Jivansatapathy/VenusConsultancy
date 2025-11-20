@@ -120,6 +120,32 @@ router.post("/save", authAndRole("admin"), async (req, res) => {
       return res.status(400).json({ error: "Page, section, and data are required" });
     }
 
+    // Validate blog section data
+    if (page === 'home' && section === 'blog') {
+      if (data.items && !Array.isArray(data.items)) {
+        return res.status(400).json({ error: "Blog items must be an array" });
+      }
+      
+      // Validate each blog item if items array exists
+      if (data.items && Array.isArray(data.items)) {
+        for (let i = 0; i < data.items.length; i++) {
+          const item = data.items[i];
+          if (!item.slug || !item.title) {
+            return res.status(400).json({ 
+              error: `Blog item at index ${i} is missing required fields: slug and title are required` 
+            });
+          }
+          
+          // Validate slug format (URL-friendly)
+          if (!/^[a-z0-9-]+$/.test(item.slug)) {
+            return res.status(400).json({ 
+              error: `Blog item at index ${i} has invalid slug. Only lowercase letters, numbers, and hyphens are allowed` 
+            });
+          }
+        }
+      }
+    }
+
     // Get or create content document (only one document in collection)
     let content = await Content.findOne();
     
@@ -139,10 +165,28 @@ router.post("/save", authAndRole("admin"), async (req, res) => {
     // Merge new data with existing section data (don't replace entire section)
     // This preserves fields that weren't included in the update
     const existingSection = content.data[page][section] || {};
-    content.data[page][section] = {
-      ...existingSection,
-      ...data
-    };
+    
+    // For arrays (like blog.items, services.items, etc.), replace them entirely
+    // For objects, merge deeply
+    const mergedSection = { ...existingSection };
+    
+    for (const key in data) {
+      if (Array.isArray(data[key])) {
+        // Replace arrays entirely
+        mergedSection[key] = data[key];
+      } else if (typeof data[key] === 'object' && data[key] !== null && !Array.isArray(data[key])) {
+        // Merge objects deeply
+        mergedSection[key] = {
+          ...(mergedSection[key] || {}),
+          ...data[key]
+        };
+      } else {
+        // Replace primitives
+        mergedSection[key] = data[key];
+      }
+    }
+    
+    content.data[page][section] = mergedSection;
     content.updatedAt = new Date();
     content.updatedBy = req.user?.id || null;
 
@@ -150,6 +194,17 @@ router.post("/save", authAndRole("admin"), async (req, res) => {
     content.markModified('data');
     content.markModified(`data.${page}`);
     content.markModified(`data.${page}.${section}`);
+    
+    // If section has arrays, mark them as modified too
+    if (mergedSection.items && Array.isArray(mergedSection.items)) {
+      content.markModified(`data.${page}.${section}.items`);
+    }
+    if (mergedSection.categories && Array.isArray(mergedSection.categories)) {
+      content.markModified(`data.${page}.${section}.categories`);
+    }
+    if (mergedSection.cards && Array.isArray(mergedSection.cards)) {
+      content.markModified(`data.${page}.${section}.cards`);
+    }
 
     // Save to MongoDB
     await content.save();
@@ -287,6 +342,65 @@ router.post("/initialize", authAndRole("admin"), async (req, res) => {
     });
   } catch (err) {
     console.error("Error initializing content:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get blog posts (public endpoint)
+router.get("/blog", async (req, res) => {
+  try {
+    const content = await Content.findOne();
+    if (!content || !content.data || !content.data.home || !content.data.home.blog) {
+      return res.json({ 
+        heading: "Blog",
+        subheading: "",
+        items: []
+      });
+    }
+    
+    const blogData = content.data.home.blog;
+    
+    // Ensure items is an array
+    if (!Array.isArray(blogData.items)) {
+      blogData.items = [];
+    }
+    
+    // Sort by date (newest first) if dates exist
+    if (blogData.items.length > 0 && blogData.items.some(item => item.date)) {
+      blogData.items.sort((a, b) => {
+        const dateA = new Date(a.date || 0);
+        const dateB = new Date(b.date || 0);
+        return dateB - dateA; // Newest first
+      });
+    }
+    
+    res.json(blogData);
+  } catch (err) {
+    console.error("[Backend] ❌ Error fetching blog:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get single blog post by slug (public endpoint)
+router.get("/blog/:slug", async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const content = await Content.findOne();
+    
+    if (!content || !content.data || !content.data.home || !content.data.home.blog) {
+      return res.status(404).json({ error: "Blog post not found" });
+    }
+    
+    const blogItems = content.data.home.blog.items || [];
+    const post = blogItems.find(item => item.slug === slug);
+    
+    if (!post) {
+      return res.status(404).json({ error: "Blog post not found" });
+    }
+    
+    res.json(post);
+  } catch (err) {
+    console.error("[Backend] ❌ Error fetching blog post:", err);
     res.status(500).json({ error: err.message });
   }
 });

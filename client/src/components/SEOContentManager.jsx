@@ -107,8 +107,7 @@ const SEOContentManager = () => {
         { key: 'statAbout', label: 'About & Stats' },
         { key: 'services', label: 'Services Section' },
         { key: 'talent', label: 'Talent Section' },
-        { key: 'whyStats', label: 'Why Stats' },
-        { key: 'blog', label: 'Blog Section' }
+        { key: 'whyStats', label: 'Why Stats' }
       ],
       about: [
         { key: 'hero', label: 'Hero Section' },
@@ -222,7 +221,6 @@ const SEOContentManager = () => {
           {activePage === 'home' && activeSection === 'services' && <ServicesEditor content={content.home?.services || {}} updateContent={updateContent} addArrayItem={addArrayItem} removeArrayItem={removeArrayItem} handleImageUpload={handleImageUpload} page="home" />}
           {activePage === 'home' && activeSection === 'talent' && <TalentEditor content={content.home?.talent || {}} updateContent={updateContent} addArrayItem={addArrayItem} removeArrayItem={removeArrayItem} handleImageUpload={handleImageUpload} page="home" />}
           {activePage === 'home' && activeSection === 'whyStats' && <WhyStatsEditor content={content.home?.whyStats || {}} updateContent={updateContent} addArrayItem={addArrayItem} removeArrayItem={removeArrayItem} handleImageUpload={handleImageUpload} page="home" />}
-          {activePage === 'home' && activeSection === 'blog' && <BlogEditor content={content.home?.blog || {}} updateContent={updateContent} addArrayItem={addArrayItem} removeArrayItem={removeArrayItem} handleImageUpload={handleImageUpload} page="home" />}
           
           {/* About Page Sections */}
           {activePage === 'about' && activeSection === 'hero' && <HeroEditor content={content.about?.hero || {}} updateContent={updateContent} handleImageUpload={handleImageUpload} page="about" />}
@@ -857,8 +855,24 @@ const WhyStatsEditor = ({ content, updateContent, addArrayItem, removeArrayItem,
 };
 
 // Blog Editor
-const BlogEditor = ({ content, updateContent, addArrayItem, removeArrayItem, handleImageUpload }) => {
+const BlogEditor = ({ content, updateContent, updateNestedContent, addArrayItem, removeArrayItem, handleImageUpload, uploadImage }) => {
   const items = content.items || [];
+
+  const handleImageUploadForBlog = async (file, index) => {
+    try {
+      if (uploadImage) {
+        const imageUrl = await uploadImage(file);
+        updateNestedContent('home.blog.items', index, { image: imageUrl });
+      } else if (handleImageUpload) {
+        handleImageUpload(file, (url) => {
+          updateNestedContent('home.blog.items', index, { image: url });
+        });
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Failed to upload image. Please try again.');
+    }
+  };
 
   return (
     <div className="seo-section-editor">
@@ -896,14 +910,23 @@ const BlogEditor = ({ content, updateContent, addArrayItem, removeArrayItem, han
             <h4>Blog Items</h4>
             <button
               className="btn btn-primary btn-sm"
-              onClick={() => addArrayItem('home.blog.items', {
-                slug: `blog-${Date.now()}`,
-                title: 'New Blog Post',
-                excerpt: '',
-                image: '',
-                readMoreUrl: '#',
-                tags: []
-              })}
+              onClick={async () => {
+                try {
+                  await addArrayItem('home.blog.items', {
+                    slug: `blog-${Date.now()}`,
+                    title: 'New Blog Post',
+                    excerpt: '',
+                    author: '',
+                    date: new Date().toISOString().split('T')[0],
+                    image: '',
+                    readMoreUrl: '/blog',
+                    tags: []
+                  });
+                } catch (error) {
+                  console.error('Error adding blog post:', error);
+                  alert('Failed to add blog post. Please try again.');
+                }
+              }}
             >
               Add Blog Post
             </button>
@@ -912,30 +935,42 @@ const BlogEditor = ({ content, updateContent, addArrayItem, removeArrayItem, han
           {items.map((item, index) => (
             <div key={index} className="seo-array-item">
               <div className="seo-array-item-header">
-                <h5>Post {index + 1}</h5>
+                <h5>Post {index + 1}: {item.title || 'Untitled'}</h5>
                 <button
                   className="btn btn-danger btn-sm"
-                  onClick={() => removeArrayItem('home.blog.items', index)}
+                  onClick={async () => {
+                    if (window.confirm('Are you sure you want to delete this blog post?')) {
+                      try {
+                        await removeArrayItem('home.blog.items', index);
+                      } catch (error) {
+                        console.error('Error removing blog post:', error);
+                        alert('Failed to remove blog post. Please try again.');
+                      }
+                    }
+                  }}
                 >
                   Remove
                 </button>
               </div>
 
               <div className="seo-form-group">
-                <label>Slug</label>
+                <label>Slug *</label>
                 <input
                   type="text"
                   value={item.slug || ''}
                   onChange={(e) => updateNestedContent('home.blog.items', index, { slug: e.target.value })}
+                  placeholder="blog-post-slug"
                 />
+                <small>URL-friendly identifier (e.g., "how-to-hire-remote-engineers")</small>
               </div>
 
               <div className="seo-form-group">
-                <label>Title</label>
+                <label>Title *</label>
                 <input
                   type="text"
                   value={item.title || ''}
                   onChange={(e) => updateNestedContent('home.blog.items', index, { title: e.target.value })}
+                  placeholder="Blog Post Title"
                 />
               </div>
 
@@ -945,6 +980,26 @@ const BlogEditor = ({ content, updateContent, addArrayItem, removeArrayItem, han
                   value={item.excerpt || ''}
                   onChange={(e) => updateNestedContent('home.blog.items', index, { excerpt: e.target.value })}
                   rows={3}
+                  placeholder="Brief description of the blog post..."
+                />
+              </div>
+
+              <div className="seo-form-group">
+                <label>Author</label>
+                <input
+                  type="text"
+                  value={item.author || ''}
+                  onChange={(e) => updateNestedContent('home.blog.items', index, { author: e.target.value })}
+                  placeholder="Author Name"
+                />
+              </div>
+
+              <div className="seo-form-group">
+                <label>Date</label>
+                <input
+                  type="date"
+                  value={item.date || ''}
+                  onChange={(e) => updateNestedContent('home.blog.items', index, { date: e.target.value })}
                 />
               </div>
 
@@ -954,6 +1009,7 @@ const BlogEditor = ({ content, updateContent, addArrayItem, removeArrayItem, han
                   type="text"
                   value={item.readMoreUrl || ''}
                   onChange={(e) => updateNestedContent('home.blog.items', index, { readMoreUrl: e.target.value })}
+                  placeholder="/blog/post-slug"
                 />
               </div>
 
@@ -966,6 +1022,7 @@ const BlogEditor = ({ content, updateContent, addArrayItem, removeArrayItem, han
                     const tags = e.target.value.split(',').map(t => t.trim()).filter(t => t);
                     updateNestedContent('home.blog.items', index, { tags });
                   }}
+                  placeholder="Hiring, Engineering, Recruitment"
                 />
               </div>
 
@@ -973,13 +1030,7 @@ const BlogEditor = ({ content, updateContent, addArrayItem, removeArrayItem, han
                 <label>Image</label>
                 <ImageUploader
                   currentImage={item.image}
-                  onUpload={(file) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                      updateNestedContent('home.blog.items', index, { image: reader.result });
-                    };
-                    reader.readAsDataURL(file);
-                  }}
+                  onUpload={(file) => handleImageUploadForBlog(file, index)}
                   onUrlChange={(url) => updateNestedContent('home.blog.items', index, { image: url })}
                 />
               </div>

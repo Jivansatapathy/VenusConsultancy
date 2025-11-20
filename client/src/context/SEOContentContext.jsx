@@ -360,10 +360,15 @@ export const SEOContentProvider = ({ children }) => {
     }
   };
 
-  const addArrayItem = (path, item) => {
+  const addArrayItem = async (path, item) => {
+    const keys = path.split('.');
+    const page = keys[0]; // e.g., 'home'
+    const section = keys[1]; // e.g., 'blog'
+    
+    // Update local state immediately and capture the updated section
+    let updatedSection = null;
     setContent(prev => {
       const newContent = { ...prev };
-      const keys = path.split('.');
       let current = newContent;
       
       for (let i = 0; i < keys.length - 1; i++) {
@@ -379,14 +384,86 @@ export const SEOContentProvider = ({ children }) => {
       }
       current[lastKey] = [...current[lastKey], item];
       
+      // Capture the updated section for backend save
+      updatedSection = newContent[page]?.[section];
+      
       return newContent;
     });
+
+    // Save to backend
+    try {
+      if (updatedSection) {
+        const timestamp = new Date().toISOString();
+        console.log(`[SEO Content] [${timestamp}] 🔄 API Call: Adding array item`, { 
+          page, 
+          section, 
+          path,
+          endpoint: '/content/save'
+        });
+        
+        const apiCallStart = performance.now();
+        const response = await API.post('/content/save', {
+          page,
+          section: section,
+          data: updatedSection
+        });
+        
+        const apiCallDuration = (performance.now() - apiCallStart).toFixed(2);
+        console.log(`[SEO Content] [${timestamp}] ✅ API Success: Array item added (${apiCallDuration}ms)`);
+        
+        // Reload content from backend to ensure we have the latest merged data
+        try {
+          const reloadResponse = await API.get('/content');
+          const reloadedContent = reloadResponse.data?.data || {};
+          if (reloadedContent && Object.keys(reloadedContent).length > 0) {
+            setContent(reloadedContent);
+            console.log(`[SEO Content] ✅ Content reloaded from backend after adding array item`);
+          }
+        } catch (reloadError) {
+          console.warn(`[SEO Content] ⚠️  Could not reload content after adding array item:`, reloadError.message);
+        }
+        
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('seo-content-saved', {
+            detail: { path, item, response: response.data, duration: apiCallDuration }
+          }));
+        }
+      }
+    } catch (error) {
+      const timestamp = new Date().toISOString();
+      console.error(`[SEO Content] [${timestamp}] ❌ API Error: Failed to add array item`, error);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('seo-content-error', {
+          detail: { path, item, error: error.message, status: error.response?.status }
+        }));
+      }
+      // Revert local state on error
+      setContent(prev => {
+        const newContent = { ...prev };
+        const keys = path.split('.');
+        let current = newContent;
+        for (let i = 0; i < keys.length - 1; i++) {
+          current = current[keys[i]];
+        }
+        const lastKey = keys[keys.length - 1];
+        if (Array.isArray(current[lastKey])) {
+          current[lastKey] = current[lastKey].slice(0, -1); // Remove last item
+        }
+        return newContent;
+      });
+      throw error;
+    }
   };
 
-  const removeArrayItem = (path, index) => {
+  const removeArrayItem = async (path, index) => {
+    const keys = path.split('.');
+    const page = keys[0]; // e.g., 'home'
+    const section = keys[1]; // e.g., 'blog'
+    
+    // Update local state immediately and capture the updated section
+    let updatedSection = null;
     setContent(prev => {
       const newContent = { ...prev };
-      const keys = path.split('.');
       let current = newContent;
       
       for (const k of keys) {
@@ -397,8 +474,72 @@ export const SEOContentProvider = ({ children }) => {
         current.splice(index, 1);
       }
       
+      // Capture the updated section for backend save
+      updatedSection = newContent[page]?.[section];
+      
       return newContent;
     });
+
+    // Save to backend
+    try {
+      if (updatedSection) {
+        const timestamp = new Date().toISOString();
+        console.log(`[SEO Content] [${timestamp}] 🔄 API Call: Removing array item`, { 
+          page, 
+          section, 
+          path,
+          index,
+          endpoint: '/content/save'
+        });
+        
+        const apiCallStart = performance.now();
+        const response = await API.post('/content/save', {
+          page,
+          section: section,
+          data: updatedSection
+        });
+        
+        const apiCallDuration = (performance.now() - apiCallStart).toFixed(2);
+        console.log(`[SEO Content] [${timestamp}] ✅ API Success: Array item removed (${apiCallDuration}ms)`);
+        
+        // Reload content from backend to ensure we have the latest merged data
+        try {
+          const reloadResponse = await API.get('/content');
+          const reloadedContent = reloadResponse.data?.data || {};
+          if (reloadedContent && Object.keys(reloadedContent).length > 0) {
+            setContent(reloadedContent);
+            console.log(`[SEO Content] ✅ Content reloaded from backend after removing array item`);
+          }
+        } catch (reloadError) {
+          console.warn(`[SEO Content] ⚠️  Could not reload content after removing array item:`, reloadError.message);
+        }
+        
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('seo-content-saved', {
+            detail: { path, index, response: response.data, duration: apiCallDuration }
+          }));
+        }
+      }
+    } catch (error) {
+      const timestamp = new Date().toISOString();
+      console.error(`[SEO Content] [${timestamp}] ❌ API Error: Failed to remove array item`, error);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('seo-content-error', {
+          detail: { path, index, error: error.message, status: error.response?.status }
+        }));
+      }
+      // Revert local state on error - reload from backend
+      try {
+        const reloadResponse = await API.get('/content');
+        const reloadedContent = reloadResponse.data?.data || {};
+        if (reloadedContent && Object.keys(reloadedContent).length > 0) {
+          setContent(reloadedContent);
+        }
+      } catch (reloadError) {
+        console.error(`[SEO Content] ❌ Could not reload content after error:`, reloadError);
+      }
+      throw error;
+    }
   };
 
   const resetContent = async () => {

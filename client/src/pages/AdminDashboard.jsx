@@ -1,7 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useSEOContent } from "../context/SEOContentContext";
 import API from "../utils/api";
 import SEOContentManager from "../components/SEOContentManager";
+import BlogAdmin from "../components/BlogAdmin";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
@@ -203,17 +205,23 @@ const AdminDashboard = () => {
             Bookings ({bookings.length})
           </button>
           <button 
+            className={activeTab === "blog-admin" ? "active" : ""}
+            onClick={() => setActiveTab("blog-admin")}
+          >
+            Blog Admin
+          </button>
+          <button 
             className={activeTab === "seo-content" ? "active" : ""}
             onClick={() => setActiveTab("seo-content")}
           >
             SEO Content
           </button>
           <a
-            href="/admin/test-seo"
+            href="/blog"
             className="btn btn-outline"
             style={{ marginLeft: 'auto', textDecoration: 'none' }}
           >
-            🧪 Test SEO
+            📝 View Blog
           </a>
         </div>
 
@@ -272,6 +280,9 @@ const AdminDashboard = () => {
                   onUpdateStatus={handleUpdateBookingStatus}
                   onDelete={handleDeleteBooking}
                 />
+              )}
+              {activeTab === "blog-admin" && (
+                <BlogAdmin />
               )}
               {activeTab === "seo-content" && (
                 <SEOContentManager />

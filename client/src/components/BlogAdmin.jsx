@@ -1,10 +1,11 @@
 // client/src/components/BlogAdmin.jsx
 import React, { useState } from 'react';
 import { useSEOContent } from '../context/SEOContentContext';
+import { uploadBlogImage } from '../utils/firebaseStorage.js';
 import './BlogAdmin.css';
 
 const BlogAdmin = () => {
-  const { content, updateContent, updateNestedContent, addArrayItem, removeArrayItem, uploadImage } = useSEOContent();
+  const { content, updateContent, updateNestedContent, addArrayItem, removeArrayItem } = useSEOContent();
   const blogData = content?.home?.blog || {};
   const blogPosts = blogData.items || [];
   const [editingIndex, setEditingIndex] = useState(null);
@@ -24,14 +25,15 @@ const BlogAdmin = () => {
 
   const handleEdit = (index) => {
     const post = blogPosts[index];
+    const slug = post.slug || '';
     setFormData({
-      slug: post.slug || '',
+      slug: slug,
       title: post.title || '',
       excerpt: post.excerpt || '',
       author: post.author || '',
       date: post.date || new Date().toISOString().split('T')[0],
       image: post.image || '',
-      readMoreUrl: post.readMoreUrl || '/blog',
+      readMoreUrl: post.readMoreUrl || `/blog/${slug}`,
       tags: post.tags || []
     });
     setTagInput(post.tags ? post.tags.join(', ') : '');
@@ -40,14 +42,15 @@ const BlogAdmin = () => {
   };
 
   const handleAdd = () => {
+    const slug = `blog-${Date.now()}`;
     setFormData({
-      slug: `blog-${Date.now()}`,
+      slug: slug,
       title: '',
       excerpt: '',
       author: '',
       date: new Date().toISOString().split('T')[0],
       image: '',
-      readMoreUrl: '/blog',
+      readMoreUrl: `/blog/${slug}`,
       tags: []
     });
     setTagInput('');
@@ -74,7 +77,8 @@ const BlogAdmin = () => {
   const handleImageUpload = async (file) => {
     setUploading(true);
     try {
-      const imageUrl = await uploadImage(file);
+      // Upload directly to Firebase Storage
+      const imageUrl = await uploadBlogImage(file);
       setFormData(prev => ({ ...prev, image: imageUrl }));
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -102,8 +106,12 @@ const BlogAdmin = () => {
     // Parse tags
     const tags = tagInput.split(',').map(t => t.trim()).filter(t => t);
 
+    // Ensure readMoreUrl is set based on slug
+    const readMoreUrl = formData.readMoreUrl || `/blog/${formData.slug}`;
+    
     const postData = {
       ...formData,
+      readMoreUrl,
       tags
     };
 
@@ -148,6 +156,23 @@ const BlogAdmin = () => {
     } catch {
       return dateString;
     }
+  };
+
+  const getImageUrl = (imageUrl) => {
+    if (!imageUrl) return '/images/placeholder.jpg';
+    // Firebase Storage URLs are already full HTTPS URLs
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return imageUrl;
+    }
+    // Legacy backend images (for backward compatibility)
+    if (imageUrl.startsWith('/api/')) {
+      return imageUrl;
+    }
+    if (imageUrl.startsWith('/')) {
+      return imageUrl;
+    }
+    // Fallback for old format
+    return `/api/content${imageUrl}`;
   };
 
   return (
@@ -216,7 +241,14 @@ const BlogAdmin = () => {
                   <input
                     type="text"
                     value={formData.slug}
-                    onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
+                    onChange={(e) => {
+                      const newSlug = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
+                      setFormData(prev => ({ 
+                        ...prev, 
+                        slug: newSlug,
+                        readMoreUrl: `/blog/${newSlug}`
+                      }));
+                    }}
                     placeholder="blog-post-slug"
                     required
                     pattern="[a-z0-9-]+"
@@ -293,7 +325,9 @@ const BlogAdmin = () => {
                 <div className="image-upload-section">
                   {formData.image && (
                     <div className="image-preview">
-                      <img src={formData.image} alt="Preview" />
+                      <img src={getImageUrl(formData.image)} alt="Preview" onError={(e) => {
+                        e.target.src = '/images/placeholder.jpg';
+                      }} />
                       <button
                         type="button"
                         className="btn-remove-image"

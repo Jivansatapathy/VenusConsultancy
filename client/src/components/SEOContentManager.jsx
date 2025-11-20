@@ -861,6 +861,7 @@ const BlogEditor = ({ content, updateContent, updateNestedContent, addArrayItem,
   const handleImageUploadForBlog = async (file, index) => {
     try {
       if (uploadImage) {
+        // uploadImage now uses Firebase Storage
         const imageUrl = await uploadImage(file);
         updateNestedContent('home.blog.items', index, { image: imageUrl });
       } else if (handleImageUpload) {

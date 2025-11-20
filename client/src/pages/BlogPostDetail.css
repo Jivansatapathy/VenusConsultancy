@@ -1,0 +1,147 @@
+/* client/src/pages/BlogPostDetail.css */
+.blog-post-detail {
+  min-height: 100vh;
+  padding: 120px 20px 80px;
+  background: #f8f9fa;
+}
+
+.blog-post-detail__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.blog-post-detail__back {
+  display: inline-block;
+  color: #0066cc;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 30px;
+  transition: color 0.2s;
+}
+
+.blog-post-detail__back:hover {
+  color: #0052a3;
+}
+
+.blog-post-detail__loading,
+.blog-post-detail__error {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 12px;
+}
+
+.blog-post-detail__error h2 {
+  margin-bottom: 15px;
+  color: #1a1a1a;
+}
+
+.blog-post-detail__error p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.blog-post-detail__article {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post-detail__image {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  background: #e9ecef;
+}
+
+.blog-post-detail__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog-post-detail__header {
+  padding: 40px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.blog-post-detail__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.blog-post-detail__tag {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #f0f0f0;
+  color: #666;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.blog-post-detail__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+  line-height: 1.2;
+}
+
+.blog-post-detail__meta {
+  display: flex;
+  gap: 20px;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.blog-post-detail__author {
+  font-weight: 500;
+}
+
+.blog-post-detail__content {
+  padding: 40px;
+}
+
+.blog-post-detail__excerpt {
+  font-size: 1.25rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-style: italic;
+  border-left: 4px solid #0066cc;
+  padding-left: 20px;
+}
+
+.blog-post-detail__body {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+.blog-post-detail__body p {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .blog-post-detail {
+    padding: 100px 16px 60px;
+  }
+
+  .blog-post-detail__title {
+    font-size: 1.75rem;
+  }
+
+  .blog-post-detail__header,
+  .blog-post-detail__content {
+    padding: 24px;
+  }
+
+  .blog-post-detail__image {
+    height: 250px;
+  }
+}
+

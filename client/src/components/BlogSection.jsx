@@ -1,5 +1,6 @@
 // client/src/components/BlogSection.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 import { useSEOContent } from "../context/SEOContentContext";
 import "./BlogSection.css";
 import blogConfig from "../data/blogConfig.js";
@@ -29,36 +30,68 @@ const BlogSection = () => {
         </header>
 
         <div className="vh-blog__grid">
-          {visible.map((b) => (
-            <article key={b.slug} className="vh-blog__item">
-              <a href={b.readMoreUrl} className="vh-blog__media-link" aria-label={`Read full article: ${b.title}`}>
-                <div className="vh-blog__media">
-                  <img src={b.image} alt={b.title} loading="lazy" decoding="async" />
-                </div>
-              </a>
-
-              <div className="vh-blog__content">
-                {b.tags?.length > 0 && (
-                  <div className="vh-blog__meta">
-                    {b.tags.slice(0, 2).map((t) => (
-                      <span key={t} className="vh-blog__tag">{t}</span>
-                    ))}
+          {visible.map((b) => {
+            const postUrl = `/blog/${b.slug}`;
+            const getImageUrl = (imageUrl) => {
+              if (!imageUrl) return '/images/placeholder.jpg';
+              // Firebase Storage URLs are already full HTTPS URLs
+              if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                return imageUrl;
+              }
+              // Legacy backend images (for backward compatibility)
+              if (imageUrl.startsWith('/api/')) {
+                return imageUrl;
+              }
+              if (imageUrl.startsWith('/')) {
+                return imageUrl;
+              }
+              // Fallback for old format
+              return `/api/content${imageUrl}`;
+            };
+            const truncateExcerpt = (text, maxLength = 100) => {
+              if (!text) return '';
+              if (text.length <= maxLength) return text;
+              return text.substring(0, maxLength).trim() + '...';
+            };
+            
+            return (
+              <article key={b.slug} className="vh-blog__item">
+                <Link to={postUrl} className="vh-blog__media-link" aria-label={`Read full article: ${b.title}`}>
+                  <div className="vh-blog__media">
+                    <img 
+                      src={getImageUrl(b.image)} 
+                      alt={b.title} 
+                      loading="lazy" 
+                      decoding="async"
+                      onError={(e) => {
+                        e.target.src = '/images/placeholder.jpg';
+                      }}
+                    />
                   </div>
-                )}
+                </Link>
 
-                <h3 className="vh-blog__title">
-                  <a href={b.readMoreUrl}>{b.title}</a>
-                </h3>
+                <div className="vh-blog__content">
+                  {b.tags?.length > 0 && (
+                    <div className="vh-blog__meta">
+                      {b.tags.slice(0, 2).map((t) => (
+                        <span key={t} className="vh-blog__tag">{t}</span>
+                      ))}
+                    </div>
+                  )}
 
-                <p className="vh-blog__excerpt">{b.excerpt}</p>
+                  <h3 className="vh-blog__title">
+                    <Link to={postUrl}>{b.title}</Link>
+                  </h3>
 
-                {/* Small text link instead of button */}
-                <a href={b.readMoreUrl} className="vh-blog__readlink">
+                  <p className="vh-blog__excerpt">{truncateExcerpt(b.excerpt)}</p>
+
+                <Link to={postUrl} className="vh-blog__readlink">
                   Read more →
-                </a>
+                </Link>
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
 
         <div className="vh-blog__more">

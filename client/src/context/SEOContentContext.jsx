@@ -3,6 +3,7 @@ import API from '../utils/api';
 import servicesConfig from '../data/servicesConfig';
 import talentConfig from '../data/talentConfig';
 import blogConfig from '../data/blogConfig';
+import { uploadContentImage } from '../utils/firebaseStorage.js';
 
 const SEOContentContext = createContext();
 
@@ -549,23 +550,13 @@ export const SEOContentProvider = ({ children }) => {
 
   const uploadImage = async (file) => {
     try {
-      const formData = new FormData();
-      formData.append('image', file);
+      // Upload image to Firebase Storage
+      const imageUrl = await uploadContentImage(file);
       
-      // Upload image to server (saves to uploads/images folder)
-      const response = await API.post('/content/upload-image', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      
-      // Return the image URL that will be stored in database
-      // The URL points to the server endpoint that serves the image
-      const imageUrl = response.data.imageUrl;
-      
+      // Return the Firebase Storage URL (this will be stored in database)
       return imageUrl;
     } catch (error) {
-      console.error('Error uploading image to server:', error);
+      console.error('Error uploading image to Firebase Storage:', error);
       throw error;
     }
   };

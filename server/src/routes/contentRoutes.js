@@ -415,6 +415,21 @@ router.get("/uploads/images/:filename", (req, res) => {
       return res.status(404).json({ error: "Image not found" });
     }
 
+    // Set proper content type based on file extension
+    const ext = path.extname(filename).toLowerCase();
+    const contentTypes = {
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.png': 'image/png',
+      '.gif': 'image/gif',
+      '.webp': 'image/webp',
+      '.svg': 'image/svg+xml'
+    };
+    
+    const contentType = contentTypes[ext] || 'image/jpeg';
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Cache-Control', 'public, max-age=31536000'); // Cache for 1 year
+    
     res.sendFile(filePath);
   } catch (err) {
     console.error("Error serving image:", err);

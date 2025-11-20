@@ -85,12 +85,7 @@ function AppContent() {
             </PrivateRoute>
           }
         />
-        <Route path="/blog" element={
-          <Suspense fallback={<LoadingFallback />}>
-            <Blog />
-          </Suspense>
-        } />
-        <Route path="/blog/:slug" element={
+        <Route path="/blog/:slug?" element={
           <Suspense fallback={<LoadingFallback />}>
             <Blog />
           </Suspense>

@@ -48,11 +48,7 @@ const BlogSection = () => {
               // Fallback for old format
               return `/api/content${imageUrl}`;
             };
-            const truncateExcerpt = (text, maxLength = 100) => {
-              if (!text) return '';
-              if (text.length <= maxLength) return text;
-              return text.substring(0, maxLength).trim() + '...';
-            };
+            // No need for truncateExcerpt anymore - CSS handles it with line-clamp
             
             return (
               <article key={b.slug} className="vh-blog__item">
@@ -83,7 +79,7 @@ const BlogSection = () => {
                     <Link to={postUrl}>{b.title}</Link>
                   </h3>
 
-                  <p className="vh-blog__excerpt">{truncateExcerpt(b.excerpt)}</p>
+                  <p className="vh-blog__excerpt">{b.excerpt || ''}</p>
 
                 <Link to={postUrl} className="vh-blog__readlink">
                   Read more →

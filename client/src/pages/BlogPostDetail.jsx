@@ -141,19 +141,25 @@ const BlogPostDetail = () => {
           </header>
 
           <div className="blog-post-detail__content">
-            {post.excerpt && (
-              <div className="blog-post-detail__excerpt">
-                <p>{post.excerpt}</p>
+            {post.content ? (
+              <div className="blog-post-detail__body">
+                {post.content.split('\n').map((paragraph, index) => {
+                  if (paragraph.trim() === '') {
+                    return <br key={index} />;
+                  }
+                  return <p key={index}>{paragraph}</p>;
+                })}
               </div>
-            )}
-
-            {/* In a real implementation, you would have full content here */}
-            <div className="blog-post-detail__body">
-              <p>This is a placeholder for the full blog post content. In a production application, you would store and display the full article content here.</p>
-              {post.excerpt && (
-                <p>{post.excerpt}</p>
-              )}
-            </div>
+            ) : post.excerpt ? (
+              <div className="blog-post-detail__body">
+                {post.excerpt.split('\n').map((paragraph, index) => {
+                  if (paragraph.trim() === '') {
+                    return <br key={index} />;
+                  }
+                  return <p key={index}>{paragraph}</p>;
+                })}
+              </div>
+            ) : null}
           </div>
         </article>
       </div>

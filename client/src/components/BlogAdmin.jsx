@@ -14,6 +14,7 @@ const BlogAdmin = () => {
     slug: '',
     title: '',
     excerpt: '',
+    content: '',
     author: '',
     date: new Date().toISOString().split('T')[0],
     image: '',
@@ -30,6 +31,7 @@ const BlogAdmin = () => {
       slug: slug,
       title: post.title || '',
       excerpt: post.excerpt || '',
+      content: post.content || post.excerpt || '',
       author: post.author || '',
       date: post.date || new Date().toISOString().split('T')[0],
       image: post.image || '',
@@ -47,6 +49,7 @@ const BlogAdmin = () => {
       slug: slug,
       title: '',
       excerpt: '',
+      content: '',
       author: '',
       date: new Date().toISOString().split('T')[0],
       image: '',
@@ -65,6 +68,7 @@ const BlogAdmin = () => {
       slug: '',
       title: '',
       excerpt: '',
+      content: '',
       author: '',
       date: new Date().toISOString().split('T')[0],
       image: '',
@@ -270,13 +274,26 @@ const BlogAdmin = () => {
               </div>
 
               <div className="form-group">
-                <label>Excerpt</label>
+                <label>Excerpt (for preview - 1-2 lines)</label>
                 <textarea
                   value={formData.excerpt}
                   onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
-                  placeholder="Brief description of the blog post..."
-                  rows={3}
+                  placeholder="Brief description of the blog post (shown in preview cards)..."
+                  rows={2}
                 />
+                <small>This will be shown in the blog preview cards. Keep it short (1-2 lines).</small>
+              </div>
+
+              <div className="form-group">
+                <label>Full Content *</label>
+                <textarea
+                  value={formData.content}
+                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                  placeholder="Full blog post content with paragraphs and formatting..."
+                  rows={12}
+                  style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}
+                />
+                <small>Enter the full blog post content. Paragraphs and line breaks will be preserved.</small>
               </div>
 
               <div className="form-row">

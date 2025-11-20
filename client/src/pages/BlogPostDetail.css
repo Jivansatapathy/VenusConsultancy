@@ -124,6 +124,13 @@
 
 .blog-post-detail__body p {
   margin-bottom: 20px;
+  white-space: pre-wrap; /* Preserve whitespace and line breaks within paragraphs */
+}
+
+.blog-post-detail__body br {
+  display: block;
+  content: "";
+  margin-bottom: 1em;
 }
 
 @media (max-width: 768px) {

@@ -1,0 +1,33 @@
+/* client/src/components/services/IndustryGrid.css */
+
+.services-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+  transition: grid-template-columns 320ms cubic-bezier(.2,.9,.2,1);
+  margin: 2rem 0;
+}
+
+/* Ensure each cell takes full width inside the grid */
+.services-grid__cell {
+  position: relative;
+  width: 100%;
+}
+
+/* When a card expands, switch to single-column stacking */
+.services-grid.is-single {
+  grid-template-columns: 1fr;
+}
+
+/* Lift expanded cell above siblings */
+.services-grid__cell.is-expanded {
+  z-index: 70;
+}
+
+/* On narrow screens always single column */
+@media (max-width: 980px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}

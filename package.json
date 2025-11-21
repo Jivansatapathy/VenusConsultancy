@@ -1,0 +1,14 @@
+{
+  "name": "venus-hiring-keepalive",
+  "version": "1.0.0",
+  "description": "Keep-alive service for Venus Hiring backend on Render",
+  "main": "keep-alive.js",
+  "scripts": {
+    "start": "node keep-alive.js",
+    "dev": "node keep-alive.js"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

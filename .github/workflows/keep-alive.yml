@@ -1,0 +1,53 @@
+name: Keep Render Backend Alive
+
+on:
+  schedule:
+    # Run every 12 minutes to keep the server awake
+    - cron: '*/12 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Keep server alive
+      env:
+        SERVER_URL: ${{ secrets.RENDER_SERVER_URL }}
+      run: |
+        echo "🚀 Starting keep-alive for: $SERVER_URL"
+        
+        # Test if server is reachable
+        if [ -z "$SERVER_URL" ]; then
+          echo "❌ SERVER_URL secret is not set"
+          exit 1
+        fi
+        
+        echo "📡 Testing server connectivity..."
+        
+        # Test each endpoint
+        endpoints=("/api/health/keepalive" "/api/health/ping" "/api/health/health")
+        
+        for endpoint in "${endpoints[@]}"; do
+          echo "🔄 Testing $endpoint..."
+          response=$(curl -s -o /dev/null -w "%{http_code}" "$SERVER_URL$endpoint" || echo "000")
+          
+          if [ "$response" = "200" ]; then
+            echo "✅ $endpoint - Server responded: $response"
+          else
+            echo "⚠️  $endpoint - Response: $response"
+          fi
+          
+          # Small delay between requests
+          sleep 2
+        done
+        
+        echo "✅ Keep-alive cycle completed successfully"

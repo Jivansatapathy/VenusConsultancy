@@ -1,0 +1,102 @@
+/* Custom Cursor Styles - Black Dot Following Original Cursor */
+.custom-cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #000000 !important;
+  border: 1px solid #000000 !important;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.2s ease-out;
+  opacity: 1;
+  visibility: visible;
+}
+
+.custom-cursor.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.custom-cursor.hovering {
+  width: 12px;
+  height: 12px;
+  background: #000000 !important;
+  border: 1px solid #000000 !important;
+  transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.2s ease-out, height 0.2s ease-out;
+}
+
+/* Keep default cursor visible - custom cursor will follow it */
+* {
+  cursor: auto !important;
+}
+
+/* Remove section elevation effects - only target specific text elements */
+
+/* Completely disable cursor zoom effects to prevent section elevation */
+
+/* Prevent section elevation - be more specific to avoid breaking animations */
+
+/* Specifically protect all major sections and components - but NOT Lottie containers */
+section:not(.third-hero), 
+article, header, footer, nav, main, 
+div[class*="container"]:not(.lottie-container), 
+div[class*="section"]:not(.third-hero), 
+div[class*="wrapper"],
+div[class*="card"], div[class*="component"], div[class*="page"],
+.vh-upfooter, .vh-upfooter *, 
+.vh-footer, .vh-footer *,
+.vh-navbar, .vh-navbar * {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Allow button hover effects to work */
+.btn:hover,
+button:hover,
+a:hover {
+  transform: unset !important;
+}
+
+/* Smooth transitions are now defined in the main .custom-cursor rule */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-cursor {
+    display: none;
+  }
+}
+
+/* Accessibility - respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor {
+    display: none;
+  }
+}
+
+/* High contrast mode - Black Dot */
+@media (prefers-contrast: high) {
+  .custom-cursor {
+    border: 2px solid #000000 !important;
+    background: #000000 !important;
+  }
+  
+  .custom-cursor.hovering {
+    background: #000000 !important;
+    border: 2px solid #000000 !important;
+  }
+}
+
+/* Dark mode adjustments - Keep Black Dot */
+@media (prefers-color-scheme: dark) {
+  .custom-cursor {
+    background: #000000 !important;
+    border: 1px solid #000000 !important;
+  }
+  
+  .custom-cursor.hovering {
+    background: #000000 !important;
+    border: 1px solid #000000 !important;
+  }
+}

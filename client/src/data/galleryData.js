@@ -56,15 +56,6 @@ export const galleryData = [
     orientation: "landscape"
   },
   {
-    id: 6,
-    image: "/Gallery/Principal Commerce Officer Bardley Hacker.jpg",
-    eventName: "With Bardley Hacker - Principal Commerce Officer",
-    location: "Please update location",
-    description: "Please add event description here.",
-    attendees: "Please add who met with whom",
-    orientation: "landscape"
-  },
-  {
     id: 7,
     image: "/Gallery/the High Commissioner of India..jpg",
     eventName: "With the High Commissioner of India",

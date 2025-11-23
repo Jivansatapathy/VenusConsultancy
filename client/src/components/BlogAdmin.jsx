@@ -14,27 +14,68 @@ const BlogAdmin = () => {
     slug: '',
     title: '',
     excerpt: '',
-    content: '',
+    featuredImage: '',
+    paragraph1: '',
+    image1: '',
+    paragraph2: '',
+    image2: '',
+    paragraph3: '',
+    image3: '',
+    paragraph4: '',
+    image4: '',
+    conclusion: '',
     author: '',
     date: new Date().toISOString().split('T')[0],
-    image: '',
     readMoreUrl: '/blog',
     tags: []
   });
   const [tagInput, setTagInput] = useState('');
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState({});
+
+  // Helper function to handle image upload for specific field
+  const handleImageUpload = async (file, fieldName) => {
+    setUploading(prev => ({ ...prev, [fieldName]: true }));
+    try {
+      const imageUrl = await uploadBlogImage(file);
+      setFormData(prev => ({ ...prev, [fieldName]: imageUrl }));
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Failed to upload image. Please try again.');
+    } finally {
+      setUploading(prev => ({ ...prev, [fieldName]: false }));
+    }
+  };
 
   const handleEdit = (index) => {
     const post = blogPosts[index];
     const slug = post.slug || '';
+    
+    // Handle backward compatibility - if old format exists, convert it
+    let structuredData = {
+      featuredImage: post.featuredImage || post.image || '',
+      paragraph1: post.paragraph1 || '',
+      image1: post.image1 || '',
+      paragraph2: post.paragraph2 || '',
+      image2: post.image2 || '',
+      paragraph3: post.paragraph3 || '',
+      image3: post.image3 || '',
+      paragraph4: post.paragraph4 || '',
+      image4: post.image4 || '',
+      conclusion: post.conclusion || ''
+    };
+
+    // If old content format exists, put it in paragraph1
+    if (post.content && !post.paragraph1) {
+      structuredData.paragraph1 = post.content;
+    }
+
     setFormData({
       slug: slug,
       title: post.title || '',
       excerpt: post.excerpt || '',
-      content: post.content || post.excerpt || '',
+      ...structuredData,
       author: post.author || '',
       date: post.date || new Date().toISOString().split('T')[0],
-      image: post.image || '',
       readMoreUrl: post.readMoreUrl || `/blog/${slug}`,
       tags: post.tags || []
     });
@@ -49,10 +90,18 @@ const BlogAdmin = () => {
       slug: slug,
       title: '',
       excerpt: '',
-      content: '',
+      featuredImage: '',
+      paragraph1: '',
+      image1: '',
+      paragraph2: '',
+      image2: '',
+      paragraph3: '',
+      image3: '',
+      paragraph4: '',
+      image4: '',
+      conclusion: '',
       author: '',
       date: new Date().toISOString().split('T')[0],
-      image: '',
       readMoreUrl: `/blog/${slug}`,
       tags: []
     });
@@ -68,28 +117,23 @@ const BlogAdmin = () => {
       slug: '',
       title: '',
       excerpt: '',
-      content: '',
+      featuredImage: '',
+      paragraph1: '',
+      image1: '',
+      paragraph2: '',
+      image2: '',
+      paragraph3: '',
+      image3: '',
+      paragraph4: '',
+      image4: '',
+      conclusion: '',
       author: '',
       date: new Date().toISOString().split('T')[0],
-      image: '',
       readMoreUrl: '/blog',
       tags: []
     });
     setTagInput('');
-  };
-
-  const handleImageUpload = async (file) => {
-    setUploading(true);
-    try {
-      // Upload directly to Firebase Storage
-      const imageUrl = await uploadBlogImage(file);
-      setFormData(prev => ({ ...prev, image: imageUrl }));
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      alert('Failed to upload image. Please try again.');
-    } finally {
-      setUploading(false);
-    }
+    setUploading({});
   };
 
   const handleSubmit = async (e) => {
@@ -114,7 +158,21 @@ const BlogAdmin = () => {
     const readMoreUrl = formData.readMoreUrl || `/blog/${formData.slug}`;
     
     const postData = {
-      ...formData,
+      slug: formData.slug,
+      title: formData.title,
+      excerpt: formData.excerpt,
+      featuredImage: formData.featuredImage,
+      paragraph1: formData.paragraph1,
+      image1: formData.image1,
+      paragraph2: formData.paragraph2,
+      image2: formData.image2,
+      paragraph3: formData.paragraph3,
+      image3: formData.image3,
+      paragraph4: formData.paragraph4,
+      image4: formData.image4,
+      conclusion: formData.conclusion,
+      author: formData.author,
+      date: formData.date,
       readMoreUrl,
       tags
     };
@@ -178,6 +236,51 @@ const BlogAdmin = () => {
     // Fallback for old format
     return `/api/content${imageUrl}`;
   };
+
+  // Component for image upload field
+  const ImageUploadField = ({ fieldName, label }) => (
+    <div className="form-group">
+      <label>{label}</label>
+      <div className="image-upload-section">
+        {formData[fieldName] && (
+          <div className="image-preview">
+            <img src={getImageUrl(formData[fieldName])} alt="Preview" onError={(e) => {
+              e.target.src = '/images/placeholder.jpg';
+            }} />
+            <button
+              type="button"
+              className="btn-remove-image"
+              onClick={() => setFormData(prev => ({ ...prev, [fieldName]: '' }))}
+            >
+              Remove
+            </button>
+          </div>
+        )}
+        <div className="image-upload-controls">
+          <label className="btn btn-secondary">
+            {uploading[fieldName] ? 'Uploading...' : 'Upload Image'}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) handleImageUpload(file, fieldName);
+              }}
+              style={{ display: 'none' }}
+              disabled={uploading[fieldName]}
+            />
+          </label>
+          <input
+            type="text"
+            placeholder="Or enter image URL"
+            value={formData[fieldName]}
+            onChange={(e) => setFormData(prev => ({ ...prev, [fieldName]: e.target.value }))}
+            className="image-url-input"
+          />
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="blog-admin">
@@ -284,16 +387,79 @@ const BlogAdmin = () => {
                 <small>This will be shown in the blog preview cards. Keep it short (1-2 lines).</small>
               </div>
 
+              {/* Featured Image */}
+              <ImageUploadField fieldName="featuredImage" label="Featured Image *" />
+
+              {/* Paragraph 1 */}
               <div className="form-group">
-                <label>Full Content *</label>
+                <label>Paragraph 1 *</label>
                 <textarea
-                  value={formData.content}
-                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  placeholder="Full blog post content with paragraphs and formatting..."
-                  rows={12}
+                  value={formData.paragraph1}
+                  onChange={(e) => setFormData(prev => ({ ...prev, paragraph1: e.target.value }))}
+                  placeholder="First paragraph of your blog post..."
+                  rows={4}
                   style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}
                 />
-                <small>Enter the full blog post content. Paragraphs and line breaks will be preserved.</small>
+              </div>
+
+              {/* Image 1 */}
+              <ImageUploadField fieldName="image1" label="Image 1" />
+
+              {/* Paragraph 2 */}
+              <div className="form-group">
+                <label>Paragraph 2</label>
+                <textarea
+                  value={formData.paragraph2}
+                  onChange={(e) => setFormData(prev => ({ ...prev, paragraph2: e.target.value }))}
+                  placeholder="Second paragraph..."
+                  rows={4}
+                  style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}
+                />
+              </div>
+
+              {/* Image 2 */}
+              <ImageUploadField fieldName="image2" label="Image 2" />
+
+              {/* Paragraph 3 */}
+              <div className="form-group">
+                <label>Paragraph 3</label>
+                <textarea
+                  value={formData.paragraph3}
+                  onChange={(e) => setFormData(prev => ({ ...prev, paragraph3: e.target.value }))}
+                  placeholder="Third paragraph..."
+                  rows={4}
+                  style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}
+                />
+              </div>
+
+              {/* Image 3 */}
+              <ImageUploadField fieldName="image3" label="Image 3" />
+
+              {/* Paragraph 4 */}
+              <div className="form-group">
+                <label>Paragraph 4</label>
+                <textarea
+                  value={formData.paragraph4}
+                  onChange={(e) => setFormData(prev => ({ ...prev, paragraph4: e.target.value }))}
+                  placeholder="Fourth paragraph..."
+                  rows={4}
+                  style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}
+                />
+              </div>
+
+              {/* Image 4 */}
+              <ImageUploadField fieldName="image4" label="Image 4" />
+
+              {/* Conclusion */}
+              <div className="form-group">
+                <label>Conclusion</label>
+                <textarea
+                  value={formData.conclusion}
+                  onChange={(e) => setFormData(prev => ({ ...prev, conclusion: e.target.value }))}
+                  placeholder="Conclusion paragraph..."
+                  rows={4}
+                  style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}
+                />
               </div>
 
               <div className="form-row">
@@ -337,53 +503,15 @@ const BlogAdmin = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label>Image</label>
-                <div className="image-upload-section">
-                  {formData.image && (
-                    <div className="image-preview">
-                      <img src={getImageUrl(formData.image)} alt="Preview" onError={(e) => {
-                        e.target.src = '/images/placeholder.jpg';
-                      }} />
-                      <button
-                        type="button"
-                        className="btn-remove-image"
-                        onClick={() => setFormData(prev => ({ ...prev, image: '' }))}
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  )}
-                  <div className="image-upload-controls">
-                    <label className="btn btn-secondary">
-                      {uploading ? 'Uploading...' : 'Upload Image'}
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files[0];
-                          if (file) handleImageUpload(file);
-                        }}
-                        style={{ display: 'none' }}
-                        disabled={uploading}
-                      />
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Or enter image URL"
-                      value={formData.image}
-                      onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
-                      className="image-url-input"
-                    />
-                  </div>
-                </div>
-              </div>
-
               <div className="form-actions">
                 <button type="button" className="btn btn-secondary" onClick={handleCancel}>
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary" disabled={uploading}>
+                <button 
+                  type="submit" 
+                  className="btn btn-primary" 
+                  disabled={Object.values(uploading).some(v => v)}
+                >
                   {editingIndex !== null ? 'Update Post' : 'Add Post'}
                 </button>
               </div>
@@ -470,4 +598,3 @@ const BlogAdmin = () => {
 };
 
 export default BlogAdmin;
-

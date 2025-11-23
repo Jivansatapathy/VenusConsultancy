@@ -1,7 +1,6 @@
 // client/src/pages/Services.jsx
-import React, { useState, useEffect, Suspense, lazy } from "react";
+import React, { useState, Suspense, lazy } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { motion, useMotionTemplate, useMotionValue, animate } from "framer-motion";
 import { jobRolesData } from "../data/jobRolesData";
 import "./Services.css";
 
@@ -10,20 +9,6 @@ const ServicesSection = lazy(() => import("../components/ServicesSection"));
 
 const Services = () => {
   const navigate = useNavigate();
-  
-  // Aurora background for mobile/tablet hero
-  const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
-  const color = useMotionValue(COLORS_TOP[0]);
-  useEffect(() => {
-    const controls = animate(color, COLORS_TOP, {
-      ease: "easeInOut",
-      duration: 10,
-      repeat: Infinity,
-      repeatType: "mirror",
-    });
-    return () => controls.stop();
-  }, []);
-  const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewForm, setReviewForm] = useState({
     name: '',
@@ -520,55 +505,122 @@ const Services = () => {
 
   return (
     <main className="services-page">
-      {/* Desktop/Laptop hero (hidden on tablet/mobile) */}
-      <header className="svc-hero" role="banner">
+      {/* Hero Section */}
+      <section className="svc-hero-section">
         <div className="svc-container">
-          <div className="svc-hero__grid" aria-label="Hero two column layout">
-            <div className="svc-hero__left">
-              <h1 className="svc-hero__title">Your partner in hiring the right talent for every role across the USA.</h1>
-              <div className="svc-hero__ctas" role="group" aria-label="Primary actions">
-                <a className="btn btn--primary" href="/contact">Contact Us</a>
-                <a className="btn btn--outline1" href="#services">Browse on your own</a>
+          <div className="svc-hero-content">
+            <span className="svc-hero-label">Talent</span>
+            <h1 className="svc-hero-title">Our services</h1>
+            <p className="svc-hero-description">
+              Precision recruitment solutions that transform businesses through strategic talent acquisition and expert placement.
+            </p>
+            <div className="svc-hero-buttons">
+              <Link to="/contact" className="svc-btn-connect">
+                Connect
+              </Link>
+              <Link to="/about" className="svc-btn-learn">
+                <span>Learn more</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Grid Section */}
+      <section className="svc-grid-section">
+        <div className="svc-container">
+          {/* Header */}
+          <div className="svc-grid-header">
+            <span className="svc-grid-label">Solutions</span>
+            <h2 className="svc-grid-title">Comprehensive staffing services</h2>
+            <p className="svc-grid-subtitle">
+              Tailored recruitment strategies for dynamic business needs
+            </p>
+          </div>
+
+          {/* Main Grid */}
+          <div className="svc-grid">
+            {/* Left Column - Large Primary Card */}
+            <div className="svc-card-large">
+              <div className="svc-card-image-wrapper">
+                <img 
+                  src="/aboutus/aboutus1.png" 
+                  alt="Permanent staffing solutions" 
+                  className="svc-card-image"
+                />
+              </div>
+              <div className="svc-card-content">
+                <span className="svc-card-category">Permanent</span>
+                <h3 className="svc-card-title">Permanent staffing solutions</h3>
+                <p className="svc-card-description">
+                  Strategic placement of top-tier talent for long-term organizational success and growth.
+                </p>
+                <div className="svc-card-buttons">
+                  <button className="svc-btn-explore"><span>Explore</span></button>
+                  <Link to="/services" className="svc-btn-learn-more">Learn →</Link>
+                </div>
               </div>
             </div>
 
-            <div className="svc-hero__right" aria-hidden="false">
-              <video 
-                className="hero-video" 
-                autoPlay 
-                muted 
-                loop 
-                playsInline
-                controls
-                aria-label="Services video presentation"
-              >
-                <source src="/images/ven01.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </div>
-        </div>
-      </header>
+            {/* Right Column - Two Stacked Cards */}
+            <div className="svc-cards-stack">
+              {/* Top Small Card */}
+              <div className="svc-card-small">
+                <div className="svc-card-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M14 2V8H20" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M16 13H8" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M16 17H8" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M10 9H9H8" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                <h4 className="svc-card-small-title">Contract and temporary staffing</h4>
+                <p className="svc-card-small-description">
+                  Flexible workforce solutions for agile business environments.
+                </p>
+                <Link to="/services" className="svc-btn-learn-more">Learn →</Link>
+              </div>
 
-      {/* Tablet/Mobile hero (hidden on desktop/laptop) */}
-      <header className="svc-hero-mobile" role="banner" aria-label="Services hero (mobile/tablet)">
-        <div className="svc-hero-mobile__container">
-          {/* Animated aurora background layer (behind content) */}
-          <motion.div
-            className="svc-hero-mobile__bg"
-            style={{ backgroundImage }}
-            aria-hidden
-          />
-          <div className="svc-hero-mobile__content">
-            <h1 className="svc-hero-mobile__title">Your partner in hiring the right talent for every role across the USA.</h1>
-            <p className="svc-hero-mobile__sub">Whatever your hiring challenge, explore our talent solutions to find the right professionals across 2,000+ specialized roles for USA companies.</p>
-            <div className="svc-hero-mobile__ctas" role="group" aria-label="Primary actions">
-              <a className="btn btn--primary" href="/contact">Contact Us</a>
-              <a className="btn btn--outline-invert" href="#services">Browse on your own</a>
+              {/* Bottom Small Card */}
+              <div className="svc-card-small">
+                <div className="svc-card-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="12" cy="12" r="2" fill="#000"/>
+                  </svg>
+                </div>
+                <h4 className="svc-card-small-title">Specialized IT and advisory</h4>
+                <p className="svc-card-small-description">
+                  Expert technology and strategic consulting talent for complex business challenges.
+                </p>
+                <Link to="/services" className="svc-btn-learn-more">Learn →</Link>
+              </div>
+            </div>
+
+            {/* Bottom Right - Medium Wide Card */}
+            <div className="svc-card-medium">
+              <div className="svc-card-medium-image-wrapper">
+                <img 
+                  src="/aboutus/aboutus3.png" 
+                  alt="Executive search and C-suite placement" 
+                  className="svc-card-image"
+                />
+              </div>
+              <div className="svc-card-medium-content">
+                <span className="svc-card-category">Executive</span>
+                <h3 className="svc-card-title">Executive search and C-suite placement</h3>
+                <p className="svc-card-description">
+                  High-level recruitment for leadership roles that drive organizational transformation.
+                </p>
+                <Link to="/services" className="svc-btn-learn-more">Learn →</Link>
+              </div>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
       {/* Services Section from Home Page */}
       <Suspense fallback={<div style={{ padding: '3rem 0', textAlign: 'center' }}>Loading...</div>}>

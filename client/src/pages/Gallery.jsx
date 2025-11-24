@@ -86,7 +86,7 @@ const Gallery = () => {
                   >
                     <div className="gallery-item__image-wrapper">
                       <img
-                        src={item.image}
+                        src={encodeURI(item.image)}
                         alt={item.eventName}
                         className="gallery-item__image"
                         loading="lazy"
@@ -121,7 +121,7 @@ const Gallery = () => {
                   >
                     <div className="gallery-item__image-wrapper">
                       <img
-                        src={item.image}
+                        src={encodeURI(item.image)}
                         alt={item.eventName}
                         className="gallery-item__image"
                         loading="lazy"
@@ -159,7 +159,7 @@ const Gallery = () => {
             <div className="gallery-modal__body">
               <div className={`gallery-modal__image-wrapper gallery-modal__image-wrapper--${selectedImage.orientation}`}>
                 <img
-                  src={selectedImage.image}
+                  src={encodeURI(selectedImage.image)}
                   alt={selectedImage.eventName}
                   className="gallery-modal__image"
                   onError={(e) => {

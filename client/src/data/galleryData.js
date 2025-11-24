@@ -11,42 +11,6 @@
 
 export const galleryData = [
   {
-    id: 1,
-    image: "/Gallery/22nd Prime Minister of Canada, Stephen Harper.jpg",
-    eventName: "With Stephen Harper - 22nd Prime Minister of Canada",
-    location: "Canada",
-    description: "A significant meeting with the 22nd Prime Minister of Canada, discussing talent solutions and business opportunities.",
-    attendees: "Venus Consultancy team met with Stephen Harper, 22nd Prime Minister of Canada",
-    orientation: "landscape"
-  },
-  {
-    id: 2,
-    image: "/Gallery/Associate Minister of Small Business Nina Tangri.jpg",
-    eventName: "With Nina Tangri - Associate Minister of Small Business",
-    location: "Canada",
-    description: "Engaging discussion with the Associate Minister of Small Business about supporting small businesses through strategic talent acquisition.",
-    attendees: "Venus Consultancy team met with Nina Tangri, Associate Minister of Small Business",
-    orientation: "landscape"
-  },
-  {
-    id: 3,
-    image: "/Gallery/Baxter Hunt, Consulate General of the U.S. Embassy in Toronto.jpg",
-    eventName: "With Baxter Hunt - Consulate General of the U.S. Embassy in Toronto",
-    location: "Toronto, Canada",
-    description: "Productive meeting with the Consulate General of the U.S. Embassy in Toronto to discuss cross-border talent solutions.",
-    attendees: "Venus Consultancy team met with Baxter Hunt, Consulate General of the U.S. Embassy in Toronto",
-    orientation: "landscape"
-  },
-  {
-    id: 4,
-    image: "/Gallery/With Consulated General of teh U.S, Baxer Hunt.jpg",
-    eventName: "With Baxter Hunt - Consulate General of the U.S.",
-    location: "Canada",
-    description: "Strategic meeting with the U.S. Consulate General to explore international talent partnerships and business opportunities.",
-    attendees: "Venus Consultancy team met with Baxter Hunt, Consulate General of the U.S.",
-    orientation: "landscape"
-  },
-  {
     id: 5,
     image: "/Gallery/With Consulate General of US.jpg",
     eventName: "With Consulate General of the U.S.",
@@ -62,24 +26,6 @@ export const galleryData = [
     location: "United States",
     description: "Prestigious meeting with U.S. Ambassador David Cohen to discuss international talent solutions and diplomatic partnerships.",
     attendees: "Venus Consultancy team met with David Cohen, U.S. Ambassador",
-    orientation: "landscape"
-  },
-  {
-    id: 7,
-    image: "/Gallery/the High Commissioner of India..jpg",
-    eventName: "With the High Commissioner of India",
-    location: "Canada",
-    description: "Significant meeting with the High Commissioner of India to discuss talent exchange programs and bilateral business opportunities.",
-    attendees: "Venus Consultancy team met with the High Commissioner of India",
-    orientation: "landscape"
-  },
-  {
-    id: 8,
-    image: "/Gallery/Tiff Macklem, the Governor of the Bank of Canada.jpg",
-    eventName: "With Tiff Macklem - Governor of the Bank of Canada",
-    location: "Canada",
-    description: "Strategic discussion with the Governor of the Bank of Canada about economic partnerships and financial sector talent needs.",
-    attendees: "Venus Consultancy team met with Tiff Macklem, Governor of the Bank of Canada",
     orientation: "landscape"
   },
   {
@@ -156,15 +102,6 @@ export const galleryData = [
   },
   {
     id: 17,
-    image: "/Gallery/Venus Consultancy  at CES Las Vegas Nevada.jpg",
-    eventName: "Venus Consultancy at CES Las Vegas",
-    location: "Las Vegas, Nevada, USA",
-    description: "Showcasing talent solutions at the Consumer Electronics Show, connecting with tech companies and innovators in the technology sector.",
-    attendees: "Venus Consultancy team at CES Las Vegas",
-    orientation: "landscape"
-  },
-  {
-    id: 18,
     image: "/Gallery/Venus consultancy at CES Las Vegas Nevada.jpg",
     eventName: "Venus Consultancy at CES Las Vegas",
     location: "Las Vegas, Nevada, USA",
@@ -188,15 +125,6 @@ export const galleryData = [
     location: "United States",
     description: "Proud sponsorship of SelectUSA, supporting international business investment and connecting global talent with U.S. opportunities.",
     attendees: "Venus Consultancy as sponsor at SelectUSA event",
-    orientation: "landscape"
-  },
-  {
-    id: 21,
-    image: "/Gallery/#SelectUSATECH #Select Venus Consultancy.jpg",
-    eventName: "Venus Consultancy at SelectUSA Tech",
-    location: "United States",
-    description: "Active participation in SelectUSA Tech, showcasing technology talent solutions and connecting with international tech companies.",
-    attendees: "Venus Consultancy team at SelectUSA Tech event",
     orientation: "landscape"
   },
   {
@@ -262,13 +190,4 @@ export const galleryData = [
     attendees: "Team Venus Consultancy at AMCHAM Thanksgiving Gala",
     orientation: "landscape"
   },
-  {
-    id: 29,
-    image: "/Gallery/event of venus consultancy.jpg",
-    eventName: "Venus Consultancy Event",
-    location: "United States",
-    description: "A special event hosted by Venus Consultancy, bringing together industry leaders, partners, and talent to celebrate achievements and explore future opportunities.",
-    attendees: "Venus Consultancy team and partners at company event",
-    orientation: "landscape"
-  }
 ];

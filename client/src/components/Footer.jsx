@@ -63,7 +63,7 @@ const Footer = () => {
 
           {/* Login Button Column */}
           <div className="vh-footer__column vh-footer__login-column">
-            <Link to="/login" className="vh-footer__login-btn">Login</Link>
+            <Link to="/admin/login" className="vh-footer__login-btn">Login</Link>
           </div>
         </div>
       </div>

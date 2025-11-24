@@ -73,7 +73,7 @@ const Blog = () => {
                   <Link to={postUrl} className="blog-page__image-link">
                     <div className="blog-page__image-wrapper">
                       <img 
-                        src={getImageUrl(post.image)} 
+                        src={getImageUrl(post.featuredImage || post.image)} 
                         alt={post.title || 'Blog post'} 
                         loading="lazy" 
                         decoding="async"

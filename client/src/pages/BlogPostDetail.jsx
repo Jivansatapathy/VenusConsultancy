@@ -110,10 +110,11 @@ const BlogPostDetail = () => {
         </Link>
 
         <article className="blog-post-detail__article">
-          {post.image && (
+          {/* Featured Image - Use featuredImage first, fallback to image for backward compatibility */}
+          {(post.featuredImage || post.image) && (
             <div className="blog-post-detail__image">
               <img 
-                src={getImageUrl(post.image)} 
+                src={getImageUrl(post.featuredImage || post.image)} 
                 alt={post.title || 'Blog post'} 
               />
             </div>
@@ -141,25 +142,121 @@ const BlogPostDetail = () => {
           </header>
 
           <div className="blog-post-detail__content">
-            {post.content ? (
+            {/* New Structured Format: paragraph1, image1, paragraph2, image2, etc. */}
+            {(post.paragraph1 || post.image1 || post.paragraph2 || post.image2 || 
+              post.paragraph3 || post.image3 || post.paragraph4 || post.image4 || post.conclusion) ? (
               <div className="blog-post-detail__body">
-                {post.content.split('\n').map((paragraph, index) => {
-                  if (paragraph.trim() === '') {
-                    return <br key={index} />;
-                  }
-                  return <p key={index}>{paragraph}</p>;
-                })}
+                {/* Paragraph 1 */}
+                {post.paragraph1 && (
+                  <div className="blog-post-detail__paragraph">
+                    {post.paragraph1.split('\n').map((para, idx) => (
+                      para.trim() ? <p key={idx}>{para}</p> : <br key={idx} />
+                    ))}
+                  </div>
+                )}
+
+                {/* Image 1 */}
+                {post.image1 && (
+                  <div className="blog-post-detail__content-image">
+                    <img 
+                      src={getImageUrl(post.image1)} 
+                      alt={post.title || 'Blog post image 1'} 
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+
+                {/* Paragraph 2 */}
+                {post.paragraph2 && (
+                  <div className="blog-post-detail__paragraph">
+                    {post.paragraph2.split('\n').map((para, idx) => (
+                      para.trim() ? <p key={idx}>{para}</p> : <br key={idx} />
+                    ))}
+                  </div>
+                )}
+
+                {/* Image 2 */}
+                {post.image2 && (
+                  <div className="blog-post-detail__content-image">
+                    <img 
+                      src={getImageUrl(post.image2)} 
+                      alt={post.title || 'Blog post image 2'} 
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+
+                {/* Paragraph 3 */}
+                {post.paragraph3 && (
+                  <div className="blog-post-detail__paragraph">
+                    {post.paragraph3.split('\n').map((para, idx) => (
+                      para.trim() ? <p key={idx}>{para}</p> : <br key={idx} />
+                    ))}
+                  </div>
+                )}
+
+                {/* Image 3 */}
+                {post.image3 && (
+                  <div className="blog-post-detail__content-image">
+                    <img 
+                      src={getImageUrl(post.image3)} 
+                      alt={post.title || 'Blog post image 3'} 
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+
+                {/* Paragraph 4 */}
+                {post.paragraph4 && (
+                  <div className="blog-post-detail__paragraph">
+                    {post.paragraph4.split('\n').map((para, idx) => (
+                      para.trim() ? <p key={idx}>{para}</p> : <br key={idx} />
+                    ))}
+                  </div>
+                )}
+
+                {/* Image 4 */}
+                {post.image4 && (
+                  <div className="blog-post-detail__content-image">
+                    <img 
+                      src={getImageUrl(post.image4)} 
+                      alt={post.title || 'Blog post image 4'} 
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+
+                {/* Conclusion */}
+                {post.conclusion && (
+                  <div className="blog-post-detail__paragraph blog-post-detail__conclusion">
+                    {post.conclusion.split('\n').map((para, idx) => (
+                      para.trim() ? <p key={idx}>{para}</p> : <br key={idx} />
+                    ))}
+                  </div>
+                )}
               </div>
-            ) : post.excerpt ? (
-              <div className="blog-post-detail__body">
-                {post.excerpt.split('\n').map((paragraph, index) => {
-                  if (paragraph.trim() === '') {
-                    return <br key={index} />;
-                  }
-                  return <p key={index}>{paragraph}</p>;
-                })}
-              </div>
-            ) : null}
+            ) : (
+              /* Backward Compatibility: Old format with content or excerpt */
+              post.content ? (
+                <div className="blog-post-detail__body">
+                  {post.content.split('\n').map((paragraph, index) => {
+                    if (paragraph.trim() === '') {
+                      return <br key={index} />;
+                    }
+                    return <p key={index}>{paragraph}</p>;
+                  })}
+                </div>
+              ) : post.excerpt ? (
+                <div className="blog-post-detail__body">
+                  {post.excerpt.split('\n').map((paragraph, index) => {
+                    if (paragraph.trim() === '') {
+                      return <br key={index} />;
+                    }
+                    return <p key={index}>{paragraph}</p>;
+                  })}
+                </div>
+              ) : null
+            )}
           </div>
         </article>
       </div>

@@ -8,9 +8,11 @@ import services from "../data/servicesConfig.js";
 const ServicesSection = () => {
   const { content } = useSEOContent();
   const seoServices = content?.home?.services;
-  const { heading, description, items } = seoServices?.items?.length > 0 
-    ? seoServices 
-    : services;
+  
+  // Always use servicesConfig items (which now has 6 items), but allow SEO content to override heading/description
+  const heading = seoServices?.heading || services.heading;
+  const description = seoServices?.description || services.description;
+  const items = services.items; // Always use the updated config items
 
   // Map services to match the image layout with categories
   const serviceCategories = [
@@ -22,10 +24,8 @@ const ServicesSection = () => {
     { category: "Solutions", icon: "🎯" }
   ];
 
-  // Ensure we have 6 items (duplicate or add if needed)
-  const displayItems = items.length >= 6 
-    ? items.slice(0, 6) 
-    : [...items, ...items.slice(0, 6 - items.length)];
+  // Use items directly (should be 6 items now)
+  const displayItems = items.slice(0, 6);
 
   return (
     <section className="vh-services" aria-labelledby="vh-services-heading">

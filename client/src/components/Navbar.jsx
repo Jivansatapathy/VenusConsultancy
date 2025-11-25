@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { to: "/services", label: "Services" },
   { to: "/find-jobs", label: "Find Jobs" },
   { to: "/about", label: "About Us" },
+  { to: "/gallery", label: "Gallery" },
   { to: "/contact", label: "Contact Us" }
 ];
 

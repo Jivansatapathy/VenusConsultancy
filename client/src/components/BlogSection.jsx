@@ -50,12 +50,22 @@ const BlogSection = () => {
             };
             // No need for truncateExcerpt anymore - CSS handles it with line-clamp
             
+            // Generate excerpt from paragraph1 if excerpt is not available (for new structured format)
+            const getExcerpt = () => {
+              if (b.excerpt) return b.excerpt;
+              if (b.paragraph1) {
+                const text = b.paragraph1.replace(/\n/g, ' ').trim();
+                return text.length > 150 ? text.substring(0, 150) + '...' : text;
+              }
+              return '';
+            };
+
             return (
               <article key={b.slug} className="vh-blog__item">
                 <Link to={postUrl} className="vh-blog__media-link" aria-label={`Read full article: ${b.title}`}>
                   <div className="vh-blog__media">
                     <img 
-                      src={getImageUrl(b.image)} 
+                      src={getImageUrl(b.featuredImage || b.image)} 
                       alt={b.title} 
                       loading="lazy" 
                       decoding="async"
@@ -79,7 +89,7 @@ const BlogSection = () => {
                     <Link to={postUrl}>{b.title}</Link>
                   </h3>
 
-                  <p className="vh-blog__excerpt">{b.excerpt || ''}</p>
+                  <p className="vh-blog__excerpt">{getExcerpt()}</p>
 
                 <Link to={postUrl} className="vh-blog__readlink">
                   Read more →

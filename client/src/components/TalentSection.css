@@ -37,6 +37,24 @@
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(229, 9, 20, 0.3) transparent;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+  .vh-talent__tabs::-webkit-scrollbar {
+    height: 6px;
+  }
+  .vh-talent__tabs::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .vh-talent__tabs::-webkit-scrollbar-thumb {
+    background: rgba(229, 9, 20, 0.3);
+    border-radius: 3px;
+  }
+  .vh-talent__tabs::-webkit-scrollbar-thumb:hover {
+    background: rgba(229, 9, 20, 0.5);
   }
   .vh-talent__tab {
     background: transparent;

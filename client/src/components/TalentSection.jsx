@@ -7,22 +7,35 @@ import config from "../data/talentConfig";
 const TalentSection = ({ brandColor = config.brandColor }) => {
   const { content } = useSEOContent();
   const seoTalent = content?.home?.talent;
-  const talentConfig = seoTalent?.categories?.length > 0 ? seoTalent : config;
-  const categories = talentConfig.categories || config.categories;
+  // Always use config file for categories (source of truth), but allow SEO content to override heading
+  const talentConfig = {
+    ...config,
+    heading: seoTalent?.heading || config.heading
+  };
+  const categories = config.categories; // Always use categories from config file
   const defaultKey =
-    talentConfig.defaultCategory || config.defaultCategory || (categories[0] && categories[0].key);
+    config.defaultCategory || (categories[0] && categories[0].key);
   const [activeKey, setActiveKey] = useState(defaultKey);
-  const [showAll, setShowAll] = useState(false);
-  const visibleCategories = showAll ? categories : categories.slice(0, 4);
-  const activeIndex = visibleCategories.findIndex((c) => c.key === activeKey);
+  const [showAll, setShowAll] = useState(false); // Show only a few categories initially
+  const activeIndex = categories.findIndex((c) => c.key === activeKey);
   const tabsRef = useRef(null);
+  
+  // Show 4 categories initially, or all if showAll is true
+  const visibleCategories = showAll ? categories : categories.slice(0, 4);
 
-  // Ensure active tab is within the visible set when toggling showAll
+  // Ensure active tab is within the categories
+  useEffect(() => {
+    if (!categories.find((c) => c.key === activeKey)) {
+      if (categories[0]) setActiveKey(categories[0].key);
+    }
+  }, [categories, activeKey]);
+  
+  // When showAll changes, ensure active category is visible
   useEffect(() => {
     if (!visibleCategories.find((c) => c.key === activeKey)) {
       if (visibleCategories[0]) setActiveKey(visibleCategories[0].key);
     }
-  }, [showAll, categories]);
+  }, [showAll, visibleCategories, activeKey]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -32,20 +45,20 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
       if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return;
       e.preventDefault();
       if (e.key === "ArrowLeft") {
-        const prev = (activeIndex - 1 + visibleCategories.length) % visibleCategories.length;
-        setActiveKey(visibleCategories[prev].key);
+        const prev = (activeIndex - 1 + categories.length) % categories.length;
+        setActiveKey(categories[prev].key);
       } else if (e.key === "ArrowRight") {
-        const next = (activeIndex + 1) % visibleCategories.length;
-        setActiveKey(visibleCategories[next].key);
+        const next = (activeIndex + 1) % categories.length;
+        setActiveKey(categories[next].key);
       } else if (e.key === "Home") {
-        setActiveKey(visibleCategories[0].key);
+        setActiveKey(categories[0].key);
       } else if (e.key === "End") {
-        setActiveKey(visibleCategories[visibleCategories.length - 1].key);
+        setActiveKey(categories[categories.length - 1].key);
       }
     };
     node.addEventListener("keydown", handleKey);
     return () => node.removeEventListener("keydown", handleKey);
-  }, [activeIndex, visibleCategories]);
+  }, [activeIndex, categories]);
 
   const active = categories.find((c) => c.key === activeKey) || categories[0];
 
@@ -57,6 +70,8 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
     const idx = (activeIndex + 1) % categories.length;
     setActiveKey(categories[idx].key);
   };
+  
+  // Remove "+ More" button since we're showing all by default
 
   return (
     <section className="vh-talent" aria-labelledby="vh-talent-heading">

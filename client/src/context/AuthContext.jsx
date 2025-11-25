@@ -141,15 +141,6 @@ export function AuthProvider({ children }) {
   const login = useCallback(async ({ email, password, userType = "admin" }) => {
     try {
       const resp = await API.post("/auth/login", { email, password, userType });
-      
-      console.log("[AuthContext] Login response:", resp.data);
-      
-      // Check if OTP is required
-      if (resp.data.requiresOTP) {
-        console.log("[AuthContext] OTP required, returning requiresOTP flag");
-        return { requiresOTP: true, message: resp.data.message };
-      }
-      
       const { accessToken, user: userObj } = resp.data;
       
       // Set token and user
@@ -166,29 +157,6 @@ export function AuthProvider({ children }) {
       return resp.data;
     } catch (error) {
       console.error("[AuthContext] Login failed:", error);
-      throw error;
-    }
-  }, [saveUserToStorage]);
-
-  const verifyOTP = useCallback(async ({ email, otp }) => {
-    try {
-      const resp = await API.post("/auth/verify-otp", { email, otp });
-      const { accessToken, user: userObj } = resp.data;
-      
-      // Set token and user
-      setAccessToken(accessToken);
-      setUser(userObj || null);
-      
-      // Store in localStorage for persistence
-      if (userObj) {
-        saveUserToStorage(userObj);
-        localStorage.setItem(STORAGE_KEYS.TOKEN, accessToken);
-      }
-      
-      console.log("[AuthContext] OTP verified, login successful");
-      return resp.data;
-    } catch (error) {
-      console.error("[AuthContext] OTP verification failed:", error);
       throw error;
     }
   }, [saveUserToStorage]);
@@ -222,7 +190,6 @@ export function AuthProvider({ children }) {
     user,
     setUser,
     login,
-    verifyOTP,
     logout,
     isAuthenticated: !!user,
     loading,

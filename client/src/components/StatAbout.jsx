@@ -8,7 +8,7 @@ export default function StatAbout() {
   const statContent = content?.home?.statAbout || {};
   const sectionRef = useRef(null);
   const [inView, setInView] = useState(false);
-  const [counts, setCounts] = useState({ clients: 0, satisfaction: 0, success: 0 });
+  const [counts, setCounts] = useState({ clients: 0, satisfaction: 0, success: 0, placements: 0, experience: 0 });
 
   // IntersectionObserver to detect when section comes into view
   useEffect(() => {
@@ -37,10 +37,16 @@ export default function StatAbout() {
     const duration = 2000; // 2 seconds
     const startTime = performance.now();
     
+    // Extract number from experienceNumber (e.g., "18+" -> 18)
+    const experienceStr = statContent.experienceNumber || "18+";
+    const experienceNum = parseInt(experienceStr.replace(/\D/g, '')) || 18;
+    
     const targets = {
       clients: parseInt(statContent.stat1Number || 77),
       satisfaction: parseInt(statContent.stat2Number || 98),
-      success: parseInt(statContent.stat3Number || 99)
+      success: parseInt(statContent.stat3Number || 99),
+      placements: 5000,
+      experience: experienceNum
     };
 
     // Ease out cubic function
@@ -55,7 +61,9 @@ export default function StatAbout() {
       setCounts({
         clients: Math.round(targets.clients * eased),
         satisfaction: Math.round(targets.satisfaction * eased),
-        success: Math.round(targets.success * eased)
+        success: Math.round(targets.success * eased),
+        placements: Math.round(targets.placements * eased),
+        experience: Math.round(targets.experience * eased)
       });
 
       if (progress < 1) {
@@ -78,109 +86,72 @@ export default function StatAbout() {
   return (
     <section className="stat-about" ref={sectionRef}>
       <div className="stat-about__container">
-        {/* Left Side - Image Grid */}
-        <div className="stat-about__left">
-          <div className="stat-about__image-grid">
-            {/* Top Left Image */}
-            <div className="stat-about__image-item stat-about__image-item--1">
-              <img 
-                src={statContent.images?.image1 || "/images/imagetrail/image1.jpg"} 
-                alt="Team collaboration" 
-                loading="lazy"
-              />
-            </div>
-            
-            {/* Top Right Image */}
-            <div className="stat-about__image-item stat-about__image-item--2">
-              <img 
-                src={statContent.images?.image2 || "/images/imagetrail/image2.jpg"} 
-                alt="Team working together" 
-                loading="lazy"
-              />
-            </div>
-            
-            {/* Bottom Left - Purple Card */}
-            <div className="stat-about__image-item stat-about__image-item--card">
-              <div className="stat-about__experience-card">
-              <div className="stat-about__experience-number">{statContent.experienceNumber || "18+"}</div>
-              <div className="stat-about__experience-label">{statContent.experienceLabel || "Years Of Experience"}</div>
-              <div className="stat-about__team-avatars">
-                <div className="stat-about__avatar">
-                  <img src={statContent.images?.image1 || "/images/imagetrail/image1.jpg"} alt="Team member" />
-                </div>
-                <div className="stat-about__avatar">
-                  <img src={statContent.images?.image2 || "/images/imagetrail/image2.jpg"} alt="Team member" />
-                </div>
-                <div className="stat-about__avatar">
-                  <img src={statContent.images?.image3 || "/images/imagetrail/image3.jpg"} alt="Team member" />
-                </div>
-                <div className="stat-about__avatar">
-                  <img src={statContent.images?.image4 || "/images/imagetrail/image4.jpg"} alt="Team member" />
-                </div>
-                <div className="stat-about__avatar stat-about__avatar--plus">+</div>
-              </div>
-              <div className="stat-about__team-text">{statContent.teamText || "We Are Awesome Team"}</div>
-            </div>
-            </div>
-            
-            {/* Bottom Right Image */}
-            <div className="stat-about__image-item stat-about__image-item--3">
-              <img 
-                src={statContent.images?.image3 || "/images/imagetrail/image3.jpg"} 
-                alt="Professional team member" 
-                loading="lazy"
-              />
-            </div>
-          </div>
+        {/* Header Section */}
+        <div className="stat-about__header">
+          <h2 className="stat-about__main-title">
+            {statContent.title || "Our proven track record speaks volumes"}
+          </h2>
+          <p className="stat-about__main-description">
+            {statContent.description || "We deliver measurable results through strategic talent solutions. Our commitment transforms businesses across industries."}
+          </p>
         </div>
 
-        {/* Right Side - Content */}
-        <div className="stat-about__right">
-          {/* Tag */}
-          <div className="stat-about__tag">
-            <span className="stat-about__tag-icon">🏢</span>
-            <span>{statContent.tag || "ABOUT VENUS HIRING"}</span>
-          </div>
-
-          {/* Title */}
-          <h2 className="stat-about__title">
-            {statContent.title || "Driving Success With An Expert Staffing"}
-          </h2>
-
-          {/* Description */}
-          <p className="stat-about__description">
-            {statContent.description || "At Venus Consultancy, we understand that the key to business success lies in having the right people on your team. That's why we're committed to connecting USA companies with top-tier talent across North America and beyond."}
-          </p>
-
-          {/* Stats */}
-          <div className="stat-about__stats">
-            <div className="stat-about__stat">
-              <div className="stat-about__stat-number">
-                {formatStat(counts.clients, statContent.stat1Suffix || 'K+')}
-              </div>
-              <div className="stat-about__stat-label">{statContent.stat1Label || "Trusted Partnerships"}</div>
+        {/* Grid Section - 5 Cards */}
+        <div className="stat-about__grid">
+          {/* Card 1 - Large Vertical (Top Left) */}
+          <div className="stat-about__card stat-about__card--large">
+            <div className="stat-about__card-number">
+              {counts.experience}+
             </div>
-            <div className="stat-about__stat">
-              <div className="stat-about__stat-number">
-                {formatStat(counts.satisfaction, statContent.stat2Suffix || '%')}
-              </div>
-              <div className="stat-about__stat-label">{statContent.stat2Label || "Client Satisfaction"}</div>
-            </div>
-            <div className="stat-about__stat">
-              <div className="stat-about__stat-number">
-                {formatStat(counts.success, statContent.stat3Suffix || '%')}
-              </div>
-              <div className="stat-about__stat-label">{statContent.stat3Label || "Success Rate"}</div>
+            <div className="stat-about__card-content">
+              <div className="stat-about__card-title">Years of expertise</div>
+              <div className="stat-about__card-subtitle">Decades of refined recruitment strategies</div>
             </div>
           </div>
 
-          {/* CTA Button */}
-          <Link to={statContent.ctaLink || "/book-call"} className="stat-about__cta">
-            {statContent.ctaText || "JOIN OUR NETWORK"}
-          </Link>
+          {/* Card 2 - Image Placeholder (Top Middle) */}
+          <div className="stat-about__card stat-about__card--image">
+            <img 
+              src={statContent.images?.image1 || "/images/imagetrail/image1.jpg"} 
+              alt="Team collaboration" 
+              className="stat-about__card-image"
+              loading="lazy"
+            />
+          </div>
+
+          {/* Card 3 - Stat Card (Top Right) */}
+          <div className="stat-about__card stat-about__card--stat">
+            <div className="stat-about__card-number">
+              {counts.placements.toLocaleString()}+
+            </div>
+            <div className="stat-about__card-content">
+              <div className="stat-about__card-title">Successful placements</div>
+              <div className="stat-about__card-subtitle">Connecting talent with opportunity</div>
+            </div>
+          </div>
+
+          {/* Card 4 - Stat Card (Bottom Left) */}
+          <div className="stat-about__card stat-about__card--stat">
+            <div className="stat-about__card-number">
+              {formatStat(counts.satisfaction, statContent.stat2Suffix || '%')}
+            </div>
+            <div className="stat-about__card-content">
+              <div className="stat-about__card-title">Client satisfaction</div>
+              <div className="stat-about__card-subtitle">Consistently exceeding expectations</div>
+            </div>
+          </div>
+
+          {/* Card 5 - Image Placeholder (Bottom Right) */}
+          <div className="stat-about__card stat-about__card--image">
+            <img 
+              src={statContent.images?.image2 || "/images/imagetrail/image2.jpg"} 
+              alt="Professional team" 
+              className="stat-about__card-image"
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
     </section>
   );
 }
-

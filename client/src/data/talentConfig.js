@@ -315,6 +315,145 @@ const talentConfig = {
           "rgba(155, 81, 224, 0.25)",
           "rgba(46, 204, 113, 0.25)"
         ]
+      },
+      {
+        key: "lightIndustrial",
+        label: "Light Industrial",
+        intro:
+          "Flexible workforce solutions for light manufacturing, assembly, and production operations.",
+        roles: [
+          "Assembly Workers",
+          "Production Operators",
+          "Quality Inspectors",
+          "Warehouse Associates",
+          "Packaging Specialists",
+          "Material Handlers",
+          "Machine Operators",
+          "Line Workers"
+        ],
+        images: [
+          "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop&auto=format",
+          "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=600&fit=crop&auto=format",
+          "https://images.unsplash.com/photo-1581092160561-40a0e2b0c8a3?w=800&h=600&fit=crop&auto=format"
+        ],
+        learnMoreUrl: "/services",
+        shapeColors: [
+          "rgba(241, 196, 15, 0.25)",
+          "rgba(52, 152, 219, 0.25)",
+          "rgba(46, 204, 113, 0.25)"
+        ]
+      },
+      {
+        key: "officeClerical",
+        label: "Office & Clerical",
+        intro:
+          "Administrative and clerical professionals to keep your office operations running smoothly.",
+        roles: [
+          "Administrative Assistant",
+          "Office Manager",
+          "Data Entry Specialist",
+          "Receptionist",
+          "Executive Assistant",
+          "Clerical Support",
+          "File Clerk",
+          "Office Coordinator",
+          "Secretary",
+          "Administrative Coordinator"
+        ],
+        images: [
+          "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&h=600&fit=crop&auto=format",
+          "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop&auto=format",
+          "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&h=600&fit=crop&auto=format"
+        ],
+        learnMoreUrl: "/services",
+        shapeColors: [
+          "rgba(52, 152, 219, 0.25)",
+          "rgba(155, 81, 224, 0.25)",
+          "rgba(241, 196, 15, 0.25)"
+        ]
+      },
+      {
+        key: "outsourcing",
+        label: "Outsourcing",
+        intro:
+          "Comprehensive outsourcing solutions for business process optimization and cost efficiency.",
+        roles: [
+          "Business Process Outsourcing",
+          "IT Outsourcing",
+          "HR Outsourcing",
+          "Finance & Accounting Outsourcing",
+          "Customer Service Outsourcing",
+          "Data Processing",
+          "Back Office Support",
+          "Shared Services"
+        ],
+        images: [
+          "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop&auto=format",
+          "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop&auto=format",
+          "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&h=600&fit=crop&auto=format"
+        ],
+        learnMoreUrl: "/services",
+        shapeColors: [
+          "rgba(46, 204, 113, 0.25)",
+          "rgba(52, 152, 219, 0.25)",
+          "rgba(155, 81, 224, 0.25)"
+        ]
+      },
+      {
+        key: "recruitmentProcessOutsourcing",
+        label: "Recruitment Process Outsourcing (RPO)",
+        intro:
+          "End-to-end recruitment process outsourcing to streamline your hiring and reduce time-to-fill.",
+        roles: [
+          "Recruitment Process Management",
+          "Talent Acquisition Specialists",
+          "Sourcing & Screening",
+          "Interview Coordination",
+          "Candidate Management",
+          "Onboarding Support",
+          "Recruitment Analytics",
+          "Employer Branding"
+        ],
+        images: [
+          "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop&auto=format",
+          "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop&auto=format",
+          "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop&auto=format"
+        ],
+        learnMoreUrl: "/services",
+        shapeColors: [
+          "rgba(155, 81, 224, 0.25)",
+          "rgba(52, 152, 219, 0.25)",
+          "rgba(46, 204, 113, 0.25)"
+        ]
+      },
+      {
+        key: "engineering",
+        label: "Engineering",
+        intro:
+          "Skilled engineering professionals across multiple disciplines for complex technical projects.",
+        roles: [
+          "Mechanical Engineer",
+          "Electrical Engineer",
+          "Civil Engineer",
+          "Chemical Engineer",
+          "Industrial Engineer",
+          "Process Engineer",
+          "Project Engineer",
+          "Design Engineer",
+          "Quality Engineer",
+          "Manufacturing Engineer"
+        ],
+        images: [
+          "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop&auto=format",
+          "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=600&fit=crop&auto=format",
+          "https://images.unsplash.com/photo-1581092160561-40a0e2b0c8a3?w=800&h=600&fit=crop&auto=format"
+        ],
+        learnMoreUrl: "/services",
+        shapeColors: [
+          "rgba(44, 62, 80, 0.25)",
+          "rgba(52, 152, 219, 0.25)",
+          "rgba(46, 204, 113, 0.25)"
+        ]
       }
       // ➕ Add more industries here
     ],

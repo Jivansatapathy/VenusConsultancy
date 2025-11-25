@@ -27,6 +27,10 @@ const Hiring = lazy(() => import("./pages/Hiring"));
 const JobRoles = lazy(() => import("./pages/JobRoles"));
 const ServiceCategory = lazy(() => import("./pages/ServiceCategory"));
 const Blog = lazy(() => import("./pages/Blog"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const Disclaimer = lazy(() => import("./pages/Disclaimer"));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -156,6 +160,26 @@ function AppContent() {
         <Route path="/service-category/:categoryKey" element={
           <Suspense fallback={<LoadingFallback />}>
             <ServiceCategory />
+          </Suspense>
+        } />
+        <Route path="/gallery" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Gallery />
+          </Suspense>
+        } />
+        <Route path="/privacy" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <PrivacyPolicy />
+          </Suspense>
+        } />
+        <Route path="/terms" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <TermsOfService />
+          </Suspense>
+        } />
+        <Route path="/disclaimer" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Disclaimer />
           </Suspense>
         } />
 

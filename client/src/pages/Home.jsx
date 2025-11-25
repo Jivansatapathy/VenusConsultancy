@@ -5,7 +5,6 @@ import StatAbout from "../components/StatAbout";
 
 // Lazy load heavy components that are below the fold
 const Certifications = lazy(() => import("../components/Certifications"));
-const WhyStats = lazy(() => import("../components/WhyStats"));
 const TalentSection = lazy(() => import("../components/TalentSection"));
 const ServicesSection = lazy(() => import("../components/ServicesSection"));
 const BlogSection = lazy(() => import("../components/BlogSection"));
@@ -37,9 +36,7 @@ export default function Home() {
       </Suspense>
       {/* Certifications section removed as requested */}
       {/* JourneyStats section removed as requested */}
-      <Suspense fallback={<LazyFallback />}>
-        <WhyStats />
-      </Suspense>
+      {/* WhyStats section removed */}
       <Suspense fallback={<LazyFallback />}>
         <BlogSection/>
       </Suspense>

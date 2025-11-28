@@ -47,7 +47,7 @@ const Footer = () => {
             <div className="vh-footer__contact">
               <div className="vh-footer__contact-item">
                 <p className="vh-footer__contact-label">USA Office</p>
-                <p className="vh-footer__contact-text">225 – 880 W Long Lake Road</p>
+                <p className="vh-footer__contact-text">880 W Long Lake Rd Ste 225</p>
                 <p className="vh-footer__contact-text">Troy, MI 48098</p>
               </div>
               <div className="vh-footer__contact-item">

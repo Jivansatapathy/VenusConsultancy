@@ -173,7 +173,7 @@ const TermsOfService = () => {
             </p>
             <div className="legal-section__contact">
               <p><strong>Venus Hiring</strong></p>
-              <p>225 – 880 W Long Lake Road</p>
+              <p>880 W Long Lake Rd Ste 225</p>
               <p>Troy, MI 48098, USA</p>
               <p>Email: <a href="mailto:info@venushiring.com" className="legal-section__link">info@venushiring.com</a></p>
               <p>Phone: <a href="tel:248-275-1077" className="legal-section__link">248-275-1077</a></p>

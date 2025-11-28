@@ -50,10 +50,28 @@ const LoadingFallback = () => (
 function AppContent() {
   const location = useLocation();
 
-
-  // Scroll to top on route change
+  // Scroll to top on route change - improved implementation
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Use multiple methods for better browser compatibility
+    const scrollToTop = () => {
+      // Try modern method first
+      if ('scrollBehavior' in document.documentElement.style) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      } else {
+        window.scrollTo(0, 0);
+      }
+      // Fallback for older browsers
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+    
+    // Immediate scroll
+    scrollToTop();
+    
+    // Also scroll after a small delay to handle any async rendering or transitions
+    const timeoutId = setTimeout(scrollToTop, 150);
+    
+    return () => clearTimeout(timeoutId);
   }, [location]);
 
   return (

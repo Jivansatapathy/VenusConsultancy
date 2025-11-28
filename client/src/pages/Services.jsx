@@ -518,8 +518,8 @@ const Services = () => {
               <Link to="/contact" className="svc-btn-connect">
                 Connect
               </Link>
-              <Link to="/about" className="svc-btn-learn">
-                <span>Learn more</span>
+              <Link to="/book-call" className="svc-btn-learn">
+                <span>Connect</span>
               </Link>
             </div>
           </div>

@@ -5,6 +5,7 @@
   padding: 1.5rem 0;
   overflow: hidden;
   position: relative;
+  z-index: 10;
 }
 
 .scrolling-banner__container {

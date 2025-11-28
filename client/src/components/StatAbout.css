@@ -155,6 +155,7 @@
   padding: 0;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+  position: relative;
 }
 
 /* Card Content Styles */

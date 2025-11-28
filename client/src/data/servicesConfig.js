@@ -4,7 +4,7 @@
 const services = {
     heading: "Our Services",
     description:
-      "We provide tailored hiring and advisory services to help organisations build strong teams and leadership.",
+      "Strategic recruitment and advisory services designed to help organizations build exceptional teams and drive sustainable growth.",
     items: [
       {
         key: "permanent-staffing",

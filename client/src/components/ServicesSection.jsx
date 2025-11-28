@@ -32,12 +32,12 @@ const ServicesSection = () => {
       <div className="vh-services__container">
         {/* Header Section */}
         <div className="vh-services__header">
-          <div className="vh-services__branding">Talent</div>
+          <div className="vh-services__branding">Solutions</div>
           <h2 id="vh-services-heading" className="vh-services__heading">
-            {heading || "Our services"}
+            More ways we can help
           </h2>
           <p className="vh-services__desc">
-            {description || "Comprehensive solutions for every hiring challenge"}
+            {description || "Strategic recruitment services tailored to your business needs"}
           </p>
         </div>
 
@@ -67,13 +67,6 @@ const ServicesSection = () => {
                   )}
                   <h3 className="vh-service-card__title">{it.title}</h3>
                   <p className="vh-service-card__excerpt">{it.excerpt}</p>
-                  <Link 
-                    to={it.link || "/contact"} 
-                    className="vh-service-card__link"
-                    aria-label={`Learn more about ${it.title}`}
-                  >
-                    Learn more <span className="vh-service-card__link-arrow">&gt;</span>
-                  </Link>
                 </div>
               </article>
             );

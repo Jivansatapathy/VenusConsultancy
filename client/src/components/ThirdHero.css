@@ -162,14 +162,14 @@
 }
 
 .btn--primary-dark {
-  background: #1A2020;
+  background: #e50914;
   color: #fff;
-  border-color: #1A2020;
+  border-color: #e50914;
 }
 
 .btn--primary-dark:hover {
-  background: #2d3748;
-  border-color: #2d3748;
+  background: #c40812;
+  border-color: #c40812;
   transform: translateY(-2px) !important;
 }
 

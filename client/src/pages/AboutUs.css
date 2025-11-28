@@ -48,16 +48,30 @@
   width: 100%;
   max-width: 600px;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
+}
+
+.about-hero-slideshow {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 400px;
 }
 
 .about-hero-image {
+  position: relative;
   width: 100%;
   height: auto;
   display: block;
   object-fit: contain;
   background: transparent;
   filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+  opacity: 1;
+}
+
+.about-hero-image.active {
+  opacity: 1;
+  position: relative;
 }
 
 /* Right Side - Text and Features */

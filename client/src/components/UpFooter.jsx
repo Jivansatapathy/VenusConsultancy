@@ -28,7 +28,7 @@ const UpFooter = () => {
               <a href="/contact" className="vh-upfooter__btn vh-upfooter__btn--primary">
                 Hire Top Talent
               </a>
-              <a href="/contact" className="vh-upfooter__btn vh-upfooter__btn--secondary">
+              <a href="/find-jobs" className="vh-upfooter__btn vh-upfooter__btn--secondary">
                 Explore Career Opportunities
               </a>
             </div>

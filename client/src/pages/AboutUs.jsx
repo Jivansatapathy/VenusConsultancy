@@ -5,13 +5,14 @@ import "./AboutUs.css";
 import ImageTrail from "../components/ImageTrail";
 
 const AboutUs = () => {
+
   return (
     <main className="about-page">
       {/* Hero Section - About Us Design with Image Trail */}
       <section className="about-hero-section">
         <div className="about-hero-container">
           <div className="about-hero-grid">
-            {/* Left Side - Image */}
+            {/* Left Side - Single Image */}
             <div className="about-hero-left">
               <div className="about-hero-image-wrapper">
                 <img 
@@ -192,12 +193,12 @@ const AboutUs = () => {
                   <p className="about-approach-card-description">
                     Precision screening with advanced assessment frameworks and predictive analytics
                   </p>
-                  <a href="#methodology" className="about-approach-card-link">
+                  <Link to="/services" className="about-approach-card-link">
                     Learn more
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -214,12 +215,12 @@ const AboutUs = () => {
                 <p className="about-approach-card-small-description">
                   Leveraging machine learning to decode complex talent landscapes
                 </p>
-                <a href="#insights" className="about-approach-card-link">
+                <Link to="/services" className="about-approach-card-link">
                   Explore
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                </a>
+                </Link>
               </div>
 
               <div className="about-approach-card-small">
@@ -273,13 +274,12 @@ const AboutUs = () => {
                     Sourcing top-tier tech talent from software engineers to cybersecurity experts
                   </p>
                   <div className="industries-card-ctas">
-                    <a href="#tech-roles" className="industries-cta-primary">View roles</a>
-                    <a href="#tech-explore" className="industries-cta-link">
+                    <Link to="/services" className="industries-cta-link">
                       Explore
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -298,12 +298,12 @@ const AboutUs = () => {
                   <p className="industries-card-description">
                     Connecting innovative medical and research talent
                   </p>
-                  <a href="#healthcare" className="industries-cta-link">
+                  <Link to="/services" className="industries-cta-link">
                     Discover
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -318,12 +318,12 @@ const AboutUs = () => {
                   <p className="industries-card-small-description">
                     Precision talent for complex industrial landscapes
                   </p>
-                  <a href="#engineering" className="industries-cta-link">
+                  <Link to="/services" className="industries-cta-link">
                     Learn more
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="industries-card-small">
@@ -358,13 +358,12 @@ const AboutUs = () => {
                     Identifying transformative leaders who drive organizational excellence
                   </p>
                   <div className="industries-card-ctas">
-                    <a href="#leadership-roles" className="industries-cta-primary">View opportunities</a>
-                    <a href="#leadership-explore" className="industries-cta-link">
+                    <Link to="/services" className="industries-cta-link">
                       Explore
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -384,7 +383,7 @@ const AboutUs = () => {
                 Machine learning transforms recruitment. Advanced algorithms decode complex talent landscapes with unprecedented precision and insight.
               </p>
               <div className="ai-platform-ctas">
-                <a href="#explore" className="ai-platform-btn-explore">Explore</a>
+                <Link to="/services" className="ai-platform-btn-explore">Explore</Link>
                 <Link to="/contact" className="ai-platform-link-connect">
                   Connect
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -476,13 +475,13 @@ const AboutUs = () => {
               </div>
 
               <div className="our-impact-ctas">
-                <a href="#learn" className="our-impact-btn-learn">Learn</a>
-                <a href="#insights" className="our-impact-link-insights">
+                <Link to="/contact" className="our-impact-btn-learn">Connect</Link>
+                <Link to="/services" className="our-impact-link-insights">
                   Insights
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -500,13 +499,7 @@ const AboutUs = () => {
                 Quantitative insights reveal the power of intelligent talent acquisition across industries.
               </p>
               <div className="performance-ctas">
-                <a href="#analyze" className="performance-btn-analyze">Analyze</a>
-                <a href="#details" className="performance-link-details">
-                  Details
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </a>
+                <Link to="/book-call" className="performance-btn-analyze">Book a call</Link>
               </div>
             </div>
 
@@ -544,8 +537,8 @@ const AboutUs = () => {
                 Partner with Venus Hiring and unlock precision hiring across global industries.
               </p>
               <div className="cta-buttons">
-                <Link to="/jobs" className="cta-btn-primary">Hire talent</Link>
-                <Link to="/jobs" className="cta-btn-secondary">Find jobs</Link>
+                <Link to="/contact" className="cta-btn-primary">Hire talent</Link>
+                <Link to="/find-jobs" className="cta-btn-secondary">Find jobs</Link>
               </div>
             </div>
             <div className="cta-image-wrapper">

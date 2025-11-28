@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../utils/api";
 import "./BookCall.css";
+import FAQ from "../components/FAQ";
 
 const BookCall = () => {
   const navigate = useNavigate();
@@ -259,6 +260,7 @@ const BookCall = () => {
           </div>
         </form>
       </div>
+      <FAQ />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import "./AboutUs.css";
 import ImageTrail from "../components/ImageTrail";
+import FAQ from "../components/FAQ";
 
 const AboutUs = () => {
 
@@ -395,10 +396,7 @@ const AboutUs = () => {
 
             <div className="ai-platform-images-column">
               <div className="ai-platform-image-large">
-                <img src="/aboutus/aboutus5.png" alt="AI-powered talent discovery" />
-              </div>
-              <div className="ai-platform-image-small">
-                <img src="/aboutus/aboutus2.png" alt="Collaborative workspace" />
+                <img src="/slider/laptopjob.jpg" alt="AI-powered talent discovery" />
               </div>
             </div>
           </div>
@@ -415,7 +413,7 @@ const AboutUs = () => {
           <div className="our-impact-grid">
             <div className="our-impact-image-column">
               <div className="our-impact-image-card">
-                <img src="/aboutus/aboutus6.png" alt="Our Impact" />
+                <img src="/Gallery/Venus Consultancy at Job-fair event.jpg" alt="Venus Consultancy at Job-fair event" />
               </div>
             </div>
 
@@ -542,11 +540,12 @@ const AboutUs = () => {
               </div>
             </div>
             <div className="cta-image-wrapper">
-              <img src="/aboutus/aboutus5.png" alt="Transform your talent strategy" className="cta-image" />
+              <img src="/slider/transform.avif" alt="Transform your talent strategy" className="cta-image" />
             </div>
           </div>
         </div>
       </section>
+      <FAQ />
     </main>
   );
 };

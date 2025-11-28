@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import "./ServiceCategory.css";
+import FAQ from "../components/FAQ";
 
 const ServiceCategory = () => {
   const { categoryKey } = useParams();
@@ -581,6 +582,7 @@ const ServiceCategory = () => {
           onClose={() => setShowApplyModal(false)} 
         />
       )}
+      <FAQ />
     </main>
   );
 };

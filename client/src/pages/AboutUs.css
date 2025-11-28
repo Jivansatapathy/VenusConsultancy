@@ -845,40 +845,22 @@
 
 .ai-platform-images-column {
   position: relative;
-  height: 100%;
-  min-height: 500px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ai-platform-image-large {
   position: relative;
-  width: 85%;
-  height: auto;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-  z-index: 1;
 }
 
 .ai-platform-image-large img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.ai-platform-image-small {
-  position: absolute;
-  bottom: -40px;
-  right: 0;
-  width: 60%;
-  height: auto;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-  z-index: 2;
-}
-
-.ai-platform-image-small img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1163,7 +1145,7 @@
 
 /* CTA Section */
 .cta-section {
-  padding: 6rem 2rem;
+  padding: 3rem 2rem;
   background: #f5f7fa;
 }
 
@@ -1178,7 +1160,7 @@
 }
 
 .cta-content {
-  padding: 4rem 3rem;
+  padding: 2.5rem 3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1249,7 +1231,7 @@
 .cta-image-wrapper {
   width: 100%;
   height: 100%;
-  min-height: 400px;
+  min-height: 300px;
   overflow: hidden;
 }
 
@@ -1322,6 +1304,15 @@
     text-align: center;
   }
 
+  .ai-platform-images-column {
+    min-height: auto;
+  }
+
+  .ai-platform-image-large {
+    aspect-ratio: 16 / 9;
+    min-height: 300px;
+  }
+
   .our-impact-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -1378,7 +1369,7 @@
   .our-impact-section,
   .performance-section,
   .cta-section {
-    padding: 4rem 1.5rem;
+    padding: 2.5rem 1.5rem;
   }
 
   .mission-vision-title,
@@ -1421,13 +1412,25 @@
     min-height: 250px;
   }
 
-  .ai-platform-images-column {
-    min-height: 300px;
+  .ai-platform-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    min-height: auto;
   }
 
-  .ai-platform-image-small {
-    width: 75%;
-    bottom: -20px;
+  .ai-platform-text-column {
+    padding-right: 0;
+    order: 1;
+  }
+
+  .ai-platform-images-column {
+    order: 2;
+    min-height: auto;
+  }
+
+  .ai-platform-image-large {
+    aspect-ratio: 16 / 9;
+    min-height: 250px;
   }
 
   .our-impact-features-grid {

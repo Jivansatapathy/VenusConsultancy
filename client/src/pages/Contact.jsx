@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MapPin, Phone, Mail } from "lucide-react";
 import "./Contact.css";
 import API from "../utils/api";
+import FAQ from "../components/FAQ";
 
 const offices = [
   {
@@ -321,6 +322,7 @@ const Contact = () => {
           ))}
         </div>
       </section>
+      <FAQ />
     </main>
   );
 };

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../utils/api";
 import "./FindJobs.css";
+import FAQ from "../components/FAQ";
 
 const FindJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -395,6 +396,7 @@ const ApplyModal = ({ job, onClose }) => {
           </div>
         </form>
       </div>
+      <FAQ />
     </div>
   );
 };

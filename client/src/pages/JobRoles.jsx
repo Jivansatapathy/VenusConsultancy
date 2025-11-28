@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllIndustries, getJobRolesByIndustry } from "../data/jobRolesData";
 import "./JobRoles.css";
+import FAQ from "../components/FAQ";
 
 const JobRoles = () => {
   const [selectedIndustry, setSelectedIndustry] = useState("All");
@@ -101,6 +102,7 @@ const JobRoles = () => {
           </div>
         </div>
       </div>
+      <FAQ />
     </div>
   );
 };

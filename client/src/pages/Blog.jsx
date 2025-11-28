@@ -5,6 +5,7 @@ import { useSEOContent } from "../context/SEOContentContext";
 import blogConfig from "../data/blogConfig.js";
 import BlogPostDetail from "./BlogPostDetail";
 import "./Blog.css";
+import FAQ from "../components/FAQ";
 
 const formatDate = (iso) => {
   try {
@@ -119,6 +120,7 @@ const Blog = () => {
             })}
           </div>
         )}
+        <FAQ />
       </div>
     </div>
   );

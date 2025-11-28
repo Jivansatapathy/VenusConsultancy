@@ -3,6 +3,7 @@ import React, { useState, Suspense, lazy } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { jobRolesData } from "../data/jobRolesData";
 import "./Services.css";
+import FAQ from "../components/FAQ";
 
 // Lazy load ServicesSection
 const ServicesSection = lazy(() => import("../components/ServicesSection"));
@@ -811,6 +812,7 @@ const Services = () => {
         </div>
       )}
 
+      <FAQ />
     </main>
   );
 };

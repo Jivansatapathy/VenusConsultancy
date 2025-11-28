@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getJobRoleByKey, getAllIndustries, getJobRolesByIndustry, jobRolesData } from "../data/jobRolesData";
 import "./Hiring.css";
+import FAQ from "../components/FAQ";
 
 const Hiring = () => {
   const { jobRole } = useParams();
@@ -197,6 +198,7 @@ const Hiring = () => {
           </div>
         </div>
       </div>
+      <FAQ />
     </div>
   );
 };

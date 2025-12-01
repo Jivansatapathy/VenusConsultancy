@@ -50,36 +50,47 @@ const NewHero = () => {
   const { content } = useSEOContent();
   const heroContent = content?.home?.hero || {};
 
-  // First slider with jobfair images repeating
-  const slider1Images = [
+  // All available slider images
+  const allSliderImages = [
     '/slider/jobfair.jpg',
     '/slider/jobfair1.jpg',
     '/slider/jobfair2.jpg',
-    '/slider/jobfair.jpg',
-    '/slider/jobfair1.jpg',
-    '/slider/jobfair2.jpg'
+    '/slider/jobfair3.jpg',
+    '/slider/jobfair4.jpg',
+    '/slider/jobfair5.jpg',
+    '/slider/laptopjob.jpg',
+    '/slider/Venus Consultancy at Job-fair event.jpg',
+    '/slider/Team Venus helping at Community Job fair.jpg',
+    '/slider/Venus Consultancy at Baltimore US for NMSDC Conference.jpg',
+    '/slider/Conference at Harvard Business School.jpg',
+    '/slider/Supplier Diversity event at Stellantis.jpg',
+    '/slider/Team Venus at US thanks giving dinner at AMCHAM Gala Event.jpg'
   ];
 
-  // Second slider with jobfair images repeating (alternating pattern)
-  const slider2Images = [
-    '/slider/jobfair1.jpg',
-    '/slider/jobfair2.jpg',
-    '/slider/jobfair.jpg',
-    '/slider/jobfair1.jpg',
-    '/slider/jobfair2.jpg',
-    '/slider/jobfair.jpg'
-  ];
+  // Split images evenly - half in slider 1, half in slider 2
+  const midPoint = Math.ceil(allSliderImages.length / 2);
+  const slider1Images = allSliderImages.slice(0, midPoint);
+  const slider2Images = allSliderImages.slice(midPoint);
+  
+  // Duplicate arrays to create seamless loop
+  const slider1Final = [...slider1Images, ...slider1Images];
+  const slider2Final = [...slider2Images, ...slider2Images];
 
-  // Mobile slider with Gallery images only
+  // Mobile slider with all slider images
   const mobileSliderImages = [
     '/slider/jobfair.jpg',
     '/slider/jobfair1.jpg',
     '/slider/jobfair2.jpg',
-    '/Gallery/Venus Consultancy at Baltimore US for NMSDC Conference.jpg',
-    '/Gallery/Great meeting with Governor of Arizona, Katie Hobbs.jpg',
-    '/Gallery/Meeting with Governor of Michigan Gretchen Whitmer.jpg',
-    '/Gallery/Team Venus at US thanks giving dinner at AMCHAM Gala Event.jpg',
-    '/Gallery/Great Meeting with Governor of Indiana, Eric Holcomb.jpg'
+    '/slider/jobfair3.jpg',
+    '/slider/jobfair4.jpg',
+    '/slider/jobfair5.jpg',
+    '/slider/laptopjob.jpg',
+    '/slider/Venus Consultancy at Job-fair event.jpg',
+    '/slider/Team Venus helping at Community Job fair.jpg',
+    '/slider/Venus Consultancy at Baltimore US for NMSDC Conference.jpg',
+    '/slider/Conference at Harvard Business School.jpg',
+    '/slider/Supplier Diversity event at Stellantis.jpg',
+    '/slider/Team Venus at US thanks giving dinner at AMCHAM Gala Event.jpg'
   ];
 
   return (
@@ -116,13 +127,13 @@ const NewHero = () => {
 
         {/* Right Side - Desktop Sliders */}
         <div className="hero-sliders">
-          <VerticalSlider images={slider1Images} speed={25} className="slider-1" />
-          <VerticalSlider images={slider2Images} speed={30} className="slider-2" />
+          <VerticalSlider images={slider1Final} speed={70} className="slider-1" />
+          <VerticalSlider images={slider2Final} speed={70} className="slider-2" />
         </div>
 
         {/* Mobile Slider */}
         <div className="hero-mobile-slider">
-          <MobileSlider images={mobileSliderImages} speed={25} />
+          <MobileSlider images={mobileSliderImages} speed={60} />
         </div>
       </div>
     </section>

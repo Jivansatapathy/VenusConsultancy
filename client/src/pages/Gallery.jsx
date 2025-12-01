@@ -3,6 +3,7 @@ import React, { useState, useMemo } from "react";
 import "./Gallery.css";
 import { galleryData } from "../data/galleryData";
 import FAQ from "../components/FAQ";
+import YouTubeVideos from "../components/YouTubeVideos";
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -189,6 +190,12 @@ const Gallery = () => {
           </div>
         </div>
       )}
+
+      {/* YouTube Videos Section */}
+      <YouTubeVideos 
+        maxResults={12}
+      />
+
       <FAQ />
     </main>
   );

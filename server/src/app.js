@@ -23,6 +23,7 @@ import chatRoutes from "./routes/chatRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import healthRoutes from "./routes/healthRoutes.js";
 import contentRoutes from "./routes/contentRoutes.js";
+import youtubeRoutes from "./routes/youtubeRoutes.js";
 import connectDB from "./config/db.js";
 
 const app = express();
@@ -138,6 +139,7 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/health", healthRoutes);
 app.use("/api/content", contentRoutes);
+app.use("/api/youtube", youtubeRoutes);
 
 // ---- Serve Frontend (guarded) ----
 import fs from "fs";

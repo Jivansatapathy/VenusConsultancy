@@ -172,12 +172,6 @@ const Gallery = () => {
               </div>
               <div className="gallery-modal__details">
                 <h2 className="gallery-modal__title">{selectedImage.eventName}</h2>
-                <div className="gallery-modal__meta">
-                  <div className="gallery-modal__meta-item">
-                    <span className="gallery-modal__meta-label">Location:</span>
-                    <span className="gallery-modal__meta-value">{selectedImage.location}</span>
-                  </div>
-                </div>
                 <div className="gallery-modal__description">
                   <p>{selectedImage.description}</p>
                 </div>

@@ -64,7 +64,6 @@ const YouTubeVideos = ({ maxResults = 12 }) => {
     return (
       <div className="youtube-videos-section">
         <div className="youtube-videos-container">
-          <h2 className="youtube-videos-title">Our YouTube Videos</h2>
           <div className="youtube-videos-loading">Loading videos...</div>
         </div>
       </div>
@@ -75,7 +74,6 @@ const YouTubeVideos = ({ maxResults = 12 }) => {
     return (
       <div className="youtube-videos-section">
         <div className="youtube-videos-container">
-          <h2 className="youtube-videos-title">Our YouTube Videos</h2>
           <div className="youtube-videos-error">
             Unable to load videos. Please check your YouTube API configuration.
           </div>
@@ -91,13 +89,6 @@ const YouTubeVideos = ({ maxResults = 12 }) => {
   return (
     <section className="youtube-videos-section">
       <div className="youtube-videos-container">
-        <div className="youtube-videos-header">
-          <h2 className="youtube-videos-title">Our YouTube Videos</h2>
-          <p className="youtube-videos-subtitle">
-            Watch our latest videos from events, conferences, and more
-          </p>
-        </div>
-        
         <div className="youtube-videos-grid">
           {videos.filter(video => !failedThumbnails.has(video.id)).map((video) => (
             <div

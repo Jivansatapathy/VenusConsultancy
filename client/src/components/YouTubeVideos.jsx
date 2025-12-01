@@ -8,8 +8,8 @@ const YouTubeVideos = ({ maxResults = 12 }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Hardcoded channel handle - extract from URL: @venusconsultancy5699
-  const channelHandle = "venusconsultancy5699";
+  // Hardcoded playlist ID
+  const playlistId = "PL7_T4oO_C6rWX50IcHwrGXTkx_3Ks2T7V";
 
   const fetchVideos = async () => {
     try {
@@ -19,7 +19,7 @@ const YouTubeVideos = ({ maxResults = 12 }) => {
       // Fetch videos from our backend API (which calls YouTube API securely)
       const response = await API.get("/youtube/videos", {
         params: {
-          channelHandle: channelHandle,
+          playlistId: playlistId,
           maxResults: maxResults
         }
       });

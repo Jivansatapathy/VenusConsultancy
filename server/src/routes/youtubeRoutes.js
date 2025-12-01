@@ -30,20 +30,36 @@ router.get("/videos", async (req, res) => {
       throw new Error(response.data.error.message || "Failed to fetch videos");
     }
 
-    // Transform YouTube API response to our format
-    const formattedVideos = response.data.items.map((item) => {
-      const videoId = item.contentDetails?.videoId || item.snippet?.resourceId?.videoId;
-      return {
-        id: videoId,
-        title: item.snippet.title,
-        description: item.snippet.description,
-        thumbnail: item.snippet.thumbnails?.high?.url || item.snippet.thumbnails?.medium?.url,
-        publishedAt: item.snippet.publishedAt,
-        channelTitle: item.snippet.channelTitle,
-        videoUrl: `https://www.youtube.com/watch?v=${videoId}`,
-        embedUrl: `https://www.youtube.com/embed/${videoId}`
-      };
-    }).filter(video => video.id); // Filter out any items without video ID
+    // Transform YouTube API response to our format and filter out deleted videos
+    const formattedVideos = response.data.items
+      .filter((item) => {
+        // Filter out deleted/private videos
+        // Deleted videos often have missing snippet or title like "Deleted video" or "Private video"
+        const title = item.snippet?.title || "";
+        const videoId = item.contentDetails?.videoId || item.snippet?.resourceId?.videoId;
+        
+        // Check if video is deleted or private
+        if (!videoId) return false;
+        if (title.toLowerCase().includes("deleted video")) return false;
+        if (title.toLowerCase().includes("private video")) return false;
+        if (!item.snippet?.thumbnails) return false; // Missing thumbnails often indicate deleted videos
+        
+        return true;
+      })
+      .map((item) => {
+        const videoId = item.contentDetails?.videoId || item.snippet?.resourceId?.videoId;
+        return {
+          id: videoId,
+          title: item.snippet.title,
+          description: item.snippet.description,
+          thumbnail: item.snippet.thumbnails?.high?.url || item.snippet.thumbnails?.medium?.url,
+          publishedAt: item.snippet.publishedAt,
+          channelTitle: item.snippet.channelTitle,
+          videoUrl: `https://www.youtube.com/watch?v=${videoId}`,
+          embedUrl: `https://www.youtube.com/embed/${videoId}`
+        };
+      })
+      .filter(video => video.id && video.thumbnail); // Final filter to ensure we have valid video ID and thumbnail
 
     res.json({
       success: true,

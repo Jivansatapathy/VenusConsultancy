@@ -19,15 +19,15 @@ export const galleryData = [
   //   attendees: "Venus Consultancy team met with the Consulate General of the U.S.",
   //   orientation: "landscape"
   // },
-  {
-    id: 6,
-    image: "/Gallery/With The U.S Ambassador David Cohen.jpg",
-    eventName: "With David Cohen - U.S. Ambassador",
-    location: "United States",
-    description: "Prestigious meeting with U.S. Ambassador David Cohen to discuss international talent solutions and diplomatic partnerships.",
-    attendees: "Venus Consultancy team met with David Cohen, U.S. Ambassador",
-    orientation: "landscape"
-  },
+  // {
+  //   id: 6,
+  //   image: "/Gallery/With The U.S Ambassador David Cohen.jpg",
+  //   eventName: "With David Cohen - U.S. Ambassador",
+  //   location: "United States",
+  //   description: "Prestigious meeting with U.S. Ambassador David Cohen to discuss international talent solutions and diplomatic partnerships.",
+  //   attendees: "Venus Consultancy team met with David Cohen, U.S. Ambassador",
+  //   orientation: "landscape"
+  // },
   // {
   //   id: 9,
   //   image: "/Gallery/Meeting with Governor of Michigan Gretchen Whitmer.jpg",

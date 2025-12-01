@@ -7,6 +7,7 @@ const YouTubeVideos = ({ maxResults = 12 }) => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [failedThumbnails, setFailedThumbnails] = useState(new Set());
 
   // Hardcoded playlist ID
   const playlistId = "PL7_T4oO_C6rWX50IcHwrGXTkx_3Ks2T7V";
@@ -47,6 +48,12 @@ const YouTubeVideos = ({ maxResults = 12 }) => {
 
     return () => clearInterval(refreshInterval);
   }, [maxResults]);
+
+  const handleThumbnailError = (videoId) => {
+    // Mark thumbnail as failed and remove video from display
+    setFailedThumbnails(prev => new Set([...prev, videoId]));
+    setVideos(prev => prev.filter(video => video.id !== videoId));
+  };
 
   const openVideoModal = (video) => {
     // Open video in modal or new tab
@@ -92,7 +99,7 @@ const YouTubeVideos = ({ maxResults = 12 }) => {
         </div>
         
         <div className="youtube-videos-grid">
-          {videos.map((video) => (
+          {videos.filter(video => !failedThumbnails.has(video.id)).map((video) => (
             <div
               key={video.id}
               className="youtube-video-item"
@@ -104,6 +111,7 @@ const YouTubeVideos = ({ maxResults = 12 }) => {
                   alt={video.title}
                   className="youtube-video-thumbnail"
                   loading="lazy"
+                  onError={() => handleThumbnailError(video.id)}
                 />
                 <div className="youtube-video-play-button">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="white">

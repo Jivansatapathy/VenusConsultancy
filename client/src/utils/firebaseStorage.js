@@ -60,3 +60,10 @@ export const uploadContentImage = async (file) => {
   return uploadImageToFirebase(file, 'content-images');
 };
 
+/**
+ * Upload image for gallery
+ */
+export const uploadGalleryImage = async (file) => {
+  return uploadImageToFirebase(file, 'gallery-images');
+};
+

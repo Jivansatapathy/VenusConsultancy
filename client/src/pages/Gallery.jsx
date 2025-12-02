@@ -1,13 +1,38 @@
 // client/src/pages/Gallery.jsx
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import "./Gallery.css";
-import { galleryData } from "../data/galleryData";
+import { galleryData as staticGalleryData } from "../data/galleryData";
+import { getGalleryItems } from "../utils/galleryFirestore.js";
 import FAQ from "../components/FAQ";
 import YouTubeVideos from "../components/YouTubeVideos";
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageOrientations, setImageOrientations] = useState({});
+  const [galleryData, setGalleryData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch gallery data from Firestore
+  useEffect(() => {
+    const fetchGalleryData = async () => {
+      try {
+        setLoading(true);
+        const items = await getGalleryItems();
+        // Sort by id descending
+        items.sort((a, b) => (b.id || 0) - (a.id || 0));
+        setGalleryData(items);
+      } catch (error) {
+        console.error('Error fetching gallery data from Firestore:', error);
+        // Fallback to static data if Firestore fails
+        console.log('Falling back to static gallery data');
+        setGalleryData(staticGalleryData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGalleryData();
+  }, []);
 
   // Detect image orientation when image loads
   const handleImageLoad = (itemId, event) => {
@@ -47,8 +72,10 @@ const Gallery = () => {
     
     galleryData.forEach((item) => {
       // Use detected orientation or fallback to item.orientation
-      const detectedOrientation = imageOrientations[item.id] || item.orientation;
-      const itemWithOrientation = { ...item, currentOrientation: detectedOrientation };
+      // Handle both Firestore doc IDs and numeric IDs
+      const itemId = item.id || item.docId || `item-${Math.random()}`;
+      const detectedOrientation = imageOrientations[itemId] || item.orientation || 'landscape';
+      const itemWithOrientation = { ...item, currentOrientation: detectedOrientation, itemId };
       
       if (detectedOrientation === "portrait") {
         portrait.push(itemWithOrientation);
@@ -59,6 +86,21 @@ const Gallery = () => {
     
     return { landscapeItems: landscape, portraitItems: portrait };
   }, [imageOrientations]);
+
+  if (loading) {
+    return (
+      <main className="gallery-page">
+        <section className="gallery-hero">
+          <div className="gallery-hero__container">
+            <h1 className="gallery-hero__title">Our Gallery</h1>
+            <p className="gallery-hero__subtitle">
+              Loading gallery...
+            </p>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="gallery-page">
@@ -80,9 +122,10 @@ const Gallery = () => {
             <div className="gallery-grid">
               {landscapeItems.map((item) => {
                 const detectedOrientation = item.currentOrientation;
+                const itemId = item.id || item.docId || `item-${Math.random()}`;
                 return (
                   <div
-                    key={item.id}
+                    key={itemId}
                     className={`gallery-item gallery-item--${detectedOrientation}`}
                     onClick={() => openModal({...item, orientation: detectedOrientation})}
                   >
@@ -92,7 +135,7 @@ const Gallery = () => {
                         alt={item.eventName}
                         className="gallery-item__image"
                         loading="lazy"
-                        onLoad={(e) => handleImageLoad(item.id, e)}
+                        onLoad={(e) => handleImageLoad(itemId, e)}
                         onError={(e) => {
                           e.target.src = '/venuslogo.png'; // Fallback image
                           e.target.alt = 'Image not available';
@@ -115,9 +158,10 @@ const Gallery = () => {
             <div className="gallery-grid gallery-grid--portrait">
               {portraitItems.map((item) => {
                 const detectedOrientation = item.currentOrientation;
+                const itemId = item.id || item.docId || `item-${Math.random()}`;
                 return (
                   <div
-                    key={item.id}
+                    key={itemId}
                     className={`gallery-item gallery-item--${detectedOrientation}`}
                     onClick={() => openModal({...item, orientation: detectedOrientation})}
                   >
@@ -127,7 +171,7 @@ const Gallery = () => {
                         alt={item.eventName}
                         className="gallery-item__image"
                         loading="lazy"
-                        onLoad={(e) => handleImageLoad(item.id, e)}
+                        onLoad={(e) => handleImageLoad(itemId, e)}
                         onError={(e) => {
                           e.target.src = '/venuslogo.png'; // Fallback image
                           e.target.alt = 'Image not available';

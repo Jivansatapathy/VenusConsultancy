@@ -22,9 +22,23 @@ const GALLERY_COLLECTION = 'gallery';
  */
 export const getGalleryItems = async () => {
   try {
+    // Check if db is initialized
+    if (!db) {
+      throw new Error('Firestore database is not initialized');
+    }
+
     const galleryRef = collection(db, GALLERY_COLLECTION);
-    const q = query(galleryRef, orderBy('id', 'desc')); // Order by id descending
-    const querySnapshot = await getDocs(q);
+    
+    // Try to order by 'id', but if it fails (e.g., no items or missing index), fetch without ordering
+    let querySnapshot;
+    try {
+      const q = query(galleryRef, orderBy('id', 'desc'));
+      querySnapshot = await getDocs(q);
+    } catch (orderError) {
+      // If ordering fails (e.g., missing index or no items), fetch without ordering
+      console.warn('Could not order by id, fetching without order:', orderError);
+      querySnapshot = await getDocs(galleryRef);
+    }
     
     const items = [];
     querySnapshot.forEach((docSnapshot) => {
@@ -35,9 +49,22 @@ export const getGalleryItems = async () => {
       });
     });
     
+    // Sort manually if we couldn't use orderBy
+    items.sort((a, b) => (b.id || 0) - (a.id || 0));
+    
     return items;
   } catch (error) {
     console.error('Error fetching gallery items:', error);
+    
+    // Provide more helpful error messages
+    if (error.code === 'permission-denied') {
+      throw new Error('Permission denied. Please check Firestore security rules.');
+    } else if (error.code === 'unavailable') {
+      throw new Error('Firestore is temporarily unavailable. Please try again later.');
+    } else if (error.message?.includes('index')) {
+      throw new Error('Firestore index required. Please create an index for the "gallery" collection on field "id".');
+    }
+    
     throw error;
   }
 };
@@ -50,15 +77,26 @@ export const getGalleryItems = async () => {
  */
 export const addGalleryItem = async (itemData, forceId = null) => {
   try {
+    // Check if db is initialized
+    if (!db) {
+      throw new Error('Firestore database is not initialized');
+    }
+
     let itemId = forceId;
     
     // If no forceId provided, get the next ID by finding the highest current ID
     if (itemId === null) {
-      const existingItems = await getGalleryItems();
-      const maxId = existingItems.length > 0 
-        ? Math.max(...existingItems.map(item => item.id || 0))
-        : 0;
-      itemId = maxId + 1;
+      try {
+        const existingItems = await getGalleryItems();
+        const maxId = existingItems.length > 0 
+          ? Math.max(...existingItems.map(item => item.id || 0))
+          : 0;
+        itemId = maxId + 1;
+      } catch (fetchError) {
+        // If fetching fails, start from 1
+        console.warn('Could not fetch existing items, starting ID from 1:', fetchError);
+        itemId = 1;
+      }
     }
     
     const galleryRef = collection(db, GALLERY_COLLECTION);
@@ -73,6 +111,14 @@ export const addGalleryItem = async (itemData, forceId = null) => {
     return docRef.id;
   } catch (error) {
     console.error('Error adding gallery item:', error);
+    
+    // Provide more helpful error messages
+    if (error.code === 'permission-denied') {
+      throw new Error('Permission denied. Please check Firestore security rules.');
+    } else if (error.code === 'unavailable') {
+      throw new Error('Firestore is temporarily unavailable. Please try again later.');
+    }
+    
     throw error;
   }
 };

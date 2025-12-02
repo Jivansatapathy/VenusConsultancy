@@ -18,11 +18,24 @@ const Gallery = () => {
       try {
         setLoading(true);
         const items = await getGalleryItems();
+        console.log('Fetched gallery items from Firestore:', items.length);
+        
         // Sort by id descending
         items.sort((a, b) => (b.id || 0) - (a.id || 0));
-        setGalleryData(items);
+        
+        if (items.length === 0) {
+          console.log('No items in Firestore, using static data');
+          setGalleryData(staticGalleryData);
+        } else {
+          setGalleryData(items);
+        }
       } catch (error) {
         console.error('Error fetching gallery data from Firestore:', error);
+        console.error('Error details:', {
+          message: error.message,
+          code: error.code,
+          stack: error.stack
+        });
         // Fallback to static data if Firestore fails
         console.log('Falling back to static gallery data');
         setGalleryData(staticGalleryData);
@@ -65,6 +78,24 @@ const Gallery = () => {
     return () => window.removeEventListener("keydown", handleEscape);
   }, [selectedImage]);
 
+  // Helper function to get image URL
+  const getImageUrl = (imageUrl) => {
+    if (!imageUrl) return '/venuslogo.png';
+    
+    // If it's already a full URL (Firebase Storage or external), return as is
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return imageUrl;
+    }
+    
+    // If it's a local path starting with /, return as is
+    if (imageUrl.startsWith('/')) {
+      return imageUrl;
+    }
+    
+    // Otherwise, treat as local path
+    return imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+  };
+
   // Separate gallery items into landscape and portrait
   const { landscapeItems, portraitItems } = useMemo(() => {
     const landscape = [];
@@ -75,7 +106,12 @@ const Gallery = () => {
       // Handle both Firestore doc IDs and numeric IDs
       const itemId = item.id || item.docId || `item-${Math.random()}`;
       const detectedOrientation = imageOrientations[itemId] || item.orientation || 'landscape';
-      const itemWithOrientation = { ...item, currentOrientation: detectedOrientation, itemId };
+      const itemWithOrientation = { 
+        ...item, 
+        currentOrientation: detectedOrientation, 
+        itemId,
+        imageUrl: getImageUrl(item.image) // Pre-process image URL
+      };
       
       if (detectedOrientation === "portrait") {
         portrait.push(itemWithOrientation);
@@ -85,7 +121,7 @@ const Gallery = () => {
     });
     
     return { landscapeItems: landscape, portraitItems: portrait };
-  }, [imageOrientations]);
+  }, [galleryData, imageOrientations]);
 
   if (loading) {
     return (
@@ -117,8 +153,17 @@ const Gallery = () => {
       {/* Gallery Grid */}
       <section className="gallery-section">
         <div className="gallery-container">
-          {/* Landscape Images Section */}
-          {landscapeItems.length > 0 && (
+          {galleryData.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '60px 20px', color: '#666' }}>
+              <p>No gallery items available.</p>
+              <p style={{ fontSize: '0.9rem', marginTop: '10px' }}>
+                Check the browser console for details.
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* Landscape Images Section */}
+              {landscapeItems.length > 0 && (
             <div className="gallery-grid">
               {landscapeItems.map((item) => {
                 const detectedOrientation = item.currentOrientation;
@@ -131,12 +176,13 @@ const Gallery = () => {
                   >
                     <div className="gallery-item__image-wrapper">
                       <img
-                        src={encodeURI(item.image)}
-                        alt={item.eventName}
+                        src={item.imageUrl || getImageUrl(item.image)}
+                        alt={item.eventName || 'Gallery image'}
                         className="gallery-item__image"
                         loading="lazy"
                         onLoad={(e) => handleImageLoad(itemId, e)}
                         onError={(e) => {
+                          console.error('Image failed to load:', item.image, item.imageUrl);
                           e.target.src = '/venuslogo.png'; // Fallback image
                           e.target.alt = 'Image not available';
                         }}
@@ -167,12 +213,13 @@ const Gallery = () => {
                   >
                     <div className="gallery-item__image-wrapper">
                       <img
-                        src={encodeURI(item.image)}
-                        alt={item.eventName}
+                        src={item.imageUrl || getImageUrl(item.image)}
+                        alt={item.eventName || 'Gallery image'}
                         className="gallery-item__image"
                         loading="lazy"
                         onLoad={(e) => handleImageLoad(itemId, e)}
                         onError={(e) => {
+                          console.error('Image failed to load:', item.image, item.imageUrl);
                           e.target.src = '/venuslogo.png'; // Fallback image
                           e.target.alt = 'Image not available';
                         }}
@@ -187,6 +234,8 @@ const Gallery = () => {
                 );
               })}
             </div>
+          )}
+            </>
           )}
         </div>
       </section>
@@ -205,10 +254,11 @@ const Gallery = () => {
             <div className="gallery-modal__body">
               <div className={`gallery-modal__image-wrapper gallery-modal__image-wrapper--${selectedImage.orientation}`}>
                 <img
-                  src={encodeURI(selectedImage.image)}
-                  alt={selectedImage.eventName}
+                  src={getImageUrl(selectedImage.image)}
+                  alt={selectedImage.eventName || 'Gallery image'}
                   className="gallery-modal__image"
                   onError={(e) => {
+                    console.error('Modal image failed to load:', selectedImage.image);
                     e.target.src = '/venuslogo.png'; // Fallback image
                     e.target.alt = 'Image not available';
                   }}

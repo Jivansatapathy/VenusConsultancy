@@ -4,6 +4,7 @@ import { useSEOContent } from "../context/SEOContentContext";
 import API from "../utils/api";
 import SEOContentManager from "../components/SEOContentManager";
 import BlogAdmin from "../components/BlogAdmin";
+import GalleryAdmin from "../components/GalleryAdmin";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
@@ -216,6 +217,12 @@ const AdminDashboard = () => {
           >
             SEO Content
           </button>
+          <button 
+            className={activeTab === "gallery" ? "active" : ""}
+            onClick={() => setActiveTab("gallery")}
+          >
+            Gallery
+          </button>
           <a
             href="/blog"
             className="btn btn-outline"
@@ -286,6 +293,9 @@ const AdminDashboard = () => {
               )}
               {activeTab === "seo-content" && (
                 <SEOContentManager />
+              )}
+              {activeTab === "gallery" && (
+                <GalleryAdmin />
               )}
             </>
           )}

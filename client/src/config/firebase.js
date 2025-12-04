@@ -1,6 +1,7 @@
 // client/src/config/firebase.js
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
@@ -20,12 +21,15 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Storage
 const storage = getStorage(app);
 
+// Initialize Firestore
+const db = getFirestore(app);
+
 // Initialize Analytics (only in browser)
 let analytics = null;
 if (typeof window !== 'undefined') {
   analytics = getAnalytics(app);
 }
 
-export { storage, analytics };
+export { storage, db, analytics };
 export default app;
 

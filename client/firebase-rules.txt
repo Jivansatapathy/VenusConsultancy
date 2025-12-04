@@ -1,0 +1,116 @@
+// ============================================
+// FIREBASE SECURITY RULES
+// ============================================
+// Copy these rules to Firebase Console
+// ============================================
+
+// ============================================
+// FIRESTORE DATABASE RULES
+// ============================================
+// Location: Firebase Console → Firestore Database → Rules
+// ============================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Gallery Collection Rules
+    // Allows public read access, authenticated write access
+    match /gallery/{document=**} {
+      // Anyone can read gallery items (public gallery)
+      allow read: if true;
+      
+      // Only authenticated users can create, update, or delete
+      allow create, update, delete: if request.auth != null;
+    }
+    
+    // Add other collection rules below as needed
+    // Example: Blog posts, SEO content, etc.
+  }
+}
+
+// ============================================
+// FIREBASE STORAGE RULES
+// ============================================
+// Location: Firebase Console → Storage → Rules
+// ============================================
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Gallery Images Folder
+    // Allows public read access, authenticated write access
+    match /gallery-images/{allPaths=**} {
+      // Anyone can read/view gallery images (public gallery)
+      allow read: if true;
+      
+      // Only authenticated users can upload or delete images
+      allow write: if request.auth != null
+        && request.resource.size < 10 * 1024 * 1024  // 10MB limit
+        && request.resource.contentType.matches('image/.*');
+    }
+    
+    // Blog Images Folder (if you have blog functionality)
+    match /blog-images/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+    
+    // Content Images Folder (for SEO content, etc.)
+    match /content-images/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+    
+    // Default rule for other paths (optional)
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
+
+// ============================================
+// PRODUCTION RULES (More Restrictive)
+// ============================================
+// Use these for production with admin-only writes
+// ============================================
+
+// FIRESTORE - PRODUCTION VERSION
+/*
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /gallery/{document=**} {
+      // Public read access
+      allow read: if true;
+      
+      // Only admin users can write (requires custom claims)
+      allow create, update, delete: if request.auth != null 
+        && request.auth.token.admin == true;
+    }
+  }
+}
+*/
+
+// STORAGE - PRODUCTION VERSION
+/*
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /gallery-images/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.auth.token.admin == true
+        && request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+  }
+}
+*/
+

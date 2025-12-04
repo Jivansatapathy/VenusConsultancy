@@ -38,7 +38,7 @@ const ContactSection = () => {
               </div>
               <div className="office-detail-item">
                 <Mail size={18} className="office-icon office-icon--green" />
-                <a href="mailto:info@venushiring.ca" className="office-email">info@venushiring.ca</a>
+                <a href="mailto:info@venushiring.ca" className="office-email">info@venushiring.com</a>
               </div>
             </div>
           </div>

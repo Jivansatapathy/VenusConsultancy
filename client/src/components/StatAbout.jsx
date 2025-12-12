@@ -45,7 +45,7 @@ export default function StatAbout() {
       clients: parseInt(statContent.stat1Number || 77),
       satisfaction: parseInt(statContent.stat2Number || 98),
       success: parseInt(statContent.stat3Number || 99),
-      placements: 5000,
+      placements: 10000,
       experience: experienceNum
     };
 

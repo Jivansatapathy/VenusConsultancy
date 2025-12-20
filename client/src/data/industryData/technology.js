@@ -1,0 +1,165 @@
+// Technology Industry Data
+export default {
+  id: "technology",
+  slug: "technology",
+  hero: {
+    title: "Technology Recruitment",
+    subtitle: "IT Talent Solutions",
+    description: "Smart IT Recruitment Built on Cognitive Talent. We connect top technology professionals with leading companies to drive digital transformation and innovation.",
+    backgroundImage: "/images/industries/technology-bg.jpg",
+    heroImage: "/images/industries/technology-hero-person.jpg",
+    color: "#007bff",
+  },
+  stats: {
+    enabled: true,
+    items: [
+      { number: "10,000+", label: "Tech Candidates", icon: "👥" },
+      { number: "500+", label: "Companies Served", icon: "🏢" },
+      { number: "95%", label: "Placement Success", icon: "✅" },
+      { number: "2-4 weeks", label: "Avg. Time to Hire", icon: "⏱️" },
+    ],
+  },
+  services: {
+    enabled: true,
+    banner: "SERVICES",
+    title: "Tailored IT Talent Solutions",
+    viewAllButton: {
+      text: "View All Services",
+      link: "/services",
+      external: false,
+    },
+    items: [
+      {
+        title: "Digital Marketing",
+        description: "Expert digital marketing recruitment to help you find skilled professionals who can drive your online presence and marketing campaigns.",
+        image: "/images/services/digital-marketing.jpg",
+        link: {
+          text: "Connect Now",
+          url: "/contact",
+          external: false,
+        },
+      },
+      {
+        title: "IT Consultancy",
+        description: "Connect with top IT consultants and advisors who can help transform your technology infrastructure and business processes.",
+        image: "/images/services/it-consultancy.jpg",
+        link: {
+          text: "Connect Now",
+          url: "/contact",
+          external: false,
+        },
+      },
+      {
+        title: "IT Solutions",
+        description: "Find IT solution architects and specialists who can design and implement comprehensive technology solutions for your business.",
+        image: "/images/services/it-solutions.jpg",
+        link: {
+          text: "Connect Now",
+          url: "/contact",
+          external: false,
+        },
+      },
+      {
+        title: "Web Developer",
+        description: "Recruit skilled web developers who can build responsive, modern websites and web applications that drive your business forward.",
+        image: "/images/services/web-developer.jpg",
+        link: {
+          text: "Connect Now",
+          url: "/contact",
+          external: false,
+        },
+      },
+    ],
+  },
+  benefits: {
+    enabled: true,
+    title: "Why Choose Our Technology Recruitment?",
+    items: [
+      {
+        title: "Access to top 1% of tech talent",
+        description: "We source from the best talent pools globally including Silicon Valley, Bangalore, and emerging tech hubs",
+        icon: "⭐",
+        iconImage: null,
+      },
+      {
+        title: "Rapid deployment (2-4 weeks)",
+        description: "Fast-track hiring process without compromising quality or candidate fit",
+        icon: "⚡",
+        iconImage: null,
+      },
+      {
+        title: "95% retention rate",
+        description: "Long-term placements that stick with proven candidate-company fit",
+        icon: "🎯",
+        iconImage: null,
+      },
+      {
+        title: "24/7 technical support",
+        description: "Round-the-clock assistance for your hiring needs and candidate onboarding",
+        icon: "🛟",
+        iconImage: null,
+      },
+      {
+        title: "Scalable team solutions",
+        description: "From individual hires to entire development teams and tech departments",
+        icon: "📈",
+        iconImage: null,
+      },
+    ],
+  },
+  jobs: {
+    enabled: true,
+    title: "Available Technology Roles",
+    subtitle: "Click on any role to start the hiring process",
+    items: [
+      "Full Stack Developer",
+      "Frontend Developer",
+      "Backend Developer",
+      "Mobile App Developer",
+      "DevOps Engineer",
+      "Cloud Architect",
+      "Data Engineer",
+      "Machine Learning Engineer",
+      "AI Specialist",
+      "Cybersecurity Analyst",
+      "IT Support Specialist",
+      "System Administrator",
+      "Network Engineer",
+      "Database Administrator",
+      "QA Engineer",
+      "Test Automation Engineer",
+      "Technical Writer",
+      "Solution Architect",
+      "Product Owner",
+      "Scrum Master",
+      "Agile Coach",
+      "Technical Lead",
+      "Engineering Manager",
+      "CTO",
+    ],
+  },
+  cta: {
+    enabled: true,
+    title: "Ready to Find Your Next Technology Professional?",
+    description: "Get started today and find the perfect candidate for your team.",
+    primaryButton: {
+      text: "Get Started",
+      link: "/contact",
+      external: false,
+    },
+    secondaryButton: {
+      text: "View All Services",
+      link: "/services",
+      external: false,
+    },
+  },
+  blogs: {
+    enabled: true,
+  },
+  seo: {
+    title: "Technology Recruitment Services | Venus Consultancy",
+    description: "Find top technology professionals for your software development and IT needs",
+    keywords: ["technology recruitment", "IT hiring", "software developers", "tech talent"],
+  },
+};
+

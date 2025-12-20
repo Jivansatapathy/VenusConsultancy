@@ -1,0 +1,1547 @@
+/* IndustryPage.css - Reusable template styles for industry pages */
+
+.industry-page {
+  min-height: 100vh;
+  --primary-color: #007bff;
+}
+
+/* Error State */
+.industry-page-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.industry-page-error h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.industry-page-error p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.industry-page-error button {
+  padding: 0.75rem 2rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.industry-page-error button:hover {
+  background: #0056b3;
+}
+
+/* Container */
+.industry-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .industry-container {
+    padding: 0 1.25rem;
+  }
+}
+
+/* Hero Section */
+.industry-hero {
+  min-height: 600px;
+  padding: 6rem 0;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+.industry-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.industry-hero .industry-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.industry-hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  min-height: 500px;
+}
+
+.industry-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-right: 2rem;
+}
+
+.industry-banner {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.industry-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+  color: white;
+}
+
+.industry-description {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin: 0;
+  opacity: 0.9;
+  max-width: 550px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.industry-hero-cta {
+  margin-top: 1rem;
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: white;
+  color: var(--primary-color);
+  border: 2px solid white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.industry-hero-cta:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.industry-hero-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+}
+
+.industry-hero-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Services Section */
+.industry-services {
+  padding: 5rem 0;
+  background: white;
+}
+
+.industry-services-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+  gap: 2rem;
+}
+
+.industry-services-header-left {
+  flex: 1;
+}
+
+.industry-services-banner {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary-color);
+  margin: 0 0 0.5rem 0;
+}
+
+.industry-services-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.industry-services-view-all {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--primary-color);
+  color: white;
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  align-self: flex-end;
+  margin-top: 1.5rem;
+}
+
+.industry-services-view-all:hover {
+  background: transparent;
+  color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.industry-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.industry-service-card {
+  background: transparent;
+  padding: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.industry-service-card:hover {
+  opacity: 0.8;
+}
+
+.industry-service-image-wrapper {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.industry-service-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.industry-service-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.industry-service-card-description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+  flex-grow: 1;
+}
+
+.industry-service-link {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  align-self: flex-start;
+}
+
+.industry-service-link:hover {
+  color: var(--primary-color);
+}
+
+/* What You Need Section */
+.industry-what-you-need {
+  padding: 5rem 0;
+  background: white;
+}
+
+.industry-what-you-need-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.industry-what-you-need-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.industry-what-you-need-banner {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.industry-what-you-need-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.industry-what-you-need-description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.industry-what-you-need-services {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.industry-what-you-need-service-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.industry-what-you-need-checkmark {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.industry-what-you-need-button {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.industry-what-you-need-button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.industry-what-you-need-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.industry-what-you-need-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Why Partner Section */
+.industry-why-partner {
+  padding: 5rem 0;
+  background: #f8f9fa;
+}
+
+.industry-why-partner-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.industry-why-partner-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  order: 1;
+}
+
+.industry-why-partner-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.industry-why-partner-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  order: 2;
+}
+
+.industry-why-partner-banner {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.industry-why-partner-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.industry-why-partner-description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.industry-why-partner-points {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.industry-why-partner-point-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.industry-why-partner-checkmark {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.industry-why-partner-button {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.industry-why-partner-button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Formula Section */
+.industry-formula {
+  padding: 0;
+  background: white;
+  width: 100%;
+}
+
+.industry-formula-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Formula Section with 70% BG Image and 30% White */
+.industry-formula-content {
+  position: relative;
+  min-height: 800px;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 70% of section has background image, 30% is white */
+.industry-formula-content::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: white;
+  z-index: 1;
+}
+
+/* Top Content - Center Aligned (in the 70% BG area) */
+.industry-formula-top-content {
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+  z-index: 2;
+  flex: 0 0 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.industry-formula-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 3rem 0;
+  line-height: 1.2;
+}
+
+.industry-formula-title-highlight {
+  color: var(--primary-color);
+}
+
+.industry-formula-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.industry-formula-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 0 2rem;
+}
+
+.industry-formula-stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.industry-formula-stat-label {
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+}
+
+.industry-formula-stat-divider {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--primary-color);
+  border-radius: 50%;
+}
+
+/* Bottom Image - Center Aligned (in the 30% white area) */
+.industry-formula-bottom-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+  flex: 0 0 30%;
+  background: white;
+}
+
+.industry-formula-image {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.industry-formula-subtitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary-color);
+  margin: 0;
+  text-align: center;
+}
+
+.industry-formula-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+.industry-formula-description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.7;
+  margin: 0;
+  text-align: center;
+}
+
+/* Roles We Hire For Section */
+.industry-roles-we-hire {
+  padding: 5rem 0;
+  background: white;
+}
+
+.industry-roles-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.industry-roles-subtitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary-color);
+  margin: 0 0 1rem 0;
+}
+
+.industry-roles-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+}
+
+.industry-roles-description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.industry-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.industry-role-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.industry-role-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.industry-role-icon {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+}
+
+.industry-role-icon-emoji {
+  font-size: 3rem;
+  display: block;
+}
+
+.industry-role-icon-image {
+  width: 100%;
+  height: 100%;
+  max-width: 80px;
+  max-height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.industry-role-card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.industry-role-card-description {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.industry-role-link {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  align-self: center;
+  text-align: center;
+}
+
+.industry-role-link:hover {
+  color: #0056b3;
+}
+
+/* FAQ Section */
+.industry-faq {
+  padding: 5rem 0;
+  background: white;
+}
+
+.industry-faq-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.industry-faq-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.industry-faq-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.industry-faq-title-highlight {
+  color: var(--primary-color);
+}
+
+.industry-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.industry-faq-item {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.industry-faq-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.industry-faq-item--open {
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.industry-faq-question {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  background: white;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.industry-faq-item--open .industry-faq-question {
+  background: var(--primary-color);
+  color: white;
+}
+
+.industry-faq-question:hover {
+  background: #f8f9fa;
+}
+
+.industry-faq-item--open .industry-faq-question:hover {
+  background: var(--primary-color);
+  opacity: 0.95;
+}
+
+.industry-faq-question-text {
+  flex: 1;
+  line-height: 1.5;
+}
+
+.industry-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.industry-faq-answer--open {
+  max-height: 500px;
+  padding: 0 1.5rem 1.25rem 1.5rem;
+}
+
+.industry-faq-answer-text {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.7;
+  margin: 0;
+  padding-top: 1rem;
+}
+
+.industry-faq-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 2rem;
+}
+
+.industry-faq-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Blog Section */
+.industry-blogs {
+  padding: 5rem 0;
+  background: white;
+}
+
+.industry-blogs-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.industry-blogs-subtitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary-color);
+  margin: 0 0 1rem 0;
+}
+
+.industry-blogs-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+}
+
+.industry-blogs-description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* Benefits Section */
+.industry-benefits {
+  padding: 5rem 0;
+  background: #f8f9fa;
+}
+
+.industry-section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.industry-section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.industry-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.industry-benefit-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.industry-benefit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.benefit-icon-wrapper {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.benefit-icon {
+  font-size: 3rem;
+  display: block;
+}
+
+.benefit-icon-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.benefit-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.benefit-description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Jobs Section */
+.industry-jobs {
+  padding: 5rem 0;
+  background: white;
+}
+
+.industry-jobs-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.industry-jobs-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.industry-jobs-header p {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+}
+
+.industry-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.industry-job-card {
+  background: #f8f9fa;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.industry-job-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--primary-color);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.industry-job-card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.industry-job-card:hover::before {
+  transform: scaleY(1);
+}
+
+.industry-job-card:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.industry-job-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.industry-job-card p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 0 1rem 0;
+}
+
+.job-card-arrow {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.industry-job-card:hover .job-card-arrow {
+  transform: translateX(5px);
+}
+
+/* CTA Section */
+.industry-cta {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color)dd 100%);
+  color: white;
+}
+
+.industry-cta-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.industry-cta-content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+}
+
+.industry-cta-content p {
+  font-size: 1.2rem;
+  margin: 0 0 2.5rem 0;
+  opacity: 0.95;
+}
+
+.industry-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: white;
+  color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-outline:hover {
+  background: white;
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* Modal */
+.industry-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.industry-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.industry-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #666;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.industry-modal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.industry-modal h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.industry-modal p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+}
+
+.industry-modal-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.industry-modal-buttons .btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.industry-modal-buttons .btn-primary:hover {
+  background: #0056b3;
+}
+
+.industry-modal-buttons .btn-outline {
+  background: transparent;
+  color: #333;
+  border: 2px solid #ddd;
+}
+
+.industry-modal-buttons .btn-outline:hover {
+  background: #f8f9fa;
+  border-color: #ccc;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .industry-hero {
+    min-height: 500px;
+    padding: 4rem 0;
+  }
+
+  .industry-hero-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    min-height: auto;
+  }
+
+  .industry-hero-left {
+    padding-right: 0;
+    text-align: center;
+    align-items: center;
+  }
+
+  .industry-hero-cta {
+    align-self: center;
+  }
+
+  .industry-title {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .industry-description {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .industry-hero-image {
+    max-width: 400px;
+  }
+
+  .industry-services-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .industry-services-view-all {
+    align-self: flex-start;
+    margin-top: 1rem;
+  }
+
+  .industry-services-title {
+    font-size: 2rem;
+  }
+
+  .industry-services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .industry-what-you-need-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .industry-what-you-need-title {
+    font-size: 2rem;
+  }
+
+  .industry-what-you-need-services {
+    grid-template-columns: 1fr;
+  }
+
+  .industry-why-partner-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .industry-why-partner-left {
+    order: 2;
+  }
+
+  .industry-why-partner-right {
+    order: 1;
+  }
+
+  .industry-why-partner-title {
+    font-size: 2rem;
+  }
+
+  .industry-why-partner-points {
+    grid-template-columns: 1fr;
+  }
+
+  .industry-section-header h2,
+  .industry-jobs-header h2,
+  .industry-cta-content h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .industry-hero {
+    min-height: 450px;
+    padding: 3rem 0;
+  }
+
+  .industry-hero-content {
+    gap: 2rem;
+  }
+
+  .industry-title {
+    font-size: 2rem;
+  }
+
+  .industry-description {
+    font-size: 1rem;
+  }
+
+  .industry-hero-cta {
+    padding: 0.875rem 2rem;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .industry-hero-image {
+    max-width: 100%;
+  }
+
+  .industry-services {
+    padding: 3rem 0;
+  }
+
+  .industry-services-title {
+    font-size: 1.75rem;
+  }
+
+  .industry-services-view-all {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .industry-services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .industry-service-image-wrapper {
+    height: 180px;
+  }
+
+  .industry-what-you-need {
+    padding: 3rem 0;
+  }
+
+  .industry-what-you-need-content {
+    gap: 2rem;
+  }
+
+  .industry-what-you-need-title {
+    font-size: 1.75rem;
+  }
+
+  .industry-what-you-need-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .industry-why-partner {
+    padding: 3rem 0;
+  }
+
+  .industry-why-partner-content {
+    gap: 2rem;
+  }
+
+  .industry-why-partner-title {
+    font-size: 1.75rem;
+  }
+
+  .industry-why-partner-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .industry-formula {
+    padding: 3rem 0;
+  }
+
+  .industry-formula-top {
+    margin-bottom: 3rem;
+  }
+
+  .industry-formula-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .industry-formula-stats {
+    gap: 1rem;
+  }
+
+  .industry-formula-stat-item {
+    padding: 0 1rem;
+  }
+
+  .industry-formula-stat-number {
+    font-size: 2rem;
+  }
+
+  .industry-formula-stat-divider {
+    display: none;
+  }
+
+  .industry-formula-content {
+    min-height: 600px;
+  }
+
+  .industry-formula-top-content {
+    padding: 3rem 1.5rem;
+  }
+
+  .industry-formula-bottom-content {
+    padding: 1.5rem;
+  }
+
+  .industry-roles-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .industry-roles-title {
+    font-size: 1.75rem;
+  }
+
+  .industry-faq {
+    padding: 3rem 0;
+  }
+
+  .industry-faq-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .industry-faq-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .industry-faq-right {
+    position: relative;
+    top: 0;
+    order: -1;
+  }
+
+  .industry-faq-image {
+    max-width: 100%;
+  }
+
+  .industry-blogs {
+    padding: 3rem 0;
+  }
+
+  .industry-blogs-title {
+    font-size: 2rem;
+  }
+
+  .industry-formula-section-title {
+    font-size: 1.75rem;
+  }
+
+  .industry-roles-we-hire {
+    padding: 3rem 0;
+  }
+
+  .industry-roles-title {
+    font-size: 2rem;
+  }
+
+  .industry-roles-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .industry-benefits,
+  .industry-jobs,
+  .industry-cta {
+    padding: 3rem 0;
+  }
+
+  .industry-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industry-jobs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industry-cta-buttons {
+    flex-direction: column;
+  }
+
+  .industry-cta-buttons .btn {
+    width: 100%;
+  }
+
+  .industry-section-header h2,
+  .industry-jobs-header h2,
+  .industry-cta-content h2 {
+    font-size: 1.75rem;
+  }
+}
+

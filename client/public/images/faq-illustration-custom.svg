@@ -1,0 +1,17 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#F8F9FA"/>
+  <circle cx="400" cy="300" r="200" fill="#E9ECEF"/>
+  <path d="M400 500C289.543 500 200 410.457 200 300C200 189.543 289.543 100 400 100C510.457 100 600 189.543 600 300C600 410.457 510.457 500 400 500Z" fill="url(#paint0_linear)"/>
+  <path d="M380 420H420V380H380V420ZM380 340H420C420 317.909 437.909 300 460 300C482.091 300 500 282.091 500 260C500 237.909 482.091 220 460 220H340C317.909 220 300 237.909 300 260H340C340 248.954 348.954 240 360 240H440C451.046 240 460 248.954 460 260C460 271.046 451.046 280 440 280C417.909 280 400 297.909 400 320V340H380Z" fill="white"/>
+  <defs>
+    <linearGradient id="paint0_linear" x1="200" y1="100" x2="600" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#007BFF"/>
+      <stop offset="1" stop-color="#0056B3"/>
+    </linearGradient>
+  </defs>
+  <!-- Decorative Elements -->
+  <circle cx="250" cy="150" r="20" fill="#DC3545" fill-opacity="0.1"/>
+  <circle cx="600" cy="450" r="30" fill="#28A745" fill-opacity="0.1"/>
+  <circle cx="650" cy="200" r="15" fill="#FFC107" fill-opacity="0.2"/>
+  <path d="M150 450L200 500L150 550" stroke="#17A2B8" stroke-width="4" stroke-opacity="0.2"/>
+</svg>

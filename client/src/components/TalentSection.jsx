@@ -1,5 +1,6 @@
 // client/src/components/TalentSection.jsx
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSEOContent } from "../context/SEOContentContext";
 import "./TalentSection.css";
 import config from "../data/talentConfig";
@@ -19,7 +20,7 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
   const [showAll, setShowAll] = useState(false); // Show only a few categories initially
   const activeIndex = categories.findIndex((c) => c.key === activeKey);
   const tabsRef = useRef(null);
-  
+
   // Show 4 categories initially, or all if showAll is true
   const visibleCategories = showAll ? categories : categories.slice(0, 4);
 
@@ -29,7 +30,7 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
       if (categories[0]) setActiveKey(categories[0].key);
     }
   }, [categories, activeKey]);
-  
+
   // When showAll changes, ensure active category is visible
   useEffect(() => {
     if (!visibleCategories.find((c) => c.key === activeKey)) {
@@ -70,7 +71,7 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
     const idx = (activeIndex + 1) % categories.length;
     setActiveKey(categories[idx].key);
   };
-  
+
   // Remove "+ More" button since we're showing all by default
 
   return (
@@ -96,9 +97,8 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
                 aria-controls={`vh-tabpanel-${cat.key}`}
                 id={`vh-tab-${cat.key}`}
                 tabIndex={cat.key === activeKey ? 0 : -1}
-                className={`vh-talent__tab ${
-                  cat.key === activeKey ? "active" : ""
-                }`}
+                className={`vh-talent__tab ${cat.key === activeKey ? "active" : ""
+                  }`}
                 onClick={() => setActiveKey(cat.key)}
                 style={
                   cat.key === activeKey
@@ -161,7 +161,28 @@ const TalentSection = ({ brandColor = config.brandColor }) => {
               ))}
             </ul>
 
-            {/* removed learn more link per request */}
+            {/* Learn More Button */}
+            <div style={{ marginTop: "2rem" }}>
+              <Link
+                to={active.learnMoreUrl}
+                className="vh-btn vh-btn--primary"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "12px 24px",
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  textDecoration: "none",
+                  borderRadius: "4px",
+                  backgroundColor: brandColor,
+                  color: "#fff",
+                  transition: "opacity 0.2s ease"
+                }}
+              >
+                Know More
+              </Link>
+            </div>
           </div>
 
           {/* Right collage */}

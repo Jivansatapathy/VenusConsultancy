@@ -29,7 +29,7 @@ export default function IndustryPage({ data }) {
     benefits,
     jobs,
     cta,
-    color = "#007bff",
+    color = "#dc3545",
   } = data;
 
   // Handle job click
@@ -55,7 +55,7 @@ export default function IndustryPage({ data }) {
           className="industry-hero"
           style={{
             backgroundImage: hero.backgroundImage
-              ? `url(${hero.backgroundImage})`
+              ? `url("${hero.backgroundImage}")`
               : `linear-gradient(135deg, ${color} 0%, ${color}dd 100%)`,
           }}
         >
@@ -80,7 +80,7 @@ export default function IndustryPage({ data }) {
                       )
                     }
                   >
-                    {cta.primaryButton.text} +
+                    {cta.primaryButton.text}
                   </button>
                 )}
               </div>
@@ -152,7 +152,7 @@ export default function IndustryPage({ data }) {
                         }
                       }}
                     >
-                      {service.link.text} +
+                      {service.link.text}
                     </a>
                   )}
                 </div>
@@ -197,7 +197,7 @@ export default function IndustryPage({ data }) {
                       )
                     }
                   >
-                    {data.whatYouNeed.button.text} +
+                    {data.whatYouNeed.button.text}
                   </button>
                 )}
               </div>
@@ -259,7 +259,7 @@ export default function IndustryPage({ data }) {
                       )
                     }
                   >
-                    {data.whyPartner.button.text} +
+                    {data.whyPartner.button.text}
                   </button>
                 )}
               </div>
@@ -268,57 +268,34 @@ export default function IndustryPage({ data }) {
         </section>
       )}
 
-      {/* Formula Section */}
-      {data.formula && data.formula.enabled && (
-        <section className="industry-formula">
-          <div className="industry-formula-container">
-            {/* Section with 70% BG Image and 30% White */}
-            <div
-              className="industry-formula-content"
-              style={{
-                backgroundImage: data.formula.backgroundImage
-                  ? `url(${data.formula.backgroundImage})`
-                  : "none",
-              }}
-            >
-              {/* Top Content - Center Aligned */}
-              <div className="industry-formula-top-content">
-                {data.formula.title && (
-                  <h2 className="industry-formula-title">
-                    {data.formula.title.prefix}{" "}
-                    <span className="industry-formula-title-highlight">
-                      {data.formula.title.highlight}
-                    </span>
-                  </h2>
-                )}
-                {data.formula.stats && data.formula.stats.length > 0 && (
-                  <div className="industry-formula-stats">
-                    {data.formula.stats.map((stat, index) => (
-                      <div key={index} className="industry-formula-stat-item">
-                        <div className="industry-formula-stat-number">{stat.number}</div>
-                        <div className="industry-formula-stat-label">{stat.label}</div>
-                        {index < data.formula.stats.length - 1 && (
-                          <div className="industry-formula-stat-divider"></div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-              {/* Bottom Image - Center Aligned */}
-              <div className="industry-formula-bottom-content">
-                {data.formula.image && (
-                  <img
-                    src={data.formula.image}
-                    alt={data.formula.imageAlt || "Formula"}
-                    className="industry-formula-image"
-                  />
-                )}
-              </div>
+      {/* ROI Benefits Section - NEW */}
+      {data.benefits && data.benefits.enabled && data.benefits.items && (
+        <section className="industry-roi-benefits" style={{ padding: '6rem 0', background: 'white' }}>
+          <div className="industry-container">
+            {data.benefits.title && (
+              <h2 style={{ fontSize: '2.5rem', fontWeight: 700, textAlign: 'center', marginBottom: '3rem', color: '#333' }}>
+                {data.benefits.title}
+              </h2>
+            )}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+              {data.benefits.items.map((item, index) => (
+                <div key={index} style={{
+                  padding: '2rem',
+                  borderRadius: '12px',
+                  background: '#fff',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                  border: '1px solid #eee'
+                }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem', color: '#1a1a1a' }}>{item.title}</h3>
+                  <p style={{ fontSize: '1rem', color: '#666', lineHeight: 1.6, margin: 0 }}>{item.description}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
       )}
+
+
 
       {/* Roles We Hire For Section */}
       {data.rolesWeHire && data.rolesWeHire.enabled && (
@@ -339,20 +316,6 @@ export default function IndustryPage({ data }) {
               <div className="industry-roles-grid">
                 {data.rolesWeHire.items.map((role, index) => (
                   <div key={index} className="industry-role-card">
-                    {role.iconImage && (
-                      <div className="industry-role-icon">
-                        <img
-                          src={role.iconImage}
-                          alt={role.title}
-                          className="industry-role-icon-image"
-                        />
-                      </div>
-                    )}
-                    {role.icon && !role.iconImage && (
-                      <div className="industry-role-icon">
-                        <span className="industry-role-icon-emoji">{role.icon}</span>
-                      </div>
-                    )}
                     <h3 className="industry-role-card-title">{role.title}</h3>
                     {role.description && (
                       <p className="industry-role-card-description">{role.description}</p>
@@ -368,13 +331,33 @@ export default function IndustryPage({ data }) {
                           }
                         }}
                       >
-                        {role.link.text} +
+                        {role.link.text}
                       </a>
                     )}
                   </div>
                 ))}
               </div>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* Process Section - NEW */}
+      {data.process && data.process.enabled && (
+        <section className="industry-process">
+          <div className="industry-container">
+            <h2 className="industry-process-title">{data.process.title}</h2>
+            <div className="industry-process-steps">
+              {data.process.steps.map((step, index) => (
+                <div key={index} className="industry-process-step">
+                  <div className="industry-process-number">{step.number}</div>
+                  <div className="industry-process-content">
+                    <h3>{step.title}</h3>
+                    <p>{step.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}
@@ -397,9 +380,8 @@ export default function IndustryPage({ data }) {
                   {data.faq.items.map((faqItem, index) => (
                     <div
                       key={index}
-                      className={`industry-faq-item ${
-                        openFaqIndex === index ? "industry-faq-item--open" : ""
-                      }`}
+                      className={`industry-faq-item ${openFaqIndex === index ? "industry-faq-item--open" : ""
+                        }`}
                     >
                       <button
                         className="industry-faq-question"
@@ -413,9 +395,8 @@ export default function IndustryPage({ data }) {
                         </span>
                       </button>
                       <div
-                        className={`industry-faq-answer ${
-                          openFaqIndex === index ? "industry-faq-answer--open" : ""
-                        }`}
+                        className={`industry-faq-answer ${openFaqIndex === index ? "industry-faq-answer--open" : ""
+                          }`}
                       >
                         <p className="industry-faq-answer-text">{faqItem.answer}</p>
                       </div>
@@ -445,6 +426,13 @@ export default function IndustryPage({ data }) {
           </div>
         </section>
       )}
+
+      {/* Process Section - NEW */}
+
+
+
+
+
 
       {/* Apply Modal */}
       {showApplyModal && selectedJob && (

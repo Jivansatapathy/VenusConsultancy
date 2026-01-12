@@ -6,8 +6,8 @@ export default {
     title: "Recruitment Process Outsourcing (RPO)",
     subtitle: "RPO Talent Solutions",
     description: "End-to-end recruitment process outsourcing solutions. We manage your entire recruitment function, from sourcing to onboarding, delivering scalable and efficient hiring solutions.",
-    backgroundImage: "/images/industries/rpo-bg.jpg",
-    heroImage: "/images/industries/rpo-hero-person.jpg",
+    backgroundImage: "/images/industries/outsourcing-bg.png",
+    heroImage: "/images/industries/outsourcing-hero-person.png",
     color: "#007bff",
   },
   stats: {
@@ -166,6 +166,7 @@ export default {
           "We provide RPO services across multiple industries including Technology, Finance, Healthcare, Manufacturing, Engineering, Sales, Customer Service, and Executive positions. Our team has deep expertise in each sector and understands the unique requirements and talent pools for different industries.",
       },
     ],
+    image: "/images/faq-illustration-custom.svg?v=3",
   },
   rolesWeHire: {
     enabled: true,

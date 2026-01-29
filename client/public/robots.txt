@@ -11,3 +11,15 @@ Allow: /
 
 # Link to sitemap
 Sitemap: https://www.venushiring.com/sitemap.xml
+
+
+# Allow AI crawlers
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+

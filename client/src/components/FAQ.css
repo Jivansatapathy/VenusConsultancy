@@ -157,3 +157,30 @@
   }
 }
 
+.faq-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.faq-see-more-btn {
+  background: transparent;
+  border: 2px solid #e50914;
+  color: #ffffff;
+  padding: 0.8rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.faq-see-more-btn:hover {
+  background: #e50914;
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+  transform: translateY(-2px);
+}
+
+.faq-see-more-btn:active {
+  transform: translateY(0);
+}

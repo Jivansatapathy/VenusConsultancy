@@ -44,7 +44,7 @@ const Services = () => {
         status: 'pending',
         createdAt: new Date().toISOString()
       };
-      
+
       // For now, we'll store in localStorage as a demo
       // In production, this would be sent to your backend API
       const existingReviews = JSON.parse(localStorage.getItem('venus_reviews') || '[]');
@@ -54,7 +54,7 @@ const Services = () => {
       };
       existingReviews.push(newReview);
       localStorage.setItem('venus_reviews', JSON.stringify(existingReviews));
-      
+
       console.log('Review submitted:', newReview);
       alert('Thank you for your review! It will be reviewed and may appear on our website.');
       setShowReviewModal(false);
@@ -78,7 +78,7 @@ const Services = () => {
       title: "Pharmaceutical & Life Science",
       links: [
         "Sales",
-        "Marketing", 
+        "Marketing",
         "Market Research",
         "Regulatory Affairs",
         "Supply Chain Management",
@@ -387,25 +387,25 @@ const Services = () => {
       if (jobRolesData[roleName]) {
         return roleName;
       }
-      
+
       // Try to find exact match with the title
       for (const [key, jobData] of Object.entries(jobRolesData)) {
         if (jobData.title === roleName) {
           return key;
         }
       }
-      
+
       // Try partial matches for common variations
       const lowerRoleName = roleName.toLowerCase();
       for (const [key, jobData] of Object.entries(jobRolesData)) {
         const lowerTitle = jobData.title.toLowerCase();
         const lowerKey = key.toLowerCase();
         if (lowerTitle.includes(lowerRoleName) || lowerRoleName.includes(lowerTitle) ||
-            lowerKey.includes(lowerRoleName) || lowerRoleName.includes(lowerKey)) {
+          lowerKey.includes(lowerRoleName) || lowerRoleName.includes(lowerKey)) {
           return key;
         }
       }
-      
+
       return null; // No match found
     };
 
@@ -427,41 +427,41 @@ const Services = () => {
       const icons = {
         "Pharmaceutical & Life Science": (
           <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
-            <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z" />
           </svg>
         ),
         "C-suite Executive Search": (
           <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
-            <path d="M16 4C18.2 4 20 5.8 20 8S18.2 12 16 12 12 10.2 12 8 13.8 4 16 4ZM16 6C14.9 6 14 6.9 14 8S14.9 10 16 10 18 9.1 18 8 17.1 6 16 6ZM8 4C10.2 4 12 5.8 12 8S10.2 12 8 12 4 10.2 4 8 5.8 4 8 4ZM8 6C6.9 6 6 6.9 6 8S6.9 10 8 10 10 9.1 10 8 9.1 6 8 6ZM16 14C18.2 14 20 15.8 20 18V20H12V18C12 15.8 13.8 14 16 14ZM8 14C10.2 14 12 15.8 12 18V20H4V18C4 15.8 5.8 14 8 14Z"/>
+            <path d="M16 4C18.2 4 20 5.8 20 8S18.2 12 16 12 12 10.2 12 8 13.8 4 16 4ZM16 6C14.9 6 14 6.9 14 8S14.9 10 16 10 18 9.1 18 8 17.1 6 16 6ZM8 4C10.2 4 12 5.8 12 8S10.2 12 8 12 4 10.2 4 8 5.8 4 8 4ZM8 6C6.9 6 6 6.9 6 8S6.9 10 8 10 10 9.1 10 8 9.1 6 8 6ZM16 14C18.2 14 20 15.8 20 18V20H12V18C12 15.8 13.8 14 16 14ZM8 14C10.2 14 12 15.8 12 18V20H4V18C4 15.8 5.8 14 8 14Z" />
           </svg>
         ),
         "AutoTech": (
           <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
-            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H6.5C5.84 5 5.28 5.42 5.08 6.01L3 12V20C3 20.55 3.45 21 4 21H5C5.55 21 6 20.55 6 20V19H18V20C18 20.55 18.45 21 19 21H20C20.55 21 21 20.55 21 20V12L18.92 6.01ZM6.5 6.5H17.5L19 12H5L6.5 6.5ZM7 13.5C7.83 13.5 8.5 14.17 8.5 15S7.83 16.5 7 16.5 5.5 15.83 5.5 15 6.17 13.5 7 13.5ZM17 13.5C17.83 13.5 18.5 14.17 18.5 15S17.83 16.5 17 16.5 15.5 15.83 15.5 15 16.17 13.5 17 13.5Z"/>
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H6.5C5.84 5 5.28 5.42 5.08 6.01L3 12V20C3 20.55 3.45 21 4 21H5C5.55 21 6 20.55 6 20V19H18V20C18 20.55 18.45 21 19 21H20C20.55 21 21 20.55 21 20V12L18.92 6.01ZM6.5 6.5H17.5L19 12H5L6.5 6.5ZM7 13.5C7.83 13.5 8.5 14.17 8.5 15S7.83 16.5 7 16.5 5.5 15.83 5.5 15 6.17 13.5 7 13.5ZM17 13.5C17.83 13.5 18.5 14.17 18.5 15S17.83 16.5 17 16.5 15.5 15.83 15.5 15 16.17 13.5 17 13.5Z" />
           </svg>
         ),
         "Manufacturing & Skilled Trade": (
           <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
-            <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.5L19.5 8V16L12 19.5L4.5 16V8L12 4.5ZM12 6L6 9V15L12 18L18 15V9L12 6Z"/>
-            <path d="M8 10H16V12H8V10ZM8 14H16V16H8V14Z"/>
+            <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.5L19.5 8V16L12 19.5L4.5 16V8L12 4.5ZM12 6L6 9V15L12 18L18 15V9L12 6Z" />
+            <path d="M8 10H16V12H8V10ZM8 14H16V16H8V14Z" />
           </svg>
         ),
         "Accounting & Back Office Outsourcing": (
           <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
-            <path d="M7 4V2C7 1.45 7.45 1 8 1H16C16.55 1 17 1.45 17 2V4H20C20.55 4 21 4.45 21 5S20.55 6 20 6H19V19C19 20.1 18.1 21 17 21H7C5.9 21 5 20.1 5 19V6H4C3.45 6 3 5.55 3 5S3.45 4 4 4H7ZM9 3V4H15V3H9ZM7 6V19H17V6H7Z"/>
-            <path d="M9 8H15V10H9V8ZM9 12H15V14H9V12Z"/>
+            <path d="M7 4V2C7 1.45 7.45 1 8 1H16C16.55 1 17 1.45 17 2V4H20C20.55 4 21 4.45 21 5S20.55 6 20 6H19V19C19 20.1 18.1 21 17 21H7C5.9 21 5 20.1 5 19V6H4C3.45 6 3 5.55 3 5S3.45 4 4 4H7ZM9 3V4H15V3H9ZM7 6V19H17V6H7Z" />
+            <path d="M9 8H15V10H9V8ZM9 12H15V14H9V12Z" />
           </svg>
         ),
         "Aerospace": (
           <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
-            <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.5L19.5 8V16L12 19.5L4.5 16V8L12 4.5ZM12 6L6 9V15L12 18L18 15V9L12 6Z"/>
-            <path d="M8 10H16V12H8V10ZM8 14H16V16H8V14Z"/>
+            <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.5L19.5 8V16L12 19.5L4.5 16V8L12 4.5ZM12 6L6 9V15L12 18L18 15V9L12 6Z" />
+            <path d="M8 10H16V12H8V10ZM8 14H16V16H8V14Z" />
           </svg>
         )
       };
       return icons[serviceTitle] || (
         <svg viewBox="0 0 24 24" fill="currentColor" className="service-icon">
-          <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2Z"/>
+          <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2Z" />
         </svg>
       );
     };
@@ -511,13 +511,13 @@ const Services = () => {
         <div className="svc-container">
           <div className="svc-hero-content">
             <span className="svc-hero-label">Talent</span>
-            <h1 className="svc-hero-title">Our services</h1>
+            <h1 className="svc-hero-title">Staffing & Recruitment Services for Businesses in the USA</h1>
             <p className="svc-hero-description">
-              Precision recruitment solutions that transform businesses through strategic talent acquisition and expert placement.
+              Venus Hiring provides end-to-end staffing and recruitment services to help organizations hire skilled professionals, scale teams, and achieve long-term business growth across the USA.
             </p>
             <div className="svc-hero-buttons">
               <Link to="/contact" className="svc-btn-connect">
-                Connect
+                Contact Us
               </Link>
               <Link to="/book-call" className="svc-btn-learn">
                 <span>Connect</span>
@@ -535,88 +535,84 @@ const Services = () => {
             <span className="svc-grid-label">Solutions</span>
             <h2 className="svc-grid-title">Comprehensive staffing services</h2>
             <p className="svc-grid-subtitle">
-              Tailored recruitment strategies for dynamic business needs
+              Venus Hiring offers customized hiring solutions for startups, mid-sized companies, and enterprises. Our services include permanent staffing, contract and temporary hiring, executive search, and strategic talent advisory, designed to meet diverse workforce requirements across industries.
             </p>
           </div>
 
-          {/* Main Grid */}
-          <div className="svc-grid">
-            {/* Left Column - Large Primary Card */}
-            <div className="svc-card-large">
-              <div className="svc-card-image-wrapper">
-                <img 
-                  src="/aboutus/aboutus1.png" 
-                  alt="Permanent staffing solutions" 
-                  className="svc-card-image"
-                />
+          {/* Main Grid - Optimized 3+1 Layout */}
+          <div className="svc-grid-optimized">
+            {/* Row 1: Three Standard Cards */}
+            <div className="svc-card-standard">
+              <div className="svc-card-standard-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M2 17L12 22L22 17" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M2 12L12 17L22 12" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </div>
-              <div className="svc-card-content">
-                <span className="svc-card-category">Permanent</span>
-                <h3 className="svc-card-title">Permanent staffing solutions</h3>
-                <p className="svc-card-description">
-                  Strategic placement of top-tier talent for long-term organizational success and growth.
+              <div className="svc-card-standard-content">
+                <span className="svc-card-standard-category">Permanent</span>
+                <h3 className="svc-card-standard-title">Permanent staffing solutions</h3>
+                <p className="svc-card-standard-description">
+                  We help organizations hire full-time professionals who align with technical requirements, company culture, and long-term business goals, ensuring stable and scalable workforce growth.
                 </p>
-                <div className="svc-card-buttons">
-                  <button className="svc-btn-explore"><span>Explore</span></button>
-                  <Link to="/services" className="svc-btn-learn-more">Learn →</Link>
-                </div>
+                <Link to="/services" className="svc-btn-learn-more">Learn More →</Link>
               </div>
             </div>
 
-            {/* Right Column - Two Stacked Cards */}
-            <div className="svc-cards-stack">
-              {/* Top Small Card */}
-              <div className="svc-card-small">
-                <div className="svc-card-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M14 2V8H20" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M16 13H8" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M16 17H8" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M10 9H9H8" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                </div>
-                <h4 className="svc-card-small-title">Contract and temporary staffing</h4>
-                <p className="svc-card-small-description">
-                  Flexible workforce solutions for agile business environments.
-                </p>
-                <Link to="/services" className="svc-btn-learn-more">Learn →</Link>
+            <div className="svc-card-standard">
+              <div className="svc-card-standard-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M14 2V8H20" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M16 13H8" stroke="#000" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M16 17H8" stroke="#000" strokeWidth="2" strokeLinecap="round" />
+                </svg>
               </div>
-
-              {/* Bottom Small Card */}
-              <div className="svc-card-small">
-                <div className="svc-card-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M2 17L12 22L22 17" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M2 12L12 17L22 12" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="12" cy="12" r="2" fill="#000"/>
-                  </svg>
-                </div>
-                <h4 className="svc-card-small-title">Specialized IT and advisory</h4>
-                <p className="svc-card-small-description">
-                  Expert technology and strategic consulting talent for complex business challenges.
+              <div className="svc-card-standard-content">
+                <span className="svc-card-standard-category">Contract</span>
+                <h3 className="svc-card-standard-title">Contract & Temporary Staffing</h3>
+                <p className="svc-card-standard-description">
+                  We provide contract and temporary staffing solutions to help organizations manage short-term projects, seasonal workforce needs, and specialized skill requirements. Our flexible hiring model enables businesses to scale teams quickly while maintaining productivity, compliance, and cost efficiency.
                 </p>
-                <Link to="/services" className="svc-btn-learn-more">Learn →</Link>
+                <Link to="/services" className="svc-btn-learn-more">Learn More →</Link>
               </div>
             </div>
 
-            {/* Bottom Right - Medium Wide Card */}
-            <div className="svc-card-medium">
-              <div className="svc-card-medium-image-wrapper">
-                <img 
-                  src="/aboutus/aboutus3.png" 
-                  alt="Executive search and C-suite placement" 
-                  className="svc-card-image"
+            <div className="svc-card-standard">
+              <div className="svc-card-standard-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M12 22V12" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M22 7L12 12L2 7" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <div className="svc-card-standard-content">
+                <span className="svc-card-standard-category">Technology</span>
+                <h3 className="svc-card-standard-title">IT Staffing & Consulting</h3>
+                <p className="svc-card-standard-description">
+                  Our IT staffing and consulting services help organizations access experienced technology professionals for project-based and long-term roles. We recruit software developers, engineers, QA specialists, and IT consultants who support digital transformation, system optimization, and business innovation.
+                </p>
+                <Link to="/services" className="svc-btn-learn-more">Learn More →</Link>
+              </div>
+            </div>
+
+            {/* Row 2: One Full-Span Banner Card */}
+            <div className="svc-card-full-span">
+              <div className="svc-card-full-span-image-wrapper">
+                <img
+                  src="/aboutus/aboutus3.png"
+                  alt="Executive search"
+                  className="svc-card-full-span-image"
                 />
               </div>
-              <div className="svc-card-medium-content">
-                <span className="svc-card-category">Executive</span>
-                <h3 className="svc-card-title">Executive search and C-suite placement</h3>
-                <p className="svc-card-description">
-                  High-level recruitment for leadership roles that drive organizational transformation.
+              <div className="svc-card-full-span-content">
+                <span className="svc-card-standard-category">Executive</span>
+                <h3 className="svc-card-standard-title">Executive Search & C-Suite Placement</h3>
+                <p className="svc-card-standard-description">
+                  Our executive search and C-suite placement services help organizations identify and hire senior leadership talent that drives strategic growth and organizational success. We recruit executives with proven leadership experience, industry expertise, and the ability to lead teams through change and transformation.
                 </p>
-                <Link to="/services" className="svc-btn-learn-more">Learn →</Link>
+                <Link to="/services" className="svc-btn-learn-more">Get Started →</Link>
               </div>
             </div>
           </div>
@@ -658,15 +654,14 @@ const Services = () => {
                   Share your talent needs. Connect with qualified professionals within minutes.
                 </h2>
                 <p className="talent-banner__subtitle">
-                  Tell us about your company and hiring goals<br />
-                  to generate a custom Talent Brief in minutes.
+                  Tell us about your hiring requirements, timelines, and business goals to receive a customized recruitment solution tailored to your organization’s needs.
                 </p>
                 <button className="talent-banner__cta" onClick={handleFindTalents}>Find Talents</button>
               </div>
               <div className="talent-banner__right">
-                <img 
-                  src="/images/iamge01.png" 
-                  alt="Project Brief" 
+                <img
+                  src="/images/iamge01.png"
+                  alt="Project Brief"
                   className="talent-banner__image"
                   loading="lazy"
                   decoding="async"
@@ -717,7 +712,7 @@ const Services = () => {
               <p className="cta-description">
                 Get in front of thousands of companies actively hiring through the leading global talent marketplace.
               </p>
-              <button className="cta-button" type="button" onClick={handleCreateJobListing}>Create a Job Listing</button>
+              <button className="cta-button" type="button" onClick={handleCreateJobListing}>Hire Talent</button>
             </div>
           </div>
         </div>
@@ -729,15 +724,15 @@ const Services = () => {
           <div className="review-modal" onClick={(e) => e.stopPropagation()}>
             <div className="review-modal__header">
               <h3>Write a Review</h3>
-              <button 
-                className="review-modal__close" 
+              <button
+                className="review-modal__close"
                 onClick={() => setShowReviewModal(false)}
                 aria-label="Close modal"
               >
                 ×
               </button>
             </div>
-            
+
             <form onSubmit={handleReviewSubmit} className="review-modal__form">
               <div className="review-modal__field">
                 <label htmlFor="name">Your Name *</label>
@@ -796,8 +791,8 @@ const Services = () => {
               </div>
 
               <div className="review-modal__actions">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="review-modal__cancel"
                   onClick={() => setShowReviewModal(false)}
                 >

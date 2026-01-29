@@ -5,8 +5,33 @@ import "./FAQ.css";
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [showAll, setShowAll] = useState(false);
 
   const faqs = [
+    {
+      question: "What types of staffing models does Venus Hiring offer?",
+      answer: "Venus Hiring offers permanent staffing, contract and temporary hiring, executive search, project-based hiring, and talent consulting services tailored to business needs."
+    },
+    {
+      question: "How does Venus Hiring ensure candidate quality?",
+      answer: "We use a structured recruitment process that includes role analysis, skill-based screening, interviews, and background verification to ensure candidates meet technical and cultural requirements."
+    },
+    {
+      question: "Can Venus Hiring support urgent or high-volume hiring needs?",
+      answer: "Yes, we specialize in fast-turnaround and high-volume hiring projects by leveraging pre-vetted talent pools and industry-specific recruiters."
+    },
+    {
+      question: "Do you provide industry-specific recruitment solutions?",
+      answer: "Yes, our recruiters specialize in specific industries such as IT, healthcare, life sciences, manufacturing, aerospace, and finance to ensure domain expertise."
+    },
+    {
+      question: "How does Venus Hiring handle compliance and hiring regulations?",
+      answer: "We follow industry and regional hiring compliance standards to ensure ethical, secure, and legally compliant recruitment processes."
+    },
+    {
+      question: "Can Venus Hiring customize recruitment solutions for my business?",
+      answer: "Absolutely. Our recruitment strategies are customized based on company size, industry, hiring goals, and workforce requirements."
+    },
     {
       question: "What services does Venus Consultancy offer?",
       answer: "Venus Consultancy provides comprehensive recruitment and talent solutions including IT recruitment, engineering placements, skilled trades, executive search, recruitment process outsourcing (RPO), and end-to-end talent acquisition services across various industries."
@@ -53,6 +78,8 @@ const FAQ = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const visibleFaqs = showAll ? faqs : faqs.slice(0, 7);
+
   return (
     <section className="faq-section" aria-label="Frequently Asked Questions">
       <div className="faq-container">
@@ -62,11 +89,11 @@ const FAQ = () => {
             Find answers to common questions about our services, job applications, and recruitment process
           </p>
         </div>
-        
+
         <div className="faq-list">
-          {faqs.map((faq, index) => (
-            <div 
-              key={index} 
+          {visibleFaqs.map((faq, index) => (
+            <div
+              key={index}
               className={`faq-item ${openIndex === index ? 'faq-item--open' : ''}`}
             >
               <button
@@ -76,7 +103,7 @@ const FAQ = () => {
                 aria-controls={`faq-answer-${index}`}
               >
                 <span className="faq-question-text">{faq.question}</span>
-                <ChevronDown 
+                <ChevronDown
                   className={`faq-icon ${openIndex === index ? 'faq-icon--open' : ''}`}
                   size={20}
                 />
@@ -90,6 +117,15 @@ const FAQ = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="faq-actions">
+          <button
+            className="faq-see-more-btn"
+            onClick={() => setShowAll(!showAll)}
+          >
+            {showAll ? "See Less" : "See More"}
+          </button>
         </div>
       </div>
     </section>

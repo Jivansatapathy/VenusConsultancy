@@ -89,7 +89,7 @@ export default function StatAbout() {
         {/* Header Section */}
         <div className="stat-about__header">
           <h2 className="stat-about__main-title">
-            {statContent.title || "Our proven track record speaks volumes"}
+            {statContent.title || "Driving Business Growth With Expert Staffing & Recruitment Solutions"}
           </h2>
           <p className="stat-about__main-description">
             {statContent.description || "We deliver measurable results through strategic talent solutions. Our commitment transforms businesses across industries."}
@@ -105,7 +105,7 @@ export default function StatAbout() {
             </div>
             <div className="stat-about__card-content">
               <div className="stat-about__card-title">Years of expertise</div>
-              <div className="stat-about__card-subtitle">Decades of refined recruitment strategies</div>
+              <div className="stat-about__card-subtitle">Delivering recruitment solutions across multiple industries</div>
             </div>
           </div>
 
@@ -126,7 +126,7 @@ export default function StatAbout() {
             </div>
             <div className="stat-about__card-content">
               <div className="stat-about__card-title">Successful placements</div>
-              <div className="stat-about__card-subtitle">Connecting talent with opportunity</div>
+              <div className="stat-about__card-subtitle">Helping companies hire skilled professionals</div>
             </div>
           </div>
 
@@ -137,7 +137,7 @@ export default function StatAbout() {
             </div>
             <div className="stat-about__card-content">
               <div className="stat-about__card-title">Client satisfaction</div>
-              <div className="stat-about__card-subtitle">Consistently exceeding expectations</div>
+              <div className="stat-about__card-subtitle">Trusted staffing partner for growing businesses</div>
             </div>
           </div>
 

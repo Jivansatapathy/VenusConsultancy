@@ -12,9 +12,8 @@ const getDefaultContent = () => ({
   home: {
     hero: {
       greeting: "- Empower Your Workforce -",
-      titleLine1: "Shape the Future of",
-      titleLine2: "Your Organization Today",
-      subtitle: "Connect with top-tier talent across the USA and discover professionals who drive growth, innovation, and success for American businesses.",
+      title: "Staffing & Recruitment Agency in the USA",   
+      subtitle: "Supporting Businesses Across the USA with Skilled Talent and Reliable Hiring Solutions",
       button1Text: "Book a Consultation",
       button1Link: "/book-call",
       button2Text: "Our Services",
@@ -23,8 +22,8 @@ const getDefaultContent = () => ({
     },
     statAbout: {
       tag: "ABOUT VENUS HIRING",
-      title: "Driving Success With An Expert Staffing",
-      description: "At Venus Consultancy, we understand that the key to business success lies in having the right people on your team. That's why we're committed to connecting USA companies with top-tier talent across North America and beyond.",
+      title: "Driving Business Growth With Expert Staffing & Recruitment Solutions",
+      description: "At Venus Hiring, we understand that hiring the right talent is critical to business success. As a professional staffing and recruitment agency in the USA, we help organizations build high-performing teams through tailored hiring solutions. From permanent recruitment and contract staffing to executive search and workforce planning, our team connects employers with qualified professionals across North America, ensuring faster hiring, reduced costs, and long-term success",
       stat1Number: "77",
       stat1Suffix: "K+",
       stat1Label: "Trusted Partnerships",
@@ -105,40 +104,45 @@ export const SEOContentProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Load content from MongoDB database on mount
-  useEffect(() => {
-    const loadContent = async () => {
-      try {
-        console.log('[SEO Content] 🔄 Loading content from backend...');
-        // Fetch all content from database
-        const response = await API.get('/content');
-        const databaseContent = response.data?.data || {};
+  // useEffect(() => {
+  //   const loadContent = async () => {
+  //     try {
+  //       console.log('[SEO Content] 🔄 Loading content from backend...');
+  //       // Fetch all content from database
+  //       const response = await API.get('/content');
+  //       const databaseContent = response.data?.data || {};
         
-        console.log('[SEO Content] 📦 Content received from backend:', {
-          pages: Object.keys(databaseContent),
-          hasData: Object.keys(databaseContent).length > 0
-        });
+  //       console.log('[SEO Content] 📦 Content received from backend:', {
+  //         pages: Object.keys(databaseContent),
+  //         hasData: Object.keys(databaseContent).length > 0
+  //       });
         
-        // If database has content, use it directly (don't merge with defaults)
-        // This ensures saved content is not overwritten by defaults
-        if (databaseContent && Object.keys(databaseContent).length > 0) {
-          console.log('[SEO Content] ✅ Using content from database');
-          setContent(databaseContent);
-        } else {
-          console.log('[SEO Content] ⚠️  No content in database, using defaults');
-          // Only use defaults if database is empty
-          setContent(getDefaultContent());
-        }
-      } catch (error) {
-        console.error('[SEO Content] ❌ Error loading content from database:', error);
-        // Fallback to defaults if database fetch fails
-        setContent(getDefaultContent());
-      } finally {
-        setLoading(false);
-      }
-    };
+  //       // If database has content, use it directly (don't merge with defaults)
+  //       // This ensures saved content is not overwritten by defaults
+  //       if (databaseContent && Object.keys(databaseContent).length > 0) {
+  //         console.log('[SEO Content] ✅ Using content from database');
+  //         setContent(databaseContent);
+  //       } else {
+  //         console.log('[SEO Content] ⚠️  No content in database, using defaults');
+  //         // Only use defaults if database is empty
+  //         setContent(getDefaultContent());
+  //       }
+  //     } catch (error) {
+  //       console.error('[SEO Content] ❌ Error loading content from database:', error);
+  //       // Fallback to defaults if database fetch fails
+  //       setContent(getDefaultContent());
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
     
-    loadContent();
-  }, []);
+  //   loadContent();
+  // }, []);
+useEffect(() => {
+  // Offline-first mode: use default content only
+  setContent(getDefaultContent());
+  setLoading(false);
+}, []);
 
   const updateContent = async (path, value) => {
     // Parse the path to get page and section

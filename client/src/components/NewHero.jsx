@@ -101,7 +101,7 @@ const NewHero = () => {
         {/* Left Content */}
         <div className="hero-content">
           <h1 className="hero-title">
-            {heroContent.title || "Staffing & Recruitment Agency in the USA Helping Businesses Hire Top Talent"}
+            {heroContent.title }
           </h1>
           <p className="hero-subtitle">
             {heroContent.subtitle || "We unite Technology, Talent, and Opportunities to align your career goals with the perfect job match."}

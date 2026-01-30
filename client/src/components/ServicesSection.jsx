@@ -11,7 +11,7 @@ const ServicesSection = () => {
   
   // Always use servicesConfig items (which now has 6 items), but allow SEO content to override heading/description
   const heading = seoServices?.heading || services.heading;
-  const description = seoServices?.description || services.description;
+  const description ='We provide tailored staffing, recruitment, and HR advisory solutions to help organizations build strong, scalable teams across the USA.';
   const items = services.items; // Always use the updated config items
 
   // Map services to match the image layout with categories
@@ -34,7 +34,7 @@ const ServicesSection = () => {
         <div className="vh-services__header">
           <div className="vh-services__branding">Solutions</div>
           <h2 id="vh-services-heading" className="vh-services__heading">
-            More ways we can help
+            Staffing & Recruitment Solutions We Offer
           </h2>
           <p className="vh-services__desc">
             {description || "Strategic recruitment services tailored to your business needs"}

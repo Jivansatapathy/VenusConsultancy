@@ -10,7 +10,7 @@ const services = {
         key: "permanent-staffing",
         title: "Solutions",
         excerpt:
-          "Connecting organizations with full-time professionals across technology, engineering, corporate, and skilled trades.",
+          "We provide permanent staffing solutions to help companies hire skilled professionals across IT, healthcare, manufacturing, finance, and corporate roles. Our recruitment process ensures quality hiring, faster turnaround times, and long-term workforce stability.",
         image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop&auto=format",
         link: "/contact"
       },
@@ -18,7 +18,7 @@ const services = {
         key: "contract-temporary",
         title: "Contract & Temporary Staffing",
         excerpt:
-          "Flexible talent solutions for short- or long-term projects to meet dynamic business needs.",
+          "Our contract and temporary staffing services help organizations manage short-term projects, seasonal hiring, and specialized skill requirements. We offer flexible workforce solutions tailored to dynamic business needs.",
         image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop&auto=format",
         link: "/contact"
       },
@@ -26,7 +26,7 @@ const services = {
         key: "fractional-hr",
         title: "Fractional HR & HR Advisory",
         excerpt:
-          "Providing part-time or interim HR leadership for workforce planning, compliance, and engagement.",
+          "Our fractional HR and HR advisory services provide companies with expert HR leadership, compliance support, workforce planning, and employee engagement strategies without the cost of a full-time HR team.",
         image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&h=600&fit=crop&auto=format",
         link: "/contact"
       },
@@ -34,7 +34,7 @@ const services = {
         key: "sow-project",
         title: "Statement of Work (SOW) & Project-Based Solutions",
         excerpt:
-          "Deploying specialized talent for defined projects or deliverables without long-term commitments.",
+          "We deliver project-based recruitment solutions under a defined statement of work, enabling companies to achieve specific business outcomes without long-term hiring commitments.",
         image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop&auto=format",
         link: "/contact"
       },
@@ -42,7 +42,7 @@ const services = {
         key: "startup-hiring",
         title: "Startup Hiring",
         excerpt:
-          "Specialized recruitment solutions for startups and growing companies, connecting them with innovative talent ready to scale.",
+          "We help startups and fast-growing companies build core teams by recruiting skilled professionals aligned with growth goals, culture, and scalability requirements.",
         image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop&auto=format",
         link: "/contact"
       },
@@ -50,7 +50,7 @@ const services = {
         key: "talent-consulting",
         title: "Talent Consulting & Advisory",
         excerpt:
-          "Strategic talent consulting services to help organizations optimize their hiring processes, build talent pipelines, and develop effective recruitment strategies.",
+          "Our talent consulting services help organizations optimize hiring strategies, improve recruitment processes, and build strong talent pipelines for sustainable business growth.",
         image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop&auto=format",
         link: "/contact"
       }

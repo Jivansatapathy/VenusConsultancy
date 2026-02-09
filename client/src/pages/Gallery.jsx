@@ -9,38 +9,36 @@ import YouTubeVideos from "../components/YouTubeVideos";
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageOrientations, setImageOrientations] = useState({});
-  const [galleryData, setGalleryData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [galleryData, setGalleryData] = useState(staticGalleryData); // Initialize with static data
+  const [loading, setLoading] = useState(false); // Change to false to show static data immediately
+  const [initialFetchDone, setInitialFetchDone] = useState(false);
 
   // Fetch gallery data from Firestore
   useEffect(() => {
     const fetchGalleryData = async () => {
       try {
-        setLoading(true);
-        const items = await getGalleryItems();
-        console.log('Fetched gallery items from Firestore:', items.length);
-        
-        // Sort by id descending
-        items.sort((a, b) => (b.id || 0) - (a.id || 0));
-        
-        if (items.length === 0) {
-          console.log('No items in Firestore, using static data');
-          setGalleryData(staticGalleryData);
-        } else {
-          setGalleryData(items);
+        // We don't set loading=true here anymore because we want to keep showing static data
+        setInitialFetchDone(false);
+        const dynamicItems = await getGalleryItems();
+        console.log('Fetched dynamic gallery items from Firestore:', dynamicItems.length);
+
+        if (dynamicItems.length > 0) {
+          setGalleryData(prevData => {
+            // Keep existing static data but filter out any that might be duplicates by ID
+            const staticIds = new Set(staticGalleryData.map(item => item.id));
+            const uniqueDynamicItems = dynamicItems.filter(item => !staticIds.has(item.id));
+
+            // Combine them
+            const combined = [...staticGalleryData, ...uniqueDynamicItems];
+
+            // Sort by id descending
+            return combined.sort((a, b) => (b.id || 0) - (a.id || 0));
+          });
         }
       } catch (error) {
-        console.error('Error fetching gallery data from Firestore:', error);
-        console.error('Error details:', {
-          message: error.message,
-          code: error.code,
-          stack: error.stack
-        });
-        // Fallback to static data if Firestore fails
-        console.log('Falling back to static gallery data');
-        setGalleryData(staticGalleryData);
+        console.error('Error fetching gallery data from Firestore (using static data only):', error);
       } finally {
-        setLoading(false);
+        setInitialFetchDone(true);
       }
     };
 
@@ -80,46 +78,64 @@ const Gallery = () => {
 
   // Helper function to get image URL
   const getImageUrl = (imageUrl) => {
-    if (!imageUrl) return '/venuslogo.png';
-    
+    if (!imageUrl) {
+      console.warn('Empty imageUrl provided to getImageUrl');
+      return '/venuslogo.png';
+    }
+
     // If it's already a full URL (Firebase Storage or external), return as is
     if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
       return imageUrl;
     }
-    
-    // If it's a local path starting with /, return as is
-    if (imageUrl.startsWith('/')) {
-      return imageUrl;
+
+    // Normalize local path: ensure single leading slash and Gallery prefix if missing
+    let cleanPath = imageUrl;
+
+    // Ensure it starts with a single /
+    if (!cleanPath.startsWith('/')) {
+      cleanPath = '/' + cleanPath;
     }
-    
-    // Otherwise, treat as local path
-    return imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+
+    // If it's just the filename without folder, prepend /Gallery/
+    if (!cleanPath.startsWith('/Gallery/') && !cleanPath.includes('/images/') && !cleanPath.includes('/slider/')) {
+      // If it already had Gallery but maybe misspelled or lowercase, this might help
+      if (cleanPath.toLowerCase().startsWith('/gallery/')) {
+        cleanPath = '/Gallery/' + cleanPath.substring(9);
+      } else {
+        cleanPath = '/Gallery' + cleanPath;
+      }
+    }
+
+    // Clean up any double slashes that might have been introduced
+    cleanPath = cleanPath.replace(/\/+/g, '/');
+
+    return cleanPath;
   };
 
   // Separate gallery items into landscape and portrait
   const { landscapeItems, portraitItems } = useMemo(() => {
     const landscape = [];
     const portrait = [];
-    
+
     galleryData.forEach((item) => {
       // Use detected orientation or fallback to item.orientation
       // Handle both Firestore doc IDs and numeric IDs
       const itemId = item.id || item.docId || `item-${Math.random()}`;
       const detectedOrientation = imageOrientations[itemId] || item.orientation || 'landscape';
-      const itemWithOrientation = { 
-        ...item, 
-        currentOrientation: detectedOrientation, 
+      const itemWithOrientation = {
+        ...item,
+        currentOrientation: detectedOrientation,
         itemId,
         imageUrl: getImageUrl(item.image) // Pre-process image URL
       };
-      
+
       if (detectedOrientation === "portrait") {
         portrait.push(itemWithOrientation);
       } else {
         landscape.push(itemWithOrientation);
       }
     });
-    
+
     return { landscapeItems: landscape, portraitItems: portrait };
   }, [galleryData, imageOrientations]);
 
@@ -164,77 +180,97 @@ const Gallery = () => {
             <>
               {/* Landscape Images Section */}
               {landscapeItems.length > 0 && (
-            <div className="gallery-grid">
-              {landscapeItems.map((item) => {
-                const detectedOrientation = item.currentOrientation;
-                const itemId = item.id || item.docId || `item-${Math.random()}`;
-                return (
-                  <div
-                    key={itemId}
-                    className={`gallery-item gallery-item--${detectedOrientation}`}
-                    onClick={() => openModal({...item, orientation: detectedOrientation})}
-                  >
-                    <div className="gallery-item__image-wrapper">
-                      <img
-                        src={item.imageUrl || getImageUrl(item.image)}
-                        alt={item.eventName || 'Gallery image'}
-                        className="gallery-item__image"
-                        loading="lazy"
-                        onLoad={(e) => handleImageLoad(itemId, e)}
-                        onError={(e) => {
-                          console.error('Image failed to load:', item.image, item.imageUrl);
-                          e.target.src = '/venuslogo.png'; // Fallback image
-                          e.target.alt = 'Image not available';
-                        }}
-                      />
-                      <div className="gallery-item__overlay">
-                        <div className="gallery-item__info">
-                          <h3 className="gallery-item__title">{item.eventName}</h3>
+                <div className="gallery-grid">
+                  {landscapeItems.map((item) => {
+                    const detectedOrientation = item.currentOrientation;
+                    const itemId = item.id || item.docId || `item-${Math.random()}`;
+                    return (
+                      <div
+                        key={itemId}
+                        className={`gallery-item gallery-item--${detectedOrientation}`}
+                        onClick={() => openModal({ ...item, orientation: detectedOrientation })}
+                      >
+                        <div className="gallery-item__image-wrapper">
+                          <img
+                            src={item.imageUrl}
+                            alt={item.eventName || 'Gallery image'}
+                            className="gallery-item__image"
+                            loading="lazy"
+                            onLoad={(e) => {
+                              if (!e.target.dataset.logged) {
+                                console.log('Landscape image loaded:', item.imageUrl);
+                                e.target.dataset.logged = 'true';
+                              }
+                              handleImageLoad(itemId, e);
+                            }}
+                            onError={(e) => {
+                              console.error('Landscape image load error:', {
+                                image: item.image,
+                                url: item.imageUrl,
+                                id: itemId
+                              });
+                              e.target.src = '/venuslogo.png';
+                              e.target.alt = 'Image not available';
+                            }}
+                          />
+                          <div className="gallery-item__overlay">
+                            <div className="gallery-item__info">
+                              <h3 className="gallery-item__title">{item.eventName}</h3>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-          
-          {/* Portrait Images Section - Starts on new row */}
-          {portraitItems.length > 0 && (
-            <div className="gallery-grid gallery-grid--portrait">
-              {portraitItems.map((item) => {
-                const detectedOrientation = item.currentOrientation;
-                const itemId = item.id || item.docId || `item-${Math.random()}`;
-                return (
-                  <div
-                    key={itemId}
-                    className={`gallery-item gallery-item--${detectedOrientation}`}
-                    onClick={() => openModal({...item, orientation: detectedOrientation})}
-                  >
-                    <div className="gallery-item__image-wrapper">
-                      <img
-                        src={item.imageUrl || getImageUrl(item.image)}
-                        alt={item.eventName || 'Gallery image'}
-                        className="gallery-item__image"
-                        loading="lazy"
-                        onLoad={(e) => handleImageLoad(itemId, e)}
-                        onError={(e) => {
-                          console.error('Image failed to load:', item.image, item.imageUrl);
-                          e.target.src = '/venuslogo.png'; // Fallback image
-                          e.target.alt = 'Image not available';
-                        }}
-                      />
-                      <div className="gallery-item__overlay">
-                        <div className="gallery-item__info">
-                          <h3 className="gallery-item__title">{item.eventName}</h3>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Portrait Images Section - Starts on new row */}
+              {portraitItems.length > 0 && (
+                <div className="gallery-grid gallery-grid--portrait">
+                  {portraitItems.map((item) => {
+                    const detectedOrientation = item.currentOrientation;
+                    const itemId = item.id || item.docId || `item-${Math.random()}`;
+                    return (
+                      <div
+                        key={itemId}
+                        className={`gallery-item gallery-item--${detectedOrientation}`}
+                        onClick={() => openModal({ ...item, orientation: detectedOrientation })}
+                      >
+                        <div className="gallery-item__image-wrapper">
+                          <img
+                            src={item.imageUrl}
+                            alt={item.eventName || 'Gallery image'}
+                            className="gallery-item__image"
+                            loading="lazy"
+                            onLoad={(e) => {
+                              if (!e.target.dataset.logged) {
+                                console.log('Portrait image loaded:', item.imageUrl);
+                                e.target.dataset.logged = 'true';
+                              }
+                              handleImageLoad(itemId, e);
+                            }}
+                            onError={(e) => {
+                              console.error('Portrait image load error:', {
+                                image: item.image,
+                                url: item.imageUrl,
+                                id: itemId
+                              });
+                              e.target.src = '/venuslogo.png';
+                              e.target.alt = 'Image not available';
+                            }}
+                          />
+                          <div className="gallery-item__overlay">
+                            <div className="gallery-item__info">
+                              <h3 className="gallery-item__title">{item.eventName}</h3>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+                    );
+                  })}
+                </div>
+              )}
             </>
           )}
         </div>
@@ -258,7 +294,10 @@ const Gallery = () => {
                   alt={selectedImage.eventName || 'Gallery image'}
                   className="gallery-modal__image"
                   onError={(e) => {
-                    console.error('Modal image failed to load:', selectedImage.image);
+                    console.error('Modal image failed to load:', {
+                      image: selectedImage.image,
+                      calculated: getImageUrl(selectedImage.image)
+                    });
                     e.target.src = '/venuslogo.png'; // Fallback image
                     e.target.alt = 'Image not available';
                   }}
@@ -280,7 +319,7 @@ const Gallery = () => {
       )}
 
       {/* YouTube Videos Section */}
-      <YouTubeVideos 
+      <YouTubeVideos
         maxResults={12}
       />
 

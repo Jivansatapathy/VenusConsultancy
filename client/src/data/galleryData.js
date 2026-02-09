@@ -10,69 +10,69 @@
 // - orientation: "landscape" or "portrait" (will be auto-detected, but you can set it manually)
 
 export const galleryData = [
-  // {
-  //   id: 5,
-  //   image: "/Gallery/With Consulate General of US.jpg",
-  //   eventName: "With Consulate General of the U.S.",
-  //   location: "United States",
-  //   description: "Important diplomatic meeting with the U.S. Consulate General to discuss talent mobility and business relations.",
-  //   attendees: "Venus Consultancy team met with the Consulate General of the U.S.",
-  //   orientation: "landscape"
-  // },
-  // {
-  //   id: 6,
-  //   image: "/Gallery/With The U.S Ambassador David Cohen.jpg",
-  //   eventName: "With David Cohen - U.S. Ambassador",
-  //   location: "United States",
-  //   description: "Prestigious meeting with U.S. Ambassador David Cohen to discuss international talent solutions and diplomatic partnerships.",
-  //   attendees: "Venus Consultancy team met with David Cohen, U.S. Ambassador",
-  //   orientation: "landscape"
-  // },
-  // {
-  //   id: 9,
-  //   image: "/Gallery/Meeting with Governor of Michigan Gretchen Whitmer.jpg",
-  //   eventName: "With Gretchen Whitmer - Governor of Michigan",
-  //   location: "Michigan, USA",
-  //   description: "Important meeting with Governor Gretchen Whitmer to discuss talent solutions for Michigan's growing economy and business development initiatives.",
-  //   attendees: "Venus Consultancy team met with Gretchen Whitmer, Governor of Michigan",
-  //   orientation: "landscape"
-  // },
-  // {
-  //   id: 10,
-  //   image: "/Gallery/Great meeting with Governor of Arizona, Katie Hobbs.jpg",
-  //   eventName: "With Katie Hobbs - Governor of Arizona",
-  //   location: "Arizona, USA",
-  //   description: "Productive meeting with Governor Katie Hobbs to explore talent acquisition strategies for Arizona's expanding business landscape.",
-  //   attendees: "Venus Consultancy team met with Katie Hobbs, Governor of Arizona",
-  //   orientation: "landscape"
-  // },
-  // {
-  //   id: 11,
-  //   image: "/Gallery/Great Meeting with Governor of Indiana, Eric Holcomb.jpg",
-  //   eventName: "With Eric Holcomb - Governor of Indiana",
-  //   location: "Indiana, USA",
-  //   description: "Strategic discussion with Governor Eric Holcomb about supporting Indiana's workforce development and talent recruitment initiatives.",
-  //   attendees: "Venus Consultancy team met with Eric Holcomb, Governor of Indiana",
-  //   orientation: "landscape"
-  // },
-  // {
-  //   id: 12,
-  //   image: "/Gallery/Great Meeting with Governor of Maryland Wes Moore.jpg",
-  //   eventName: "With Wes Moore - Governor of Maryland",
-  //   location: "Maryland, USA",
-  //   description: "Engaging meeting with Governor Wes Moore to discuss innovative talent solutions for Maryland's diverse business ecosystem.",
-  //   attendees: "Venus Consultancy team met with Wes Moore, Governor of Maryland",
-  //   orientation: "landscape"
-  // },
-  // {
-  //   id: 13,
-  //   image: "/Gallery/Great Meeting with Governor of Nevada Lombardo.jpg",
-  //   eventName: "With Joe Lombardo - Governor of Nevada",
-  //   location: "Nevada, USA",
-  //   description: "Strategic meeting with Governor Joe Lombardo to explore talent acquisition opportunities in Nevada's dynamic economy.",
-  //   attendees: "Venus Consultancy team met with Joe Lombardo, Governor of Nevada",
-  //   orientation: "landscape"
-  // },
+  {
+    id: 5,
+    image: "/Gallery/With Consulate General of US.jpg",
+    eventName: "With Consulate General of the U.S.",
+    location: "United States",
+    description: "Important diplomatic meeting with the U.S. Consulate General to discuss talent mobility and business relations.",
+    attendees: "Venus Consultancy team met with the Consulate General of the U.S.",
+    orientation: "landscape"
+  },
+  {
+    id: 6,
+    image: "/Gallery/With The U.S Ambassador David Cohen.jpg",
+    eventName: "With David Cohen - U.S. Ambassador",
+    location: "United States",
+    description: "Prestigious meeting with U.S. Ambassador David Cohen to discuss international talent solutions and diplomatic partnerships.",
+    attendees: "Venus Consultancy team met with David Cohen, U.S. Ambassador",
+    orientation: "landscape"
+  },
+  {
+    id: 9,
+    image: "/Gallery/Meeting with Governor of Michigan Gretchen Whitmer.jpg",
+    eventName: "With Gretchen Whitmer - Governor of Michigan",
+    location: "Michigan, USA",
+    description: "Important meeting with Governor Gretchen Whitmer to discuss talent solutions for Michigan's growing economy and business development initiatives.",
+    attendees: "Venus Consultancy team met with Gretchen Whitmer, Governor of Michigan",
+    orientation: "landscape"
+  },
+  {
+    id: 10,
+    image: "/Gallery/Great meeting with Governor of Arizona, Katie Hobbs.jpg",
+    eventName: "With Katie Hobbs - Governor of Arizona",
+    location: "Arizona, USA",
+    description: "Productive meeting with Governor Katie Hobbs to explore talent acquisition strategies for Arizona's expanding business landscape.",
+    attendees: "Venus Consultancy team met with Katie Hobbs, Governor of Arizona",
+    orientation: "landscape"
+  },
+  {
+    id: 11,
+    image: "/Gallery/Great Meeting with Governor of Indiana, Eric Holcomb.jpg",
+    eventName: "With Eric Holcomb - Governor of Indiana",
+    location: "Indiana, USA",
+    description: "Strategic discussion with Governor Eric Holcomb about supporting Indiana's workforce development and talent recruitment initiatives.",
+    attendees: "Venus Consultancy team met with Eric Holcomb, Governor of Indiana",
+    orientation: "landscape"
+  },
+  {
+    id: 12,
+    image: "/Gallery/Great Meeting with Governor of Maryland Wes Moore.jpg",
+    eventName: "With Wes Moore - Governor of Maryland",
+    location: "Maryland, USA",
+    description: "Engaging meeting with Governor Wes Moore to discuss innovative talent solutions for Maryland's diverse business ecosystem.",
+    attendees: "Venus Consultancy team met with Wes Moore, Governor of Maryland",
+    orientation: "landscape"
+  },
+  {
+    id: 13,
+    image: "/Gallery/Great Meeting with Governor of Nevada Lombardo.jpg",
+    eventName: "With Joe Lombardo - Governor of Nevada",
+    location: "Nevada, USA",
+    description: "Strategic meeting with Governor Joe Lombardo to explore talent acquisition opportunities in Nevada's dynamic economy.",
+    attendees: "Venus Consultancy team met with Joe Lombardo, Governor of Nevada",
+    orientation: "landscape"
+  },
   {
     id: 14,
     image: "/Gallery/Great meeting with President Ying McGuire of NMSDC at Baltimore.jpg",
@@ -118,15 +118,15 @@ export const galleryData = [
     attendees: "Venus Consultancy team at NMSDC Conference in Baltimore",
     orientation: "landscape"
   },
-  // {
-  //   id: 20,
-  //   image: "/Gallery/Venus Consultancy Sponsor at SELECT USA.jpg",
-  //   eventName: "Venus Consultancy Sponsor at SelectUSA",
-  //   location: "United States",
-  //   description: "Proud sponsorship of SelectUSA, supporting international business investment and connecting global talent with U.S. opportunities.",
-  //   attendees: "Venus Consultancy as sponsor at SelectUSA event",
-  //   orientation: "landscape"
-  // },
+  {
+    id: 20,
+    image: "/Gallery/Venus Consultancy Sponsor at SELECT USA.jpg",
+    eventName: "Venus Consultancy Sponsor at SelectUSA",
+    location: "United States",
+    description: "Proud sponsorship of SelectUSA, supporting international business investment and connecting global talent with U.S. opportunities.",
+    attendees: "Venus Consultancy as sponsor at SelectUSA event",
+    orientation: "landscape"
+  },
   {
     id: 22,
     image: "/Gallery/Supplier Diversity event at Stellantis.jpg",

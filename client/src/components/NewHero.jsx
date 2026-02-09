@@ -64,14 +64,22 @@ const NewHero = () => {
     '/slider/Venus Consultancy at Baltimore US for NMSDC Conference.jpg',
     '/slider/Conference at Harvard Business School.jpg',
     '/slider/Supplier Diversity event at Stellantis.jpg',
-    '/slider/Team Venus at US thanks giving dinner at AMCHAM Gala Event.jpg'
+    '/slider/Team Venus at US thanks giving dinner at AMCHAM Gala Event.jpg',
+    '/Gallery/With Consulate General of US.jpg',
+    '/Gallery/With The U.S Ambassador David Cohen.jpg',
+    '/Gallery/Meeting with Governor of Michigan Gretchen Whitmer.jpg',
+    '/Gallery/Great meeting with Governor of Arizona, Katie Hobbs.jpg',
+    '/Gallery/Great Meeting with Governor of Indiana, Eric Holcomb.jpg',
+    '/Gallery/Great Meeting with Governor of Maryland Wes Moore.jpg',
+    '/Gallery/Great Meeting with Governor of Nevada Lombardo.jpg',
+    '/Gallery/Venus Consultancy Sponsor at SELECT USA.jpg'
   ];
 
   // Split images evenly - half in slider 1, half in slider 2
   const midPoint = Math.ceil(allSliderImages.length / 2);
   const slider1Images = allSliderImages.slice(0, midPoint);
   const slider2Images = allSliderImages.slice(midPoint);
-  
+
   // Duplicate arrays to create seamless loop
   const slider1Final = [...slider1Images, ...slider1Images];
   const slider2Final = [...slider2Images, ...slider2Images];
@@ -90,34 +98,42 @@ const NewHero = () => {
     '/slider/Venus Consultancy at Baltimore US for NMSDC Conference.jpg',
     '/slider/Conference at Harvard Business School.jpg',
     '/slider/Supplier Diversity event at Stellantis.jpg',
-    '/slider/Team Venus at US thanks giving dinner at AMCHAM Gala Event.jpg'
+    '/slider/Team Venus at US thanks giving dinner at AMCHAM Gala Event.jpg',
+    '/Gallery/With Consulate General of US.jpg',
+    '/Gallery/With The U.S Ambassador David Cohen.jpg',
+    '/Gallery/Meeting with Governor of Michigan Gretchen Whitmer.jpg',
+    '/Gallery/Great meeting with Governor of Arizona, Katie Hobbs.jpg',
+    '/Gallery/Great Meeting with Governor of Indiana, Eric Holcomb.jpg',
+    '/Gallery/Great Meeting with Governor of Maryland Wes Moore.jpg',
+    '/Gallery/Great Meeting with Governor of Nevada Lombardo.jpg',
+    '/Gallery/Venus Consultancy Sponsor at SELECT USA.jpg'
   ];
 
   return (
     <section className="hero">
       <div className="hero-background"></div>
-      
+
       <div className="hero-container">
         {/* Left Content */}
         <div className="hero-content">
           <h1 className="hero-title">
-            {heroContent.title }
+            {heroContent.title}
           </h1>
           <p className="hero-subtitle">
             {heroContent.subtitle || "We unite Technology, Talent, and Opportunities to align your career goals with the perfect job match."}
           </p>
           <div className="hero-buttons">
-            <Link 
-              to={heroContent.button1Link || "/find-jobs"} 
+            <Link
+              to={heroContent.button1Link || "/find-jobs"}
               className="btn-hero-primary"
             >
               {heroContent.button1Text || "Find Works"}
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
-            <Link 
-              to={heroContent.button2Link || "/contact"} 
+            <Link
+              to={heroContent.button2Link || "/contact"}
               className="btn-hero-secondary"
             >
               {heroContent.button2Text || "Hire Talents Now"}

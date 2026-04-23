@@ -1,7 +1,169 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import API from "../utils/api";
 import "./FindJobs.css";
 import FAQ from "../components/FAQ";
+
+const STATIC_JOBS = [
+  {
+    _id: "embedded-systems-infrastructure-monitoring",
+    title: "Embedded Systems Engineer – Infrastructure Monitoring",
+    type: "Full-Time",
+    location: "New York, NY / Chicago, IL",
+    department: "Engineering",
+    description: "Develop monitoring and sensing systems for bridges, tunnels, and large civil infrastructure. Lead embedded firmware and sensor integration for real-time structural health insights.",
+    tags: ["Embedded", "C/C++", "Sensors", "Infrastructure"],
+  },
+  {
+    _id: "systems-integration-engineer-smart-construction",
+    title: "Systems Integration Engineer",
+    type: "Full-Time",
+    location: "Houston, TX / Boston, MA",
+    department: "Systems Engineering",
+    description: "Integrate embedded IoT devices with construction and automation systems. Build reliable interfaces between field hardware and cloud monitoring platforms.",
+    tags: ["IoT", "Integration", "Networking", "Automation"],
+  },
+  {
+    _id: "embedded-systems-engineer-civil-infrastructure",
+    title: "Embedded Systems Engineer",
+    type: "Full-Time",
+    location: "New York, NY / Chicago, IL",
+    department: "Engineering",
+    description: "Develop firmware and sensor-based monitoring systems for highways, tunnels, and other civil infrastructure with a focus on low-power deployment.",
+    tags: ["Firmware", "Data Acquisition", "Low Power", "Civil Infrastructure"],
+  },
+  {
+    _id: "systems-integration-engineer-smart-construction-ii",
+    title: "Systems Integration Engineer",
+    type: "Full-Time",
+    location: "Houston, TX / Boston, MA",
+    department: "Integration",
+    description: "Support smart construction initiatives by connecting embedded systems, digital platforms, and field devices for deployed infrastructure projects.",
+    tags: ["Field Integration", "IoT", "Communication", "Validation"],
+  },
+  {
+    _id: "construction-field-technology-engineer",
+    title: "Construction Field Technology Engineer",
+    type: "Full-Time",
+    location: "California / Texas",
+    department: "Field Operations",
+    description: "Deploy, maintain, and troubleshoot embedded sensors and wireless monitoring systems on construction and infrastructure sites.",
+    tags: ["Field Technology", "Calibration", "Wireless", "Troubleshooting"],
+  },
+  {
+    _id: "welder-industrial-manufacturing",
+    title: "Welder – Industrial Manufacturing (Tier I Automotive Supplier)",
+    type: "Full-Time",
+    location: "Tennessee",
+    department: "Manufacturing",
+    description: "Perform MIG, TIG, and spot welding for high-volume automotive and industrial components while maintaining quality and production efficiency.",
+    tags: ["Welding", "Fabrication", "Automotive", "Quality"],
+  },
+  {
+    _id: "industrial-maintenance-technician",
+    title: "Industrial Maintenance Technician – Manufacturing Equipment Support",
+    type: "Full-Time",
+    location: "Tennessee",
+    department: "Maintenance",
+    description: "Maintain uptime for production equipment by troubleshooting mechanical, electrical, hydraulic, and pneumatic systems in manufacturing environments.",
+    tags: ["Maintenance", "Troubleshooting", "CNC", "Reliability"],
+  },
+  {
+    _id: "tool-room-machinist-precision-manufacturing",
+    title: "Tool Room Machinist – Precision Manufacturing (Tier I Automotive Supplier)",
+    type: "Full-Time",
+    location: "Tennessee",
+    department: "Tooling",
+    description: "Operate CNC and manual machining equipment to manufacture and maintain precision tools, fixtures, and dies for automotive production systems.",
+    tags: ["Machining", "CNC", "Precision", "GD&T"],
+  },
+  {
+    _id: "python-backend-engineer-ai-platform",
+    title: "Python Backend Engineer – AI Platform",
+    type: "Full-Time",
+    location: "Remote / San Francisco / Austin",
+    department: "Technology",
+    description: "Build scalable Python APIs and microservices for AI-driven SaaS products, integrating machine learning models into cloud-native backend systems.",
+    tags: ["Python", "AWS/GCP", "APIs", "AI"],
+  },
+  {
+    _id: "principal-engineer-ai-systems",
+    title: "Principal Engineer – AI Systems",
+    type: "Full-Time",
+    location: "San Francisco, CA / Remote",
+    department: "Leadership",
+    description: "Lead architecture for AI-first platforms and scalable distributed systems, driving performance, reliability, and security across teams.",
+    tags: ["Distributed Systems", "AI", "Architecture", "Leadership"],
+  },
+  {
+    _id: "founding-engineer-ai-startup",
+    title: "Founding Engineer – AI Startup (USA)",
+    type: "Full-Time",
+    location: "Remote / Bay Area / Austin",
+    department: "Startup Engineering",
+    description: "Build MVP infrastructure and core platform systems from scratch for an early-stage AI startup, working closely with founders on rapid product delivery.",
+    tags: ["Startup", "Full-Stack", "Rapid Prototyping", "AI"],
+  },
+  {
+    _id: "qa-automation-engineer-ai-saas",
+    title: "QA Automation Engineer – AI / SaaS Platform (USA)",
+    type: "Full-Time",
+    location: "Remote / USA",
+    department: "Quality Assurance",
+    description: "Develop automation frameworks and CI/CD test coverage for AI SaaS products, ensuring API reliability and performance across releases.",
+    tags: ["QA", "Automation", "API Testing", "CI/CD"],
+  },
+  {
+    _id: "devops-engineer-ai-infrastructure",
+    title: "DevOps Engineer – AI Infrastructure (USA)",
+    type: "Full-Time",
+    location: "Remote / Austin / NYC",
+    department: "DevOps",
+    description: "Manage cloud infrastructure, containerized deployments, and reliability tooling for AI and SaaS infrastructure in AWS/GCP environments.",
+    tags: ["DevOps", "Kubernetes", "Cloud", "Automation"],
+  },
+];
+
+const USE_STATIC_JOBS = true;
+
+const filterJobs = (jobList, filters) => {
+  const { search, type, location, department, tags } = filters;
+  return jobList.filter((job) => {
+    const searchableText = [job.title, job.description, job.department, job.location].join(" ").toLowerCase();
+    const jobTagsText = (job.tags || []).join(" ").toLowerCase();
+
+    if (search) {
+      const query = search.toLowerCase();
+      if (!searchableText.includes(query) && !jobTagsText.includes(query)) {
+        return false;
+      }
+    }
+
+    if (type && job.type !== type) {
+      return false;
+    }
+
+    if (location && !job.location.toLowerCase().includes(location.toLowerCase())) {
+      return false;
+    }
+
+    if (department && !job.department.toLowerCase().includes(department.toLowerCase())) {
+      return false;
+    }
+
+    if (tags) {
+      const tagQueries = tags
+        .split(",")
+        .map((tag) => tag.trim().toLowerCase())
+        .filter(Boolean);
+      if (tagQueries.length > 0 && !tagQueries.some((tag) => jobTagsText.includes(tag))) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+};
 
 const FindJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -18,6 +180,13 @@ const FindJobs = () => {
 
   const fetchJobs = async () => {
     try {
+      if (USE_STATIC_JOBS) {
+        const filteredJobs = filterJobs(STATIC_JOBS, filters);
+        setJobs(filteredJobs);
+        setPagination({ total: 1, totalJobs: filteredJobs.length, current: 1 });
+        return;
+      }
+
       setLoading(true);
       const params = new URLSearchParams();
       Object.entries(filters).forEach(([key, value]) => {
@@ -25,10 +194,12 @@ const FindJobs = () => {
       });
 
       const { data } = await API.get(`/jobs?${params.toString()}`);
-      setJobs(data.jobs || []);
-      setPagination(data.pagination || {});
+      setJobs(data.jobs || STATIC_JOBS);
+      setPagination(data.pagination || { total: 1, totalJobs: data.jobs?.length || STATIC_JOBS.length, current: 1 });
     } catch (err) {
       console.error("Error fetching jobs:", err);
+      setJobs(STATIC_JOBS);
+      setPagination({ total: 1, totalJobs: STATIC_JOBS.length, current: 1 });
     } finally {
       setLoading(false);
     }
@@ -128,7 +299,7 @@ const FindJobs = () => {
                   <p>{pagination.totalJobs || 0} jobs found</p>
                 </div>
 
-                <div className="jobs-grid">
+                        <div className="jobs-grid">
                   {jobs.map((job) => (
                     <JobCard key={job._id} job={job} />
                   ))}
@@ -151,10 +322,7 @@ const FindJobs = () => {
 };
 
 const JobCard = ({ job }) => {
-  const [showApplyModal, setShowApplyModal] = useState(false);
-
   return (
-    <>
       <div className="job-card">
         <div className="job-header">
           <h3>{job.title}</h3>
@@ -178,21 +346,10 @@ const JobCard = ({ job }) => {
           </div>
         )}
 
-        <button 
-          className="btn btn-primary apply-btn"
-          onClick={() => setShowApplyModal(true)}
-        >
+        <Link to="/contact" className="btn btn-primary apply-btn">
           Apply Now
-        </button>
+        </Link>
       </div>
-
-      {showApplyModal && (
-        <ApplyModal 
-          job={job} 
-          onClose={() => setShowApplyModal(false)} 
-        />
-      )}
-    </>
   );
 };
 
@@ -227,176 +384,6 @@ const Pagination = ({ current, total, onPageChange }) => {
       >
         Next
       </button>
-    </div>
-  );
-};
-
-const ApplyModal = ({ job, onClose }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    coverMessage: ""
-  });
-  const [resume, setResume] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState({ type: "", text: "" });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // Validate file type
-      const allowedTypes = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
-      if (!allowedTypes.includes(file.type)) {
-        setMessage({ type: "error", text: "Please upload a PDF, DOC, or DOCX file" });
-        return;
-      }
-      
-      // Validate file size (5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        setMessage({ type: "error", text: "File size must be less than 5MB" });
-        return;
-      }
-      
-      setResume(file);
-      setMessage({ type: "success", text: "File selected successfully" });
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.email || !resume) {
-      setMessage({ type: "error", text: "Name, email, and resume are required" });
-      return;
-    }
-
-    // Validate email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setMessage({ type: "error", text: "Please enter a valid email address" });
-      return;
-    }
-
-    setLoading(true);
-    setMessage({ type: "", text: "" });
-
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("jobId", job._id);
-      formDataToSend.append("name", formData.name);
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("phone", formData.phone);
-      formDataToSend.append("coverMessage", formData.coverMessage);
-      formDataToSend.append("resume", resume);
-
-      const { data } = await API.post(
-        "/applications",
-        formDataToSend,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-
-      if (data && (data.ok || data._id || data.message)) {
-        setMessage({ type: "success", text: "Application submitted successfully!" });
-        setTimeout(() => {
-          onClose();
-        }, 2000);
-      } else {
-        setMessage({ type: "error", text: (data && (data.error || data.message)) || "Failed to submit application" });
-      }
-    } catch (err) {
-      setMessage({ type: "error", text: "Network error. Please try again." });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h2>Apply for {job.title}</h2>
-          <button className="close-btn" onClick={onClose}>×</button>
-        </div>
-
-        <form onSubmit={handleSubmit} className="apply-form">
-          <div className="form-group">
-            <label>Full Name *</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Email Address *</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Phone Number</label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Cover Message (optional)</label>
-            <textarea
-              name="coverMessage"
-              value={formData.coverMessage}
-              onChange={handleInputChange}
-              maxLength={1000}
-              placeholder="Tell us why you're interested in this position..."
-            />
-            <small>{formData.coverMessage.length}/1000 characters</small>
-          </div>
-
-          <div className="form-group">
-            <label>Resume *</label>
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx"
-              onChange={handleFileChange}
-              required
-            />
-            <small>PDF, DOC, or DOCX files only. Max 5MB.</small>
-          </div>
-
-          {message.text && (
-            <div className={`message ${message.type}`}>
-              {message.text}
-            </div>
-          )}
-
-          <div className="form-actions">
-            <button type="button" onClick={onClose} disabled={loading}>
-              Cancel
-            </button>
-            <button type="submit" disabled={loading}>
-              {loading ? "Submitting..." : "Submit Application"}
-            </button>
-          </div>
-        </form>
-      </div>
-      <FAQ />
     </div>
   );
 };

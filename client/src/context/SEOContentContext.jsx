@@ -12,8 +12,8 @@ const getDefaultContent = () => ({
   home: {
     hero: {
       greeting: "- Empower Your Workforce -",
-      title: "Staffing & Recruitment Agency in the USA",   
-      subtitle: "Supporting Businesses Across the USA with Skilled Talent and Reliable Hiring Solutions",
+      title: "Staffing & Recruitment Agency",
+      subtitle: "Supporting Businesses with Skilled Talent and Reliable Hiring Solutions",
       button1Text: "Book a Consultation",
       button1Link: "/book-call",
       button2Text: "Our Services",

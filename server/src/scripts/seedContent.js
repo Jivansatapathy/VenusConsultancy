@@ -12,7 +12,7 @@ const getBaseContent = () => ({
       greeting: "- Empower Your Workforce -",
       titleLine1: "Shape the Future of",
       titleLine2: "Your Organization Today",
-      subtitle: "Connect with top-tier talent across the USA and discover professionals who drive growth, innovation, and success for American businesses.",
+      subtitle: "Connect with top-tier talent and discover professionals who drive growth, innovation, and success for businesses.",
       button1Text: "Book a Consultation",
       button1Link: "/book-call",
       button2Text: "Our Services",

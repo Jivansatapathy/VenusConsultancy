@@ -41,8 +41,8 @@ function processQueue(err, token = null) {
   refreshQueue = [];
 }
 
-// Cloud Run Backend URL - ONLY source of truth
-const CLOUD_RUN_BACKEND = 'https://venus-backend-841304788329.asia-south1.run.app';
+// Railway Backend URL - ONLY source of truth
+const CLOUD_RUN_BACKEND = 'https://venus-backend-production-6bee.up.railway.app';
 
 // Resolve API URL from environment variable or use Cloud Run backend
 // In development, allow localhost if explicitly set, otherwise use Cloud Run

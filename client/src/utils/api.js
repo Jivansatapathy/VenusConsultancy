@@ -41,36 +41,14 @@ function processQueue(err, token = null) {
   refreshQueue = [];
 }
 
-// Railway Backend URL - ONLY source of truth
-const CLOUD_RUN_BACKEND = 'https://venus-backend-production-6bee.up.railway.app';
+// Railway Backend URL - ONLY source of truth.
+// NOTE: This is intentionally HARDCODED and ignores VITE_API_URL so that a stale
+// Vercel env var (e.g. an old Cloud Run URL) can never override the real backend.
+const RAILWAY_BACKEND = 'https://venus-backend-production-6bee.up.railway.app';
 
-// Resolve API URL from environment variable or use Cloud Run backend
-// In development, allow localhost if explicitly set, otherwise use Cloud Run
-const RUNTIME_API = 
-  (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_URL) ||
-  (typeof process !== "undefined" && process.env && process.env.VITE_API_URL);
-
-// Determine API URL - ONLY use Cloud Run backend or explicit VITE_API_URL
-let API_URL;
-if (RUNTIME_API) {
-  // Use explicit VITE_API_URL if set
-  API_URL = RUNTIME_API;
-  console.log('[API] Using VITE_API_URL:', API_URL);
-} else {
-  // Default to Cloud Run backend (ONLY allowed backend)
-  API_URL = CLOUD_RUN_BACKEND;
-  console.log('[API] Using Cloud Run backend:', API_URL);
-  
-  // Warn if in production and VITE_API_URL is not set
-  const isProduction = typeof process !== "undefined" && process.env.NODE_ENV === 'production';
-  if (isProduction) {
-    console.warn(
-      '[API] VITE_API_URL not set. Using Cloud Run backend:',
-      CLOUD_RUN_BACKEND,
-      '\nTo customize, set VITE_API_URL environment variable.'
-    );
-  }
-}
+// Force the Railway backend regardless of any VITE_API_URL environment variable.
+const API_URL = RAILWAY_BACKEND;
+console.log('[API] Using Railway backend (forced):', API_URL);
 
 // Ensure baseURL ends without trailing slash and points to /api
 const API_BASE = API_URL.replace(/\/$/, "") + "/api";

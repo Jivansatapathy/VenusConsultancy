@@ -99,50 +99,64 @@ const getDefaultContent = () => ({
   }
 });
 
+// Deep-merge database content over defaults.
+// Objects are merged recursively; arrays and primitives from the database
+// replace the default value entirely (so e.g. blog.items reflects the DB exactly).
+const mergeContent = (defaults, override) => {
+  if (Array.isArray(override) || override === null || typeof override !== 'object') {
+    return override;
+  }
+  if (Array.isArray(defaults) || defaults === null || typeof defaults !== 'object') {
+    return override;
+  }
+  const result = { ...defaults };
+  for (const key of Object.keys(override)) {
+    result[key] = key in defaults
+      ? mergeContent(defaults[key], override[key])
+      : override[key];
+  }
+  return result;
+};
+
 export const SEOContentProvider = ({ children }) => {
   const [content, setContent] = useState(getDefaultContent());
   const [loading, setLoading] = useState(true);
 
   // Load content from MongoDB database on mount
-  // useEffect(() => {
-  //   const loadContent = async () => {
-  //     try {
-  //       console.log('[SEO Content] 🔄 Loading content from backend...');
-  //       // Fetch all content from database
-  //       const response = await API.get('/content');
-  //       const databaseContent = response.data?.data || {};
-        
-  //       console.log('[SEO Content] 📦 Content received from backend:', {
-  //         pages: Object.keys(databaseContent),
-  //         hasData: Object.keys(databaseContent).length > 0
-  //       });
-        
-  //       // If database has content, use it directly (don't merge with defaults)
-  //       // This ensures saved content is not overwritten by defaults
-  //       if (databaseContent && Object.keys(databaseContent).length > 0) {
-  //         console.log('[SEO Content] ✅ Using content from database');
-  //         setContent(databaseContent);
-  //       } else {
-  //         console.log('[SEO Content] ⚠️  No content in database, using defaults');
-  //         // Only use defaults if database is empty
-  //         setContent(getDefaultContent());
-  //       }
-  //     } catch (error) {
-  //       console.error('[SEO Content] ❌ Error loading content from database:', error);
-  //       // Fallback to defaults if database fetch fails
-  //       setContent(getDefaultContent());
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-    
-  //   loadContent();
-  // }, []);
-useEffect(() => {
-  // Offline-first mode: use default content only
-  setContent(getDefaultContent());
-  setLoading(false);
-}, []);
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        console.log('[SEO Content] 🔄 Loading content from backend...');
+        // Fetch all content from database
+        const response = await API.get('/content');
+        const databaseContent = response.data?.data || {};
+
+        console.log('[SEO Content] 📦 Content received from backend:', {
+          pages: Object.keys(databaseContent),
+          hasData: Object.keys(databaseContent).length > 0
+        });
+
+        // Merge database content over defaults so any sections not yet saved
+        // to the database still render (and saved blog posts persist).
+        if (databaseContent && Object.keys(databaseContent).length > 0) {
+          console.log('[SEO Content] ✅ Merging content from database with defaults');
+          setContent(mergeContent(getDefaultContent(), databaseContent));
+        } else {
+          console.log('[SEO Content] ⚠️  No content in database, using defaults');
+          // Only use defaults if database is empty
+          setContent(getDefaultContent());
+        }
+      } catch (error) {
+        console.error('[SEO Content] ❌ Error loading content from database:', error);
+        // Fallback to defaults if database fetch fails
+        setContent(getDefaultContent());
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadContent();
+  }, []);
 
   const updateContent = async (path, value) => {
     // Parse the path to get page and section
@@ -238,7 +252,7 @@ useEffect(() => {
         const reloadResponse = await API.get('/content');
         const reloadedContent = reloadResponse.data?.data || {};
         if (reloadedContent && Object.keys(reloadedContent).length > 0) {
-          setContent(reloadedContent);
+          setContent(mergeContent(getDefaultContent(), reloadedContent));
           console.log(`[SEO Content] ✅ Content reloaded from backend after save`);
         }
       } catch (reloadError) {
@@ -341,7 +355,7 @@ useEffect(() => {
           const reloadResponse = await API.get('/content');
           const reloadedContent = reloadResponse.data?.data || {};
           if (reloadedContent && Object.keys(reloadedContent).length > 0) {
-            setContent(reloadedContent);
+            setContent(mergeContent(getDefaultContent(), reloadedContent));
             console.log(`[SEO Content] ✅ Content reloaded from backend after nested save`);
           }
         } catch (reloadError) {
@@ -421,7 +435,7 @@ useEffect(() => {
           const reloadResponse = await API.get('/content');
           const reloadedContent = reloadResponse.data?.data || {};
           if (reloadedContent && Object.keys(reloadedContent).length > 0) {
-            setContent(reloadedContent);
+            setContent(mergeContent(getDefaultContent(), reloadedContent));
             console.log(`[SEO Content] ✅ Content reloaded from backend after adding array item`);
           }
         } catch (reloadError) {
@@ -512,7 +526,7 @@ useEffect(() => {
           const reloadResponse = await API.get('/content');
           const reloadedContent = reloadResponse.data?.data || {};
           if (reloadedContent && Object.keys(reloadedContent).length > 0) {
-            setContent(reloadedContent);
+            setContent(mergeContent(getDefaultContent(), reloadedContent));
             console.log(`[SEO Content] ✅ Content reloaded from backend after removing array item`);
           }
         } catch (reloadError) {
@@ -538,7 +552,7 @@ useEffect(() => {
         const reloadResponse = await API.get('/content');
         const reloadedContent = reloadResponse.data?.data || {};
         if (reloadedContent && Object.keys(reloadedContent).length > 0) {
-          setContent(reloadedContent);
+          setContent(mergeContent(getDefaultContent(), reloadedContent));
         }
       } catch (reloadError) {
         console.error(`[SEO Content] ❌ Could not reload content after error:`, reloadError);
